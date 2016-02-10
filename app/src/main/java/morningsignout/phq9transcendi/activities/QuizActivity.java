@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi;
+package morningsignout.phq9transcendi.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import morningsignout.phq9transcendi.R;
 
 public class QuizActivity extends AppCompatActivity {
 
