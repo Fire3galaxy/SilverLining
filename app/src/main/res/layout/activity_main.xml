@@ -17,7 +17,7 @@
     <Button
         android:layout_width="150dp"
         android:layout_height="75dp"
-        android:text="Start"
+        android:text="How am I doing?"
         android:id="@+id/startButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
