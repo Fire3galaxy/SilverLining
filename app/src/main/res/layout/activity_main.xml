@@ -21,5 +21,24 @@
         android:id="@+id/startButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="108dp" />
+        android:layout_marginBottom="208dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resources"
+        android:id="@+id/resrcButton"
+        android:layout_marginTop="100dp"
+        android:layout_alignTop="@+id/startButton"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignStart="@+id/title" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="References"
+        android:id="@+id/refButton"
+        android:layout_alignTop="@+id/resrcButton"
+        android:layout_alignRight="@+id/title"
+        android:layout_alignEnd="@+id/title" />
 </RelativeLayout>

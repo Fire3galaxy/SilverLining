@@ -12,8 +12,7 @@ import morningsignout.phq9transcendi.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button startButton;
-
+    private Button startButton, resrcButton, refButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -23,9 +22,30 @@ public class MainActivity extends AppCompatActivity {
         startButton = (Button) findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
                 startIntent();
             }
         });
+
+        String page_type = "";
+        resrcButton = (Button) findViewById(R.id.resrcButton);
+        resrcButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ResourceActivity.class);
+                intent.putExtra("page_type", "Resources");
+                startActivity(intent);
+            }
+        });
+
+        refButton = (Button) findViewById(R.id.refButton);
+        refButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ResourceActivity.class);
+                intent.putExtra("page_type", "References");
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
