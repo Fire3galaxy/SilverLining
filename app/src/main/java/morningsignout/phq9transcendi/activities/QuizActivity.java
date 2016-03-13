@@ -25,6 +25,7 @@ public class QuizActivity extends AppCompatActivity {
     private int scoreA;
     private int scoreB;
     private boolean redFlag; //If a red flag question gets answered
+    private boolean redFlagQ; //If a question is a red flag question
     private boolean quizDone; //If all questions are answered
     private int questionNumber; //which question the user is on
     private boolean toggle; //For what section a question belongs in
@@ -76,7 +77,7 @@ public class QuizActivity extends AppCompatActivity {
                 toggleQuestionsB();
             }
             questionNumber++;
-            if(questionNumber > 16) {
+            if(questionNumber > 20) {
                 quizDone = true;
             }
 
@@ -249,6 +250,23 @@ public class QuizActivity extends AppCompatActivity {
                 toggle = false;
                 break;
             case 16:
+                question.setText("How about the thought of thinking that you’d be better off dead, or that it would be great to just fall asleep and never wake up?");
+                toggle = true;
+                break;
+            //RED FLAG QUESTIONS
+            case 17:
+                question.setText("How about the thought of thinking that you’d be better off dead, or that it would be great to just fall asleep and never wake up?");
+                toggle = true;
+                break;
+            case 18:
+                question.setText("How about the thought of thinking that you’d be better off dead, or that it would be great to just fall asleep and never wake up?");
+                toggle = true;
+                break;
+            case 19:
+                question.setText("How about the thought of thinking that you’d be better off dead, or that it would be great to just fall asleep and never wake up?");
+                toggle = true;
+                break;
+            case 20:
                 question.setText("How about the thought of thinking that you’d be better off dead, or that it would be great to just fall asleep and never wake up?");
                 toggle = true;
                 break;
