@@ -50,6 +50,7 @@ public class QuizActivity extends AppCompatActivity {
         scoreA = 0;
         scoreB = 0;
         redFlag = false;
+        redFlagQ = false;
         quizDone = false;
         questionNumber = 1;
         toggle = true;
@@ -72,7 +73,11 @@ public class QuizActivity extends AppCompatActivity {
         if(!redFlag && !quizDone) {
             updateQuestions();
             if(toggle) {
-                toggleQuestionsA();
+                if(!redFlagQ) {
+                    toggleQuestionsA();
+                } else {
+                    toggleFlagQuestions();
+                }
             } else {
                 toggleQuestionsB();
             }
@@ -89,6 +94,7 @@ public class QuizActivity extends AppCompatActivity {
     private void finishQuiz() {
         if(redFlag) {
             //alert
+            question.setText("Please consult a doctor immediately (msg will be changed)");
         } else {
             //proceed normally with score
             question.setText("Your total score is: " + totalScore);
@@ -170,7 +176,52 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void toggleFlagQuestions() {
+        if(questionNumber == 18) {
+            answer1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startQuiz();
+                }
+            });
 
+            answer2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startQuiz();
+                }
+            });
+
+            answer3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startQuiz();
+                }
+            });
+
+            answer4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    redFlag = true;
+                    startQuiz();
+                }
+            });
+        } else {
+
+            answer1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    redFlag = true;
+                    startQuiz();
+                }
+            });
+
+            answer2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startQuiz();
+                }
+            });
+        }
     }
 
     private void calculateScore() {
@@ -255,20 +306,39 @@ public class QuizActivity extends AppCompatActivity {
                 break;
             //RED FLAG QUESTIONS
             case 17:
-                question.setText("How about the thought of thinking that you’d be better off dead, or that it would be great to just fall asleep and never wake up?");
+                question.setText("In the past year have you felt depressed or sad most days even if you felt okay sometimes?");
+                redFlagQ = true;
                 toggle = true;
+                answer1.setText("Yes");
+                answer2.setText("No");
+                answer3.setVisibility(View.INVISIBLE);
+                answer4.setVisibility(View.INVISIBLE);
                 break;
             case 18:
-                question.setText("How about the thought of thinking that you’d be better off dead, or that it would be great to just fall asleep and never wake up?");
+                question.setText("If you are experiencing any of the problems that we asked you about, how much do these problems problems keep you from being 100% at your work, study, go about your daily business, get along with other people, and maintain your relationships?");
                 toggle = true;
+                answer1.setText("Doesn't affect me");
+                answer2.setText("A little");
+                answer3.setText("Somewhat");
+                answer4.setText("Crippling");
+                answer3.setVisibility(View.VISIBLE);
+                answer4.setVisibility(View.VISIBLE);
                 break;
             case 19:
-                question.setText("How about the thought of thinking that you’d be better off dead, or that it would be great to just fall asleep and never wake up?");
+                question.setText("Has there been a time in the past month when you have had serious thoughts about ending your life?");
                 toggle = true;
+                answer1.setText("Yes");
+                answer2.setText("No");
+                answer3.setVisibility(View.INVISIBLE);
+                answer4.setVisibility(View.INVISIBLE);
                 break;
             case 20:
-                question.setText("How about the thought of thinking that you’d be better off dead, or that it would be great to just fall asleep and never wake up?");
+                question.setText("Have you ever in your whole life try to kill yourself or make a suicide attempt?");
                 toggle = true;
+                answer1.setText("Yes");
+                answer2.setText("No");
+                answer3.setVisibility(View.INVISIBLE);
+                answer4.setVisibility(View.INVISIBLE);
                 break;
             //default
             default:
