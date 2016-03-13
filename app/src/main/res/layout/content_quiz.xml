@@ -28,26 +28,24 @@
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/tableLayout1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:layout_alignRight="@+id/questionView"
         android:layout_alignEnd="@+id/questionView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
-        android:layout_below="@+id/questionView"
-        android:layout_marginTop="100dp">
+        android:layout_marginBottom="50dp">
 
         <TableRow
             android:id="@+id/tableRow1"
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1" >
 
             <Button
                 android:id="@+id/answer1"
                 android:layout_width="0dp"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Not at all" />
 
