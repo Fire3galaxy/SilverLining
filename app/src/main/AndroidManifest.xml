@@ -30,6 +30,18 @@
             android:label="@string/app_name">
         </activity>
 
+        <activity
+            android:name=".activities.DemographicsActivity"
+            android:label="Demographics"
+            android:parentActivityName=".activities.DemographicsIntroActivity">
+        </activity>
+
+        <activity
+            android:name=".activities.DemographicsIntroActivity"
+            android:label="Demographics"
+            android:parentActivityName=".activities.MainActivity">
+        </activity>
+
     </application>
 
 </manifest>

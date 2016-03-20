@@ -5,5 +5,40 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_quiz">QuizActivity</string>
     <string name="resource_activity">ResourceActivity</string>
+    <string name="demographics_intro">We want to know a little about you so we can  do a better job
+    helping people. All this information will be kept anonymous and strictly confidential.</string>
+
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+
+    <string-array name="ethnicity_array">
+        <item>African American/Black</item>
+        <item>Mexican American/Chicano</item>
+        <item>Hispanic/Latino</item>
+        <item>Native American/Alaska Native</item>
+        <item>Pacific Islander</item>
+        <item>Chinese</item>
+        <item>Filipino</item>
+        <item>Japanese</item>
+        <item>Korean</item>
+        <item>Other Asian/South Asian</item>
+        <item>White</item>
+    </string-array>
+
+    <string-array name="school_year">
+        <item>1-5</item>
+        <item>graduate student</item>
+        <item>not currently enrolled</item>
+    </string-array>
+
+    <string-array name="yes_no_array">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+
 
 </resources>

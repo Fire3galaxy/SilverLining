@@ -71,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startIntent() {
-        Intent intent = new Intent(this, QuizActivity.class);
-        startActivity(intent);
+        Intent firstIntent = new Intent(this, DemographicsIntroActivity.class);
+        startActivity(firstIntent);
+
     }
 }
