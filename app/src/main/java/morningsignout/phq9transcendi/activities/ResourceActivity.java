@@ -1,10 +1,12 @@
 package morningsignout.phq9transcendi.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -37,6 +39,18 @@ public class ResourceActivity extends AppCompatActivity {
         subtitle = (TextView)findViewById(R.id.Subtitle);
 
         contents = (ListView)findViewById(R.id.Contents);
+        contents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                String url = "http://morningsignout.com";
+
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+
+            }
+        });
+
         homeButton = (Button)findViewById(R.id.back_button);
         homeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

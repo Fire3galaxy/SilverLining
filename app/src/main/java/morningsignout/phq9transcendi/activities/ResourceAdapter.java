@@ -62,7 +62,7 @@ public class ResourceAdapter extends BaseAdapter{
 
     private class ResourcesViewHolder {
         TextView textViewTitle;
-        ImageView imageView;
+        //ImageView imageView;
     }
 
 
