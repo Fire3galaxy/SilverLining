@@ -15,30 +15,51 @@
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:layout_width="150dp"
+        android:layout_width="120dp"
         android:layout_height="75dp"
-        android:text="How am I doing?"
-        android:id="@+id/startButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="208dp" />
+        android:text="Login"
+        android:id="@+id/loginButton"
+        android:layout_below="@+id/editText2"
+        android:layout_alignLeft="@+id/editText2"
+        android:layout_alignStart="@+id/editText2" />
 
     <Button
+        android:layout_width="125dp"
+        android:layout_height="75dp"
+        android:text="New User"
+        android:id="@+id/newButton"
+        android:layout_alignBottom="@+id/loginButton"
+        android:layout_alignRight="@+id/editText2"
+        android:layout_alignEnd="@+id/editText2" />
+
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Resources"
-        android:id="@+id/resrcButton"
-        android:layout_marginTop="100dp"
-        android:layout_alignTop="@+id/startButton"
+        android:id="@+id/editText"
+        android:layout_below="@+id/title"
         android:layout_alignLeft="@+id/title"
-        android:layout_alignStart="@+id/title" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="References"
-        android:id="@+id/refButton"
-        android:layout_alignTop="@+id/resrcButton"
+        android:layout_alignStart="@+id/title"
         android:layout_alignRight="@+id/title"
         android:layout_alignEnd="@+id/title" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editText2"
+        android:layout_below="@+id/editText"
+        android:layout_alignLeft="@+id/editText"
+        android:layout_alignStart="@+id/editText"
+        android:layout_alignRight="@+id/editText"
+        android:layout_alignEnd="@+id/editText" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quick Quiz"
+        android:id="@+id/quickButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="69dp" />
 </RelativeLayout>

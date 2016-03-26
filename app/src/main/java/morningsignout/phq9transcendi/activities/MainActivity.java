@@ -12,15 +12,15 @@ import morningsignout.phq9transcendi.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button startButton, resrcButton, refButton;
+    private Button loginButton, newButton, quickButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startButton = (Button) findViewById(R.id.startButton);
-        startButton.setOnClickListener(new View.OnClickListener() {
+        loginButton = (Button) findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 startIntent();
@@ -28,20 +28,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         String page_type = "";
-        resrcButton = (Button) findViewById(R.id.resrcButton);
-        resrcButton.setOnClickListener(new View.OnClickListener() {
+        newButton = (Button) findViewById(R.id.newButton);
+        //New User stuff not yet handled
+        /*resrcButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ResourceActivity.class);
+                Intent intent = new Intent(IndexActivity.this, ResourceActivity.class);
                 intent.putExtra("page_type", "Resources");
                 startActivity(intent);
             }
-        });
+        });*/
 
-        refButton = (Button) findViewById(R.id.refButton);
-        refButton.setOnClickListener(new View.OnClickListener() {
+        quickButton = (Button) findViewById(R.id.quickButton);
+        quickButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ResourceActivity.class);
-                intent.putExtra("page_type", "References");
+                Intent intent = new Intent(MainActivity.this, DemographicsIntroActivity.class);
                 startActivity(intent);
             }
         });
@@ -71,8 +71,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startIntent() {
-        Intent firstIntent = new Intent(this, DemographicsIntroActivity.class);
+        Intent firstIntent = new Intent(this, IndexActivity.class);
         startActivity(firstIntent);
-
     }
 }
