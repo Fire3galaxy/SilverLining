@@ -70,7 +70,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void startQuiz() {
-        if(!redFlag && !quizDone) {
+        if(!quizDone) {
             updateQuestions();
             if(toggle) {
                 if(!redFlagQ) {
@@ -94,11 +94,15 @@ public class QuizActivity extends AppCompatActivity {
     private void finishQuiz() {
         if(redFlag) {
             //alert
-            question.setText("Please consult a doctor immediately (msg will be changed)");
+            question.setText("Your total score is " + totalScore +", however please consult a doctor immediately (msg will be changed)");
         } else {
             //proceed normally with score
             question.setText("Your total score is: " + totalScore);
         }
+        answer1.setVisibility(View.INVISIBLE);
+        answer2.setVisibility(View.INVISIBLE);
+        answer3.setVisibility(View.INVISIBLE);
+        answer4.setVisibility(View.INVISIBLE);
     }
 
     private void toggleQuestionsA() {
