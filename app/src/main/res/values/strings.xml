@@ -39,6 +39,7 @@
         <item>No</item>
     </string-array>
     <string name="title_activity_index">IndexActivity</string>
+    <string name="title_activity_new_user">NewUserActivity</string>
 
 
 </resources>

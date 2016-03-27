@@ -7,12 +7,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import org.w3c.dom.Text;
 
 import morningsignout.phq9transcendi.R;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button loginButton, newButton, quickButton;
+    private EditText username, password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -29,14 +33,12 @@ public class MainActivity extends AppCompatActivity {
 
         String page_type = "";
         newButton = (Button) findViewById(R.id.newButton);
-        //New User stuff not yet handled
-        /*resrcButton.setOnClickListener(new View.OnClickListener() {
+        newButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(IndexActivity.this, ResourceActivity.class);
-                intent.putExtra("page_type", "Resources");
+                Intent intent = new Intent(MainActivity.this, NewUserActivity.class);
                 startActivity(intent);
             }
-        });*/
+        });
 
         quickButton = (Button) findViewById(R.id.quickButton);
         quickButton.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        username = (EditText) findViewById(R.id.username);
+        password = (EditText) findViewById(R.id.password);
+        username.setHint("Username");
+        password.setHint("Password");
 
     }
 
