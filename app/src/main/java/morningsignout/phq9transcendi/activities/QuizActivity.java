@@ -48,14 +48,7 @@ public class QuizActivity extends AppCompatActivity {
         answer3 = (Button) findViewById(R.id.answer3);
         answer4 = (Button) findViewById(R.id.answer4);
 
-        totalScore = 0;
-        scoreA = 0;
-        scoreB = 0;
-        redFlag = false;
-        redFlagQ = false;
-        quizDone = false;
-        questionNumber = 1;
-        toggle = true;
+        reset();
 
         //Everything is setup, start quiz
         startQuiz();
@@ -69,6 +62,22 @@ public class QuizActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });*/
+    }
+
+    private void reset() {
+        totalScore = 0;
+        scoreA = 0;
+        scoreB = 0;
+        redFlag = false;
+        redFlagQ = false;
+        quizDone = false;
+        questionNumber = 1;
+        toggle = true;
+        subtitle.setText("");
+        answer1.setText("Not at all");
+        answer2.setText("Few days a week");
+        answer3.setText("More than half the week");
+        answer4.setText("Everyday");
     }
 
     private void startQuiz() {
@@ -114,13 +123,24 @@ public class QuizActivity extends AppCompatActivity {
         } else if(totalScore >= 20) {
             subtitle.setText("20+: You might be suffering from severe depression.");
         }
-        answer1.setVisibility(View.INVISIBLE);
+        answer1.setVisibility(View.VISIBLE);
         answer2.setVisibility(View.VISIBLE);
         answer3.setVisibility(View.VISIBLE);
         answer4.setVisibility(View.VISIBLE);
+
+        answer1.setText("Take quiz again");
         answer2.setText("Go back");
         answer3.setText("References");
         answer4.setText("Resources");
+
+        answer1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reset();
+                startQuiz();
+            }
+        });
+
         answer2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
