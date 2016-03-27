@@ -18,8 +18,8 @@
         </activity>
         <activity
             android:name=".activities.QuizActivity"
-            android:label="@string/title_activity_quiz"
-            android:parentActivityName=".activities.MainActivity"
+            android:label="Quiz"
+            android:parentActivityName=".activities.IndexActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -38,12 +38,12 @@
             android:parentActivityName=".activities.MainActivity"></activity>
         <activity
             android:name=".activities.IndexActivity"
-            android:label="@string/title_activity_index"
+            android:label="Index"
             android:parentActivityName=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="morningsignout.phq9transcendi.activities.MainActivity" />
+                android:value=".activities.MainActivity" />
         </activity>
     </application>
 
