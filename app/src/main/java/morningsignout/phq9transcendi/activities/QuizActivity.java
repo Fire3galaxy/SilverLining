@@ -1,5 +1,6 @@
 package morningsignout.phq9transcendi.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,7 +16,7 @@ import morningsignout.phq9transcendi.R;
 
 public class QuizActivity extends AppCompatActivity {
 
-    private TextView question; //The text of the question
+    private TextView question, subtitle; //The text of the question
     private Button answer1; //Not at all || yes
     private Button answer2; //Few days a week || no
     private Button answer3; //More than half the week
@@ -41,6 +42,7 @@ public class QuizActivity extends AppCompatActivity {
 
         //Grab and set content; inital setup
         question = (TextView) findViewById(R.id.questionView);
+        subtitle = (TextView) findViewById(R.id.additionalText);
         answer1 = (Button) findViewById(R.id.answer1);
         answer2 = (Button) findViewById(R.id.answer2);
         answer3 = (Button) findViewById(R.id.answer3);
@@ -94,15 +96,55 @@ public class QuizActivity extends AppCompatActivity {
     private void finishQuiz() {
         if(redFlag) {
             //alert
-            question.setText("Your total score is " + totalScore +", however please consult a doctor immediately (msg will be changed)");
+            question.setText("Your score is " + totalScore +", but one or more of your answers show that you may suffer from severe depression.");
         } else {
             //proceed normally with score
-            question.setText("Your total score is: " + totalScore);
+            question.setText("You're all done! Your score is " + totalScore);
+        }
+        if(totalScore == 0) {
+            subtitle.setText("0: Zero depression. You show none of the signs of depression.");
+        } else if(totalScore >= 1 && totalScore < 5) {
+            subtitle.setText("1-4: Minimal depression. You have very few signs of depression.");
+        } else if(totalScore >= 5 && totalScore < 10) {
+            subtitle.setText("5-9: Mild depression. You might be suffering from mild depression.");
+        } else if(totalScore >= 10 && totalScore < 15) {
+            subtitle.setText("10-14: Moderate depression. You might be suffering from moderate depression.");
+        } else if(totalScore >= 15 && totalScore < 20) {
+            subtitle.setText("15-19: You might be suffering from moderately severe depression.");
+        } else if(totalScore >= 20) {
+            subtitle.setText("20+: You might be suffering from severe depression.");
         }
         answer1.setVisibility(View.INVISIBLE);
-        answer2.setVisibility(View.INVISIBLE);
-        answer3.setVisibility(View.INVISIBLE);
-        answer4.setVisibility(View.INVISIBLE);
+        answer2.setVisibility(View.VISIBLE);
+        answer3.setVisibility(View.VISIBLE);
+        answer4.setVisibility(View.VISIBLE);
+        answer2.setText("Go back");
+        answer3.setText("References");
+        answer4.setText("Resources");
+        answer2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent c = new Intent(QuizActivity.this, IndexActivity.class);
+                startActivity(c);
+            }
+        });
+        answer3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(QuizActivity.this, ResourceActivity.class);
+                a.putExtra("page_type", "Resources");
+                startActivity(a);
+            }
+        });
+
+        answer4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent b = new Intent(QuizActivity.this, ResourceActivity.class);
+                b.putExtra("page_type", "References");
+                startActivity(b);
+            }
+        });
     }
 
     private void toggleQuestionsA() {

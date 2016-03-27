@@ -7,17 +7,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import morningsignout.phq9transcendi.R;
 
 public class IndexActivity extends AppCompatActivity {
 
     private Button startButton, resrcButton, refButton;
+    private TextView title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
+
+        title = (TextView) findViewById(R.id.title);
+        Intent intent = getIntent();
+        title.setText("Welcome, " + intent.getStringExtra("username") + "!");
 
         startButton = (Button) findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {

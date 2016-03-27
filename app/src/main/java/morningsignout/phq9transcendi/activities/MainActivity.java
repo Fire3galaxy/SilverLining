@@ -1,6 +1,7 @@
 package morningsignout.phq9transcendi.activities;
 
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,12 +23,28 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        username = (EditText) findViewById(R.id.username);
+        password = (EditText) findViewById(R.id.password);
+        username.setHint("Username");
+        password.setHint("Password");
 
         loginButton = (Button) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                startIntent();
+                if(username.getText().length() > 0) {
+                    if(password.getText().length() > 0) {
+                        //Placeholder for SQL database checking
+                        if(true) {
+                            startIntent();
+                        } else {
+                            alertIncorrect();
+                        }
+                    } else {
+                        alertPassEmpty();
+                    }
+                } else {
+                    alertUserEmpty();
+                }
             }
         });
 
@@ -43,15 +60,11 @@ public class MainActivity extends AppCompatActivity {
         quickButton = (Button) findViewById(R.id.quickButton);
         quickButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DemographicsIntroActivity.class);
+                Intent intent = new Intent(MainActivity.this, IndexActivity.class);
+                intent.putExtra("username", "guest");
                 startActivity(intent);
             }
         });
-
-        username = (EditText) findViewById(R.id.username);
-        password = (EditText) findViewById(R.id.password);
-        username.setHint("Username");
-        password.setHint("Password");
 
     }
 
@@ -78,7 +91,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startIntent() {
-        Intent firstIntent = new Intent(this, IndexActivity.class);
-        startActivity(firstIntent);
+        Intent intent = new Intent(this, IndexActivity.class);
+        intent.putExtra("username", username.getText().toString());
+        startActivity(intent);
+    }
+
+    private void alertUserEmpty() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Error")
+                .setMessage("Please input a valid username.")
+                .setPositiveButton("Ok", null)
+                .show();
+    }
+
+    private void alertPassEmpty() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Error")
+                .setMessage("Please input a valid password.")
+                .setPositiveButton("Ok", null)
+                .show();
+    }
+
+    private void alertIncorrect() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Error")
+                .setMessage("Incorrect username and/or password.")
+                .setPositiveButton("Ok", null)
+                .show();
     }
 }
