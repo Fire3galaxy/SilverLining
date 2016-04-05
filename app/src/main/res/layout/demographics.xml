@@ -14,14 +14,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Age"
-        android:id="@+id/Age" />
+        android:id="@+id/Age"
+        android:inputType="number" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Gender"
         android:id="@+id/demo2"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:paddingTop="10dp" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -33,7 +35,8 @@
         android:layout_height="wrap_content"
         android:text="Ethnicity"
         android:id="@+id/demo3"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:paddingTop="10dp" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -45,7 +48,8 @@
         android:layout_height="wrap_content"
         android:text="School Year"
         android:id="@+id/demo4"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:paddingTop="10dp" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -58,7 +62,8 @@
         android:layout_height="wrap_content"
         android:text="Are you first in family to go to college?"
         android:id="@+id/demo5"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:paddingTop="10dp" />
 
     <Spinner
         android:layout_width="match_parent"
