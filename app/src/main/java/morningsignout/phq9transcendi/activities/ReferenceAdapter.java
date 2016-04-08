@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.net.ContentHandler;
+
 import morningsignout.phq9transcendi.R;
 
 /**
@@ -15,8 +17,7 @@ import morningsignout.phq9transcendi.R;
  */
 public class ReferenceAdapter extends BaseAdapter {
     Context context;
-    private final String[] contents = { "Latest mental health news", "What is PHQ-9",
-            "Contact Us"};
+    private final String[] contents = context.getResources().getStringArray(R.array.reference_array);
     //private final Integer[] images = {"", "", ""};
 
 

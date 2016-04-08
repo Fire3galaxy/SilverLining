@@ -16,8 +16,7 @@ import morningsignout.phq9transcendi.R;
 public class ResourceAdapter extends BaseAdapter{
     Context context;
 
-    private final String[] contents = { "Learn more about depression", "Tips for good mental health",
-                                        "Find a local therapist"};
+    private final String[] contents = context.getResources().getStringArray(R.array.resource_array);
     //private final Integer[] images = {"", "", ""};
 
     public int getCount() {

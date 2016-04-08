@@ -5,14 +5,37 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_quiz">QuizActivity</string>
     <string name="resource_activity">ResourceActivity</string>
+
+    <!-- Resources and References -->
+    <string name="resource_sub">Latest mental health news</string>
+
+    <string-array name="resource_array">
+        <item>Learn more about depression</item>
+        <item>Tips for good mental health</item>
+        <item>Find a local therapist</item>
+    </string-array>
+
+    <string-array name="reference_array">
+        <item>Latest mental health news</item>
+        <item>What is PHQ-9</item>
+        <item>Contact Us</item>
+    </string-array>
+
+    <!-- Demographics -->
     <string name="demographics_intro">We want to know a little about you so we can  do a better job
     helping people. All this information will be kept anonymous and strictly confidential.</string>
+    <string name="_age">Age</string>
+    <string name="_gender">Gender</string>
+    <string name="_ethnicity">Ethnicity</string>
+    <string name="_school_year">School Year</string>
+    <string name="_family">Are you first in family to go to college?</string>
+    <string name="_resources">Resources</string>
+    <string name="_references">References</string>
 
     <string-array name="gender_array">
         <item>Male</item>
         <item>Female</item>
     </string-array>
-
 
     <string-array name="ethnicity_array">
         <item>African American/Black</item>
@@ -38,6 +61,7 @@
         <item>Yes</item>
         <item>No</item>
     </string-array>
+
     <string name="title_activity_index">IndexActivity</string>
     <string name="title_activity_new_user">NewUserActivity</string>
 

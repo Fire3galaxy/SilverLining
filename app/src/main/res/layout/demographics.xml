@@ -6,7 +6,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Age"
+        android:text="@string/_age"
         android:id="@+id/demo1"
         android:textSize="20dp" />
 
@@ -20,7 +20,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gender"
+        android:text="@string/_gender"
         android:id="@+id/demo2"
         android:textSize="20dp"
         android:paddingTop="10dp" />
@@ -33,7 +33,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ethnicity"
+        android:text="@string/_ethnicity"
         android:id="@+id/demo3"
         android:textSize="20dp"
         android:paddingTop="10dp" />
@@ -46,7 +46,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="School Year"
+        android:text="@string/_school_year"
         android:id="@+id/demo4"
         android:textSize="20dp"
         android:paddingTop="10dp" />
