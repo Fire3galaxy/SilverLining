@@ -103,6 +103,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void finishQuiz() {
+        String[] scoreEval = getResources().getStringArray(R.array.scoreEval);
         if(redFlag) {
             //alert
             question.setText("Your score is " + totalScore +", but one or more of your answers show that you may suffer from severe depression.");
@@ -111,17 +112,17 @@ public class QuizActivity extends AppCompatActivity {
             question.setText("You're all done! Your score is " + totalScore);
         }
         if(totalScore == 0) {
-            subtitle.setText("0: Zero depression. You show none of the signs of depression.");
+            subtitle.setText(scoreEval[0]);
         } else if(totalScore >= 1 && totalScore < 5) {
-            subtitle.setText("1-4: Minimal depression. You have very few signs of depression.");
+            subtitle.setText(scoreEval[1]);
         } else if(totalScore >= 5 && totalScore < 10) {
-            subtitle.setText("5-9: Mild depression. You might be suffering from mild depression.");
+            subtitle.setText(scoreEval[2]);
         } else if(totalScore >= 10 && totalScore < 15) {
-            subtitle.setText("10-14: Moderate depression. You might be suffering from moderate depression.");
+            subtitle.setText(scoreEval[3]);
         } else if(totalScore >= 15 && totalScore < 20) {
-            subtitle.setText("15-19: You might be suffering from moderately severe depression.");
+            subtitle.setText(scoreEval[4]);
         } else if(totalScore >= 20) {
-            subtitle.setText("20+: You might be suffering from severe depression.");
+            subtitle.setText(scoreEval[5]);
         }
         answer1.setVisibility(View.VISIBLE);
         answer2.setVisibility(View.VISIBLE);
@@ -319,7 +320,7 @@ public class QuizActivity extends AppCompatActivity {
                 break;
             //SECTION 3
             case 5:
-                question.setText("Sleep is an incredibly important part of both maintaining and can also shed light on how our brains are functioning. Have you had problems with falling asleep, staying asleep, or just end up sleeping a lot less in the last two months?");
+                    question.setText("Sleep is an incredibly important part of both maintaining and can also shed light on how our brains are functioning. Have you had problems with falling asleep, staying asleep, or just end up sleeping a lot less in the last two months?");
                 toggle = false;
                 break;
             case 6:
@@ -372,7 +373,7 @@ public class QuizActivity extends AppCompatActivity {
                 break;
             //RED FLAG QUESTIONS
             case 17:
-                question.setText("In the past year have you felt depressed or sad most days even if you felt okay sometimes?");
+                    question.setText("In the past year have you felt depressed or sad most days even if you felt okay sometimes?");
                 redFlagQ = true;
                 toggle = true;
                 answer1.setText("Yes");
