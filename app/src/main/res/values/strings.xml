@@ -5,14 +5,37 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_quiz">QuizActivity</string>
     <string name="resource_activity">ResourceActivity</string>
+
+    <!-- Resources and References -->
+    <string name="resource_sub">Latest mental health news</string>
+
+    <string-array name="resource_array">
+        <item>Learn more about depression</item>
+        <item>Tips for good mental health</item>
+        <item>Find a local therapist</item>
+    </string-array>
+
+    <string-array name="reference_array">
+        <item>Latest mental health news</item>
+        <item>What is PHQ-9</item>
+        <item>Contact Us</item>
+    </string-array>
+
+    <!-- Demographics -->
     <string name="demographics_intro">We want to know a little about you so we can  do a better job
     helping people. All this information will be kept anonymous and strictly confidential.</string>
+    <string name="_age">Age</string>
+    <string name="_gender">Gender</string>
+    <string name="_ethnicity">Ethnicity</string>
+    <string name="_school_year">School Year</string>
+    <string name="_family">Are you first in family to go to college?</string>
+    <string name="_resources">Resources</string>
+    <string name="_references">References</string>
 
     <string-array name="gender_array">
         <item>Male</item>
         <item>Female</item>
     </string-array>
-
 
     <string-array name="ethnicity_array">
         <item>African American/Black</item>
@@ -38,6 +61,39 @@
         <item>Yes</item>
         <item>No</item>
     </string-array>
+
+    <string-array name="questions">
+        <item>Do you find that you’ve lost a lot of interest in things used to be interested in? This can include hobbies, friends, work, food, or sex</item>
+        <item>Do you find that a lot of things are no longer enjoyable to you that you previously found enjoyable, or that you simply don’t go out and try to do enjoyable things anymore?</item>
+        <item>Do you ever feelings of being down or or depressed?</item>
+        <item>Do you ever have feelings of hopelessness?</item>
+        <item>Sleep is an incredibly important part of both maintaining and can also shed light on how our brains are functioning. Have you had problems with falling asleep, staying asleep, or just end up sleeping a lot less in the last two months?</item>
+        <item>How about on the other hand? Many depressed people often have the feeling of lethargy and sleeping much more than they normally do.</item>
+        <item>How has your energy level been? Do you feel tired? Drained? Feel like there is no energy to do anything?</item>
+        <item>Someone’s appetite can be a very good indicator of when someone’s getting depressed. Have you noticed yourself eating less than you normally do?</item>
+        <item>Okay, how about a lot more than you normally do? Have you been eating lots of food at once?</item>
+        <item>A lot of people with depression have negative thoughts that are hard to control that creep in. have you had thoughts that you’re a failure?</item>
+        <item>How’s your concentration been? Lots of people with depression have trouble concentrating on reading books or doing their homework. Have you had trouble with concentrating lately?</item>
+        <item>Have you noticed it becoming harder to finish something you started?</item>
+        <item>Some people with depression actually feel a sense of physical slowing. have you felt a sense of physical “slowness” about yourself, like moving slowly?</item>
+        <item>Other people have said that they’ve been told they move or talk more slowly when they’re depressed. Have you had anyone comment on this lately?</item>
+        <item>This one is really important - do you ever thinking about hurting yourself in some way, or ending your life?</item>
+        <item>How about the thought of thinking that you’d be better off dead, or that it would be great to just fall asleep and never wake up?</item>
+        <item>In the past year have you felt depressed or sad most days even if you felt okay sometimes?</item>
+        <item>If you are experiencing any of the problems that we asked you about, how much do these problems problems keep you from being 100% at your work, study, go about your daily business, get along with other people, and maintain your relationships?</item>
+        <item>Has there been a time in the past month when you have had serious thoughts about ending your life?</item>
+        <item>Have you ever in your whole life try to kill yourself or make a suicide attempt?</item>
+    </string-array>
+
+    <string-array name="scoreEval">
+        <item>0: Zero depression. You show none of the signs of depression.</item>
+        <item>1-4: Minimal depression. You have very few signs of depression.</item>
+        <item>5-9: Mild depression. You might be suffering from mild depression.</item>
+        <item>10-14: Moderate depression. You might be suffering from moderate depression.</item>
+        <item>15-19: You might be suffering from moderately severe depression.</item>
+        <item>20+: You might be suffering from severe depression.</item>
+    </string-array>
+
     <string name="title_activity_index">IndexActivity</string>
     <string name="title_activity_new_user">NewUserActivity</string>
 
