@@ -1,10 +1,10 @@
 package morningsignout.phq9transcendi.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -25,6 +25,7 @@ public class ResourceActivity extends AppCompatActivity {
     ResourceAdapter resourceCustomAdapter;
     ReferenceAdapter referenceCustomAdapter;
     LinearLayout linearLayout;
+    Context c;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,9 +63,9 @@ public class ResourceActivity extends AppCompatActivity {
 
         String page_type = getIntent().getStringExtra("page_type");
             System.out.print(page_type);
-            if(page_type.equals("Resources")){
-                title.setText("Resources");
-                subtitle.setText("Latest mental health news");
+            if(page_type.equals(getString(R.string._resources))){
+                title.setText(getString(R.string._resources));
+                subtitle.setText(getString(R.string.resource_sub));
                 // Create the Custom Adapter Object
                 resourceCustomAdapter = new ResourceAdapter(this);
 
@@ -72,7 +73,7 @@ public class ResourceActivity extends AppCompatActivity {
                 contents.setAdapter(resourceCustomAdapter);
             }
             else {
-                title.setText("References");
+                title.setText(getString(R.string._references));
                 subtitle.setText("");
                 // Create the Custom Adapter Object
                 referenceCustomAdapter = new ReferenceAdapter(this);
