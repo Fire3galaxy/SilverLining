@@ -16,7 +16,8 @@ import morningsignout.phq9transcendi.R;
 public class ResourceAdapter extends BaseAdapter{
     Context context;
 
-    private final String[] contents = context.getResources().getStringArray(R.array.resource_array);
+    String[] contents;
+
     //private final Integer[] images = {"", "", ""};
 
     public int getCount() {
@@ -28,7 +29,9 @@ public class ResourceAdapter extends BaseAdapter{
     }
 
     public ResourceAdapter(Context c) {
+
         this.context = c;
+        this.contents = c.getResources().getStringArray(R.array.resource_array);
     }
 
     public Object getItem(int position) {

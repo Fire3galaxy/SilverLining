@@ -16,11 +16,16 @@ import morningsignout.phq9transcendi.R;
  * Created by Stella on 3/2/2016.
  */
 public class ReferenceAdapter extends BaseAdapter {
+
     Context context;
-    private final String[] contents = context.getResources().getStringArray(R.array.reference_array);
+    String[] contents;
+
+
+    public ReferenceAdapter(Context c){
+        this.context = c;
+        this.contents = c.getResources().getStringArray(R.array.resource_array);
+    }
     //private final Integer[] images = {"", "", ""};
-
-
 
     public int getCount() {
         return contents.length;
@@ -28,10 +33,6 @@ public class ReferenceAdapter extends BaseAdapter {
 
     public long getItemId(int position) {
         return position;
-    }
-
-    public ReferenceAdapter(Context c) {
-        this.context = c;
     }
 
     public Object getItem(int position) {
@@ -42,6 +43,7 @@ public class ReferenceAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
         ReferencesViewHolder viewHolder;
+
 
         if (row == null) {
             viewHolder = new ReferencesViewHolder();
