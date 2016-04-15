@@ -6,25 +6,37 @@
     <TextView
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="@string/demographics_intro"
-        android:id="@+id/intro"
+        android:text="@string/demographics_intro1"
+        android:id="@+id/intro1"
         android:layout_marginTop="91dp"
         android:textSize="20dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/intro2"
+        android:text="@string/demographics_intro2"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Continue"
         android:id="@+id/button"
-        android:layout_marginBottom="108dp"
+        android:layout_marginBottom="110dp"
+        android:layout_marginRight="52dp"
+        android:layout_marginEnd="52dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/intro"
-        android:layout_alignEnd="@+id/intro"
-        android:layout_marginRight="56dp"
-        android:layout_marginEnd="56dp" />
+        android:layout_alignRight="@+id/intro1"
+        android:layout_alignEnd="@+id/intro1" />
 
     <Button
         android:layout_width="wrap_content"

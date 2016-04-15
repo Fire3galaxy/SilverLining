@@ -7,6 +7,10 @@
     <string name="resource_activity">ResourceActivity</string>
 
     <!-- Resources and References -->
+    <string name="resource1">We\'ve prepared some resources for people who want to learn more
+        about depression</string>
+    <string name="resource2">Find them here!</string>
+
     <string name="resource_sub">Latest mental health news</string>
 
     <string-array name="resource_array">
@@ -22,8 +26,9 @@
     </string-array>
 
     <!-- Demographics -->
-    <string name="demographics_intro">We want to know a little about you so we can  do a better job
-    helping people. All this information will be kept anonymous and strictly confidential.</string>
+    <string name="demographics_intro1">We want to know a little about you so we can  do a better job
+    helping people.</string>
+    <string name="demographics_intro2">All this information will be kept anonymous and strictly confidential.</string>
     <string name="_age">Age</string>
     <string name="_gender">Gender</string>
     <string name="_ethnicity">Ethnicity</string>
