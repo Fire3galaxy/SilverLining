@@ -12,6 +12,8 @@ import android.widget.Button;
 import morningsignout.phq9transcendi.R;
 
 public class IndexActivity extends AppCompatActivity {
+    Button resrcButton, refButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Set up layout and toolbar
@@ -30,7 +32,7 @@ public class IndexActivity extends AppCompatActivity {
             }
         });
 
-        Button resrcButton = (Button) findViewById(R.id.resrcButton);
+        resrcButton = (Button) findViewById(R.id.resrcButton);
         resrcButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(IndexActivity.this, ResourceActivity.class);
@@ -39,7 +41,7 @@ public class IndexActivity extends AppCompatActivity {
             }
         });
 
-        Button refButton = (Button) findViewById(R.id.refButton);
+        refButton = (Button) findViewById(R.id.refButton);
         refButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(IndexActivity.this, ResourceActivity.class);
@@ -74,5 +76,13 @@ public class IndexActivity extends AppCompatActivity {
     private void beginQuiz() {
         Intent demographics = new Intent(this, DemographicsIntroActivity.class);
         startActivity(demographics);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        // Make both buttons the same width for aesthetic
+        resrcButton.setWidth(refButton.getMeasuredWidth());
     }
 }

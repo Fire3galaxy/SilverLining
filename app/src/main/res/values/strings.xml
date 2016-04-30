@@ -7,11 +7,13 @@
     <string name="title_activity_quiz">QuizActivity</string>
     <string name="resource_activity">ResourceActivity</string>
 
-    <!--XML strings-->
+    <!--XML Layout strings-->
     <string name="main_menu_text">PHQ9 Transcendi Quiz Beta</string>
     <string name="start_quiz">How am I doing?</string>
     <string name="resources_button">Resources</string>
     <string name="references_button">References</string>
+    <string name="demo_continue">Continue</string>
+    <string name="demo_skip">Skip</string>
 
     <!-- Resources and References -->
     <string name="resource1">We\'ve prepared some resources for people who want to learn more
