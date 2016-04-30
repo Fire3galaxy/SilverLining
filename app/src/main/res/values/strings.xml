@@ -9,11 +9,13 @@
 
     <!--XML Layout strings-->
     <string name="main_menu_text">PHQ9 Transcendi Quiz Beta</string>
-    <string name="start_quiz">How am I doing?</string>
+    <string name="main_start_quiz">How am I doing?</string>
     <string name="resources_button">Resources</string>
     <string name="references_button">References</string>
     <string name="demo_continue">Continue</string>
     <string name="demo_skip">Skip</string>
+    <string name="demo_first_in_fam">Are you first in family to go to college?</string>
+    <string name="demo_start_quiz">Start Quiz</string>
 
     <!-- Resources and References -->
     <string name="resource1">We\'ve prepared some resources for people who want to learn more
@@ -42,7 +44,7 @@
     <string name="_gender">Gender</string>
     <string name="_ethnicity">Ethnicity</string>
     <string name="_school_year">School Year</string>
-    <string name="_family">Are you first in family to go to college?</string>
+    <string name="_family">Are you the first in your family to go to college?</string>
     <string name="_resources">Resources</string>
     <string name="_references">References</string>
 
@@ -67,8 +69,8 @@
 
     <string-array name="school_year">
         <item>1–5</item>
-        <item>graduate student</item>
-        <item>not currently enrolled</item>
+        <item>Graduate student</item>
+        <item>Not currently enrolled</item>
     </string-array>
 
     <string-array name="yes_no_array">
