@@ -85,22 +85,21 @@ public class DemographicsActivity extends AppCompatActivity implements
         });
     }
 
+    // FIXME: Maybe one day include allowed range of age (not 1000, for example)
+    // Get contents of age editText and turn into number (parsing fails if the field is empty or not a number)
     boolean setAgeAnswer() {
-        // FIXME: Maybe one day include allowed range of age (not 1000, for example)
-        // Get contents of age editText and turn into number (parsing fails if field is empty)
         try {
             age_answer = Integer.parseInt(ageField.getText().toString());
         } catch (NumberFormatException nfe) {
-            // If failed, user did not input age
             return false;
         }
 
         return true;
     }
 
-    // FIXME: Network request to firebase for Demographics here
-    // FIXME: What if default selector value is the correct one? Then we should use
-    // FIXME: spinner.getSelectedItem().toString() instead of this complicated null check system.
+    // FIXME: 1. Network request to firebase for Demographics here
+    // FIXME: 2. What if default selector value is the correct one, so user didn't touch? Then we should use
+    // FIXME:    spinner.getSelectedItem().toString() instead of this complicated null check system.
     void submitDemographics() {
         Log.d(demo_log_name, String.valueOf(age_answer));
         Log.d(demo_log_name, gender_answer);
@@ -109,13 +108,15 @@ public class DemographicsActivity extends AppCompatActivity implements
         Log.d(demo_log_name, familyFirst_answer);
     }
 
-    // Checks that every field is answered
+    // Checks that every field is answered (for spinner, at least touched)
     boolean demographicsIsCompleted() {
         // Default age_answer is 0, so user could not have answered
         boolean didNotComplete = (age_answer == 0);
 
         // Check spinner answers to see if user answered all questions
         didNotComplete = didNotComplete || checkForNullSpinnerAnswers();
+
+        if (!didNotComplete) Log.d(demo_log_name, "Incomplete");
 
         return didNotComplete;
     }
@@ -130,7 +131,6 @@ public class DemographicsActivity extends AppCompatActivity implements
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.d(demo_log_name, "HERE");
         Spinner spinner = (Spinner) parent;
         if (gender.equals(spinner))
             gender_answer = String.valueOf(spinner.getItemAtPosition(position));
