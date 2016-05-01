@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import morningsignout.phq9transcendi.R;
@@ -46,7 +45,7 @@ public class ResourceAdapter extends BaseAdapter{
         if (row == null) {
             viewHolder = new ResourcesViewHolder();
 
-            LayoutInflater inflater = ((ResourceActivity) context).getLayoutInflater();
+            LayoutInflater inflater = ((ReferenceActivity) context).getLayoutInflater();
             row = inflater.inflate(R.layout.list_item_view, parent, false);
 
             viewHolder.textViewTitle = (TextView) row.findViewById(R.id.textView_rr);

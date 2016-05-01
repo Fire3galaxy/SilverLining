@@ -49,13 +49,13 @@
                 android:padding="@dimen/text_button_padding"
                 android:text="@string/answer_not_at_all" />
 
-            <!--<Button-->
-                <!--android:id="@+id/answer2"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:padding="@dimen/text_button_padding"-->
-                <!--android:text="@string/answer_few_days" />-->
+            <Button
+                android:id="@+id/answer2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="@dimen/text_button_padding"
+                android:text="@string/answer_few_days" />
         </TableRow>
 
         <TableRow

@@ -8,8 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.net.ContentHandler;
-
 import morningsignout.phq9transcendi.R;
 
 /**
@@ -48,7 +46,7 @@ public class ReferenceAdapter extends BaseAdapter {
         if (row == null) {
             viewHolder = new ReferencesViewHolder();
 
-            LayoutInflater inflater = ((ResourceActivity) context).getLayoutInflater();
+            LayoutInflater inflater = ((ReferenceActivity) context).getLayoutInflater();
             row = inflater.inflate(R.layout.list_item_view, parent, false);
 
             viewHolder.textViewTitle = (TextView) row.findViewById(R.id.textView_rr);

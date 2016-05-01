@@ -2,15 +2,11 @@ package morningsignout.phq9transcendi.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import morningsignout.phq9transcendi.R;
 
@@ -154,7 +150,7 @@ public class QuizActivity extends AppCompatActivity {
         answer3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a = new Intent(QuizActivity.this, ResourceActivity.class);
+                Intent a = new Intent(QuizActivity.this, ReferenceActivity.class);
                 a.putExtra("page_type", "Resources");
                 startActivity(a);
             }
@@ -163,7 +159,7 @@ public class QuizActivity extends AppCompatActivity {
         answer4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent b = new Intent(QuizActivity.this, ResourceActivity.class);
+                Intent b = new Intent(QuizActivity.this, ReferenceActivity.class);
                 b.putExtra("page_type", "References");
                 startActivity(b);
             }

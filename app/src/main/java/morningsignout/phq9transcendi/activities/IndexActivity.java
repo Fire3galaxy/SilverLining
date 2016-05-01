@@ -36,7 +36,6 @@ public class IndexActivity extends AppCompatActivity {
         resrcButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(IndexActivity.this, ResourceActivity.class);
-                intent.putExtra("page_type", "Resources");
                 startActivity(intent);
             }
         });
@@ -44,8 +43,7 @@ public class IndexActivity extends AppCompatActivity {
         refButton = (Button) findViewById(R.id.refButton);
         refButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(IndexActivity.this, ResourceActivity.class);
-                intent.putExtra("page_type", "References");
+                Intent intent = new Intent(IndexActivity.this, ReferenceActivity.class);
                 startActivity(intent);
             }
         });
