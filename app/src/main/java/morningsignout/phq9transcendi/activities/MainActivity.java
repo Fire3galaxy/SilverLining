@@ -10,6 +10,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+<<<<<<< HEAD
+=======
+import com.firebase.client.Firebase;
+
+import org.w3c.dom.Text;
+
+>>>>>>> stella-UI
 import morningsignout.phq9transcendi.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_main);
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
