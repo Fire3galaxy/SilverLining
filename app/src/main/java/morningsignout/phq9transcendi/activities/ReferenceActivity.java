@@ -22,7 +22,6 @@ public class ReferenceActivity extends AppCompatActivity {
     TextView subtitle;
     ListView contents;
     Button homeButton;
-    ResourceAdapter resourceCustomAdapter;
     ReferenceAdapter referenceCustomAdapter;
     LinearLayout linearLayout;
     Context c;
