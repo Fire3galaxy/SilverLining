@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/seekbar_background">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/light_blue"/>
+            <corners android:radius="1dp"/>
+            <size android:height="50dp"/>
+        </shape>
+    </item>
+    <item android:id="@+id/seekbar_progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <solid android:color="@color/blue"/>
+                <corners android:radius="1dp"/>
+                <size android:height="50dp"/>
+            </shape>
+        </clip>
+    </item>
+</layer-list>

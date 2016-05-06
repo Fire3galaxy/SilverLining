@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import morningsignout.phq9transcendi.R;
@@ -36,7 +38,14 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //0-5 = 0, 6-14 = 1, 15-24 = 2, 25-30 = 3
+        // 1, 2, 4, 6; 0, 1, 3, 5
+        // 0-1 = 0, 1 w/ mod to 2 w/ mod = 1, 3 to 4 w/ mod = 2, 5 to 6 = 3
+        // 0-50 50-150 150-250 250-300
+        SeekBar answerBar= (SeekBar) findViewById(R.id.seekBar);
 
         //Grab and set content; inital setup
         question = (TextView) findViewById(R.id.questionView);
@@ -48,7 +57,7 @@ public class QuizActivity extends AppCompatActivity {
         questions = getResources().getStringArray(R.array.questions);
         reset();
 
-        //Everything is setup, start quiz
+        //Everything is set up, start quiz
         startQuiz();
 
         //Fab stuff that's automatically included with a fresh activity? commented out

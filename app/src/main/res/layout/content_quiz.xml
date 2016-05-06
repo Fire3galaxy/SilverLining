@@ -92,4 +92,17 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <morningsignout.phq9transcendi.activities.AnswerSeekBar
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/seekBar"
+        android:max="300"
+        android:progress="0"
+        android:layout_above="@+id/tableLayout1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="58dp"
+        android:progressDrawable="@drawable/custom_seekbar"
+        android:thumb="@android:color/transparent"/>
+
 </RelativeLayout>
