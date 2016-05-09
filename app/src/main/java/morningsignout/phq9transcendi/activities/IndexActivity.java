@@ -8,42 +8,34 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import morningsignout.phq9transcendi.R;
 
 public class IndexActivity extends AppCompatActivity {
+    Button resrcButton, refButton;
 
-    private Button startButton, resrcButton, refButton;
-    private TextView title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        // Set up layout and toolbar
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        title = (TextView) findViewById(R.id.title);
-        Intent intent = getIntent();
-        title.setText("Welcome, " + intent.getStringExtra("username") + "!");
-
-        startButton = (Button) findViewById(R.id.startButton);
+        // 3 Buttons: How am I doing, Resources, References
+        Button startButton = (Button) findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startIntent();
+                beginQuiz();
             }
         });
 
-        String page_type = "";
         resrcButton = (Button) findViewById(R.id.resrcButton);
         resrcButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(IndexActivity.this, ResourceActivity.class);
-                intent.putExtra("page_type", "Resources");
                 startActivity(intent);
             }
         });
@@ -51,12 +43,10 @@ public class IndexActivity extends AppCompatActivity {
         refButton = (Button) findViewById(R.id.refButton);
         refButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(IndexActivity.this, ResourceActivity.class);
-                intent.putExtra("page_type", "References");
+                Intent intent = new Intent(IndexActivity.this, ReferenceActivity.class);
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -73,17 +63,24 @@ public class IndexActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void startIntent() {
-        Intent firstIntent = new Intent(this, DemographicsIntroActivity.class);
-        startActivity(firstIntent);
+    private void beginQuiz() {
+        Intent demographics = new Intent(this, DemographicsIntroActivity.class);
+        startActivity(demographics);
+    }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        // Make both buttons the same width for aesthetic
+        resrcButton.setWidth(refButton.getMeasuredWidth());
     }
 }

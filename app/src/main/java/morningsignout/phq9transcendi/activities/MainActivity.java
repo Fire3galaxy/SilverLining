@@ -10,8 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import org.w3c.dom.Text;
+import com.firebase.client.Firebase;
 
+import org.w3c.dom.Text;
 import morningsignout.phq9transcendi.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_main);
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                     if(password.getText().length() > 0) {
                         //Placeholder for SQL database checking
                         if(true) {
-                            startIntent();
+                            goToMainMenu();
                         } else {
                             alertIncorrect();
                         }
@@ -82,15 +84,15 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void startIntent() {
+    private void goToMainMenu() {
         Intent intent = new Intent(this, IndexActivity.class);
         intent.putExtra("username", username.getText().toString());
         startActivity(intent);

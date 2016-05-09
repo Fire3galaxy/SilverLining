@@ -12,39 +12,51 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_marginTop="0dp"
-        android:text="PHQ9 Transcendi Quiz Beta"
+        android:layout_marginTop="10dp"
+        android:text="@string/main_menu_text"
         android:id="@+id/title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="150dp"
-        android:layout_height="75dp"
-        android:text="How am I doing?"
-        android:id="@+id/startButton"
-        android:layout_alignParentBottom="true"
+    <Space
+        android:layout_width="0px"
+        android:layout_height="0px"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="208dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Resources"
-        android:id="@+id/resrcButton"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="0dp"
         android:layout_alignTop="@+id/startButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="40dp" />
+        android:id="@+id/index_space"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:text="@string/main_start_quiz"
+        android:id="@+id/startButton"
+        android:layout_marginBottom="208dp"
+        android:padding="@dimen/text_button_padding"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="References"
+        android:text="@string/resources_button"
+        android:id="@+id/resrcButton"
+        android:padding="@dimen/text_button_padding"
+        android:layout_alignRight="@id/index_space"
+        android:layout_alignEnd="@id/index_space"
+        android:layout_alignTop="@id/startButton"
+        android:layout_marginTop="110dp"
+        android:layout_marginRight="30dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/references_button"
         android:id="@+id/refButton"
-        android:layout_alignTop="@+id/resrcButton"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="40dp" />
+        android:padding="@dimen/text_button_padding"
+        android:layout_alignLeft="@id/index_space"
+        android:layout_alignStart="@id/index_space"
+        android:layout_alignTop="@id/startButton"
+        android:layout_marginTop="110dp"
+        android:layout_marginLeft="30dp" />
 </RelativeLayout>

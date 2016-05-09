@@ -1,81 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent"
-    android:padding="20dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/_age"
-        android:id="@+id/demo1"
-        android:textSize="20dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/_age"
-        android:id="@+id/Age"
-        android:inputType="number" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/_gender"
-        android:id="@+id/demo2"
-        android:textSize="20dp"
-        android:paddingTop="10dp" />
-
-    <Spinner
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/Gender" />
+        android:padding="20dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/_ethnicity"
-        android:id="@+id/demo3"
-        android:textSize="20dp"
-        android:paddingTop="10dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_age"
+            android:textSize="20sp"
+            android:id="@+id/demo_age_field" />
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/Ethnicity" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/_age"
+            android:id="@+id/demo_age_answer"
+            android:inputType="number"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/_school_year"
-        android:id="@+id/demo4"
-        android:textSize="20dp"
-        android:paddingTop="10dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_gender"
+            android:textSize="20sp"
+            android:id="@+id/demo_gender_field"
+            android:paddingTop="10dp" />
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/SchoolYear"
-        android:layout_gravity="center_horizontal" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/demo_gender_answer" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Are you first in family to go to college?"
-        android:id="@+id/demo5"
-        android:textSize="20dp"
-        android:paddingTop="10dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_ethnicity"
+            android:textSize="20sp"
+            android:id="@+id/demo_ethnic_field"
+            android:paddingTop="10dp" />
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/FamilyFirst" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/demo_ethnic_answer" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start Quiz"
-        android:id="@+id/start"
-        android:layout_gravity="center_horizontal"
-        android:singleLine="false" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_school_year"
+            android:textSize="20sp"
+            android:id="@+id/demo_schl_yr_field"
+            android:paddingTop="10dp" />
 
-</LinearLayout>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/demo_sch_yr_answer" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/demo_first_in_fam"
+            android:textSize="20sp"
+            android:id="@+id/demo_first_field"
+            android:paddingTop="10dp" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/demo_first_answer"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/demo_start_quiz"
+            android:singleLine="false"
+            android:id="@+id/start"
+            android:layout_gravity="center_horizontal"
+            android:padding="@dimen/text_button_padding"
+            android:layout_marginTop="20dp"/>
+    </LinearLayout>
+</ScrollView>
