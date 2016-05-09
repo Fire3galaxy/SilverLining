@@ -25,6 +25,8 @@ public class QuizActivity extends AppCompatActivity {
     private String[] questions;
 
     private int totalScore; //Used for answering questions
+    public int[] scoreTracker; //Used to keep track of highest score for each section
+    private int sectionNum; //Used to keep track of what section we're on
     private int scoreA;
     private int scoreB;
     private boolean redFlag; //If a red flag question gets answered
@@ -50,6 +52,8 @@ public class QuizActivity extends AppCompatActivity {
         answer3 = (Button) findViewById(R.id.answer3);
         answer4 = (Button) findViewById(R.id.answer4);
         questions = getResources().getStringArray(R.array.questions);
+        sectionNum = 1;
+        scoreTracker = new int[13]; //9 sections
         reset();
 
         //Everything is setup, start quiz
@@ -68,8 +72,10 @@ public class QuizActivity extends AppCompatActivity {
 
     private void reset() {
         totalScore = 0;
+        sectionNum = 1;
         scoreA = 0;
         scoreB = 0;
+        scoreTracker = new int[13];
         redFlag = false;
         redFlagQ = false;
         quizDone = false;
@@ -296,8 +302,12 @@ public class QuizActivity extends AppCompatActivity {
     private void calculateScore() {
         if(scoreA >= scoreB) {
             totalScore += scoreA;
+            scoreTracker[sectionNum - 1] = scoreA;
+            sectionNum++;
         } else {
             totalScore += scoreB;
+            scoreTracker[sectionNum - 1] = scoreB;
+            sectionNum++;
         }
     }
 
