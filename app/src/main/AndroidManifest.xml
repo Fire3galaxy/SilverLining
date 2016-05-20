@@ -61,7 +61,7 @@
         </activity>
         <activity android:name=".activities.QuizIntroActivity"
             android:label="@string/quizintro_activity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

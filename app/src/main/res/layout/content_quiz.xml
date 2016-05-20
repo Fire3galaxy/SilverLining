@@ -33,7 +33,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="50dp"
+        android:visibility="gone">
 
         <TableRow
             android:id="@+id/tableRow1"
@@ -92,17 +93,85 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <Space
+        android:id="@+id/space_quiz"
+        android:layout_width="0px"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
     <morningsignout.phq9transcendi.activities.AnswerSeekBar
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:id="@+id/seekBar"
+        android:layout_marginTop="30dp"
+        android:layout_alignTop="@+id/space_quiz"
+        android:layout_centerHorizontal="true"
         android:max="300"
         android:progress="0"
-        android:layout_above="@+id/tableLayout1"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="58dp"
         android:progressDrawable="@drawable/custom_seekbar"
         android:thumb="@android:color/transparent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seekBar"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:layout_marginEnd="3dp"
+            android:text="@string/answer_not_at_all"
+            android:textSize="15sp"
+            android:gravity="center_horizontal"
+            android:id="@+id/textView"/>
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/answer_few_days"
+            android:textSize="15sp"
+            android:gravity="center_horizontal"
+            android:id="@+id/textView2"/>
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/answer_many_days"
+            android:textSize="15sp"
+            android:gravity="center_horizontal"
+            android:id="@+id/textView3"/>
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:text="longsentencesarefun>:)"
+            android:textSize="15sp"
+            android:gravity="center_horizontal"
+            android:id="@+id/textView4"/>
+    </LinearLayout>
+    <!--<TableLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/seekBar"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:stretchColumns="true"-->
+        <!--android:shrinkColumns="true">-->
+        <!--<TableRow android:layout_width="match_parent">-->
+            <!-- -->
+        <!--</TableRow>-->
+    <!--</TableLayout>-->
 
 </RelativeLayout>
