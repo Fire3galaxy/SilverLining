@@ -59,6 +59,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="morningsignout.phq9transcendi.activities.MainActivity" />
         </activity>
+        <activity android:name=".activities.QuizIntroActivity"
+            android:label="@string/quizintro_activity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

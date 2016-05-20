@@ -4,14 +4,16 @@
     <!--Activity names/test code-->
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_quiz">QuizActivity</string>
-    <string name="resource_activity">ResourceActivity</string>
+    <string name="title_activity_quiz">Quiz Activity</string>
+    <string name="resource_activity">Resource Activity</string>
+    <string name="quizintro_activity">Quiz Intro Activity</string>
 
     <!--XML Layout strings-->
     <string name="main_menu_text">PHQ9 Transcendi Quiz Beta</string>
     <string name="main_start_quiz">How am I doing?</string>
     <string name="resources_button">Resources</string>
     <string name="references_button">References</string>
+    <string name="quiz_start">Get Started!</string>
     <string name="demo_continue">Continue</string>
     <string name="demo_skip">Skip</string>
     <string name="demo_first_in_fam">Are you first in family to go to college?</string>
@@ -39,6 +41,11 @@
         <item>What is PHQ-9</item>
         <item>Contact Us</item>
     </string-array>
+
+    <!--Quiz introduction-->
+    <string name="depression_note">Depression affects hundreds of millions of people worldwide.\n\n
+        We do a poor job of recognizing the problem, but we’re trying to do better than before.\n\n
+        Before we get started, note that all of your results are confidential and will not be shared.</string>
 
     <!-- Demographics -->
     <string name="demographics_intro1">We want to know a little about you so we can  do a better job
@@ -82,6 +89,7 @@
         <item>No</item>
     </string-array>
 
+    <!--Quiz questions-->
     <string-array name="questions">
         <item>Do you find that you’ve lost a lot of interest in things used to be interested in? This can include hobbies, friends, work, food, or sex.</item>
         <item>Do you find that a lot of things are no longer enjoyable to you that you previously found enjoyable, or that you simply don’t go out and try to do enjoyable things anymore?</item>
