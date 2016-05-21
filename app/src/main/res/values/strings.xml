@@ -18,10 +18,6 @@
     <string name="demo_skip">Skip</string>
     <string name="demo_first_in_fam">Are you first in family to go to college?</string>
     <string name="demo_start_quiz">Start Quiz</string>
-    <string name="answer_not_at_all">Not at all</string>
-    <string name="answer_few_days">Few days a week</string>
-    <string name="answer_many_days">More than half the week</string>
-    <string name="answer_many_many_days">Everyday</string>
 
     <!-- Resources and References -->
     <string name="resource1">We\'ve prepared some resources for people who want to learn more
@@ -58,6 +54,16 @@
     <string name="_family">Are you the first in your family to go to college?</string>
     <string name="_resources">Resources</string>
     <string name="_references">References</string>
+    <string name="answer_not_at_all">Not at all</string>
+    <string name="answer_few_days">Few days a week</string>
+    <string name="answer_many_days">More than half the week</string>
+    <string name="answer_many_many_days">Everyday</string>
+    <string name="answer_yes">Yes</string>
+    <string name="answer_no">No</string>
+    <string name="answer_not_affected">Doesn\'t affect me</string>
+    <string name="answer_somewhat">Somewhat</string>
+    <string name="answer_a_lot">A lot</string>
+    <string name="answer_crippling">Crippling</string>
 
     <string-array name="gender_array">
         <item>Male</item>
@@ -111,6 +117,20 @@
         <item>If you are experiencing any of the problems that we asked you about, how much do these problems keep you from being 100% at your work or studies, going about your daily business, getting along with other people, and maintaining your relationships?</item>
         <item>Has there been a time in the past month when you have had serious thoughts about ending your life?</item>
         <item>Have you ever in your whole life tried to kill yourself or make a suicide attempt?</item>
+    </string-array>
+
+    <string-array name="answers_normal">
+        <item>@string/answer_not_at_all</item>
+        <item>@string/answer_few_days</item>
+        <item>@string/answer_many_days</item>
+        <item>@string/answer_many_many_days</item>
+    </string-array>
+
+    <string-array name="answers_flag">
+        <item>@string/answer_not_affected</item>
+        <item>@string/answer_somewhat</item>
+        <item>@string/answer_a_lot</item>
+        <item>@string/answer_crippling</item>
     </string-array>
 
     <string-array name="scoreEval">

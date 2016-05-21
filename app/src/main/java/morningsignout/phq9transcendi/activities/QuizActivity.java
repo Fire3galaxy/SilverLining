@@ -1,35 +1,42 @@
 package morningsignout.phq9transcendi.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.SeekBar;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import morningsignout.phq9transcendi.R;
 
-public class QuizActivity extends AppCompatActivity {
+public class QuizActivity extends AppCompatActivity implements ImageButton.OnClickListener {
+
+    private static final String LOG_NAME = "QuizActivity";
 
     private TextView question, subtitle; //The text of the question
-    private Button answer1; //Not at all || yes
-    private Button answer2; //Few days a week || no
-    private Button answer3; //More than half the week
-    private Button answer4; //Everyday
+    private AnswerSeekBar answerBar;
+    private Button answerNo, answerYes;
+    private ImageButton next, prev;
+    private LinearLayout containerButtons, containerBarText;
 
     private String[] questions;
+    private String[] answersNormal;
+    private String[] answersRedFlag;
 
     private int totalScore; //Used for answering questions
     private int scoreA;
     private int scoreB;
     private boolean redFlag; //If a red flag question gets answered
-    private boolean redFlagQ; //If a question is a red flag question
+    private boolean redFlagQuestion; //If a question is a red flag question
     private boolean quizDone; //If all questions are answered
     private int questionNumber; //which question the user is on
     private boolean toggle; //For what section a question belongs in
+
+    private enum AppState {questionA, questionB, questionFlag};
+    AppState appState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,34 +48,31 @@ public class QuizActivity extends AppCompatActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //0-5 = 0, 6-14 = 1, 15-24 = 2, 25-30 = 3
-        // 1, 2, 4, 6; 0, 1, 3, 5
-        // 0-1 = 0, 1 w/ mod to 2 w/ mod = 1, 3 to 4 w/ mod = 2, 5 to 6 = 3
-        // 0-50 50-150 150-250 250-300
-        SeekBar answerBar= (SeekBar) findViewById(R.id.seekBar);
-
         //Grab and set content; inital setup
         question = (TextView) findViewById(R.id.questionView);
         subtitle = (TextView) findViewById(R.id.additionalText);
-        answer1 = (Button) findViewById(R.id.answer1);
-        answer2 = (Button) findViewById(R.id.answer2);
-        answer3 = (Button) findViewById(R.id.answer3);
-        answer4 = (Button) findViewById(R.id.answer4);
+        answerBar = (AnswerSeekBar) findViewById(R.id.seekBar_quiz_answer);
+        answerNo = (Button) findViewById(R.id.button_answer_no);
+        answerYes = (Button) findViewById(R.id.button_answer_yes);
+        next = (ImageButton) findViewById(R.id.imageButton_nextq);
+        prev = (ImageButton) findViewById(R.id.imageButton_prevq);
+        containerButtons = (LinearLayout) findViewById(R.id.container_buttons);
+        containerBarText = (LinearLayout) findViewById(R.id.container_bar_text);
+
         questions = getResources().getStringArray(R.array.questions);
+        answersNormal = getResources().getStringArray(R.array.answers_normal);
+        answersRedFlag = getResources().getStringArray(R.array.answers_flag);
+
         reset();
+
+        // Set all buttons to onClickListener function here
+        next.setOnClickListener(this);
+        prev.setOnClickListener(this);
+        answerNo.setOnClickListener(this);
+        answerYes.setOnClickListener(this);
 
         //Everything is set up, start quiz
         startQuiz();
-
-        //Fab stuff that's automatically included with a fresh activity? commented out
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
     }
 
     private void reset() {
@@ -76,22 +80,26 @@ public class QuizActivity extends AppCompatActivity {
         scoreA = 0;
         scoreB = 0;
         redFlag = false;
-        redFlagQ = false;
+        redFlagQuestion = false;
         quizDone = false;
         questionNumber = 1;
         toggle = true;
+        appState = AppState.questionA;
+        answerBar.setProgress(0);
+        containerButtons.setVisibility(View.GONE);
+        containerBarText.setVisibility(View.VISIBLE);
         subtitle.setText("");
-        answer1.setText("Not at all");
-        answer2.setText("Few days a week");
-        answer3.setText("More than half the week");
-        answer4.setText("Everyday");
+
+        for (int i = 0; i < containerBarText.getChildCount(); i++)
+            ((TextView) containerBarText.getChildAt(i)).setText(answersNormal[i]);
     }
 
     private void startQuiz() {
         if(!quizDone) {
             updateQuestions();
+            Log.d(LOG_NAME, String.valueOf(toggle));
             if(toggle) {
-                if(!redFlagQ) {
+                if(!redFlagQuestion) {
                     toggleQuestionsA();
                 } else {
                     toggleFlagQuestions();
@@ -131,171 +139,175 @@ public class QuizActivity extends AppCompatActivity {
         } else if(totalScore >= 20) {
             subtitle.setText(scoreEval[5]);
         }
-        answer1.setVisibility(View.VISIBLE);
-        answer2.setVisibility(View.VISIBLE);
-        answer3.setVisibility(View.VISIBLE);
-        answer4.setVisibility(View.VISIBLE);
+//        answer1.setVisibility(View.VISIBLE);
+//        answer2.setVisibility(View.VISIBLE);
+//        answer3.setVisibility(View.VISIBLE);
+//        answer4.setVisibility(View.VISIBLE);
+//
+//        answer1.setText("Take quiz again");
+//        answer2.setText("Go back");
+//        answer3.setText("References");
+//        answer4.setText("Resources");
 
-        answer1.setText("Take quiz again");
-        answer2.setText("Go back");
-        answer3.setText("References");
-        answer4.setText("Resources");
-
-        answer1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                reset();
-                startQuiz();
-            }
-        });
-
-        answer2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent c = new Intent(QuizActivity.this, IndexActivity.class);
-                startActivity(c);
-            }
-        });
-        answer3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent a = new Intent(QuizActivity.this, ReferenceActivity.class);
-                a.putExtra("page_type", "Resources");
-                startActivity(a);
-            }
-        });
-
-        answer4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent b = new Intent(QuizActivity.this, ReferenceActivity.class);
-                b.putExtra("page_type", "References");
-                startActivity(b);
-            }
-        });
+//        answer1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                reset();
+//                startQuiz();
+//            }
+//        });
+//
+//        answer2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent c = new Intent(QuizActivity.this, IndexActivity.class);
+//                startActivity(c);
+//            }
+//        });
+//        answer3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent a = new Intent(QuizActivity.this, ReferenceActivity.class);
+//                a.putExtra("page_type", "Resources");
+//                startActivity(a);
+//            }
+//        });
+//
+//        answer4.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent b = new Intent(QuizActivity.this, ReferenceActivity.class);
+//                b.putExtra("page_type", "References");
+//                startActivity(b);
+//            }
+//        });
     }
 
     private void toggleQuestionsA() {
+        appState = AppState.questionA;
 
-        answer1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreA = 0;
-                startQuiz();
-            }
-        });
-
-        answer2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreA = 1;
-                startQuiz();
-            }
-        });
-
-        answer3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreA = 2;
-                startQuiz();
-            }
-        });
-
-        answer4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreA = 3;
-                startQuiz();
-            }
-        });
+//        answer1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                scoreA = 0;
+//                startQuiz();
+//            }
+//        });
+//
+//        answer2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                scoreA = 1;
+//                startQuiz();
+//            }
+//        });
+//
+//        answer3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                scoreA = 2;
+//                startQuiz();
+//            }
+//        });
+//
+//        answer4.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                scoreA = 3;
+//                startQuiz();
+//            }
+//        });
     }
 
     private void toggleQuestionsB() {
+        appState = AppState.questionB;
 
-        answer1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreB = 0;
-                calculateScore();
-                startQuiz();
-            }
-        });
-
-        answer2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreB = 1;
-                calculateScore();
-                startQuiz();
-            }
-        });
-
-        answer3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreB = 2;
-                calculateScore();
-                startQuiz();
-            }
-        });
-
-        answer4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreB = 3;
-                calculateScore();
-                startQuiz();
-            }
-        });
+//        answer1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                scoreB = 0;
+//                calculateScore();
+//                startQuiz();
+//            }
+//        });
+//
+//        answer2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                scoreB = 1;
+//                calculateScore();
+//                startQuiz();
+//            }
+//        });
+//
+//        answer3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                scoreB = 2;
+//                calculateScore();
+//                startQuiz();
+//            }
+//        });
+//
+//        answer4.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                scoreB = 3;
+//                calculateScore();
+//                startQuiz();
+//            }
+//        });
     }
 
     private void toggleFlagQuestions() {
-        if(questionNumber == 18) {
-            answer1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startQuiz();
-                }
-            });
+        appState = AppState.questionFlag;
 
-            answer2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startQuiz();
-                }
-            });
-
-            answer3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startQuiz();
-                }
-            });
-
-            answer4.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    redFlag = true;
-                    startQuiz();
-                }
-            });
-        } else {
-
-            answer1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    redFlag = true;
-                    startQuiz();
-                }
-            });
-
-            answer2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startQuiz();
-                }
-            });
-        }
+//        if(questionNumber == 18) {
+//            answer1.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    startQuiz();
+//                }
+//            });
+//
+//            answer2.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    startQuiz();
+//                }
+//            });
+//
+//            answer3.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    startQuiz();
+//                }
+//            });
+//
+//            answer4.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    redFlag = true;
+//                    startQuiz();
+//                }
+//            });
+//        } else {
+//
+//            answer1.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    redFlag = true;
+//                    startQuiz();
+//                }
+//            });
+//
+//            answer2.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    startQuiz();
+//                }
+//            });
+//        }
     }
 
     private void calculateScore() {
@@ -304,6 +316,7 @@ public class QuizActivity extends AppCompatActivity {
         } else {
             totalScore += scoreB;
         }
+        Log.d(LOG_NAME, String.valueOf(totalScore));
     }
 
     private void updateQuestions() {
@@ -311,89 +324,91 @@ public class QuizActivity extends AppCompatActivity {
         switch(questionNumber) {
             //SECTION 1
             case 1:
-                toggle = false;
+                toggle = true;
                 break;
             case 2:
-                toggle = true;
+                toggle = false;
                 break;
             //SECTION 2
             case 3:
-                toggle = false;
+                toggle = true;
                 break;
             case 4:
+                toggle = false;
                 break;
             //SECTION 3
             case 5:
-                toggle = false;
+                toggle = true;
                 break;
             case 6:
+                toggle = false;
                 break;
-            //SECTION 4
+            //SECTION 4 - No toggle A answer b/c 1 question
             case 7:
-                toggle = true;
+                scoreA = 0;
+                toggle = false;
                 break;
             //SECTION 5
             case 8:
-                toggle = false;
+                toggle = true;
                 break;
             case 9:
+                toggle = false;
                 break;
-            //SECTION 6
+            //SECTION 6 - No toggle A answer b/c 1 question
             case 10:
-                toggle = true;
+                scoreA = 0;
+                toggle = false;
                 break;
             //SECTION 7
             case 11:
-                toggle = false;
+                toggle = true;
                 break;
             case 12:
-                toggle = true;
+                toggle = false;
                 break;
             //SECTION 8
             case 13:
-                toggle = false;
+                toggle = true;
                 break;
             case 14:
-                toggle = true;
+                toggle = false;
                 break;
             //SECTION 9
             case 15:
-                toggle = false;
+                toggle = true;
                 break;
             case 16:
-                toggle = true;
+                toggle = false;
                 break;
             //RED FLAG QUESTIONS
             case 17:
-                redFlagQ = true;
+                redFlagQuestion = true;
                 toggle = true;
-                answer1.setText("Yes");
-                answer2.setText("No");
-                answer3.setVisibility(View.INVISIBLE);
-                answer4.setVisibility(View.INVISIBLE);
+                answerBar.setVisibility(View.GONE);
+                containerBarText.setVisibility(View.GONE);
+                containerButtons.setVisibility(View.VISIBLE);
                 break;
             case 18:
                 toggle = true;
-                answer1.setText("Doesn't affect me");
-                answer2.setText("A little");
-                answer3.setText("Somewhat");
-                answer4.setText("Crippling");
-                answer3.setVisibility(View.VISIBLE);
-                answer4.setVisibility(View.VISIBLE);
+                for (int i = 0; i < containerBarText.getChildCount(); i++)
+                    ((TextView) containerBarText.getChildAt(i)).setText(answersRedFlag[i]);
+                answerBar.setProgress(0);
+                answerBar.setVisibility(View.VISIBLE);
+                containerBarText.setVisibility(View.VISIBLE);
+                containerButtons.setVisibility(View.GONE);
                 break;
             case 19:
                 toggle = true;
-                answer1.setText("Yes");
-                answer2.setText("No");
-                answer3.setVisibility(View.INVISIBLE);
-                answer4.setVisibility(View.INVISIBLE);
+                answerBar.setVisibility(View.GONE);
+                containerBarText.setVisibility(View.GONE);
+                containerButtons.setVisibility(View.VISIBLE);
                 break;
             case 20:
                 toggle = true;
-                answer1.setText("Yes");
-                answer2.setText("No");
-                answer3.setVisibility(View.INVISIBLE);
-                answer4.setVisibility(View.INVISIBLE);
+                answerBar.setVisibility(View.GONE);
+                containerBarText.setVisibility(View.GONE);
+                containerButtons.setVisibility(View.VISIBLE);
                 break;
             //default
             default:
@@ -402,6 +417,37 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-
-
+    @Override
+    public void onClick(View v) {
+        if (v.equals(next)) {
+            switch (appState) {
+                case questionA:
+                    scoreA = answerBar.getAnswer();
+                    Log.d(LOG_NAME, "Score A: " + String.valueOf(scoreA));
+                    startQuiz();
+                    break;
+                case questionB:
+                    scoreB = answerBar.getAnswer();
+                    Log.d(LOG_NAME, "Score B: " + String.valueOf(scoreB));
+                    calculateScore();
+                    startQuiz();
+                    break;
+                case questionFlag:
+                    if (questionNumber == 18 && answerBar.getAnswer() == 3)
+                        redFlag = true;
+                    Log.d(LOG_NAME, "Red Flag: " + String.valueOf(redFlag));
+                    startQuiz();
+                    break;
+            }
+        } else if (v.equals(prev)) {
+            Log.d(LOG_NAME, "Prev");
+        } else if (v.equals(answerNo)) {
+            Log.d(LOG_NAME, "Red Flag: " + String.valueOf(redFlag));
+            startQuiz();
+        } else if (v.equals(answerYes)) {
+            redFlag = true;
+            Log.d(LOG_NAME, "Red Flag: " + String.valueOf(redFlag));
+            startQuiz();
+        }
+    }
 }

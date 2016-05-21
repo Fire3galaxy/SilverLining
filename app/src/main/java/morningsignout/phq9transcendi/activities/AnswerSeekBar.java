@@ -38,7 +38,6 @@ public class AnswerSeekBar extends SeekBar {
         boolean result = super.onTouchEvent(event);
 
         if (event.getActionMasked() == MotionEvent.ACTION_UP) {
-            Log.d("AnswerSeekBar", "Touch Event");
             int progress = getProgress();
             int answer = calculateAnswer(progress);
 
@@ -49,11 +48,20 @@ public class AnswerSeekBar extends SeekBar {
         return result; // Still do default activity
     }
 
+    public int getAnswer() {
+        int progress = getProgress();
+        if ((progress % 100) == 0)
+            return progress / 100;
+
+        // In case user clicks button while progress is not acceptable answer
+        return previousAnswer;
+    }
+
     // Given that max = 300 and 0-50 is Not at all, 51-150 is Few days a week,
     // 151-250 is More than half a week, and 251-300 is Everyday, translate the big
     // seekbar progress into the correct answer.
     // Alternate idea: Change answer only if user "seems" to want to do so (within range).
-    int calculateAnswer(int progress) {
+    private int calculateAnswer(int progress) {
         if (progress < RANGE) return 0;
         else if (Math.abs(progress - 100) < RANGE) return 100;
         else if (Math.abs(progress - 200) < RANGE) return 200;

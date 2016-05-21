@@ -24,66 +24,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/tableLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_alignRight="@+id/questionView"
-        android:layout_alignEnd="@+id/questionView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
-        android:visibility="gone">
-
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1" >
-
-            <Button
-                android:id="@+id/answer1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="@dimen/text_button_padding"
-                android:text="@string/answer_not_at_all" />
-
-            <Button
-                android:id="@+id/answer2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="@dimen/text_button_padding"
-                android:text="@string/answer_few_days" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1" >
-
-            <Button
-                android:id="@+id/answer3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="@dimen/text_button_padding"
-                android:text="@string/answer_many_days" />
-
-            <Button
-                android:id="@+id/answer4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="@dimen/text_button_padding"
-                android:text="@string/answer_many_many_days" />
-        </TableRow>
-
-    </TableLayout>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -96,14 +36,14 @@
     <Space
         android:id="@+id/space_quiz"
         android:layout_width="0px"
-        android:layout_height="60dp"
+        android:layout_height="40dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <morningsignout.phq9transcendi.activities.AnswerSeekBar
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/seekBar"
+        android:layout_height="40dp"
+        android:id="@+id/seekBar_quiz_answer"
         android:layout_marginTop="30dp"
         android:layout_alignTop="@+id/space_quiz"
         android:layout_centerHorizontal="true"
@@ -113,9 +53,10 @@
         android:thumb="@android:color/transparent"/>
 
     <LinearLayout
+        android:id="@+id/container_bar_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/seekBar"
+        android:layout_below="@+id/seekBar_quiz_answer"
         android:layout_marginTop="10dp">
         <TextView
             android:layout_weight="1"
@@ -126,7 +67,7 @@
             android:text="@string/answer_not_at_all"
             android:textSize="15sp"
             android:gravity="center_horizontal"
-            android:id="@+id/textView"/>
+            android:id="@+id/textView_not_at_all"/>
         <TextView
             android:layout_weight="1"
             android:layout_width="match_parent"
@@ -138,7 +79,7 @@
             android:text="@string/answer_few_days"
             android:textSize="15sp"
             android:gravity="center_horizontal"
-            android:id="@+id/textView2"/>
+            android:id="@+id/textView_few_days"/>
         <TextView
             android:layout_weight="1"
             android:layout_width="match_parent"
@@ -150,28 +91,64 @@
             android:text="@string/answer_many_days"
             android:textSize="15sp"
             android:gravity="center_horizontal"
-            android:id="@+id/textView3"/>
+            android:id="@+id/textView_many_days"/>
         <TextView
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="3dp"
             android:layout_marginStart="3dp"
-            android:text="longsentencesarefun>:)"
+            android:text="@string/answer_many_many_days"
             android:textSize="15sp"
             android:gravity="center_horizontal"
-            android:id="@+id/textView4"/>
+            android:id="@+id/textView_many_many_days"/>
     </LinearLayout>
-    <!--<TableLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/seekBar"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:stretchColumns="true"-->
-        <!--android:shrinkColumns="true">-->
-        <!--<TableRow android:layout_width="match_parent">-->
-            <!-- -->
-        <!--</TableRow>-->
-    <!--</TableLayout>-->
+
+    <LinearLayout
+        android:id="@+id/container_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_alignTop="@+id/space_quiz"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/button_answer_yes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/answer_yes"/>
+
+        <Button
+            android:id="@+id/button_answer_no"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/answer_no"/>
+    </LinearLayout>
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/imageButton_prevq"
+        android:src="@drawable/green_arrow"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:rotation="180"/>
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/imageButton_nextq"
+        android:src="@drawable/green_arrow"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>
