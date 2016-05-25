@@ -19,6 +19,9 @@
     <string name="demo_skip">Skip</string>
     <string name="demo_first_in_fam">Are you first in family to go to college?</string>
     <string name="demo_start_quiz">Start Quiz</string>
+    <string name="all_done">You\'re all done!\n\nYour score is</string>
+    <string name="red_flag_text">There were also some red flag symptoms</string>
+    <string name="what_does_it_mean">What does that all mean?</string>
 
     <!-- Resources and References -->
     <string name="resource1">We\'ve prepared some resources for people who want to learn more

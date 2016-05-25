@@ -3,6 +3,7 @@ package morningsignout.phq9transcendi.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 
 import morningsignout.phq9transcendi.R;
@@ -30,11 +31,18 @@ public class ResultsActivity extends AppCompatActivity {
         redFlag = args.getBooleanExtra(RED_FLAG, false);
 
         TextView detailsText = (TextView) findViewById(R.id.textView_details);
+        TextView scoreText = (TextView) findViewById(R.id.textView_score);
+        TextView redFlagText = (TextView) findViewById(R.id.textView_red_flag);
+
         String[] scoreEval = getResources().getStringArray(R.array.scoreEval);
-//
+
+        scoreText.setText(String.valueOf(totalScore));
+        if (!redFlag)
+            redFlagText.setVisibility(View.INVISIBLE);
+
 //        if(redFlag) {
 //            //alert
-//            question.setText("Your score is " + totalScore +", but one or more of your answers show that you may suffer from severe depression.");
+//            detailsText.setText("Your score is " + totalScore +", but one or more of your answers show that you may suffer from severe depression.");
 //        } else {
 //            //proceed normally with score
 //            question.setText("You're all done! Your score is " + totalScore);
