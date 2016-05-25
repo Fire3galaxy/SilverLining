@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:text="@string/what_does_it_mean"
         android:textSize="20sp"
