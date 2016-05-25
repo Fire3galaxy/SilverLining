@@ -1,7 +1,9 @@
 package morningsignout.phq9transcendi.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.firebase.client.Firebase;
 
 import morningsignout.phq9transcendi.R;
 
@@ -20,7 +24,7 @@ public class DemographicsActivity extends AppCompatActivity implements
         AdapterView.OnItemSelectedListener {
     static final String demo_log_name = "DemographicsActivity";
 
-    private Spinner gender, ethnicity, schoolYear,familyFirst;
+    private Spinner gender, ethnicity, schoolYear, familyFirst;
     private EditText ageField;
 
     private String gender_answer, ethnicity_answer, schoolYear_answer, familyFirst_answer;
@@ -31,7 +35,7 @@ public class DemographicsActivity extends AppCompatActivity implements
         // Setup layout
         super.onCreate(savedInstanceState);
         setContentView(R.layout.demographics);
-
+        Firebase.setAndroidContext(this);
         // Various fields for demographics
         // Age
         ageField = (EditText) findViewById(R.id.demo_age_answer);
@@ -76,11 +80,13 @@ public class DemographicsActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 setAgeAnswer();                     // Grab text from edittext and set answer (may throw exception)
                 if (demographicsIsCompleted()) {    // Only submit if all fields finished
-                    submitDemographics();
-                }
 
-                Intent intent = new Intent(DemographicsActivity.this, QuizActivity.class);
-                startActivity(intent);
+                    confirmSubmission();
+
+                }
+                //above if statement isn't working correctly so below is for testing purposes
+                confirmSubmission();
+
             }
         });
     }
@@ -97,10 +103,59 @@ public class DemographicsActivity extends AppCompatActivity implements
         return true;
     }
 
+    //ALERT BOX: Make sure user wants to submit Demographics then start quiz activity
+    void confirmSubmission() {
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(
+                DemographicsActivity.this);
+        alert.setMessage("Are you sure you want to submit")
+             .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                 @Override
+                 public void onClick(DialogInterface dialog, int which) {
+                     submitDemographics();
+
+                     Intent intent = new Intent(DemographicsActivity.this, QuizActivity.class);
+                     startActivity(intent);
+                     finish();
+                     return;
+
+                 }
+
+
+             })
+             .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                 @Override
+                 public void onClick(DialogInterface dialog, int which) {
+
+                 }
+             })
+             .show();
+    }
+
     // FIXME: 1. Network request to firebase for Demographics here
     // FIXME: 2. What if default selector value is the correct one, so user didn't touch? Then we should use
     // FIXME:    spinner.getSelectedItem().toString() instead of this complicated null check system.
     void submitDemographics() {
+
+        //reference to firebase and create child
+        Firebase ref = new Firebase("https://android-phq-9-app.firebaseio.com");
+        Firebase demo_info = ref.child("tests");
+
+        //set family first bool value (for database)
+        boolean familyFirst_bool;
+        if (familyFirst_answer.equals("yes"))
+            familyFirst_bool = true;
+        else
+            familyFirst_bool = false;
+
+        //create user object
+        DemographicDB user = new DemographicDB(age_answer,
+                ethnicity_answer, familyFirst_bool, schoolYear_answer, gender_answer);
+
+        demo_info.push().setValue(user); //push to database with unique ID
+
         Log.d(demo_log_name, String.valueOf(age_answer));
         Log.d(demo_log_name, gender_answer);
         Log.d(demo_log_name, ethnicity_answer);
@@ -109,6 +164,7 @@ public class DemographicsActivity extends AppCompatActivity implements
     }
 
     // Checks that every field is answered (for spinner, at least touched)
+    //FIXME: for some reason function is not working correctly.
     boolean demographicsIsCompleted() {
         // Default age_answer is 0, so user could not have answered
         boolean didNotComplete = (age_answer == 0);
