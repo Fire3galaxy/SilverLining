@@ -7,6 +7,7 @@
     <string name="title_activity_quiz">Quiz Activity</string>
     <string name="resource_activity">Resource Activity</string>
     <string name="quizintro_activity">Quiz Intro Activity</string>
+    <string name="results_activity">Results Activity</string>
 
     <!--XML Layout strings-->
     <string name="main_menu_text">PHQ9 Transcendi Quiz Beta</string>

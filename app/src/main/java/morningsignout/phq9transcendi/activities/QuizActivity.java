@@ -1,5 +1,6 @@
 package morningsignout.phq9transcendi.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -97,7 +98,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private void startQuiz() {
         if(!quizDone) {
             updateQuestions();
-            Log.d(LOG_NAME, String.valueOf(toggle));
             if(toggle) {
                 if(!redFlagQuestion) {
                     toggleQuestionsA();
@@ -118,196 +118,22 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     }
 
     private void finishQuiz() {
-        String[] scoreEval = getResources().getStringArray(R.array.scoreEval);
-        if(redFlag) {
-            //alert
-            question.setText("Your score is " + totalScore +", but one or more of your answers show that you may suffer from severe depression.");
-        } else {
-            //proceed normally with score
-            question.setText("You're all done! Your score is " + totalScore);
-        }
-        if(totalScore == 0) {
-            subtitle.setText(scoreEval[0]);
-        } else if(totalScore >= 1 && totalScore < 5) {
-            subtitle.setText(scoreEval[1]);
-        } else if(totalScore >= 5 && totalScore < 10) {
-            subtitle.setText(scoreEval[2]);
-        } else if(totalScore >= 10 && totalScore < 15) {
-            subtitle.setText(scoreEval[3]);
-        } else if(totalScore >= 15 && totalScore < 20) {
-            subtitle.setText(scoreEval[4]);
-        } else if(totalScore >= 20) {
-            subtitle.setText(scoreEval[5]);
-        }
-//        answer1.setVisibility(View.VISIBLE);
-//        answer2.setVisibility(View.VISIBLE);
-//        answer3.setVisibility(View.VISIBLE);
-//        answer4.setVisibility(View.VISIBLE);
-//
-//        answer1.setText("Take quiz again");
-//        answer2.setText("Go back");
-//        answer3.setText("References");
-//        answer4.setText("Resources");
-
-//        answer1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                reset();
-//                startQuiz();
-//            }
-//        });
-//
-//        answer2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent c = new Intent(QuizActivity.this, IndexActivity.class);
-//                startActivity(c);
-//            }
-//        });
-//        answer3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent a = new Intent(QuizActivity.this, ReferenceActivity.class);
-//                a.putExtra("page_type", "Resources");
-//                startActivity(a);
-//            }
-//        });
-//
-//        answer4.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent b = new Intent(QuizActivity.this, ReferenceActivity.class);
-//                b.putExtra("page_type", "References");
-//                startActivity(b);
-//            }
-//        });
+        Intent results = new Intent(this, ResultsActivity.class);
+        results.putExtra(ResultsActivity.SCORE, totalScore);
+        results.putExtra(ResultsActivity.RED_FLAG, redFlag);
+        startActivity(results);
     }
 
     private void toggleQuestionsA() {
         appState = AppState.questionA;
-
-//        answer1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                scoreA = 0;
-//                startQuiz();
-//            }
-//        });
-//
-//        answer2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                scoreA = 1;
-//                startQuiz();
-//            }
-//        });
-//
-//        answer3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                scoreA = 2;
-//                startQuiz();
-//            }
-//        });
-//
-//        answer4.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                scoreA = 3;
-//                startQuiz();
-//            }
-//        });
     }
 
     private void toggleQuestionsB() {
         appState = AppState.questionB;
-
-//        answer1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                scoreB = 0;
-//                calculateScore();
-//                startQuiz();
-//            }
-//        });
-//
-//        answer2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                scoreB = 1;
-//                calculateScore();
-//                startQuiz();
-//            }
-//        });
-//
-//        answer3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                scoreB = 2;
-//                calculateScore();
-//                startQuiz();
-//            }
-//        });
-//
-//        answer4.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                scoreB = 3;
-//                calculateScore();
-//                startQuiz();
-//            }
-//        });
     }
 
     private void toggleFlagQuestions() {
         appState = AppState.questionFlag;
-
-//        if(questionNumber == 18) {
-//            answer1.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    startQuiz();
-//                }
-//            });
-//
-//            answer2.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    startQuiz();
-//                }
-//            });
-//
-//            answer3.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    startQuiz();
-//                }
-//            });
-//
-//            answer4.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    redFlag = true;
-//                    startQuiz();
-//                }
-//            });
-//        } else {
-//
-//            answer1.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    redFlag = true;
-//                    startQuiz();
-//                }
-//            });
-//
-//            answer2.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    startQuiz();
-//                }
-//            });
-//        }
     }
 
     private void calculateScore() {
@@ -316,7 +142,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         } else {
             totalScore += scoreB;
         }
-        Log.d(LOG_NAME, String.valueOf(totalScore));
     }
 
     private void updateQuestions() {
@@ -423,30 +248,25 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
             switch (appState) {
                 case questionA:
                     scoreA = answerBar.getAnswer();
-                    Log.d(LOG_NAME, "Score A: " + String.valueOf(scoreA));
                     startQuiz();
                     break;
                 case questionB:
                     scoreB = answerBar.getAnswer();
-                    Log.d(LOG_NAME, "Score B: " + String.valueOf(scoreB));
                     calculateScore();
                     startQuiz();
                     break;
                 case questionFlag:
                     if (questionNumber == 18 && answerBar.getAnswer() == 3)
                         redFlag = true;
-                    Log.d(LOG_NAME, "Red Flag: " + String.valueOf(redFlag));
                     startQuiz();
                     break;
             }
         } else if (v.equals(prev)) {
             Log.d(LOG_NAME, "Prev");
         } else if (v.equals(answerNo)) {
-            Log.d(LOG_NAME, "Red Flag: " + String.valueOf(redFlag));
             startQuiz();
         } else if (v.equals(answerYes)) {
             redFlag = true;
-            Log.d(LOG_NAME, "Red Flag: " + String.valueOf(redFlag));
             startQuiz();
         }
     }

@@ -62,6 +62,9 @@
         <activity android:name=".activities.QuizIntroActivity"
             android:label="@string/quizintro_activity"
             android:theme="@style/AppTheme"/>
+        <activity android:name=".activities.ResultsActivity"
+            android:label="@string/results_activity"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>
