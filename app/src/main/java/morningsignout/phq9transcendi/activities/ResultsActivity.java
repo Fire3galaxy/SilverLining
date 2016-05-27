@@ -1,5 +1,7 @@
 package morningsignout.phq9transcendi.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +35,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     int totalScore;
     boolean redFlag;
     int screenNumber = 0;
+    AlertDialog.Builder dialogBuilder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,11 +66,29 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
             redFlagText.setVisibility(View.INVISIBLE);
 
         finishUpButton.setOnClickListener(this);
+
+        dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setTitle(R.string.app_name)
+                .setMessage(R.string.dialog_quit_results)
+                .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        Intent backToMenu = new Intent(ResultsActivity.this, IndexActivity.class);
+                        backToMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(backToMenu);
+                    }
+                }).setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
-        // FIXME: dialog asking if user wants to return to home screen
+        dialogBuilder.create().show();
     }
 
     @Override

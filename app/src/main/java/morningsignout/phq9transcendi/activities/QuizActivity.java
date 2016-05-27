@@ -1,10 +1,11 @@
 package morningsignout.phq9transcendi.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -19,7 +20,10 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private static final int RED_FLAG_QUESTION = 17;
     private static final int NUM_QUESTIONS = 21;
 
-    private TextView question, subtitle; //The text of the question
+    // Use String.format() with this to display current question
+    private final String numberString = "%1$d/" + String.valueOf(NUM_QUESTIONS);
+
+    private TextView question, questionNumText; //The text of the question
     private AnswerSeekBar answerBar;
     private Button answerNo, answerYes;
     private ImageButton next, prev;
@@ -31,6 +35,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private Scores scores;  // Used for answering questions
     private boolean quizDone; //If all questions are answered
     private int questionNumber; //which question the user is on
+    private AlertDialog.Builder dialogBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +47,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
         //Grab and set content; inital setup
         question = (TextView) findViewById(R.id.questionView);
-        subtitle = (TextView) findViewById(R.id.additionalText);
+        questionNumText = (TextView) findViewById(R.id.textView_question_number);
         answerBar = (AnswerSeekBar) findViewById(R.id.seekBar_quiz_answer);
         answerNo = (Button) findViewById(R.id.button_answer_no);
         answerYes = (Button) findViewById(R.id.button_answer_yes);
@@ -53,6 +58,24 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
         questions = getResources().getStringArray(R.array.questions);
         answersNormal = getResources().getStringArray(R.array.answers_normal);
+
+        dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setTitle(R.string.app_name)
+                .setMessage(R.string.dialog_quit_questionnaire)
+                .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        Intent backToMenu = new Intent(QuizActivity.this, IndexActivity.class);
+                        backToMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(backToMenu);
+                    }
+                }).setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
 
         reset();
 
@@ -68,7 +91,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
     @Override
     public void onBackPressed() {
-        // FIXME: dialog asking if user wants to quit quiz
+        dialogBuilder.create().show();
     }
 
     private void reset() {
@@ -78,7 +101,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         answerBar.setProgress(0);
         containerButtons.setVisibility(View.GONE);
         containerBarText.setVisibility(View.VISIBLE);
-        subtitle.setText("");
+        questionNumText.setText(String.format(numberString, 1));
 
         for (int i = 0; i < containerBarText.getChildCount(); i++)
             ((TextView) containerBarText.getChildAt(i)).setText(answersNormal[i]);
@@ -105,6 +128,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
     private void updateQuestions() {
         question.setText(questions[questionNumber - 1]);    // Question text
+        questionNumText.setText(String.format(numberString, questionNumber));   // Question #
 
         if (questionNumber < RED_FLAG_QUESTION)
             putSeekBar();

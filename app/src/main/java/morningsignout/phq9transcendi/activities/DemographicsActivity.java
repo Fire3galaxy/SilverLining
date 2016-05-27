@@ -81,6 +81,7 @@ public class DemographicsActivity extends AppCompatActivity implements
 
                 Intent intent = new Intent(DemographicsActivity.this, QuizActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
