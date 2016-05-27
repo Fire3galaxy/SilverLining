@@ -17,6 +17,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
     private static final String LOG_NAME = "QuizActivity";
     private static final int RED_FLAG_QUESTION = 17;
+    private static final int NUM_QUESTIONS = 20;
 
     private TextView question, subtitle; //The text of the question
     private AnswerSeekBar answerBar;
@@ -206,6 +207,8 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
                 break;
             case 16:
                 toggle = false;
+                for (int i = 0; i < containerBarText.getChildCount(); i++)
+                    ((TextView) containerBarText.getChildAt(i)).setText(answersNormal[i]);
                 break;
             //RED FLAG QUESTIONS
             case 17:
@@ -273,11 +276,17 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         } else if (v.equals(prev)) {
             // Question - 2 because the number is set to the next question, not the current question
             questionNumber = Math.max(1, questionNumber - 2);
+            Log.d(LOG_NAME, String.valueOf(questionNumber));
 
             // reset red flag boolean and seekbar if not a red flag question
             if (questionNumber < RED_FLAG_QUESTION) {
                 redFlagQuestion = false;
                 putSeekBar();
+            }
+
+            // reset quizDone flag if not complete
+            if (questionNumber < NUM_QUESTIONS) {
+                quizDone = false;
             }
 
             // FIXME: Set seekbar to previous answer when previous button is hit
