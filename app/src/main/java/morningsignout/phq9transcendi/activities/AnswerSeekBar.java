@@ -48,6 +48,10 @@ public class AnswerSeekBar extends SeekBar {
         return result; // Still do default activity
     }
 
+    public void setAnswer(int answer) {
+        setProgress(answer * 100);
+    }
+
     public int getAnswer() {
         int progress = getProgress();
         if ((progress % 100) == 0)

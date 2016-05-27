@@ -17,7 +17,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
     private static final String LOG_NAME = "QuizActivity";
     private static final int RED_FLAG_QUESTION = 17;
-    private static final int NUM_QUESTIONS = 20;
+    private static final int NUM_QUESTIONS = 21;
 
     private TextView question, subtitle; //The text of the question
     private AnswerSeekBar answerBar;
@@ -29,17 +29,9 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private String[] answersNormal;
     private String[] answersRedFlag;
 
-    private int totalScore; //Used for answering questions
-    private int scoreA;
-    private int scoreB;
-    private boolean redFlag; //If a red flag question gets answered
-    private boolean redFlagQuestion; //If a question is a red flag question
+    private Scores scores;  // Used for answering questions
     private boolean quizDone; //If all questions are answered
     private int questionNumber; //which question the user is on
-    private boolean toggle; //For what section a question belongs in
-
-    private enum AppState {questionA, questionB, questionFlag};
-    AppState appState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,15 +71,9 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     }
 
     private void reset() {
-        totalScore = 0;
-        scoreA = 0;
-        scoreB = 0;
-        redFlag = false;
-        redFlagQuestion = false;
+        scores = new Scores();
         quizDone = false;
         questionNumber = 1;
-        toggle = true;
-        appState = AppState.questionA;
         answerBar.setProgress(0);
         containerButtons.setVisibility(View.GONE);
         containerBarText.setVisibility(View.VISIBLE);
@@ -100,17 +86,8 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private void startQuiz() {
         if(!quizDone) {
             updateQuestions();
-            if(toggle) {
-                if(!redFlagQuestion) {
-                    toggleQuestionsA();
-                } else {
-                    toggleFlagQuestions();
-                }
-            } else {
-                toggleQuestionsB();
-            }
             questionNumber++;
-            if(questionNumber > 20) {
+            if(questionNumber > NUM_QUESTIONS) {
                 quizDone = true;
             }
 
@@ -121,125 +98,29 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
     private void finishQuiz() {
         Intent results = new Intent(this, ResultsActivity.class);
-        results.putExtra(ResultsActivity.SCORE, totalScore);
-        results.putExtra(ResultsActivity.RED_FLAG, redFlag);
+        results.putExtra(ResultsActivity.SCORE, scores.getTotalScore());
+        results.putExtra(ResultsActivity.RED_FLAG, scores.containsRedFlag());
         startActivity(results);
     }
 
-    private void toggleQuestionsA() {
-        appState = AppState.questionA;
-    }
-
-    private void toggleQuestionsB() {
-        appState = AppState.questionB;
-    }
-
-    private void toggleFlagQuestions() {
-        appState = AppState.questionFlag;
-    }
-
-    private void calculateScore() {
-        if(scoreA >= scoreB) {
-            totalScore += scoreA;
-        } else {
-            totalScore += scoreB;
-        }
+    private void addScore(int value) {
+        // Question - 2 because the number is set to the next question and starts at base 1
+        scores.putScore(Scores.questions[questionNumber - 2], value);
     }
 
     private void updateQuestions() {
         question.setText(questions[questionNumber - 1]);
-        switch(questionNumber) {
-            //SECTION 1
-            case 1:
-                toggle = true;
-                break;
-            case 2:
-                toggle = false;
-                break;
-            //SECTION 2
-            case 3:
-                toggle = true;
-                break;
-            case 4:
-                toggle = false;
-                break;
-            //SECTION 3
-            case 5:
-                toggle = true;
-                break;
-            case 6:
-                toggle = false;
-                break;
-            //SECTION 4 - No toggle A answer b/c 1 question
-            case 7:
-                scoreA = 0;
-                toggle = false;
-                break;
-            //SECTION 5
-            case 8:
-                toggle = true;
-                break;
-            case 9:
-                toggle = false;
-                break;
-            //SECTION 6 - No toggle A answer b/c 1 question
-            case 10:
-                scoreA = 0;
-                toggle = false;
-                break;
-            //SECTION 7
-            case 11:
-                toggle = true;
-                break;
-            case 12:
-                toggle = false;
-                break;
-            //SECTION 8
-            case 13:
-                toggle = true;
-                break;
-            case 14:
-                toggle = false;
-                break;
-            //SECTION 9
-            case 15:
-                toggle = true;
-                break;
-            case 16:
-                toggle = false;
-                for (int i = 0; i < containerBarText.getChildCount(); i++)
-                    ((TextView) containerBarText.getChildAt(i)).setText(answersNormal[i]);
-                break;
-            //RED FLAG QUESTIONS
-            case 17:
-                redFlagQuestion = true;
-                toggle = true;
-                putButtons();
-                break;
-            case 18:
-                toggle = true;
-                for (int i = 0; i < containerBarText.getChildCount(); i++)
-                    ((TextView) containerBarText.getChildAt(i)).setText(answersRedFlag[i]);
-                putSeekBar();
-                break;
-            case 19:
-                toggle = true;
-                putButtons();
-                break;
-            case 20:
-                toggle = true;
-                break;
-            //default
-            default:
-                question.setText("Ipsum Lorem");
-                break;
-        }
+
+        if (questionNumber < RED_FLAG_QUESTION && answerBar.getVisibility() != View.VISIBLE)
+            putSeekBar();
+        else if (questionNumber >= RED_FLAG_QUESTION
+                && containerButtons.getVisibility() != View.VISIBLE)
+            putButtons();
     }
 
     private void putSeekBar() {
-        answerBar.setProgress(0);
-
         if (answerBar.getVisibility() != View.VISIBLE) {
+            answerBar.setProgress(0);
             answerBar.setVisibility(View.VISIBLE);
             containerBarText.setVisibility(View.VISIBLE);
             containerButtons.setVisibility(View.GONE);
@@ -256,46 +137,31 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
     @Override
     public void onClick(View v) {
+        // Which view was clicked: arrows (next/prev) or buttons (yes/no)
         if (v.equals(next)) {
-            switch (appState) {
-                case questionA:
-                    scoreA = answerBar.getAnswer();
-                    startQuiz();
-                    break;
-                case questionB:
-                    scoreB = answerBar.getAnswer();
-                    calculateScore();
-                    startQuiz();
-                    break;
-                case questionFlag:
-                    if (questionNumber == 18 && answerBar.getAnswer() == 3)
-                        redFlag = true;
-                    startQuiz();
-                    break;
-            }
+            if (questionNumber < RED_FLAG_QUESTION
+                    && scores.getScore(questionNumber - 1) != answerBar.getAnswer())
+                addScore(answerBar.getAnswer());
+
+            startQuiz();
         } else if (v.equals(prev)) {
             // Question - 2 because the number is set to the next question, not the current question
             questionNumber = Math.max(1, questionNumber - 2);
-            Log.d(LOG_NAME, String.valueOf(questionNumber));
 
-            // reset red flag boolean and seekbar if not a red flag question
-            if (questionNumber < RED_FLAG_QUESTION) {
-                redFlagQuestion = false;
-                putSeekBar();
-            }
+            // Set answer bar to previously saved answer
+            if (questionNumber < RED_FLAG_QUESTION)
+                answerBar.setAnswer(scores.getScore(questionNumber - 1));
 
             // reset quizDone flag if not complete
-            if (questionNumber < NUM_QUESTIONS) {
+            if (questionNumber < NUM_QUESTIONS)
                 quizDone = false;
-            }
-
-            // FIXME: Set seekbar to previous answer when previous button is hit
 
             startQuiz();
         } else if (v.equals(answerNo)) {
+            addScore(0);
             startQuiz();
         } else if (v.equals(answerYes)) {
-            redFlag = true;
+            addScore(1);
             startQuiz();
         }
     }
