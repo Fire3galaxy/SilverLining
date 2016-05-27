@@ -14,7 +14,7 @@ public class Scores {
     // Ordered by current order of questions, arranged by category
     //
     // Think of this as a map from the question # to question name
-    static public final String[] questions = {
+    static private final String[] questions = {
             "anhedoniainterest", "anhedoniaenjoy",
             "mooddepress", "moodhopeless",
             "sleeplow", "sleephigh",
@@ -29,6 +29,8 @@ public class Scores {
             "continuousdepression_flag", "longdepression_flag", "interference", "suicidality_flag",
             "suicideaction_flag"
     };
+
+    // Array of which category each question is associated with
     static private int[] categories = {
         0, 0,
         1, 1,
@@ -42,23 +44,24 @@ public class Scores {
         9, 9, 9, 9, 9   // red flag
     };
 
-    private static int RED_FLAG_QUESTION = 16;
+    private static int RED_FLAG_QUESTION = 16;  // Index where red flag starts
 
     private TreeMap<String, Integer> scoreDictionary;
+    private TreeMap<String, Boolean> questionIsVisited;
 
     public Scores() {
         scoreDictionary = new TreeMap<>();
+        questionIsVisited = new TreeMap<>();
 
-        for (String category : questions)
+        for (String category : questions) {
             scoreDictionary.put(category, 0);
+            questionIsVisited.put(category, false);
+        }
     }
 
-    public void putScore(String category, int value) {
-        scoreDictionary.put(category, value);
-
-        // TESTING
-//        for (String s : questions)
-//            Log.d("Scores", s + ": " + String.valueOf(scoreDictionary.get(s)));
+    public void putScore(int i, int value) {
+        scoreDictionary.put(questions[i], value);
+        questionIsVisited.put(questions[i], true);
     }
 
     // Access by index (for (int i = 0; i < questions.length; i++) {})
@@ -67,11 +70,6 @@ public class Scores {
             return scoreDictionary.get(questions[i]);
 
         return -1;
-    }
-
-    // Access by for loop with questions array (for (String s : questions) {})
-    public int getScore(String category) {
-        return scoreDictionary.get(category);
     }
 
     public int getTotalScore() {
@@ -98,10 +96,22 @@ public class Scores {
     }
 
     public boolean containsRedFlag() {
-        for (int i = RED_FLAG_QUESTION; i < questions.length; i++)
+        for (int i = RED_FLAG_QUESTION; i < questions.length; i++) {
+            Log.d("Scores", "9: " + scoreDictionary.get(questions[i]));
+
             if (scoreDictionary.get(questions[i]) == 1)
                 return true;
+        }
+
+        Log.d("Scores", "---------------------------------------");
 
         return false;
+    }
+
+    public boolean questionIsVisited(int i) {
+        if (questionIsVisited.containsKey(questions[i]))
+            return questionIsVisited.get(questions[i]);
+
+        throw new IndexOutOfBoundsException(); // Should not happen
     }
 }

@@ -27,7 +27,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
     private String[] questions;
     private String[] answersNormal;
-    private String[] answersRedFlag;
 
     private Scores scores;  // Used for answering questions
     private boolean quizDone; //If all questions are answered
@@ -56,7 +55,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
         questions = getResources().getStringArray(R.array.questions);
         answersNormal = getResources().getStringArray(R.array.answers_normal);
-        answersRedFlag = getResources().getStringArray(R.array.answers_flag);
 
         reset();
 
@@ -86,11 +84,14 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private void startQuiz() {
         if(!quizDone) {
             updateQuestions();
-            questionNumber++;
-            if(questionNumber > NUM_QUESTIONS) {
-                quizDone = true;
-            }
 
+            // Set answer bar to previously saved answer
+            if (questionNumber < RED_FLAG_QUESTION && scores.questionIsVisited(questionNumber - 1))
+                answerBar.setAnswer(scores.getScore(questionNumber - 1));
+
+            questionNumber++;
+            if(questionNumber > NUM_QUESTIONS)
+                quizDone = true;
         } else {
             finishQuiz();
         }
@@ -101,20 +102,20 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         results.putExtra(ResultsActivity.SCORE, scores.getTotalScore());
         results.putExtra(ResultsActivity.RED_FLAG, scores.containsRedFlag());
         startActivity(results);
+        finish();
     }
 
     private void addScore(int value) {
         // Question - 2 because the number is set to the next question and starts at base 1
-        scores.putScore(Scores.questions[questionNumber - 2], value);
+        scores.putScore(questionNumber - 2, value);
     }
 
     private void updateQuestions() {
         question.setText(questions[questionNumber - 1]);
 
-        if (questionNumber < RED_FLAG_QUESTION && answerBar.getVisibility() != View.VISIBLE)
+        if (questionNumber < RED_FLAG_QUESTION)
             putSeekBar();
-        else if (questionNumber >= RED_FLAG_QUESTION
-                && containerButtons.getVisibility() != View.VISIBLE)
+        else if (questionNumber >= RED_FLAG_QUESTION)
             putButtons();
     }
 
@@ -135,22 +136,17 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         }
     }
 
+    // Which view was clicked: arrows (next/prev) or buttons (yes/no)
     @Override
     public void onClick(View v) {
-        // Which view was clicked: arrows (next/prev) or buttons (yes/no)
         if (v.equals(next)) {
-            if (questionNumber < RED_FLAG_QUESTION
-                    && scores.getScore(questionNumber - 1) != answerBar.getAnswer())
+            if (questionNumber - 1 < RED_FLAG_QUESTION)
                 addScore(answerBar.getAnswer());
 
             startQuiz();
         } else if (v.equals(prev)) {
             // Question - 2 because the number is set to the next question, not the current question
             questionNumber = Math.max(1, questionNumber - 2);
-
-            // Set answer bar to previously saved answer
-            if (questionNumber < RED_FLAG_QUESTION)
-                answerBar.setAnswer(scores.getScore(questionNumber - 1));
 
             // reset quizDone flag if not complete
             if (questionNumber < NUM_QUESTIONS)

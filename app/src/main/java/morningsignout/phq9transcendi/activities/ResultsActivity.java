@@ -86,6 +86,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
             case 2:
                 Intent backHome = new Intent(this, IndexActivity.class);
                 startActivity(backHome);
+                finish();
                 break;
             default:
                 Log.e("ResultsActivity", "Should not happen");
