@@ -16,6 +16,7 @@ import morningsignout.phq9transcendi.R;
 public class QuizActivity extends AppCompatActivity implements ImageButton.OnClickListener {
 
     private static final String LOG_NAME = "QuizActivity";
+    private static final int RED_FLAG_QUESTION = 17;
 
     private TextView question, subtitle; //The text of the question
     private AnswerSeekBar answerBar;
@@ -210,35 +211,43 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
             case 17:
                 redFlagQuestion = true;
                 toggle = true;
-                answerBar.setVisibility(View.GONE);
-                containerBarText.setVisibility(View.GONE);
-                containerButtons.setVisibility(View.VISIBLE);
+                putButtons();
                 break;
             case 18:
                 toggle = true;
                 for (int i = 0; i < containerBarText.getChildCount(); i++)
                     ((TextView) containerBarText.getChildAt(i)).setText(answersRedFlag[i]);
-                answerBar.setProgress(0);
-                answerBar.setVisibility(View.VISIBLE);
-                containerBarText.setVisibility(View.VISIBLE);
-                containerButtons.setVisibility(View.GONE);
+                putSeekBar();
                 break;
             case 19:
                 toggle = true;
-                answerBar.setVisibility(View.GONE);
-                containerBarText.setVisibility(View.GONE);
-                containerButtons.setVisibility(View.VISIBLE);
+                putButtons();
                 break;
             case 20:
                 toggle = true;
-                answerBar.setVisibility(View.GONE);
-                containerBarText.setVisibility(View.GONE);
-                containerButtons.setVisibility(View.VISIBLE);
                 break;
             //default
             default:
                 question.setText("Ipsum Lorem");
                 break;
+        }
+    }
+
+    private void putSeekBar() {
+        answerBar.setProgress(0);
+
+        if (answerBar.getVisibility() != View.VISIBLE) {
+            answerBar.setVisibility(View.VISIBLE);
+            containerBarText.setVisibility(View.VISIBLE);
+            containerButtons.setVisibility(View.GONE);
+        }
+    }
+
+    private void putButtons() {
+        if (answerBar.getVisibility() != View.GONE) {
+            answerBar.setVisibility(View.GONE);
+            containerBarText.setVisibility(View.GONE);
+            containerButtons.setVisibility(View.VISIBLE);
         }
     }
 
@@ -262,7 +271,18 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
                     break;
             }
         } else if (v.equals(prev)) {
-            Log.d(LOG_NAME, "Prev");
+            // Question - 2 because the number is set to the next question, not the current question
+            questionNumber = Math.max(1, questionNumber - 2);
+
+            // reset red flag boolean and seekbar if not a red flag question
+            if (questionNumber < RED_FLAG_QUESTION) {
+                redFlagQuestion = false;
+                putSeekBar();
+            }
+
+            // FIXME: Set seekbar to previous answer when previous button is hit
+
+            startQuiz();
         } else if (v.equals(answerNo)) {
             startQuiz();
         } else if (v.equals(answerYes)) {

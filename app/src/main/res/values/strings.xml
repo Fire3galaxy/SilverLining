@@ -19,10 +19,12 @@
     <string name="demo_skip">Skip</string>
     <string name="demo_first_in_fam">Are you first in family to go to college?</string>
     <string name="demo_start_quiz">Start Quiz</string>
+    <string name="description_score_fan">Green fan-shaped background for score</string>
     <string name="all_done">You\'re all done!\n\nYour score is</string>
     <string name="red_flag_text">There were also some red flag symptoms</string>
     <string name="what_does_it_mean">What does that all mean?</string>
     <string name="finish_up">Finish Up</string>
+    <string name="take_me_home">Take me home</string>
 
     <!-- Resources and References -->
     <string name="resource1">We\'ve prepared some resources for people who want to learn more
@@ -102,7 +104,7 @@
 
     <!--Quiz questions-->
     <string-array name="questions">
-        <item>Do you find that you’ve lost a lot of interest in things used to be interested in? This can include hobbies, friends, work, food, or sex.</item>
+        <item>Do you find that you’ve lost a lot of interest in things you used to be interested in? This can include hobbies, friends, work, food, or sex.</item>
         <item>Do you find that a lot of things are no longer enjoyable to you that you previously found enjoyable, or that you simply don’t go out and try to do enjoyable things anymore?</item>
         <item>Do you ever have feelings of being down or depressed?</item>
         <item>Do you ever have feelings of hopelessness?</item>
@@ -138,14 +140,39 @@
         <item>@string/answer_crippling</item>
     </string-array>
 
+    <string name="scoreResult">A score of %1$d is compatible with %2$s.</string>
+
     <string-array name="scoreEval">
-        <item>0: Zero depression. You show none of the signs of depression.</item>
-        <item>1–4: Minimal depression. You have very few signs of depression.</item>
-        <item>5–9: Mild depression. You might be suffering from mild depression.</item>
-        <item>10–14: Moderate depression. You might be suffering from moderate depression.</item>
-        <item>15–19: You might be suffering from moderately severe depression.</item>
-        <item>20+: You might be suffering from severe depression.</item>
+        <item>zero depression</item>
+        <item>minimal depression</item>
+        <item>mild depression</item>
+        <item>moderate depression</item>
+        <item>moderately severe depression</item>
+        <item>severe depression</item>
     </string-array>
+
+    <string-array name="scoreDetails">
+        <!-- 0 -->
+        <item>You currently don\'t have any signs of depression!\n\n
+            You\'re doing well right now!\n\n
+            Remember to check back in when you aren\'t feeling so well.</item>
+        <!-- not 0 -->
+        <item>Depression is very treatable but it takes work.\n\n
+            It’s a good idea to see a physician as soon as possible. This will get you started on
+            the path to feeling 100% again.</item>
+        <!-- red flag -->
+        <item>You also had a number of red flag symptoms, which are especially worrisome.\n\n
+            Depression is very treatable but it takes work.\n\n
+            Make an appointment to see a physician as soon as possible. This will get you started
+            on the path to feeling 100% again.</item>
+    </string-array>
+    
+    <string name="wrap_up_text">We have some resources that we think may be valuable for people
+        interested in learning about depression.\n\n
+        It’s worthwhile to examine your score from time to time as depression symptoms fluctuate
+        just like anyone’s vital signs.\n\n
+        Also, if you found this app helpful, tell others about it! We hope to make life better on
+        campuses one mind at a time.</string>
 
     <string name="title_activity_index">IndexActivity</string>
     <string name="title_activity_new_user">NewUserActivity</string>
