@@ -66,6 +66,11 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
+    public void onBackPressed() {
+        // FIXME: dialog asking if user wants to return to home screen
+    }
+
+    @Override
     public void onClick(View v) {
         switch (screenNumber) {
             case 0:

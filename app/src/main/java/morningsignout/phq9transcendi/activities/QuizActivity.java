@@ -39,8 +39,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         setContentView(R.layout.activity_quiz);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Grab and set content; inital setup
         question = (TextView) findViewById(R.id.questionView);
@@ -68,6 +66,11 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         startQuiz();
     }
 
+    @Override
+    public void onBackPressed() {
+        // FIXME: dialog asking if user wants to quit quiz
+    }
+
     private void reset() {
         scores = new Scores();
         quizDone = false;
@@ -84,11 +87,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private void startQuiz() {
         if(!quizDone) {
             updateQuestions();
-
-            // Set answer bar to previously saved answer
-            if (questionNumber < RED_FLAG_QUESTION && scores.questionIsVisited(questionNumber - 1))
-                answerBar.setAnswer(scores.getScore(questionNumber - 1));
-
             questionNumber++;
             if(questionNumber > NUM_QUESTIONS)
                 quizDone = true;
@@ -105,18 +103,16 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         finish();
     }
 
-    private void addScore(int value) {
-        // Question - 2 because the number is set to the next question and starts at base 1
-        scores.putScore(questionNumber - 2, value);
-    }
-
     private void updateQuestions() {
-        question.setText(questions[questionNumber - 1]);
+        question.setText(questions[questionNumber - 1]);    // Question text
 
         if (questionNumber < RED_FLAG_QUESTION)
             putSeekBar();
         else if (questionNumber >= RED_FLAG_QUESTION)
             putButtons();
+
+        if (scores.questionIsVisited(questionNumber - 1))
+            answerBar.setAnswer(scores.getScore(questionNumber - 1));   // Previously saved answer
     }
 
     private void putSeekBar() {
@@ -134,6 +130,11 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
             containerBarText.setVisibility(View.GONE);
             containerButtons.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void addScore(int value) {
+        // Question - 2 because the number is set to the next question and starts at base 1
+        scores.putScore(questionNumber - 2, value);
     }
 
     // Which view was clicked: arrows (next/prev) or buttons (yes/no)
