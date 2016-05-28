@@ -41,6 +41,8 @@
         android:text="Return to Home"
         android:id="@+id/back_button"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp" />
 
 </LinearLayout>

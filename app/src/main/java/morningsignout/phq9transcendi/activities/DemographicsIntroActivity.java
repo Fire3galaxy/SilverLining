@@ -28,6 +28,7 @@ public class DemographicsIntroActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(DemographicsIntroActivity.this, DemographicsActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         // Skip - Move on to quiz
@@ -35,15 +36,18 @@ public class DemographicsIntroActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(DemographicsIntroActivity.this, QuizActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-
-        // Make both buttons the same width for aesthetic
-        skip_button.setWidth(continue_button.getMeasuredWidth());
-    }
+    // When activity is visible to user: Continue button will have width
+    // Note: Used when the text was "continue" (longer) and "skip" (shorter)
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        super.onWindowFocusChanged(hasFocus);
+//
+//        // Make both buttons the same width for aesthetic
+//        skip_button.setWidth(continue_button.getMeasuredWidth());
+//    }
 }

@@ -32,8 +32,6 @@ public class ReferenceActivity extends AppCompatActivity {
 
         setContentView(R.layout.reference_view);
 
-
-
         title =(TextView)findViewById(R.id.Title);
 
         subtitle = (TextView)findViewById(R.id.Subtitle);
@@ -56,6 +54,7 @@ public class ReferenceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ReferenceActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -67,11 +66,6 @@ public class ReferenceActivity extends AppCompatActivity {
         // Set the Adapter
         contents.setAdapter(referenceCustomAdapter);
 
-
-
         linearLayout = (LinearLayout) findViewById(R.id.resourceRefView);
     }
-
-
-
 }

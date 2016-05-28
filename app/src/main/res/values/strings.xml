@@ -4,22 +4,30 @@
     <!--Activity names/test code-->
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_quiz">QuizActivity</string>
-    <string name="resource_activity">ResourceActivity</string>
+    <string name="title_activity_quiz">Quiz Activity</string>
+    <string name="resource_activity">Resource Activity</string>
+    <string name="quizintro_activity">Quiz Intro Activity</string>
+    <string name="results_activity">Results Activity</string>
 
     <!--XML Layout strings-->
     <string name="main_menu_text">PHQ9 Transcendi Quiz Beta</string>
     <string name="main_start_quiz">How am I doing?</string>
     <string name="resources_button">Resources</string>
     <string name="references_button">References</string>
-    <string name="demo_continue">Continue</string>
-    <string name="demo_skip">Skip</string>
+    <string name="quiz_start">Get Started!</string>
+    <string name="demo_continue">Share a little about myself</string>
+    <string name="demo_skip">No thanks, maybe next time</string>
     <string name="demo_first_in_fam">Are you first in family to go to college?</string>
     <string name="demo_start_quiz">Start Quiz</string>
-    <string name="answer_not_at_all">Not at all</string>
-    <string name="answer_few_days">Few days a week</string>
-    <string name="answer_many_days">More than half the week</string>
-    <string name="answer_many_many_days">Everyday</string>
+    <string name="description_previous">Previous question</string>
+    <string name="description_next">Next question</string>
+    <string name="description_white_border">White border between buttons and questionnaire</string>
+    <string name="description_score_fan">Green fan-shaped background for score</string>
+    <string name="all_done">You\'re all done!\n\nYour score is</string>
+    <string name="red_flag_text">There were also some red flag symptoms</string>
+    <string name="what_does_it_mean">What does that all mean?</string>
+    <string name="finish_up">Finish Up</string>
+    <string name="take_me_home">Take me home</string>
 
     <!-- Resources and References -->
     <string name="resource1">We\'ve prepared some resources for people who want to learn more
@@ -40,10 +48,22 @@
         <item>Contact Us</item>
     </string-array>
 
+    <!--Quiz introduction-->
+    <string name="depression_note">Depression affects hundreds of millions of people worldwide.\n\n
+        We do a poor job of recognizing the problem, but we’re trying to do better than before.\n\n
+        Before we get started, note that all of your results are confidential and will not be shared.</string>
+
     <!-- Demographics -->
     <string name="demographics_intro1">We want to know a little about you so we can  do a better job
     helping people.</string>
     <string name="demographics_intro2">All this information will be kept anonymous and strictly confidential.</string>
+    <string name="full_demographics_intro">We’re a small group trying to improve mental health
+        services at schools across the country.\n\n
+        Knowing a little bit about you would help us a lot in terms of figuring out how to reach
+        people like you better.\n\n
+        If you share some background information with us, note that all of it is confidential. It
+        will be used to assess what demographics we need to do a better job of reaching out to and
+        help a lot of people in the process.</string>
     <string name="_age">Age</string>
     <string name="_gender">Gender</string>
     <string name="_ethnicity">Ethnicity</string>
@@ -51,6 +71,16 @@
     <string name="_family">Are you the first in your family to go to college?</string>
     <string name="_resources">Resources</string>
     <string name="_references">References</string>
+    <string name="answer_not_at_all">Not at all</string>
+    <string name="answer_few_days">Few days a week</string>
+    <string name="answer_many_days">More than half the week</string>
+    <string name="answer_many_many_days">Everyday</string>
+    <string name="answer_yes">Yes</string>
+    <string name="answer_no">No</string>
+    <string name="answer_not_affected">Doesn\'t affect me</string>
+    <string name="answer_somewhat">Somewhat</string>
+    <string name="answer_a_lot">A lot</string>
+    <string name="answer_crippling">Crippling</string>
 
     <string-array name="gender_array">
         <item>Male</item>
@@ -82,8 +112,9 @@
         <item>No</item>
     </string-array>
 
+    <!--Quiz questions-->
     <string-array name="questions">
-        <item>Do you find that you’ve lost a lot of interest in things used to be interested in? This can include hobbies, friends, work, food, or sex.</item>
+        <item>Do you find that you’ve lost a lot of interest in things you used to be interested in? This can include hobbies, friends, work, food, or sex.</item>
         <item>Do you find that a lot of things are no longer enjoyable to you that you previously found enjoyable, or that you simply don’t go out and try to do enjoyable things anymore?</item>
         <item>Do you ever have feelings of being down or depressed?</item>
         <item>Do you ever have feelings of hopelessness?</item>
@@ -99,20 +130,67 @@
         <item>Other people have said that they’ve been told they move or talk more slowly when they’re depressed. Have you had anyone comment on this lately?</item>
         <item>This one is really important - do you ever thinking about hurting yourself in some way, or ending your life?</item>
         <item>How about the thought of thinking that you’d be better off dead, or that it would be great to just fall asleep and never wake up?</item>
+        <item>Would you say you’ve felt depressed or down for more than two weeks?</item>
         <item>In the past year, have you felt depressed or sad most days even if you felt okay sometimes?</item>
         <item>If you are experiencing any of the problems that we asked you about, how much do these problems keep you from being 100% at your work or studies, going about your daily business, getting along with other people, and maintaining your relationships?</item>
         <item>Has there been a time in the past month when you have had serious thoughts about ending your life?</item>
         <item>Have you ever in your whole life tried to kill yourself or make a suicide attempt?</item>
     </string-array>
 
-    <string-array name="scoreEval">
-        <item>0: Zero depression. You show none of the signs of depression.</item>
-        <item>1–4: Minimal depression. You have very few signs of depression.</item>
-        <item>5–9: Mild depression. You might be suffering from mild depression.</item>
-        <item>10–14: Moderate depression. You might be suffering from moderate depression.</item>
-        <item>15–19: You might be suffering from moderately severe depression.</item>
-        <item>20+: You might be suffering from severe depression.</item>
+    <string-array name="answers_normal">
+        <item>@string/answer_not_at_all</item>
+        <item>@string/answer_few_days</item>
+        <item>@string/answer_many_days</item>
+        <item>@string/answer_many_many_days</item>
     </string-array>
+
+    <string-array name="answers_flag">
+        <item>@string/answer_not_affected</item>
+        <item>@string/answer_somewhat</item>
+        <item>@string/answer_a_lot</item>
+        <item>@string/answer_crippling</item>
+    </string-array>
+
+    <string name="dialog_quit_questionnaire">Are you sure you want to quit? You can continue this
+        questionnaire next time you come back.</string>
+    <string name="dialog_quit_results">Do you want to return to the home screen now?</string>
+    <string name="dialog_return_home">Yes</string>
+    <string name="dialog_cancel">No</string>
+
+    <!--Results strings-->
+    <string name="scoreResult">A score of %1$d is compatible with %2$s.</string>
+
+    <string-array name="scoreEval">
+        <item>zero depression</item>
+        <item>minimal depression</item>
+        <item>mild depression</item>
+        <item>moderate depression</item>
+        <item>moderately severe depression</item>
+        <item>severe depression</item>
+    </string-array>
+
+    <string-array name="scoreDetails">
+        <!-- 0 -->
+        <item>You currently don\'t have any signs of depression!\n\n
+            You\'re doing well right now!\n\n
+            Remember to check back in when you aren\'t feeling so well.</item>
+        <!-- not 0 -->
+        <item>Depression is very treatable but it takes work.\n\n
+            It’s a good idea to see a physician as soon as possible. This will get you started on
+            the path to feeling 100% again.</item>
+        <!-- red flag -->
+        <item>You also had a number of red flag symptoms, which are especially worrisome.\n\n
+            Depression is very treatable but it takes work.\n\n
+            Make an appointment to see a physician as soon as possible. This will get you started
+            on the path to feeling 100% again.</item>
+    </string-array>
+    
+    <string name="wrap_up_text">We have some resources that we think may be valuable for people
+        interested in learning about depression.\n\n
+        It’s worthwhile to examine your score from time to time as depression symptoms fluctuate
+        just like anyone’s vital signs.\n\n
+        Also, if you found this app helpful, tell others about it! We hope to make life better on
+        campuses one mind at a time.</string>
 
     <string name="title_activity_index">IndexActivity</string>
     <string name="title_activity_new_user">NewUserActivity</string>

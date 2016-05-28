@@ -72,8 +72,8 @@ public class IndexActivity extends AppCompatActivity {
     }
 
     private void beginQuiz() {
-        Intent demographics = new Intent(this, DemographicsIntroActivity.class);
-        startActivity(demographics);
+        Intent quizIntro = new Intent(this, QuizIntroActivity.class);
+        startActivity(quizIntro);
     }
 
     @Override

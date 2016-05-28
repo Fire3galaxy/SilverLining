@@ -86,7 +86,6 @@ public class DemographicsActivity extends AppCompatActivity implements
                 }
                 //above if statement isn't working correctly so below is for testing purposes
                 confirmSubmission();
-
             }
         });
     }
@@ -108,7 +107,7 @@ public class DemographicsActivity extends AppCompatActivity implements
 
         AlertDialog.Builder alert = new AlertDialog.Builder(
                 DemographicsActivity.this);
-        alert.setMessage("Are you sure you want to submit")
+        alert.setMessage("Are you sure you want to submit?")
              .setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
                  @Override
@@ -118,7 +117,6 @@ public class DemographicsActivity extends AppCompatActivity implements
                      Intent intent = new Intent(DemographicsActivity.this, QuizActivity.class);
                      startActivity(intent);
                      finish();
-                     return;
 
                  }
 

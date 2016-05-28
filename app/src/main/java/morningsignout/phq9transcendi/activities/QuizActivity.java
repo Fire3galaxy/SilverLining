@@ -1,35 +1,41 @@
 package morningsignout.phq9transcendi.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import morningsignout.phq9transcendi.R;
 
-public class QuizActivity extends AppCompatActivity {
+public class QuizActivity extends AppCompatActivity implements ImageButton.OnClickListener {
 
-    private TextView question, subtitle; //The text of the question
-    private Button answer1; //Not at all || yes
-    private Button answer2; //Few days a week || no
-    private Button answer3; //More than half the week
-    private Button answer4; //Everyday
+    private static final String LOG_NAME = "QuizActivity";
+    private static final int RED_FLAG_QUESTION = 17;
+    private static final int NUM_QUESTIONS = 21;
+
+    // Use String.format() with this to display current question
+    private final String numberString = "%1$d/" + String.valueOf(NUM_QUESTIONS);
+
+    private TextView question, questionNumText; //The text of the question
+    private AnswerSeekBar answerBar;
+    private Button answerNo, answerYes;
+    private ImageButton next, prev;
+    private LinearLayout containerButtons, containerBarText;
 
     private String[] questions;
+    private String[] answersNormal;
 
-    private int totalScore; //Used for answering questions
-    public int[] scoreTracker; //Used to keep track of highest score for each section
-    private int sectionNum; //Used to keep track of what section we're on
-    private int scoreA;
-    private int scoreB;
-    private boolean redFlag; //If a red flag question gets answered
-    private boolean redFlagQ; //If a question is a red flag question
+    private Scores scores;  // Used for answering questions
     private boolean quizDone; //If all questions are answered
     private int questionNumber; //which question the user is on
-    private boolean toggle; //For what section a question belongs in
+    private AlertDialog.Builder dialogBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,371 +44,159 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Grab and set content; inital setup
         question = (TextView) findViewById(R.id.questionView);
-        subtitle = (TextView) findViewById(R.id.additionalText);
-        answer1 = (Button) findViewById(R.id.answer1);
-        answer2 = (Button) findViewById(R.id.answer2);
-        answer3 = (Button) findViewById(R.id.answer3);
-        answer4 = (Button) findViewById(R.id.answer4);
+        questionNumText = (TextView) findViewById(R.id.textView_question_number);
+        answerBar = (AnswerSeekBar) findViewById(R.id.seekBar_quiz_answer);
+        answerNo = (Button) findViewById(R.id.button_answer_no);
+        answerYes = (Button) findViewById(R.id.button_answer_yes);
+        next = (ImageButton) findViewById(R.id.imageButton_nextq);
+        prev = (ImageButton) findViewById(R.id.imageButton_prevq);
+        containerButtons = (LinearLayout) findViewById(R.id.container_buttons);
+        containerBarText = (LinearLayout) findViewById(R.id.container_bar_text);
+
         questions = getResources().getStringArray(R.array.questions);
-        sectionNum = 1;
-        scoreTracker = new int[13]; //9 sections
+        answersNormal = getResources().getStringArray(R.array.answers_normal);
+
+        dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setTitle(R.string.app_name)
+                .setMessage(R.string.dialog_quit_questionnaire)
+                .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        Intent backToMenu = new Intent(QuizActivity.this, IndexActivity.class);
+                        backToMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(backToMenu);
+                    }
+                }).setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
         reset();
 
-        //Everything is setup, start quiz
-        startQuiz();
+        // Set all buttons to onClickListener function here
+        next.setOnClickListener(this);
+        prev.setOnClickListener(this);
+        answerNo.setOnClickListener(this);
+        answerYes.setOnClickListener(this);
 
-        //Fab stuff that's automatically included with a fresh activity? commented out
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+        //Everything is set up, start quiz
+        startQuiz();
+    }
+
+    @Override
+    public void onBackPressed() {
+        dialogBuilder.create().show();
     }
 
     private void reset() {
-        totalScore = 0;
-        sectionNum = 1;
-        scoreA = 0;
-        scoreB = 0;
-        scoreTracker = new int[13];
-        redFlag = false;
-        redFlagQ = false;
+        scores = new Scores();
         quizDone = false;
         questionNumber = 1;
-        toggle = true;
-        subtitle.setText("");
-        answer1.setText("Not at all");
-        answer2.setText("Few days a week");
-        answer3.setText("More than half the week");
-        answer4.setText("Everyday");
+        answerBar.setProgress(0);
+        containerButtons.setVisibility(View.GONE);
+        containerBarText.setVisibility(View.VISIBLE);
+        questionNumText.setText(String.format(numberString, 1));
+
+        for (int i = 0; i < containerBarText.getChildCount(); i++)
+            ((TextView) containerBarText.getChildAt(i)).setText(answersNormal[i]);
     }
 
     private void startQuiz() {
         if(!quizDone) {
             updateQuestions();
-            if(toggle) {
-                if(!redFlagQ) {
-                    toggleQuestionsA();
-                } else {
-                    toggleFlagQuestions();
-                }
-            } else {
-                toggleQuestionsB();
-            }
             questionNumber++;
-            if(questionNumber > 20) {
+            if(questionNumber > NUM_QUESTIONS)
                 quizDone = true;
-            }
-
         } else {
             finishQuiz();
         }
     }
 
     private void finishQuiz() {
-        String[] scoreEval = getResources().getStringArray(R.array.scoreEval);
-        if(redFlag) {
-            //alert
-            question.setText("Your score is " + totalScore +", but one or more of your answers show that you may suffer from severe depression.");
-        } else {
-            //proceed normally with score
-            question.setText("You're all done! Your score is " + totalScore);
-        }
-        if(totalScore == 0) {
-            subtitle.setText(scoreEval[0]);
-        } else if(totalScore >= 1 && totalScore < 5) {
-            subtitle.setText(scoreEval[1]);
-        } else if(totalScore >= 5 && totalScore < 10) {
-            subtitle.setText(scoreEval[2]);
-        } else if(totalScore >= 10 && totalScore < 15) {
-            subtitle.setText(scoreEval[3]);
-        } else if(totalScore >= 15 && totalScore < 20) {
-            subtitle.setText(scoreEval[4]);
-        } else if(totalScore >= 20) {
-            subtitle.setText(scoreEval[5]);
-        }
-        answer1.setVisibility(View.VISIBLE);
-        answer2.setVisibility(View.VISIBLE);
-        answer3.setVisibility(View.VISIBLE);
-        answer4.setVisibility(View.VISIBLE);
-
-        answer1.setText("Take quiz again");
-        answer2.setText("Go back");
-        answer3.setText("References");
-        answer4.setText("Resources");
-
-        answer1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                reset();
-                startQuiz();
-            }
-        });
-
-        answer2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent c = new Intent(QuizActivity.this, IndexActivity.class);
-                startActivity(c);
-            }
-        });
-        answer3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent a = new Intent(QuizActivity.this, ReferenceActivity.class);
-                a.putExtra("page_type", "Resources");
-                startActivity(a);
-            }
-        });
-
-        answer4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent b = new Intent(QuizActivity.this, ReferenceActivity.class);
-                b.putExtra("page_type", "References");
-                startActivity(b);
-            }
-        });
-    }
-
-    private void toggleQuestionsA() {
-
-        answer1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreA = 0;
-                startQuiz();
-            }
-        });
-
-        answer2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreA = 1;
-                startQuiz();
-            }
-        });
-
-        answer3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreA = 2;
-                startQuiz();
-            }
-        });
-
-        answer4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreA = 3;
-                startQuiz();
-            }
-        });
-    }
-
-    private void toggleQuestionsB() {
-
-        answer1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreB = 0;
-                calculateScore();
-                startQuiz();
-            }
-        });
-
-        answer2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreB = 1;
-                calculateScore();
-                startQuiz();
-            }
-        });
-
-        answer3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreB = 2;
-                calculateScore();
-                startQuiz();
-            }
-        });
-
-        answer4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreB = 3;
-                calculateScore();
-                startQuiz();
-            }
-        });
-    }
-
-    private void toggleFlagQuestions() {
-        if(questionNumber == 18) {
-            answer1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startQuiz();
-                }
-            });
-
-            answer2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startQuiz();
-                }
-            });
-
-            answer3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startQuiz();
-                }
-            });
-
-            answer4.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    redFlag = true;
-                    startQuiz();
-                }
-            });
-        } else {
-
-            answer1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    redFlag = true;
-                    startQuiz();
-                }
-            });
-
-            answer2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startQuiz();
-                }
-            });
-        }
-    }
-
-    private void calculateScore() {
-        if(scoreA >= scoreB) {
-            totalScore += scoreA;
-            scoreTracker[sectionNum - 1] = scoreA;
-            sectionNum++;
-        } else {
-            totalScore += scoreB;
-            scoreTracker[sectionNum - 1] = scoreB;
-            sectionNum++;
-        }
+        Intent results = new Intent(this, ResultsActivity.class);
+        results.putExtra(ResultsActivity.SCORE, scores.getTotalScore());
+        results.putExtra(ResultsActivity.RED_FLAG, scores.containsRedFlag());
+        startActivity(results);
+        finish();
     }
 
     private void updateQuestions() {
-        question.setText(questions[questionNumber - 1]);
-        switch(questionNumber) {
-            //SECTION 1
-            case 1:
-                toggle = false;
-                break;
-            case 2:
-                toggle = true;
-                break;
-            //SECTION 2
-            case 3:
-                toggle = false;
-                break;
-            case 4:
-                break;
-            //SECTION 3
-            case 5:
-                toggle = false;
-                break;
-            case 6:
-                break;
-            //SECTION 4
-            case 7:
-                toggle = true;
-                break;
-            //SECTION 5
-            case 8:
-                toggle = false;
-                break;
-            case 9:
-                break;
-            //SECTION 6
-            case 10:
-                toggle = true;
-                break;
-            //SECTION 7
-            case 11:
-                toggle = false;
-                break;
-            case 12:
-                toggle = true;
-                break;
-            //SECTION 8
-            case 13:
-                toggle = false;
-                break;
-            case 14:
-                toggle = true;
-                break;
-            //SECTION 9
-            case 15:
-                toggle = false;
-                break;
-            case 16:
-                toggle = true;
-                break;
-            //RED FLAG QUESTIONS
-            case 17:
-                redFlagQ = true;
-                toggle = true;
-                answer1.setText("Yes");
-                answer2.setText("No");
-                answer3.setVisibility(View.INVISIBLE);
-                answer4.setVisibility(View.INVISIBLE);
-                break;
-            case 18:
-                toggle = true;
-                answer1.setText("Doesn't affect me");
-                answer2.setText("A little");
-                answer3.setText("Somewhat");
-                answer4.setText("Crippling");
-                answer3.setVisibility(View.VISIBLE);
-                answer4.setVisibility(View.VISIBLE);
-                break;
-            case 19:
-                toggle = true;
-                answer1.setText("Yes");
-                answer2.setText("No");
-                answer3.setVisibility(View.INVISIBLE);
-                answer4.setVisibility(View.INVISIBLE);
-                break;
-            case 20:
-                toggle = true;
-                answer1.setText("Yes");
-                answer2.setText("No");
-                answer3.setVisibility(View.INVISIBLE);
-                answer4.setVisibility(View.INVISIBLE);
-                break;
-            //default
-            default:
-                question.setText("Ipsum Lorem");
-                break;
+        question.setText(questions[questionNumber - 1]);    // Question text
+        questionNumText.setText(String.format(numberString, questionNumber));   // Question #
+
+        if (questionNumber < RED_FLAG_QUESTION)
+            putSeekBar();
+        else if (questionNumber >= RED_FLAG_QUESTION)
+            putButtons();
+
+        if (scores.questionIsVisited(questionNumber - 1))
+            answerBar.setAnswer(scores.getScore(questionNumber - 1));   // Previously saved answer
+
+        // Hide previous button on first question
+        if (questionNumber == 1)
+            prev.setVisibility(View.INVISIBLE);
+        else if (prev.getVisibility() != View.VISIBLE)
+            prev.setVisibility(View.VISIBLE);
+
+        // Hide next button on red flag questions unless already answered
+        if (questionNumber >= RED_FLAG_QUESTION
+                && (questionNumber == NUM_QUESTIONS || !scores.questionIsVisited(questionNumber - 1)))
+            next.setVisibility(View.INVISIBLE);
+        else if (next.getVisibility() != View.VISIBLE)
+            next.setVisibility(View.VISIBLE);
+    }
+
+    private void putSeekBar() {
+        if (answerBar.getVisibility() != View.VISIBLE) {
+            answerBar.setProgress(0);
+            answerBar.setVisibility(View.VISIBLE);
+            containerBarText.setVisibility(View.VISIBLE);
+            containerButtons.setVisibility(View.GONE);
         }
     }
 
+    private void putButtons() {
+        if (answerBar.getVisibility() != View.GONE) {
+            answerBar.setVisibility(View.GONE);
+            containerBarText.setVisibility(View.GONE);
+            containerButtons.setVisibility(View.VISIBLE);
+        }
+    }
 
+    private void addScore(int value) {
+        // Question - 2 because the number is set to the next question and starts at base 1
+        scores.putScore(questionNumber - 2, value);
+    }
 
+    // Which view was clicked: arrows (next/prev) or buttons (yes/no)
+    @Override
+    public void onClick(View v) {
+        if (v.equals(next)) {
+            if (questionNumber - 1 < RED_FLAG_QUESTION)
+                addScore(answerBar.getAnswer());
+
+            startQuiz();
+        } else if (v.equals(prev)) {
+            // Question - 2 because the number is set to the next question, not the current question
+            questionNumber = Math.max(1, questionNumber - 2);
+
+            // reset quizDone flag if not complete
+            if (questionNumber < NUM_QUESTIONS)
+                quizDone = false;
+
+            startQuiz();
+        } else if (v.equals(answerNo)) {
+            addScore(0);
+            startQuiz();
+        } else if (v.equals(answerYes)) {
+            addScore(1);
+            startQuiz();
+        }
+    }
 }
