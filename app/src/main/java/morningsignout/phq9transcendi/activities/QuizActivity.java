@@ -137,6 +137,19 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
         if (scores.questionIsVisited(questionNumber - 1))
             answerBar.setAnswer(scores.getScore(questionNumber - 1));   // Previously saved answer
+
+        // Hide previous button on first question
+        if (questionNumber == 1)
+            prev.setVisibility(View.INVISIBLE);
+        else if (prev.getVisibility() != View.VISIBLE)
+            prev.setVisibility(View.VISIBLE);
+
+        // Hide next button on red flag questions unless already answered
+        if (questionNumber >= RED_FLAG_QUESTION
+                && (questionNumber == NUM_QUESTIONS || !scores.questionIsVisited(questionNumber + 1)))
+            next.setVisibility(View.INVISIBLE);
+        else if (next.getVisibility() != View.VISIBLE)
+            next.setVisibility(View.VISIBLE);
     }
 
     private void putSeekBar() {
