@@ -1,10 +1,15 @@
 package morningsignout.phq9transcendi.activities;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,16 +20,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.firebase.client.Firebase;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.locks.ReentrantLock;
 
 import morningsignout.phq9transcendi.R;
 
-public class QuizActivity extends AppCompatActivity implements ImageButton.OnClickListener {
+public class QuizActivity extends AppCompatActivity
+        implements ImageButton.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final String LOG_NAME = "QuizActivity";
     private static final int RED_FLAG_QUESTION = 17;
     private static final int NUM_QUESTIONS = 21;
+    private static final int UPDATE_GOOGLE = 1;
 
     // Use String.format() with this to display current question
     private final String numberString = "%1$d/" + String.valueOf(NUM_QUESTIONS);
@@ -38,20 +49,30 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private String[] questions;
     private String[] answersNormal;
 
-    private String startTimestamp = "", endTimestamp = "";
+    private String startTimestamp, endTimestamp;
+    private double latitude = 0, longitude = 0;
     private Scores scores;  // Used for answering questions
     private boolean quizDone; //If all questions are answered
     private int questionNumber; //which question the user is on
     private AlertDialog.Builder dialogBuilder;
+    private GoogleApiClient mGoogleApiClient;
+    private ReentrantLock gpsLock = new ReentrantLock();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Firebase.setAndroidContext(this);
+        // Create an instance of GoogleAPIClient.
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
 
         //Grab and set content; inital setup
         question = (TextView) findViewById(R.id.questionView);
@@ -95,7 +116,19 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
         //Everything is set up, start quiz
         startQuiz();
-        setStartTimestamp();
+        startTimestamp = getTimestamp();
+    }
+
+    @Override
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
     }
 
     @Override
@@ -117,10 +150,10 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     }
 
     private void startQuiz() {
-        if(!quizDone) {
+        if (!quizDone) {
             updateQuestions();
             questionNumber++;
-            if(questionNumber > NUM_QUESTIONS)
+            if (questionNumber > NUM_QUESTIONS)
                 quizDone = true;
         } else {
             finishQuiz();
@@ -128,11 +161,11 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     }
 
     private void finishQuiz() {
-        setEndTimestamp();
+        endTimestamp = getTimestamp();
         uploadToDatabase();
 
         Intent results = new Intent(this, ResultsActivity.class);
-        results.putExtra(ResultsActivity.SCORE, scores.getTotalScore());
+        results.putExtra(ResultsActivity.SCORE, scores.getFinalScore());
         results.putExtra(ResultsActivity.RED_FLAG, scores.containsRedFlag());
         startActivity(results);
         finish();
@@ -148,7 +181,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
             putButtons();
 
         if (scores.questionIsVisited(questionNumber - 1))
-            answerBar.setAnswer(scores.getScore(questionNumber - 1));   // Previously saved answer
+            answerBar.setAnswer(scores.getQuestionScore(questionNumber - 1));   // Previously saved answer
 
         // Hide previous button on first question
         if (questionNumber == 1)
@@ -188,13 +221,14 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
     // Uploads score data to Firebase. If no user ID exists, creates and stores one
     private void uploadToDatabase() {
-        // Firebase reference to Android database
         Firebase firebaseRef = new Firebase(FirebaseExtras.DATA_URL);
         String userID = getSharedPreferences(IndexActivity.PREFS_NAME, MODE_PRIVATE)
-                .getString(FirebaseExtras.USER_ID, null);;
+                .getString(FirebaseExtras.USER_ID, null);
 
         if (userID != null)
-            scores.uploadDataToDatabase(firebaseRef, userID, startTimestamp, endTimestamp);
+            scores.uploadDataToDatabase(firebaseRef, userID, startTimestamp, endTimestamp,
+                    latitude, longitude);
+
         Log.d("QuizActivity", "Finished writing data");
     }
 
@@ -224,45 +258,80 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         }
     }
 
-    void setStartTimestamp() {
-        Calendar startDate = Calendar.getInstance();
-        startDate.setTime(new Date());
+    String getTimestamp() {
+        String timestamp = "";
+        Calendar date = Calendar.getInstance();
+        date.setTime(new Date());
 
-        String month = String.valueOf(startDate.get(Calendar.MONTH) + 1);
-        String day = String.valueOf(startDate.get(Calendar.DAY_OF_MONTH));
-        String hour = String.valueOf(startDate.get(Calendar.HOUR_OF_DAY));
-        String minute = String.valueOf(startDate.get(Calendar.MINUTE));
+        String month = String.valueOf(date.get(Calendar.MONTH) + 1);
+        String day = String.valueOf(date.get(Calendar.DAY_OF_MONTH));
+        String hour = String.valueOf(date.get(Calendar.HOUR_OF_DAY));
+        String minute = String.valueOf(date.get(Calendar.MINUTE));
 
-        if (startDate.get(Calendar.MONTH) + 1 < 10) month = "0" + month;
-        if (startDate.get(Calendar.DAY_OF_MONTH) < 10) day = "0" + day;
-        if (startDate.get(Calendar.HOUR_OF_DAY) < 10) hour = "0" + hour;
-        if (startDate.get(Calendar.MINUTE) < 10) minute = "0" + minute;
+        if (date.get(Calendar.MONTH) + 1 < 10) month = "0" + month;
+        if (date.get(Calendar.DAY_OF_MONTH) < 10) day = "0" + day;
+        if (date.get(Calendar.HOUR_OF_DAY) < 10) hour = "0" + hour;
+        if (date.get(Calendar.MINUTE) < 10) minute = "0" + minute;
 
-        startTimestamp += String.valueOf(startDate.get(Calendar.YEAR)) + "-";
-        startTimestamp += month + "-";
-        startTimestamp += day + " 'at' ";
-        startTimestamp += hour + ":";
-        startTimestamp += minute;
+        timestamp += String.valueOf(date.get(Calendar.YEAR)) + "-";
+        timestamp += month + "-";
+        timestamp += day + " 'at' ";
+        timestamp += hour + ":";
+        timestamp += minute;
+
+        return timestamp;
     }
 
-    void setEndTimestamp() {
-        Calendar endDate = Calendar.getInstance();
-        endDate.setTime(new Date());
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            // FIXME: Same thing with onConnectionFailed. Should we ask for location permission?
+            Log.e("QuizActivity", "Not given permission to access location");
 
-        String month = String.valueOf(endDate.get(Calendar.MONTH) + 1);
-        String day = String.valueOf(endDate.get(Calendar.DAY_OF_MONTH));
-        String hour = String.valueOf(endDate.get(Calendar.HOUR_OF_DAY));
-        String minute = String.valueOf(endDate.get(Calendar.MINUTE));
+            return;
+        }
 
-        if (endDate.get(Calendar.MONTH) + 1 < 10) month = "0" + month;
-        if (endDate.get(Calendar.DAY_OF_MONTH) < 10) day = "0" + day;
-        if (endDate.get(Calendar.HOUR_OF_DAY) < 10) hour = "0" + hour;
-        if (endDate.get(Calendar.MINUTE) < 10) minute = "0" + minute;
+        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (location != null) {
+            // Race condition between callback and access in uploadToDatabase()
+            gpsLock.lock();
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            Log.d("QuizActivity", latitude + " " + longitude);
+            gpsLock.unlock();
+        }
+    }
 
-        endTimestamp += String.valueOf(endDate.get(Calendar.YEAR)) + "-";
-        endTimestamp += month + "-";
-        endTimestamp += day + " 'at' ";
-        endTimestamp += hour + ":";
-        endTimestamp += minute;
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.e("QuizActivity", "Failed to connect to google play services");
+
+        /* FIXME: If we can't connect to google, should we force the user to update? It kinda
+         * says "Hey, we're sending data about you!" */
+//        int error = connectionResult.getErrorCode();
+//        if (error == ConnectionResult.SERVICE_MISSING
+//                || error == ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED
+//                || error == ConnectionResult.SERVICE_DISABLED) {
+//            try {
+//                connectionResult.startResolutionForResult(this, UPDATE_GOOGLE);
+//            } catch (IntentSender.SendIntentException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 }

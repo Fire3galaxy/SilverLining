@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.firebase.client.Firebase;
 
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 /**
@@ -89,14 +90,14 @@ public class Scores {
     }
 
     // Note: use to access by index (for (int i = 0; i < questions.length; i++) {})
-    public int getScore(int i) {
+    public int getQuestionScore(int i) {
         if (i >= 0 && i <= questions.length)
             return scoreDictionary.get(questions[i]);
 
         return -1;
     }
 
-    public int getTotalScore() {
+    public int getFinalScore() {
         int sum = 0;
         int max = 0;
         int currentCategory = categories[0];
@@ -147,7 +148,19 @@ public class Scores {
         return true;
     }
 
-    public boolean uploadDataToDatabase(Firebase ref, String userID, String startTime, String endTime) {
+    public int getCategoryScore(int category) {
+        int max = 0;
+
+        for (int i = 0; i < categories.length && categories[i] <= category; i++)
+            if (categories[i] == category)
+                max = Math.max(scoreDictionary.get(questions[i]), max);
+
+        return max;
+    }
+
+    public void uploadDataToDatabase(Firebase ref, String userID,
+                                        String startTime, String endTime,
+                                        double latitude, double longitude) {
         Log.d("Scores", "In upload function");
 
         Firebase testRef = ref.child("tests").push(),
@@ -174,15 +187,24 @@ public class Scores {
         userRef.child("testIDs").push().setValue(testID);
 
         // Tests
+        ArrayList<Integer> answers = new ArrayList<>(questions.length);
+        ArrayList<Integer> scores = new ArrayList<>(categoryNames.length);
+        for (String q : questions)
+            answers.add(scoreDictionary.get(q));
+
+        // FIXME Should have been using categoryNames array to distinguish 10 categories. Fix getCategoryScore too
+        for (int i = 0; i < categoryNames.length; i++)
+            Log.d("Scores", categoryNames[i] + ": " + getCategoryScore(i));
+
         testRef.child("startTimestamp").setValue(startTime);
         testRef.child("endTimestamp").setValue(endTime);
-        // FIXME: Convert getTotalScore into two functions, one that calls a private function that returns
-        // FIXME: an int array with each category in each slot, and the other public one that just adds up the
-        // FIXME: contents minus red flag score. That way I can use that function for this scores database function.
-//        for ()
-//        testRef.child("answers").setValue(scoreDictionary);
-//        testRef.child()
+        testRef.child("latitude").setValue(latitude);
+        testRef.child("longitude").setValue(longitude);
+        testRef.child("userID").setValue(userID);
+        testRef.child("completed").setValue(Boolean.toString(true)); // FIXME: No way to submit incomplete right now
+        testRef.child("answers").setValue(answers);
 
-        return true;    // FIXME: replace with check for success
+
+        // FIXME: add check for success
     }
 }
