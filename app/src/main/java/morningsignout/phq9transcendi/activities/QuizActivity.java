@@ -3,19 +3,25 @@ package morningsignout.phq9transcendi.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.firebase.client.Firebase;
+
+import java.util.Calendar;
+import java.util.Date;
+
 import morningsignout.phq9transcendi.R;
 
 public class QuizActivity extends AppCompatActivity implements ImageButton.OnClickListener {
-
     private static final String LOG_NAME = "QuizActivity";
     private static final int RED_FLAG_QUESTION = 17;
     private static final int NUM_QUESTIONS = 21;
@@ -32,6 +38,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private String[] questions;
     private String[] answersNormal;
 
+    private String startTimestamp = "", endTimestamp = "";
     private Scores scores;  // Used for answering questions
     private boolean quizDone; //If all questions are answered
     private int questionNumber; //which question the user is on
@@ -44,6 +51,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         setContentView(R.layout.activity_quiz);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Firebase.setAndroidContext(this);
 
         //Grab and set content; inital setup
         question = (TextView) findViewById(R.id.questionView);
@@ -87,6 +95,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
         //Everything is set up, start quiz
         startQuiz();
+        setStartTimestamp();
     }
 
     @Override
@@ -119,6 +128,9 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     }
 
     private void finishQuiz() {
+        setEndTimestamp();
+        uploadToDatabase();
+
         Intent results = new Intent(this, ResultsActivity.class);
         results.putExtra(ResultsActivity.SCORE, scores.getTotalScore());
         results.putExtra(ResultsActivity.RED_FLAG, scores.containsRedFlag());
@@ -174,6 +186,18 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         scores.putScore(questionNumber - 2, value);
     }
 
+    // Uploads score data to Firebase. If no user ID exists, creates and stores one
+    private void uploadToDatabase() {
+        // Firebase reference to Android database
+        Firebase firebaseRef = new Firebase(FirebaseExtras.DATA_URL);
+        String userID = getSharedPreferences(IndexActivity.PREFS_NAME, MODE_PRIVATE)
+                .getString(FirebaseExtras.USER_ID, null);;
+
+        if (userID != null)
+            scores.uploadDataToDatabase(firebaseRef, userID, startTimestamp, endTimestamp);
+        Log.d("QuizActivity", "Finished writing data");
+    }
+
     // Which view was clicked: arrows (next/prev) or buttons (yes/no)
     @Override
     public void onClick(View v) {
@@ -198,5 +222,47 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
             addScore(1);
             startQuiz();
         }
+    }
+
+    void setStartTimestamp() {
+        Calendar startDate = Calendar.getInstance();
+        startDate.setTime(new Date());
+
+        String month = String.valueOf(startDate.get(Calendar.MONTH) + 1);
+        String day = String.valueOf(startDate.get(Calendar.DAY_OF_MONTH));
+        String hour = String.valueOf(startDate.get(Calendar.HOUR_OF_DAY));
+        String minute = String.valueOf(startDate.get(Calendar.MINUTE));
+
+        if (startDate.get(Calendar.MONTH) + 1 < 10) month = "0" + month;
+        if (startDate.get(Calendar.DAY_OF_MONTH) < 10) day = "0" + day;
+        if (startDate.get(Calendar.HOUR_OF_DAY) < 10) hour = "0" + hour;
+        if (startDate.get(Calendar.MINUTE) < 10) minute = "0" + minute;
+
+        startTimestamp += String.valueOf(startDate.get(Calendar.YEAR)) + "-";
+        startTimestamp += month + "-";
+        startTimestamp += day + " 'at' ";
+        startTimestamp += hour + ":";
+        startTimestamp += minute;
+    }
+
+    void setEndTimestamp() {
+        Calendar endDate = Calendar.getInstance();
+        endDate.setTime(new Date());
+
+        String month = String.valueOf(endDate.get(Calendar.MONTH) + 1);
+        String day = String.valueOf(endDate.get(Calendar.DAY_OF_MONTH));
+        String hour = String.valueOf(endDate.get(Calendar.HOUR_OF_DAY));
+        String minute = String.valueOf(endDate.get(Calendar.MINUTE));
+
+        if (endDate.get(Calendar.MONTH) + 1 < 10) month = "0" + month;
+        if (endDate.get(Calendar.DAY_OF_MONTH) < 10) day = "0" + day;
+        if (endDate.get(Calendar.HOUR_OF_DAY) < 10) hour = "0" + hour;
+        if (endDate.get(Calendar.MINUTE) < 10) minute = "0" + minute;
+
+        endTimestamp += String.valueOf(endDate.get(Calendar.YEAR)) + "-";
+        endTimestamp += month + "-";
+        endTimestamp += day + " 'at' ";
+        endTimestamp += hour + ":";
+        endTimestamp += minute;
     }
 }

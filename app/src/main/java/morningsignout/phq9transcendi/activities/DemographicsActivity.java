@@ -36,6 +36,7 @@ public class DemographicsActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.demographics);
         Firebase.setAndroidContext(this);
+
         // Various fields for demographics
         // Age
         ageField = (EditText) findViewById(R.id.demo_age_answer);
@@ -138,15 +139,11 @@ public class DemographicsActivity extends AppCompatActivity implements
     void submitDemographics() {
 
         //reference to firebase and create child
-        Firebase ref = new Firebase("https://android-phq-9-app.firebaseio.com");
+        Firebase ref = new Firebase(FirebaseExtras.DATA_URL);
         Firebase demo_info = ref.child("tests");
 
         //set family first bool value (for database)
-        boolean familyFirst_bool;
-        if (familyFirst_answer.equals("yes"))
-            familyFirst_bool = true;
-        else
-            familyFirst_bool = false;
+        boolean familyFirst_bool = familyFirst_answer.equals("yes");
 
         //create user object
         DemographicDB user = new DemographicDB(age_answer,

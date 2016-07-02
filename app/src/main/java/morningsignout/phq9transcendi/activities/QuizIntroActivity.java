@@ -23,6 +23,7 @@ public class QuizIntroActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent demographics = new Intent(QuizIntroActivity.this, DemographicsIntroActivity.class);
                 startActivity(demographics);
+                QuizIntroActivity.this.finish();
             }
         });
     }
