@@ -31,6 +31,7 @@ public class IndexActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
         Firebase.setAndroidContext(this);
+        Firebase.getDefaultConfig().setPersistenceEnabled(true);    // Keep sync data if app closes
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
