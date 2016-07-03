@@ -225,9 +225,12 @@ public class QuizActivity extends AppCompatActivity
         String userID = getSharedPreferences(IndexActivity.PREFS_NAME, MODE_PRIVATE)
                 .getString(FirebaseExtras.USER_ID, null);
 
-        if (userID != null)
+        if (userID != null) {
+            gpsLock.lock();
             scores.uploadDataToDatabase(firebaseRef, userID, startTimestamp, endTimestamp,
                     latitude, longitude);
+            gpsLock.unlock();
+        }
 
         Log.d("QuizActivity", "Finished writing data");
     }

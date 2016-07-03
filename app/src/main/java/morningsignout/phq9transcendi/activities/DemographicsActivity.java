@@ -137,7 +137,6 @@ public class DemographicsActivity extends AppCompatActivity implements
     // FIXME: 2. What if default selector value is the correct one, so user didn't touch? Then we should use
     // FIXME:    spinner.getSelectedItem().toString() instead of this complicated null check system.
     void submitDemographics() {
-
         //reference to firebase and create child
         Firebase ref = new Firebase(FirebaseExtras.DATA_URL);
         Firebase demo_info = ref.child("tests");
