@@ -5,6 +5,8 @@ import android.util.Log;
 import com.firebase.client.Firebase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -48,7 +50,7 @@ public class Scores {
     };
 
     // Array of which category each question is associated with
-    static private final int[] categories = {
+    static private final int[] categoryNumbers = {
         0, 0,
         1, 1,
         2, 2,
@@ -100,18 +102,18 @@ public class Scores {
     public int getFinalScore() {
         int sum = 0;
         int max = 0;
-        int currentCategory = categories[0];
+        int currentCategory = categoryNumbers[0];
 
         for (int i = 0; i < RED_FLAG_QUESTION; i++) {
             max = Math.max(scoreDictionary.get(questions[i]), max);
 
             // Next category
-            if (i + 1 < categories.length && currentCategory != categories[i + 1]) {
+            if (i + 1 < categoryNumbers.length && currentCategory != categoryNumbers[i + 1]) {
                 Log.d("Scores", String.valueOf(currentCategory) + ": " + String.valueOf(max) + ", " + String.valueOf(sum + max));
 
                 sum += max;
                 max = 0;
-                currentCategory = categories[i + 1];
+                currentCategory = categoryNumbers[i + 1];
             }
         }
 
@@ -151,8 +153,8 @@ public class Scores {
     public int getCategoryScore(int category) {
         int max = 0;
 
-        for (int i = 0; i < categories.length && categories[i] <= category; i++)
-            if (categories[i] == category)
+        for (int i = 0; i < categoryNumbers.length && categoryNumbers[i] <= category; i++)
+            if (categoryNumbers[i] == category)
                 max = Math.max(scoreDictionary.get(questions[i]), max);
 
         return max;
@@ -188,14 +190,15 @@ public class Scores {
 
         // Tests
         ArrayList<Integer> answers = new ArrayList<>(questions.length);
-        ArrayList<Integer> scores = new ArrayList<>(categoryNames.length);
+        Map<String, Integer> scores = new HashMap<>(categoryNames.length);
         for (String q : questions)
             answers.add(scoreDictionary.get(q));
 
         // FIXME Should have been using categoryNames array to distinguish 10 categories. Fix getCategoryScore too
         for (int i = 0; i < categoryNames.length; i++)
-            Log.d("Scores", categoryNames[i] + ": " + getCategoryScore(i));
+            scores.put(categoryNames[i], getCategoryScore(i));
 
+        Log.d("Scores", "HERE");
         testRef.child("startTimestamp").setValue(startTime);
         testRef.child("endTimestamp").setValue(endTime);
         testRef.child("latitude").setValue(latitude);
@@ -203,7 +206,7 @@ public class Scores {
         testRef.child("userID").setValue(userID);
         testRef.child("completed").setValue(Boolean.toString(true)); // FIXME: No way to submit incomplete right now
         testRef.child("answers").setValue(answers);
-
+        testRef.child("scores").setValue(scores);
 
         // FIXME: add check for success
     }
