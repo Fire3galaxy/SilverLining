@@ -113,7 +113,7 @@ public class DemographicsActivity extends AppCompatActivity implements
 
                  @Override
                  public void onClick(DialogInterface dialog, int which) {
-                     submitDemographics();
+                     uploadDataToDatabase();
 
                      Intent intent = new Intent(DemographicsActivity.this, QuizActivity.class);
                      startActivity(intent);
@@ -136,19 +136,23 @@ public class DemographicsActivity extends AppCompatActivity implements
     // FIXME: 1. Network request to firebase for Demographics here
     // FIXME: 2. What if default selector value is the correct one, so user didn't touch? Then we should use
     // FIXME:    spinner.getSelectedItem().toString() instead of this complicated null check system.
-    void submitDemographics() {
+    void uploadDataToDatabase() {
         //reference to firebase and create child
+
         Firebase ref = new Firebase(FirebaseExtras.DATA_URL);
-        Firebase demo_info = ref.child("tests");
+        String userID = getSharedPreferences(IndexActivity.PREFS_NAME, MODE_PRIVATE)
+                .getString(FirebaseExtras.USER_ID, null);
 
-        //set family first bool value (for database)
-        boolean familyFirst_bool = familyFirst_answer.equals("yes");
+        if(userID != null) {
+            Firebase userRef = ref.child("users").child(userID);
 
-        //create user object
-        DemographicDB user = new DemographicDB(age_answer,
-                ethnicity_answer, familyFirst_bool, schoolYear_answer, gender_answer);
+            userRef.child("age").setValue(age_answer); //push to database with unique ID
+            userRef.child("gender").setValue(gender_answer);
+            userRef.child("ethnicity").setValue(ethnicity_answer);
+            userRef.child("firstGenerationCollege").setValue(familyFirst_answer);
+            userRef.child("yearInSchool").setValue(schoolYear_answer);
+        }
 
-        demo_info.push().setValue(user); //push to database with unique ID
 
         Log.d(demo_log_name, String.valueOf(age_answer));
         Log.d(demo_log_name, gender_answer);
