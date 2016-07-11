@@ -35,7 +35,6 @@ public class DemographicsActivity extends AppCompatActivity implements
         // Setup layout
         super.onCreate(savedInstanceState);
         setContentView(R.layout.demographics);
-        Firebase.setAndroidContext(this);
 
         // Various fields for demographics
         // Age
@@ -80,11 +79,11 @@ public class DemographicsActivity extends AppCompatActivity implements
         start.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setAgeAnswer();                     // Grab text from edittext and set answer (may throw exception)
-                if (demographicsIsCompleted()) {    // Only submit if all fields finished
-
-                    confirmSubmission();
-
-                }
+//                if (demographicsIsCompleted()) {    // Only submit if all fields finished
+//
+//                    confirmSubmission();
+//
+//                }
                 //above if statement isn't working correctly so below is for testing purposes
                 confirmSubmission();
             }
@@ -151,6 +150,8 @@ public class DemographicsActivity extends AppCompatActivity implements
             userRef.child("ethnicity").setValue(ethnicity_answer);
             userRef.child("firstGenerationCollege").setValue(familyFirst_answer);
             userRef.child("yearInSchool").setValue(schoolYear_answer);
+
+            Log.d(demo_log_name, "Submitted Data");
         }
 
 
