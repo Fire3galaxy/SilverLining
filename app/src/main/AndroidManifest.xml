@@ -28,7 +28,7 @@
             android:label="@string/reference_activity" />
         <activity
             android:name=".activities.ResourceActivity"
-            android:label="@string/app_name" />
+            android:label="@string/resource_activity" />
         <activity android:name=".activities.QuizIntroActivity"
             android:label="@string/quizintro_activity"
             android:theme="@style/AppTheme"/>

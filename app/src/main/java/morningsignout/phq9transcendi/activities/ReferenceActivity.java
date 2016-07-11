@@ -40,19 +40,15 @@ public class ReferenceActivity extends AppCompatActivity {
 
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 String url = "http://morningsignout.com";
-
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
-
             }
         });
 
         homeButton = (Button)findViewById(R.id.back_button);
         homeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(ReferenceActivity.this, MainActivity.class);
-                startActivity(intent);
                 finish();
             }
         });

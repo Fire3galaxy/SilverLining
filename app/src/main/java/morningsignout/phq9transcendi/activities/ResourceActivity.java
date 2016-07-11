@@ -2,6 +2,8 @@ package morningsignout.phq9transcendi.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 
 import morningsignout.phq9transcendi.R;
 
@@ -13,7 +15,13 @@ public class ResourceActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.resource_view);
+
+        Button homeButton = (Button)findViewById(R.id.back_button);
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }
