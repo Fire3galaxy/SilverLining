@@ -4,10 +4,13 @@
     <!--Activity names/test code-->
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_quiz">Quiz Activity</string>
-    <string name="resource_activity">Resource Activity</string>
-    <string name="quizintro_activity">Quiz Intro Activity</string>
-    <string name="results_activity">Results Activity</string>
+    <string name="quiz_activity">Quiz</string>
+    <string name="resource_activity">Resources</string>
+    <string name="reference_activity">References</string>
+    <string name="quizintro_activity">Introduction</string>
+    <string name="demographics_intro_activity">Demographics</string>
+    <string name="demographics_activity">Demographics</string>
+    <string name="results_activity">Results</string>
 
     <!--XML Layout strings-->
     <string name="main_menu_text">PHQ9 Transcendi Quiz Beta</string>

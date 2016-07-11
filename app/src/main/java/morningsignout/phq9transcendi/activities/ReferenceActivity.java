@@ -24,7 +24,6 @@ public class ReferenceActivity extends AppCompatActivity {
     Button homeButton;
     ReferenceAdapter referenceCustomAdapter;
     LinearLayout linearLayout;
-    Context c;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

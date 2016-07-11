@@ -25,7 +25,7 @@
         </activity>
         <activity
             android:name=".activities.ReferenceActivity"
-            android:label="@string/app_name" />
+            android:label="@string/reference_activity" />
         <activity
             android:name=".activities.ResourceActivity"
             android:label="@string/app_name" />
@@ -34,13 +34,13 @@
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".activities.DemographicsIntroActivity"
-            android:label="Demographics" />
+            android:label="@string/demographics_intro_activity" />
         <activity
             android:name=".activities.DemographicsActivity"
-            android:label="Demographics"/>
+            android:label="@string/demographics_activity"/>
         <activity
             android:name=".activities.QuizActivity"
-            android:label="Quiz"
+            android:label="@string/quiz_activity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

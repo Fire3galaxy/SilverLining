@@ -64,8 +64,7 @@ public class QuizActivity extends AppCompatActivity
         setContentView(R.layout.activity_quiz);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Create an instance of GoogleAPIClient.
-        if (mGoogleApiClient == null) {
+        if (mGoogleApiClient == null) { // Create an instance of GoogleAPIClient.
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
