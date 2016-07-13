@@ -22,7 +22,7 @@ public class ResourceActivity extends AppCompatActivity {
         homeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(ResourceActivity.this, IndexActivity.class);
-                ResourceActivity.this.startActivity(intent);
+                startActivity(intent);
             }
         });
     }
