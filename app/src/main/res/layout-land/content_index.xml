@@ -32,7 +32,7 @@
         android:id="@+id/startButton"
         android:padding="@dimen/text_button_padding"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/index_space" />
+        android:layout_above="@+id/resources_button" />
 
     <Button
         android:layout_width="wrap_content"
@@ -45,7 +45,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_below="@+id/startButton" />
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -58,5 +59,6 @@
         android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginStart="30dp"
-        android:layout_below="@+id/startButton" />
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>
