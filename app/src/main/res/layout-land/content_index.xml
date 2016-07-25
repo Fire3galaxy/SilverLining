@@ -32,7 +32,7 @@
         android:id="@+id/startButton"
         android:padding="@dimen/text_button_padding"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/resources_button" />
+        android:layout_above="@+id/resources_button"/>
 
     <Button
         android:layout_width="wrap_content"
