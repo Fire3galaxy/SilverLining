@@ -1,10 +1,16 @@
 package morningsignout.phq9transcendi.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
 import morningsignout.phq9transcendi.R;
 
 /**
@@ -48,5 +54,17 @@ public class DemographicsIntroActivity extends AppCompatActivity {
 
         // Make both buttons the same width for aesthetic
         continue_button.setWidth(skip_button.getMeasuredWidth());
+
+        // Blink scrollbar to indicate scrolling is possible
+        BlinkScrollView container = (BlinkScrollView) findViewById(R.id.container_demo_intro);
+        SharedPreferences preferences = getPreferences(0);
+        
+        if (container.canScrollVertically() && !preferences.contains("blink")) {
+            container.blinkScrollBar();
+
+            SharedPreferences.Editor editor = getPreferences(0).edit();
+            editor.putString("blink", "true");
+            editor.apply();
+        }
     }
 }
