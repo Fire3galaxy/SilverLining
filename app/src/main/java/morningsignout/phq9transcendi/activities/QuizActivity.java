@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +18,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.firebase.client.Firebase;
@@ -40,6 +43,7 @@ public class QuizActivity extends AppCompatActivity
     // Use String.format() with this to display current question
     private final String numberString = "%1$d/" + String.valueOf(NUM_QUESTIONS);
 
+    private ScrollView questionContainer;
     private TextView question, questionNumText; //The text of the question
     private AnswerSeekBar answerBar;
     private Button answerNo, answerYes;
@@ -83,6 +87,20 @@ public class QuizActivity extends AppCompatActivity
         containerButtons = (LinearLayout) findViewById(R.id.container_buttons);
         containerBarText = (LinearLayout) findViewById(R.id.container_bar_text);
 
+        // Auto-scroll up from bottom of scroll view (Only exists in landscape)
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            questionContainer = (ScrollView) findViewById(R.id.question_container);
+            question.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                @Override
+                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                    if (v.getHeight() > questionContainer.getHeight() && questionContainer.getHeight() > 0) {
+                        questionContainer.setScrollY(questionContainer.getMaxScrollAmount());
+                        questionContainer.fullScroll(View.FOCUS_UP);
+                    }
+                }
+            });
+        }
+
         questions = getResources().getStringArray(R.array.questions);
         answersNormal = getResources().getStringArray(R.array.answers_normal);
 
@@ -92,10 +110,9 @@ public class QuizActivity extends AppCompatActivity
                 .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
                         Intent backToMenu = new Intent(QuizActivity.this, IndexActivity.class);
-                        backToMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(backToMenu);
+                        finish();
                     }
                 }).setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
             @Override
@@ -201,14 +218,24 @@ public class QuizActivity extends AppCompatActivity
             answerBar.setVisibility(View.VISIBLE);
             containerBarText.setVisibility(View.VISIBLE);
             containerButtons.setVisibility(View.GONE);
+
+            if (questionContainer != null) {
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) questionContainer.getLayoutParams();
+                params.addRule(RelativeLayout.ABOVE, R.id.seekBar_quiz_answer);
+            }
         }
     }
 
     private void putButtons() {
-        if (answerBar.getVisibility() != View.GONE) {
-            answerBar.setVisibility(View.GONE);
-            containerBarText.setVisibility(View.GONE);
+        if (answerBar.getVisibility() != View.INVISIBLE) {
+            answerBar.setVisibility(View.INVISIBLE);
+            containerBarText.setVisibility(View.INVISIBLE);
             containerButtons.setVisibility(View.VISIBLE);
+
+            if (questionContainer != null) {
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) questionContainer.getLayoutParams();
+                params.addRule(RelativeLayout.ABOVE, R.id.container_buttons);
+            }
         }
     }
 
