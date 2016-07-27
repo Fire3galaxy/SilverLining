@@ -8,7 +8,7 @@
     tools:context=".activities.QuizActivity"
     tools:showIn="@layout/activity_quiz">
 
-    <ScrollView
+    <morningsignout.phq9transcendi.activities.BlinkScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_centerHorizontal="true"
@@ -19,7 +19,9 @@
         android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:id="@+id/question_container">
+        android:id="@+id/question_container"
+        android:scrollbarFadeDuration="50"
+        android:scrollbarDefaultDelayBeforeFade="50">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +29,7 @@
             android:id="@+id/questionView"
             android:gravity="center_horizontal"
             android:textSize="@dimen/quiz_text_size"/>
-    </ScrollView>
+    </morningsignout.phq9transcendi.activities.BlinkScrollView>
 
     <morningsignout.phq9transcendi.activities.AnswerSeekBar
         android:layout_width="@dimen/seekbar_width"

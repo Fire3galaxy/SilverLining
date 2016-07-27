@@ -9,8 +9,8 @@
         android:layout_alignParentTop="true"
         android:layout_above="@+id/button_start_quiz"
         android:id="@+id/container_quiz_intro"
-        android:scrollbarFadeDuration="@dimen/scrollbar_blink_rate"
-        android:scrollbarDefaultDelayBeforeFade="@dimen/scrollbar_blink_rate">
+        android:scrollbarFadeDuration="50"
+        android:scrollbarDefaultDelayBeforeFade="50">
 
         <TextView
             android:layout_width="match_parent"

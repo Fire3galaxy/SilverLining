@@ -2,7 +2,6 @@
     <dimen name="text_button_padding">15dp</dimen>
     <dimen name="quiz_text_size">24sp</dimen>
     <dimen name="seekbar_width">400dp</dimen>
-    <dimen name="scrollbar_blink_rate">50</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>

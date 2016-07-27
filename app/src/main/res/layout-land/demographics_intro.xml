@@ -10,8 +10,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/button_continue_demo"
-        android:scrollbarDefaultDelayBeforeFade="@dimen/scrollbar_blink_rate"
-        android:scrollbarFadeDuration="@dimen/scrollbar_blink_rate">
+        android:scrollbarDefaultDelayBeforeFade="50"
+        android:scrollbarFadeDuration="50">
 
         <TextView
             android:layout_width="match_parent"

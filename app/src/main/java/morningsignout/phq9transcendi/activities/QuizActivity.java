@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
@@ -19,7 +20,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.firebase.client.Firebase;
@@ -36,29 +36,27 @@ import morningsignout.phq9transcendi.R;
 public class QuizActivity extends AppCompatActivity
         implements ImageButton.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final String LOG_NAME = "QuizActivity";
-    private static final int RED_FLAG_QUESTION = 17;
-    private static final int NUM_QUESTIONS = 21;
-    private static final int UPDATE_GOOGLE = 1;
+    private static final int RED_FLAG_QUESTION = 16;    // zero-based number
+    private static final int NUM_QUESTIONS = 21;        // total number of questions
+    private static final String SAVE_TIMESTAMP = "Timestamp", SAVE_QUESTION_NUM = "Question Number";
 
     // Use String.format() with this to display current question
     private final String numberString = "%1$d/" + String.valueOf(NUM_QUESTIONS);
 
-    private ScrollView questionContainer;
-    private TextView question, questionNumText; //The text of the question
+    private BlinkScrollView questionContainer;
+    private TextView questionTextView, questionNumText; //The text of the question
     private AnswerSeekBar answerBar;
     private Button answerNo, answerYes;
-    private ImageButton next, prev;
+    private ImageButton nextArrow, prevArrow;
     private LinearLayout containerButtons, containerBarText;
 
-    private String[] questions;
-    private String[] answersNormal;
+    private String[] questionArray;
 
     private String startTimestamp, endTimestamp;
     private double latitude = 0, longitude = 0;
-    private Scores scores;  // Used for answering questions
-    private boolean quizDone; //If all questions are answered
-    private int questionNumber; //which question the user is on
-    private AlertDialog.Builder dialogBuilder;
+    private Scores scores;                          // Used for keeping track of score
+    private int questionNumber;                     // Which question the user is on (zero-based)
+    private AlertDialog.Builder dialogBuilder;      // To confirm user wants to quit
     private GoogleApiClient mGoogleApiClient;
     private ReentrantLock gpsLock = new ReentrantLock();
 
@@ -77,32 +75,38 @@ public class QuizActivity extends AppCompatActivity
         }
 
         //Grab and set content; inital setup
-        question = (TextView) findViewById(R.id.questionView);
+        SharedPreferences preferences = getPreferences(0);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            questionContainer = (BlinkScrollView) findViewById(R.id.question_container);
+        questionTextView = (TextView) findViewById(R.id.questionView);
         questionNumText = (TextView) findViewById(R.id.textView_question_number);
         answerBar = (AnswerSeekBar) findViewById(R.id.seekBar_quiz_answer);
         answerNo = (Button) findViewById(R.id.button_answer_no);
         answerYes = (Button) findViewById(R.id.button_answer_yes);
-        next = (ImageButton) findViewById(R.id.imageButton_nextq);
-        prev = (ImageButton) findViewById(R.id.imageButton_prevq);
+        nextArrow = (ImageButton) findViewById(R.id.imageButton_nextq);
+        prevArrow = (ImageButton) findViewById(R.id.imageButton_prevq);
         containerButtons = (LinearLayout) findViewById(R.id.container_buttons);
         containerBarText = (LinearLayout) findViewById(R.id.container_bar_text);
 
-        // Auto-scroll up from bottom of scroll view (Only exists in landscape)
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            questionContainer = (ScrollView) findViewById(R.id.question_container);
-            question.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+        // Blink scrollbar in scrollview for long questions (Only exists in landscape, do only once)
+        if (questionContainer != null && !preferences.contains("blink")) {
+            questionTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                 @Override
                 public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                    if (v.getHeight() > questionContainer.getHeight() && questionContainer.getHeight() > 0) {
-                        questionContainer.setScrollY(questionContainer.getMaxScrollAmount());
-                        questionContainer.fullScroll(View.FOCUS_UP);
+                    if (questionTextView.getHeight() > questionContainer.getHeight() && questionContainer.getHeight() > 0) {
+                        questionContainer.blinkScrollBar();
+
+                        SharedPreferences.Editor editor = getPreferences(0).edit();
+                        editor.putString("blink", "true");
+                        editor.apply();
+                        questionTextView.removeOnLayoutChangeListener(this);
                     }
                 }
             });
         }
 
-        questions = getResources().getStringArray(R.array.questions);
-        answersNormal = getResources().getStringArray(R.array.answers_normal);
+        questionArray = getResources().getStringArray(R.array.questions);
 
         dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setTitle(R.string.app_name)
@@ -110,6 +114,8 @@ public class QuizActivity extends AppCompatActivity
                 .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        clearPreferences();
+
                         Intent backToMenu = new Intent(QuizActivity.this, IndexActivity.class);
                         startActivity(backToMenu);
                         finish();
@@ -123,15 +129,25 @@ public class QuizActivity extends AppCompatActivity
 
         reset();
 
+//        //Reinitialize state variables
+//        if (preferences.contains(SAVE_TIMESTAMP)) {
+//            startTimestamp = preferences.getString(SAVE_TIMESTAMP, getTimestamp());
+//            Log.d(LOG_NAME, String.valueOf(preferences.getInt(SAVE_QUESTION_NUM, 1)));
+//        } else {
+            startTimestamp = getTimestamp();
+//            // reset();
+//        }
+
         // Set all buttons to onClickListener function here
-        next.setOnClickListener(this);
-        prev.setOnClickListener(this);
+        nextArrow.setOnClickListener(this);
+        prevArrow.setOnClickListener(this);
         answerNo.setOnClickListener(this);
         answerYes.setOnClickListener(this);
 
         //Everything is set up, start quiz
-        startQuiz();
-        startTimestamp = getTimestamp();
+        handleQuiz(true);
+
+//        Log.d(LOG_NAME, startTimestamp);
     }
 
     @Override
@@ -147,37 +163,52 @@ public class QuizActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Save answers and state variables
+        SharedPreferences.Editor editor = getPreferences(0).edit();
+        editor.putString(SAVE_TIMESTAMP, startTimestamp);
+        editor.putInt(SAVE_QUESTION_NUM, questionNumber);
+        editor.apply();
+    }
+
+    @Override
     public void onBackPressed() {
         dialogBuilder.create().show();
     }
 
     private void reset() {
+        clearPreferences();
+
         scores = new Scores();
-        quizDone = false;
-        questionNumber = 1;
+        questionNumber = -1;
         answerBar.setProgress(0);
         containerButtons.setVisibility(View.GONE);
         containerBarText.setVisibility(View.VISIBLE);
         questionNumText.setText(String.format(numberString, 1));
-
-        for (int i = 0; i < containerBarText.getChildCount(); i++)
-            ((TextView) containerBarText.getChildAt(i)).setText(answersNormal[i]);
     }
 
-    private void startQuiz() {
-        if (!quizDone) {
-            updateQuestions();
+    // Calls all functions to change question. NextQuestion determines if questionNumber increases/decreases.
+    private void handleQuiz(boolean nextQuestion) {
+        if (nextQuestion) {
             questionNumber++;
-            if (questionNumber > NUM_QUESTIONS)
-                quizDone = true;
+
+            if (questionNumber == NUM_QUESTIONS)
+                finishQuiz();
+            else
+                updateQuestions();
         } else {
-            finishQuiz();
+            questionNumber--;
+            updateQuestions();
         }
     }
 
     private void finishQuiz() {
         endTimestamp = getTimestamp();
         uploadToDatabase();
+
+        clearPreferences();
 
         Intent results = new Intent(this, ResultsActivity.class);
         results.putExtra(ResultsActivity.SCORE, scores.getFinalScore());
@@ -187,29 +218,30 @@ public class QuizActivity extends AppCompatActivity
     }
 
     private void updateQuestions() {
-        question.setText(questions[questionNumber - 1]);    // Question text
-        questionNumText.setText(String.format(numberString, questionNumber));   // Question #
+        questionTextView.setText(questionArray[questionNumber]);                    // Question text
+        questionNumText.setText(String.format(numberString, questionNumber + 1));   // Question #
 
-        if (questionNumber < RED_FLAG_QUESTION)
+        if (questionNumber < RED_FLAG_QUESTION)         // Normal questions (Use bar)
             putSeekBar();
-        else if (questionNumber >= RED_FLAG_QUESTION)
+        else if (questionNumber >= RED_FLAG_QUESTION)   // Red flag questions (Use buttons)
             putButtons();
 
-        if (scores.questionIsVisited(questionNumber - 1))
-            answerBar.setAnswer(scores.getQuestionScore(questionNumber - 1));   // Previously saved answer
+        // Show previously saved answer if previous button is clicked
+        if (scores.questionIsVisited(questionNumber))
+            answerBar.setAnswer(scores.getQuestionScore(questionNumber));
 
         // Hide previous button on first question
-        if (questionNumber == 1)
-            prev.setVisibility(View.INVISIBLE);
-        else if (prev.getVisibility() != View.VISIBLE)
-            prev.setVisibility(View.VISIBLE);
+        if (questionNumber == 0)
+            prevArrow.setVisibility(View.INVISIBLE);
+        else if (prevArrow.getVisibility() != View.VISIBLE)
+            prevArrow.setVisibility(View.VISIBLE);
 
-        // Hide next button on red flag questions unless already answered
+        // Hide nextArrow button on red flag questions unless already answered
         if (questionNumber >= RED_FLAG_QUESTION
-                && (questionNumber == NUM_QUESTIONS || !scores.questionIsVisited(questionNumber - 1)))
-            next.setVisibility(View.INVISIBLE);
-        else if (next.getVisibility() != View.VISIBLE)
-            next.setVisibility(View.VISIBLE);
+                && (questionNumber + 1 == NUM_QUESTIONS || !scores.questionIsVisited(questionNumber)))
+            nextArrow.setVisibility(View.INVISIBLE);
+        else if (nextArrow.getVisibility() != View.VISIBLE)
+            nextArrow.setVisibility(View.VISIBLE);
     }
 
     private void putSeekBar() {
@@ -239,9 +271,8 @@ public class QuizActivity extends AppCompatActivity
         }
     }
 
-    private void addScore(int value) {
-        // Question - 2 because the number is set to the next question and starts at base 1
-        scores.putScore(questionNumber - 2, value);
+    private void addScore(int questionNumber, int value) {
+        scores.putScore(questionNumber, value);
     }
 
     // Uploads score data to Firebase. If no user ID exists, creates and stores one
@@ -260,29 +291,22 @@ public class QuizActivity extends AppCompatActivity
         Log.d("QuizActivity", "Finished writing data");
     }
 
-    // Which view was clicked: arrows (next/prev) or buttons (yes/no)
+    // Which view was clicked: arrows (nextArrow/prevArrow) or buttons (yes/no)
     @Override
     public void onClick(View v) {
-        if (v.equals(next)) {
-            if (questionNumber - 1 < RED_FLAG_QUESTION)
-                addScore(answerBar.getAnswer());
+        if (v.equals(nextArrow)) {
+            if (questionNumber < RED_FLAG_QUESTION)
+                addScore(questionNumber, answerBar.getAnswer());
 
-            startQuiz();
-        } else if (v.equals(prev)) {
-            // Question - 2 because the number is set to the next question, not the current question
-            questionNumber = Math.max(1, questionNumber - 2);
-
-            // reset quizDone flag if not complete
-            if (questionNumber < NUM_QUESTIONS)
-                quizDone = false;
-
-            startQuiz();
+            handleQuiz(true);
+        } else if (v.equals(prevArrow)) {
+            handleQuiz(false);
         } else if (v.equals(answerNo)) {
-            addScore(0);
-            startQuiz();
+            addScore(questionNumber, 0);
+            handleQuiz(true);
         } else if (v.equals(answerYes)) {
-            addScore(1);
-            startQuiz();
+            addScore(questionNumber, 1);
+            handleQuiz(true);
         }
     }
 
@@ -308,6 +332,13 @@ public class QuizActivity extends AppCompatActivity
         timestamp += minute;
 
         return timestamp;
+    }
+
+    void clearPreferences() {
+        SharedPreferences.Editor editor = getPreferences(0).edit();
+        editor.remove(SAVE_TIMESTAMP);
+        editor.remove(SAVE_QUESTION_NUM);
+        editor.apply();
     }
 
     @Override

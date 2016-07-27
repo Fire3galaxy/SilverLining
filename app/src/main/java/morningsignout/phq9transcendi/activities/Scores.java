@@ -86,9 +86,9 @@ public class Scores {
         }
     }
 
-    public void putScore(int i, int value) {
-        scoreDictionary.put(questions[i], value);
-        questionIsVisited.put(questions[i], true);
+    public void putScore(int index, int value) {
+        scoreDictionary.put(questions[index], value);
+        questionIsVisited.put(questions[index], true);
     }
 
     // Note: use to access by index (for (int i = 0; i < questions.length; i++) {})
@@ -170,20 +170,20 @@ public class Scores {
                 questionsRef = ref.child("questions-analytics");
         String testID = testRef.getKey();
 
-//        // Questions analytics
-//        for (String q : questions) {
-//            StringBuilder path = new StringBuilder();
-//            int currAnswer = scoreDictionary.get(q);
-//
-//            // question/answer-#/userID/"testID"
-//            path.append(q).append("/")
-//                    .append(answers[currAnswer]).append("/")
-//                    .append(userID).append("/")
-//                    .append("testID");
-//
-//            // add "new val":testID to database
-//            questionsRef.child(path.toString()).push().setValue(testID);
-//        }
+        // Questions analytics
+        for (String q : questions) {
+            StringBuilder path = new StringBuilder();
+            int currAnswer = scoreDictionary.get(q);
+
+            // question/answer-#/userID/"testID"
+            path.append(q).append("/")
+                    .append(answers[currAnswer]).append("/")
+                    .append(userID).append("/")
+                    .append("testID");
+
+            // add "new val":testID to database
+            questionsRef.child(path.toString()).push().setValue(testID);
+        }
 
         // Users
         userRef.child("testIDs").push().setValue(testID);
@@ -194,11 +194,9 @@ public class Scores {
         for (String q : questions)
             answers.add(scoreDictionary.get(q));
 
-        // FIXME Should have been using categoryNames array to distinguish 10 categories. Fix getCategoryScore too
         for (int i = 0; i < categoryNames.length; i++)
             scores.put(categoryNames[i], getCategoryScore(i));
 
-        Log.d("Scores", "HERE");
         testRef.child("startTimestamp").setValue(startTime);
         testRef.child("endTimestamp").setValue(endTime);
         testRef.child("latitude").setValue(latitude);
