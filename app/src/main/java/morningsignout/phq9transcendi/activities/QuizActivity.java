@@ -51,11 +51,12 @@ public class QuizActivity extends AppCompatActivity
     private LinearLayout containerButtons, containerBarText;
 
     private String[] questionArray;
-
     private String startTimestamp, endTimestamp;
     private double latitude = 0, longitude = 0;
     private Scores scores;                          // Used for keeping track of score
     private int questionNumber;                     // Which question the user is on (zero-based)
+    private boolean aboveButtonsFlag;               // Landscape: change height of question view
+    private boolean aboveSeekbarFlag;               // Landscape: change height of question view
     private AlertDialog.Builder dialogBuilder;      // To confirm user wants to quit
     private GoogleApiClient mGoogleApiClient;
     private ReentrantLock gpsLock = new ReentrantLock();
@@ -106,15 +107,16 @@ public class QuizActivity extends AppCompatActivity
             });
         }
 
+        aboveButtonsFlag = false;
+        aboveSeekbarFlag = false;
         questionArray = getResources().getStringArray(R.array.questions);
-
         dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setTitle(R.string.app_name)
                 .setMessage(R.string.dialog_quit_questionnaire)
                 .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        clearPreferences();
+                        clearPreferences(); // FIXME: Remove this later for the "continue next time" feature
 
                         Intent backToMenu = new Intent(QuizActivity.this, IndexActivity.class);
                         startActivity(backToMenu);
@@ -127,27 +129,28 @@ public class QuizActivity extends AppCompatActivity
             }
         });
 
-        reset();
+        //Reinitialize state variables
+        if (preferences.contains(SAVE_TIMESTAMP)) {
+            startTimestamp = preferences.getString(SAVE_TIMESTAMP, getTimestamp());
+            questionNumber = preferences.getInt(SAVE_QUESTION_NUM, 1);
+            scores = new Scores();
+            answerBar.setProgress(scores.getQuestionScore(questionNumber));
 
-//        //Reinitialize state variables
-//        if (preferences.contains(SAVE_TIMESTAMP)) {
-//            startTimestamp = preferences.getString(SAVE_TIMESTAMP, getTimestamp());
-//            Log.d(LOG_NAME, String.valueOf(preferences.getInt(SAVE_QUESTION_NUM, 1)));
-//        } else {
+            setQuestion(questionNumber);    // Everything is set up, start quiz
+        } else {
             startTimestamp = getTimestamp();
-//            // reset();
-//        }
+            questionNumber = -1;
+            scores = new Scores();
+            answerBar.setProgress(0);
+
+            handleQuiz(true);               // Everything is set up, start quiz
+        }
 
         // Set all buttons to onClickListener function here
         nextArrow.setOnClickListener(this);
         prevArrow.setOnClickListener(this);
         answerNo.setOnClickListener(this);
         answerYes.setOnClickListener(this);
-
-        //Everything is set up, start quiz
-        handleQuiz(true);
-
-//        Log.d(LOG_NAME, startTimestamp);
     }
 
     @Override
@@ -178,17 +181,6 @@ public class QuizActivity extends AppCompatActivity
         dialogBuilder.create().show();
     }
 
-    private void reset() {
-        clearPreferences();
-
-        scores = new Scores();
-        questionNumber = -1;
-        answerBar.setProgress(0);
-        containerButtons.setVisibility(View.GONE);
-        containerBarText.setVisibility(View.VISIBLE);
-        questionNumText.setText(String.format(numberString, 1));
-    }
-
     // Calls all functions to change question. NextQuestion determines if questionNumber increases/decreases.
     private void handleQuiz(boolean nextQuestion) {
         if (nextQuestion) {
@@ -200,6 +192,13 @@ public class QuizActivity extends AppCompatActivity
                 updateQuestions();
         } else {
             questionNumber--;
+            updateQuestions();
+        }
+    }
+
+    private void setQuestion(int questionNumber) {
+        if (questionNumber >= 0 && questionNumber < NUM_QUESTIONS) {
+            this.questionNumber = questionNumber;
             updateQuestions();
         }
     }
@@ -245,29 +244,38 @@ public class QuizActivity extends AppCompatActivity
     }
 
     private void putSeekBar() {
-        if (answerBar.getVisibility() != View.VISIBLE) {
-            answerBar.setProgress(0);
+        if (answerBar.getVisibility() != View.VISIBLE)
             answerBar.setVisibility(View.VISIBLE);
+        if (containerBarText.getVisibility() != View.VISIBLE)
             containerBarText.setVisibility(View.VISIBLE);
+        if (containerButtons.getVisibility() != View.GONE)
             containerButtons.setVisibility(View.GONE);
 
-            if (questionContainer != null) {
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) questionContainer.getLayoutParams();
-                params.addRule(RelativeLayout.ABOVE, R.id.seekBar_quiz_answer);
-            }
+        // Landscape only: above scrollbar
+        if (questionContainer != null && !aboveSeekbarFlag) {
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) questionContainer.getLayoutParams();
+            params.addRule(RelativeLayout.ABOVE, R.id.seekBar_quiz_answer);
+
+            aboveSeekbarFlag = true;
+            aboveButtonsFlag = false;
         }
     }
 
     private void putButtons() {
-        if (answerBar.getVisibility() != View.INVISIBLE) {
+        if (answerBar.getVisibility() != View.INVISIBLE)
             answerBar.setVisibility(View.INVISIBLE);
+        if (containerBarText.getVisibility() != View.INVISIBLE)
             containerBarText.setVisibility(View.INVISIBLE);
+        if (containerButtons.getVisibility() != View.VISIBLE)
             containerButtons.setVisibility(View.VISIBLE);
 
-            if (questionContainer != null) {
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) questionContainer.getLayoutParams();
-                params.addRule(RelativeLayout.ABOVE, R.id.container_buttons);
-            }
+        // Landscape only: above buttons
+        if (questionContainer != null && !aboveButtonsFlag) {
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) questionContainer.getLayoutParams();
+            params.addRule(RelativeLayout.ABOVE, R.id.container_buttons);
+
+            aboveButtonsFlag = true;
+            aboveSeekbarFlag = false;
         }
     }
 
