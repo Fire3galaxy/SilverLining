@@ -8,28 +8,33 @@
     tools:context=".activities.QuizActivity"
     tools:showIn="@layout/activity_quiz">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/quiz_activity"
-        android:id="@+id/questionView"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/seekBar_quiz_answer"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:gravity="center_horizontal"
-        android:textSize="@dimen/quiz_text_size" />
+        android:id="@+id/question_container"
+        android:layout_marginBottom="16dp"
+        android:paddingTop="10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/quiz_activity"
+            android:id="@+id/questionView"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/quiz_text_size"
+            android:paddingTop="20dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"/>
+    </ScrollView>
 
     <Space
         android:id="@+id/space_quiz"
         android:layout_width="0px"
-        android:layout_height="40dp"
+        android:layout_height="0px"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
@@ -37,17 +42,16 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:id="@+id/seekBar_quiz_answer"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_alignTop="@+id/space_quiz"
         android:layout_centerHorizontal="true"
         android:max="300"
         android:progress="0"
         android:progressDrawable="@drawable/custom_seekbar"
-        android:thumb="@android:color/transparent"/>
+        android:thumb="@android:color/transparent"
+        android:layout_below="@+id/space_quiz" />
 
     <LinearLayout
         android:id="@+id/container_bar_text"
@@ -105,14 +109,13 @@
         android:id="@+id/container_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_alignTop="@+id/space_quiz"
         android:layout_centerHorizontal="true"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:layout_alignBottom="@+id/container_bar_text">
 
         <Button
             android:id="@+id/button_answer_yes"

@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.firebase.client.Firebase;
@@ -38,12 +39,14 @@ public class QuizActivity extends AppCompatActivity
     private static final String LOG_NAME = "QuizActivity";
     private static final int RED_FLAG_QUESTION = 16;    // zero-based number
     private static final int NUM_QUESTIONS = 21;        // total number of questions
-    private static final String SAVE_TIMESTAMP = "Timestamp", SAVE_QUESTION_NUM = "Question Number";
+    private static final String SAVE_TIMESTAMP = "Timestamp", SAVE_QUESTION_NUM = "Question Number",
+        SAVE_SCORES_A = "Score Values", SAVE_SCORES_B = "Visit values",
+        SAVE_ABV_BTTNS = "aboveButtonsFlag", SAVE_ABV_SKBR = "aboveSeekbarFlag";
 
     // Use String.format() with this to display current question
     private final String numberString = "%1$d/" + String.valueOf(NUM_QUESTIONS);
 
-    private BlinkScrollView questionContainer;
+    private ScrollView questionContainer;
     private TextView questionTextView, questionNumText; //The text of the question
     private AnswerSeekBar answerBar;
     private Button answerNo, answerYes;
@@ -57,6 +60,7 @@ public class QuizActivity extends AppCompatActivity
     private int questionNumber;                     // Which question the user is on (zero-based)
     private boolean aboveButtonsFlag;               // Landscape: change height of question view
     private boolean aboveSeekbarFlag;               // Landscape: change height of question view
+    private boolean isFinishingFlag;                // Used in onPause() to save/not save
     private AlertDialog.Builder dialogBuilder;      // To confirm user wants to quit
     private GoogleApiClient mGoogleApiClient;
     private ReentrantLock gpsLock = new ReentrantLock();
@@ -78,8 +82,6 @@ public class QuizActivity extends AppCompatActivity
         //Grab and set content; inital setup
         SharedPreferences preferences = getPreferences(0);
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-            questionContainer = (BlinkScrollView) findViewById(R.id.question_container);
         questionTextView = (TextView) findViewById(R.id.questionView);
         questionNumText = (TextView) findViewById(R.id.textView_question_number);
         answerBar = (AnswerSeekBar) findViewById(R.id.seekBar_quiz_answer);
@@ -90,25 +92,21 @@ public class QuizActivity extends AppCompatActivity
         containerButtons = (LinearLayout) findViewById(R.id.container_buttons);
         containerBarText = (LinearLayout) findViewById(R.id.container_bar_text);
 
-        // Blink scrollbar in scrollview for long questions (Only exists in landscape, do only once)
-        if (questionContainer != null && !preferences.contains("blink")) {
-            questionTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                @Override
-                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                    if (questionTextView.getHeight() > questionContainer.getHeight() && questionContainer.getHeight() > 0) {
-                        questionContainer.blinkScrollBar();
-
-                        SharedPreferences.Editor editor = getPreferences(0).edit();
-                        editor.putString("blink", "true");
-                        editor.apply();
-                        questionTextView.removeOnLayoutChangeListener(this);
-                    }
+        // Auto-scroll up from bottom of scroll view
+        questionContainer = (ScrollView) findViewById(R.id.question_container);
+        questionTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if (v.getHeight() > questionContainer.getHeight() && questionContainer.getHeight() > 0) {
+                    questionContainer.setScrollY(questionContainer.getMaxScrollAmount());
+                    questionContainer.fullScroll(View.FOCUS_UP);
                 }
-            });
-        }
+            }
+        });
 
         aboveButtonsFlag = false;
         aboveSeekbarFlag = false;
+        isFinishingFlag = false;
         questionArray = getResources().getStringArray(R.array.questions);
         dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setTitle(R.string.app_name)
@@ -116,32 +114,38 @@ public class QuizActivity extends AppCompatActivity
                 .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        clearPreferences(); // FIXME: Remove this later for the "continue next time" feature
-
                         Intent backToMenu = new Intent(QuizActivity.this, IndexActivity.class);
                         startActivity(backToMenu);
                         finish();
                     }
                 }).setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-            }
-        });
+                    }
+                });
 
         //Reinitialize state variables
         if (preferences.contains(SAVE_TIMESTAMP)) {
             startTimestamp = preferences.getString(SAVE_TIMESTAMP, getTimestamp());
-            questionNumber = preferences.getInt(SAVE_QUESTION_NUM, 1);
-            scores = new Scores();
-            answerBar.setProgress(scores.getQuestionScore(questionNumber));
+            int questionNumber = preferences.getInt(SAVE_QUESTION_NUM, 0);
+            String scoresA = preferences.getString(SAVE_SCORES_A, null);
+            String scoresB = preferences.getString(SAVE_SCORES_B, null);
+            scores = new Scores(scoresA, scoresB);
+
+            Log.d(LOG_NAME, String.valueOf(startTimestamp));
+            Log.d(LOG_NAME, String.valueOf(questionNumber));
+            Log.d(LOG_NAME, String.valueOf(scoresA));
+            Log.d(LOG_NAME, String.valueOf(scoresB));
+            scores.getFinalScore();
 
             setQuestion(questionNumber);    // Everything is set up, start quiz
-        } else {
+        }
+        else {
             startTimestamp = getTimestamp();
             questionNumber = -1;
             scores = new Scores();
-            answerBar.setProgress(0);
+            answerBar.setAnswer(0);
 
             handleQuiz(true);               // Everything is set up, start quiz
         }
@@ -170,10 +174,10 @@ public class QuizActivity extends AppCompatActivity
         super.onPause();
 
         // Save answers and state variables
-        SharedPreferences.Editor editor = getPreferences(0).edit();
-        editor.putString(SAVE_TIMESTAMP, startTimestamp);
-        editor.putInt(SAVE_QUESTION_NUM, questionNumber);
-        editor.apply();
+        if (!isFinishingFlag) {
+            savePreferences();
+            Log.d(LOG_NAME, "Saving!");
+        }
     }
 
     @Override
@@ -208,6 +212,7 @@ public class QuizActivity extends AppCompatActivity
         uploadToDatabase();
 
         clearPreferences();
+        isFinishingFlag = true;
 
         Intent results = new Intent(this, ResultsActivity.class);
         results.putExtra(ResultsActivity.SCORE, scores.getFinalScore());
@@ -346,6 +351,17 @@ public class QuizActivity extends AppCompatActivity
         SharedPreferences.Editor editor = getPreferences(0).edit();
         editor.remove(SAVE_TIMESTAMP);
         editor.remove(SAVE_QUESTION_NUM);
+        editor.remove(SAVE_SCORES_A);
+        editor.remove(SAVE_SCORES_B);
+        editor.apply();
+    }
+
+    void savePreferences() {
+        SharedPreferences.Editor editor = getPreferences(0).edit();
+        editor.putString(SAVE_TIMESTAMP, startTimestamp);
+        editor.putInt(SAVE_QUESTION_NUM, questionNumber);
+        editor.putString(SAVE_SCORES_A, scores.getScoreString());
+        editor.putString(SAVE_SCORES_B, scores.getVisitedString());
         editor.apply();
     }
 
