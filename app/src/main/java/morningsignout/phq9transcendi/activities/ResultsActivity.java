@@ -103,10 +103,10 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
                 .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
                         Intent backToMenu = new Intent(ResultsActivity.this, IndexActivity.class);
                         backToMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(backToMenu);
+                        finish();
                     }
                 }).setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
             @Override
@@ -114,6 +114,21 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
+
+        // Restore state
+        if (savedInstanceState != null) {
+            screenNumber = savedInstanceState.getInt("Screen Number", 0);
+            if (screenNumber > 0) {
+                screenNumber--;
+                onClick(null);
+            }
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("Screen Number", screenNumber);
     }
 
     @Override
@@ -142,6 +157,16 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
                 screenNumber = 1;
                 break;
             case 1:
+                // Remove unneeded views (in case of config changes)
+                if (scoreContainer != null)
+                    scoreContainer.setVisibility(View.GONE);
+                else {
+                    allDoneText.setVisibility(View.GONE);
+                    scoreText.setVisibility(View.GONE);
+                    redFlagText.setVisibility(View.GONE);
+                    scoreFan.setVisibility(View.GONE);
+                }
+
                 blinkScrollView.setScrollY(0);
                 detailsText.setText(getResources().getText(R.string.wrap_up_text));
                 finishUpButton.setText(getResources().getText(R.string.take_me_home));
