@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -110,7 +109,7 @@ public class QuizActivity extends AppCompatActivity
         questionArray = getResources().getStringArray(R.array.questions);
         dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setTitle(R.string.app_name)
-                .setMessage(R.string.dialog_quit_questionnaire)
+                .setMessage(R.string.dialog_quit_quiz)
                 .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

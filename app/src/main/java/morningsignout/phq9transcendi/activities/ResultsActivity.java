@@ -109,11 +109,11 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
                         finish();
                     }
                 }).setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-            }
-        });
+                    }
+                });
 
         // Restore state
         if (savedInstanceState != null) {
