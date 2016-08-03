@@ -9,11 +9,10 @@ import android.widget.ScrollView;
  * Created by pokeforce on 7/26/16.
  */
 public class BlinkScrollView extends ScrollView {
-    private static final int FADE_DURATION = 50;
-
     public BlinkScrollView(Context context) {
         super(context);
         setVerticalScrollBarEnabled(true);
+
     }
 
     public BlinkScrollView(Context context, AttributeSet attrs) {

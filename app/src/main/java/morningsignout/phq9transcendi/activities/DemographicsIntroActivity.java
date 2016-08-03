@@ -57,14 +57,8 @@ public class DemographicsIntroActivity extends AppCompatActivity {
 
         // Blink scrollbar to indicate scrolling is possible
         BlinkScrollView container = (BlinkScrollView) findViewById(R.id.container_demo_intro);
-        SharedPreferences preferences = getPreferences(0);
         
-        if (container.canScrollVertically() && !preferences.contains("blink")) {
+        if (container.canScrollVertically())
             container.blinkScrollBar();
-
-            SharedPreferences.Editor editor = getPreferences(0).edit();
-            editor.putString("blink", "true");
-            editor.apply();
-        }
     }
 }

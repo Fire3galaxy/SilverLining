@@ -181,6 +181,16 @@ public class QuizActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Ensure that state is NOT kept for bar if I don't want it to
+        SharedPreferences preferences = getPreferences(0);
+        if (!preferences.contains(SAVE_TIMESTAMP))
+            answerBar.setAnswer(0);
+    }
+
+    @Override
     public void onBackPressed() {
         dialogBuilder.create().show();
     }

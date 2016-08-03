@@ -75,15 +75,18 @@
             android:id="@+id/textView_red_flag"
             android:textColor="#ff0031"
             android:textSize="20sp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
 
     </LinearLayout>
 
-    <ScrollView
+    <morningsignout.phq9transcendi.activities.BlinkScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView"
-        android:layout_above="@+id/button_finish_up">
+        android:id="@+id/container_detail"
+        android:layout_above="@+id/button_finish_up"
+        style="@style/BlinkScrollViewStyle">
 
         <TextView
             android:layout_width="match_parent"
@@ -99,6 +102,6 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp" />
 
-    </ScrollView>
+    </morningsignout.phq9transcendi.activities.BlinkScrollView>
 
 </RelativeLayout>
