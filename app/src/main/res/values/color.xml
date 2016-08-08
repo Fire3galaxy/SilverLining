@@ -11,4 +11,21 @@
     <color name="light_blue">#FFd1d1d1</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFffffff</color>
+
+    <!-- ICE THEME -->
+    <color name="downy">#66cccc</color>
+    <color name="iceberg">#d2f0ee</color>
+    <color name="jungle_mist">#a2ccca</color>
+    <color name="bay_breaker">#4a9999</color>
+    <color name="timber_green">#112625</color>
+
+    <!-- CASHMERE THEME -->
+    <color name="cashmere">#e4b4a1</color>
+    <color name="white_linen">#faf0ec</color>
+    <color name="wafer">#e0d1cb</color>
+    <color name="burnt_sienna">#e8865e</color>
+    <color name="cork">#3a2118</color>
+
+
+
 </resources>

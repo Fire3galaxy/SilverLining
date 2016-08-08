@@ -2,6 +2,8 @@ package morningsignout.phq9transcendi.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +16,10 @@ import android.widget.Button;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.snapshot.Index;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -23,11 +29,19 @@ import morningsignout.phq9transcendi.R;
 public class IndexActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "PHQ9 Preference File";
 
-    Button resourceButton, refButton;
+    Button resourceButton, refButton, themeButton;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+        */
+        private GoogleApiClient client;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        // Set up layout and toolbar
+        private static int sTheme = 0;
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            // Set up layout and toolbar
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -60,6 +74,17 @@ public class IndexActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        themeButton = (Button) findViewById(R.id.themeButton);
+        themeButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                sTheme = (sTheme + 1) % 2;
+                Utils.changeToTheme(IndexActivity.this);
+            }
+        });
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -119,6 +144,7 @@ public class IndexActivity extends AppCompatActivity {
 
                     Log.d("IndexActivity", "User ID: " + authData.getUid());
                 }
+
                 @Override
                 public void onAuthenticationError(FirebaseError firebaseError) {
                     // there was an error, just don't send demographics
@@ -129,4 +155,59 @@ public class IndexActivity extends AppCompatActivity {
             Log.d("IndexActivity", "Login already exists: " + preferences.getString(FirebaseExtras.USER_ID, ""));
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Index Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://morningsignout.phq9transcendi/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Index Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://morningsignout.phq9transcendi/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+    }
+
+
+//    public void SaveTheme(String key, int theme) {
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        SharedPreferences.Editor editor = preferences.edit();
+//        editor.putInt(key, theme);
+//        editor.apply();
+//    }
+//
+//    public int GetTheme() {
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        int theme = preferences.getInt("theme", 0);
+//        return theme;
+//    }
+
 }

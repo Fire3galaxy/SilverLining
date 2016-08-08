@@ -59,4 +59,12 @@
         android:layout_alignTop="@id/startButton"
         android:layout_marginTop="110dp"
         android:layout_marginLeft="30dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="change theme"
+        android:id="@+id/themeButton"
+        android:layout_above="@+id/index_space"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

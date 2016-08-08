@@ -3,12 +3,24 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:textColor">@color/text_light</item>
-        <item name="colorPrimary">@color/red</item>
-        <item name="android:windowBackground">@color/background_dark</item>
-        <item name="android:colorBackground">@color/background_dark</item>
+        <item name="android:textColor">@color/timber_green</item>
+        <item name="colorPrimary">@color/downy</item>
+        <item name="android:windowBackground">@color/iceberg</item>
+        <item name="android:colorBackground">@color/iceberg</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>
-        <item name="android:buttonStyle">@style/ButtonAppTheme</item>
+        <item name="android:buttonStyle">@style/IceButtonAppTheme</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+    </style>
+
+    <style name="CashmereAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/cork</item>
+        <item name="colorPrimary">@color/cashmere</item>
+        <item name="android:windowBackground">@color/white_linen</item>
+        <item name="android:colorBackground">@color/white_linen</item>
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="android:buttonStyle">@style/CashmereButtonAppTheme</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
@@ -28,9 +40,19 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="ButtonAppTheme" parent="android:Widget.Holo.Light.Button">
-        <item name="android:background">@drawable/button_style</item>
-        <item name="android:textColor">@color/white</item>
+    <style name="IceButtonAppTheme" parent="android:Widget.Holo.Light.Button">
+        <item name="android:background">@drawable/ice_button_style</item>
+        <item name="android:textColor">@color/timber_green</item>
+    </style>
+
+    <style name="CashmereButtonAppTheme" parent="android:Widget.Holo.Light.Button">
+        <item name="android:background">@drawable/cashmere_button_style</item>
+        <item name="android:textColor">@color/cork</item>
+    </style>
+
+    <style name="WindowAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
 </resources>
