@@ -42,7 +42,9 @@ public class IndexActivity extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             // Set up layout and toolbar
 
+            // Utils.onActivityCreateSetTheme(this, sTheme);
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_index);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
