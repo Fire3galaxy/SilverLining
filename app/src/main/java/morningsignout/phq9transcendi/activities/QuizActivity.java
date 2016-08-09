@@ -51,7 +51,7 @@ public class QuizActivity extends AppCompatActivity
     private Button answerNo, answerYes;
     private ImageButton nextArrow, prevArrow;
     private LinearLayout containerButtons, containerBarText;
-    RangeSliderView sliderView;
+    RangeSliderView answerSliderView;
 
     private String[] questionArray;
     private String startTimestamp, endTimestamp;
@@ -93,7 +93,7 @@ public class QuizActivity extends AppCompatActivity
         prevArrow = (ImageButton) findViewById(R.id.imageButton_prevq);
         containerButtons = (LinearLayout) findViewById(R.id.container_buttons);
         containerBarText = (LinearLayout) findViewById(R.id.container_bar_text);
-        sliderView = (RangeSliderView) findViewById(R.id.rsv_small);
+        answerSliderView = (RangeSliderView) findViewById(R.id.range_slider);
 
         // Auto-scroll up from bottom of scroll view
         questionContainer = (ScrollView) findViewById(R.id.question_container);
@@ -148,7 +148,7 @@ public class QuizActivity extends AppCompatActivity
             startTimestamp = getTimestamp();
             questionNumber = -1;
             scores = new Scores();
-            sliderView.setIndex(0);
+            answerSliderView.setIndex(0);
 
             handleQuiz(true);               // Everything is set up, start quiz
         }
@@ -215,7 +215,7 @@ public class QuizActivity extends AppCompatActivity
         // Ensure that state is NOT kept for bar if I don't want it to
         SharedPreferences preferences = getPreferences(0);
         if (!preferences.contains(SAVE_TIMESTAMP))
-            sliderView.setIndex(0);
+            answerSliderView.setIndex(0);
     }
 
     @Override
@@ -270,7 +270,7 @@ public class QuizActivity extends AppCompatActivity
 
         // Show previously saved answer if previous button is clicked
         if (scores.questionIsVisited(questionNumber))
-            sliderView.setIndex(scores.getQuestionScore(questionNumber));
+            answerSliderView.setIndex(scores.getQuestionScore(questionNumber));
 
         // Hide previous button on first question
         if (questionNumber == 0)
@@ -287,8 +287,8 @@ public class QuizActivity extends AppCompatActivity
     }
 
     private void putSeekBar() {
-        if (sliderView.getVisibility() != View.VISIBLE)
-            sliderView.setVisibility(View.VISIBLE);
+        if (answerSliderView.getVisibility() != View.VISIBLE)
+            answerSliderView.setVisibility(View.VISIBLE);
         if (containerBarText.getVisibility() != View.VISIBLE)
             containerBarText.setVisibility(View.VISIBLE);
         if (containerButtons.getVisibility() != View.GONE)
@@ -305,8 +305,8 @@ public class QuizActivity extends AppCompatActivity
     }
 
     private void putButtons() {
-        if (sliderView.getVisibility() != View.INVISIBLE)
-            sliderView.setVisibility(View.INVISIBLE);
+        if (answerSliderView.getVisibility() != View.INVISIBLE)
+            answerSliderView.setVisibility(View.INVISIBLE);
         if (containerBarText.getVisibility() != View.INVISIBLE)
             containerBarText.setVisibility(View.INVISIBLE);
         if (containerButtons.getVisibility() != View.VISIBLE)
@@ -347,7 +347,7 @@ public class QuizActivity extends AppCompatActivity
     public void onClick(View v) {
         if (v.equals(nextArrow)) {
             if (questionNumber < RED_FLAG_QUESTION)
-                addScore(questionNumber, sliderView.getCurrentIndex());
+                addScore(questionNumber, answerSliderView.getCurrentIndex());
 
             handleQuiz(true);
         } else if (v.equals(prevArrow)) {

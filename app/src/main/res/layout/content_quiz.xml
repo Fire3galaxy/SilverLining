@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/seekBar_quiz_answer"
+        android:layout_above="@+id/range_slider"
         android:layout_alignParentTop="true"
         android:id="@+id/question_container"
         android:layout_marginBottom="16dp"
@@ -39,24 +39,8 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
-    <morningsignout.phq9transcendi.activities.AnswerSeekBar
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/seekBar_quiz_answer"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_centerHorizontal="true"
-        android:max="300"
-        android:progress="0"
-        android:progressDrawable="@drawable/custom_seekbar"
-        android:thumb="@android:color/transparent"
-        android:layout_below="@+id/space_quiz"
-        android:visibility="invisible"/>
-
     <morningsignout.phq9transcendi.activities.RangeSliderCustom.RangeSliderView
-        android:id="@+id/rsv_small"
+        android:id="@+id/range_slider"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="10dp"
@@ -74,7 +58,7 @@
         android:id="@+id/container_bar_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/seekBar_quiz_answer"
+        android:layout_below="@+id/range_slider"
         android:layout_marginTop="10dp">
         <TextView
             android:layout_weight="1"
