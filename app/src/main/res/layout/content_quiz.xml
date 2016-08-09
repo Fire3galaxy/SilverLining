@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:rsv="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -51,7 +52,23 @@
         android:progress="0"
         android:progressDrawable="@drawable/custom_seekbar"
         android:thumb="@android:color/transparent"
-        android:layout_below="@+id/space_quiz" />
+        android:layout_below="@+id/space_quiz"
+        android:visibility="invisible"/>
+
+    <morningsignout.phq9transcendi.activities.RangeSliderCustom.RangeSliderView
+        android:id="@+id/rsv_small"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/space_quiz"
+        app:filledColor="@color/blue"
+        app:emptyColor="@color/light_blue"
+        app:rangeCount="4"
+        app:barHeightPercent=".07"/>
 
     <LinearLayout
         android:id="@+id/container_bar_text"

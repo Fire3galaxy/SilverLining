@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.concurrent.locks.ReentrantLock;
 
 import morningsignout.phq9transcendi.R;
+import morningsignout.phq9transcendi.activities.RangeSliderCustom.RangeSliderView;
 
 public class QuizActivity extends AppCompatActivity
         implements ImageButton.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -47,10 +48,10 @@ public class QuizActivity extends AppCompatActivity
 
     private ScrollView questionContainer;
     private TextView questionTextView, questionNumText; //The text of the question
-    private AnswerSeekBar answerBar;
     private Button answerNo, answerYes;
     private ImageButton nextArrow, prevArrow;
     private LinearLayout containerButtons, containerBarText;
+    RangeSliderView sliderView;
 
     private String[] questionArray;
     private String startTimestamp, endTimestamp;
@@ -60,6 +61,7 @@ public class QuizActivity extends AppCompatActivity
     private boolean aboveButtonsFlag;               // Landscape: change height of question view
     private boolean aboveSeekbarFlag;               // Landscape: change height of question view
     private boolean isFinishingFlag;                // Used in onPause() to save/not save
+    private boolean isFirstTimeFlag;                // Used in onCreate() and onStart() for continue dialog
     private AlertDialog.Builder dialogBuilder;      // To confirm user wants to quit
     private GoogleApiClient mGoogleApiClient;
     private ReentrantLock gpsLock = new ReentrantLock();
@@ -78,18 +80,20 @@ public class QuizActivity extends AppCompatActivity
                     .build();
         }
 
+        isFirstTimeFlag = (savedInstanceState == null);
+
         //Grab and set content; inital setup
         SharedPreferences preferences = getPreferences(0);
 
         questionTextView = (TextView) findViewById(R.id.questionView);
         questionNumText = (TextView) findViewById(R.id.textView_question_number);
-        answerBar = (AnswerSeekBar) findViewById(R.id.seekBar_quiz_answer);
         answerNo = (Button) findViewById(R.id.button_answer_no);
         answerYes = (Button) findViewById(R.id.button_answer_yes);
         nextArrow = (ImageButton) findViewById(R.id.imageButton_nextq);
         prevArrow = (ImageButton) findViewById(R.id.imageButton_prevq);
         containerButtons = (LinearLayout) findViewById(R.id.container_buttons);
         containerBarText = (LinearLayout) findViewById(R.id.container_bar_text);
+        sliderView = (RangeSliderView) findViewById(R.id.rsv_small);
 
         // Auto-scroll up from bottom of scroll view
         questionContainer = (ScrollView) findViewById(R.id.question_container);
@@ -144,7 +148,7 @@ public class QuizActivity extends AppCompatActivity
             startTimestamp = getTimestamp();
             questionNumber = -1;
             scores = new Scores();
-            answerBar.setAnswer(0);
+            sliderView.setIndex(0);
 
             handleQuiz(true);               // Everything is set up, start quiz
         }
@@ -160,6 +164,31 @@ public class QuizActivity extends AppCompatActivity
     protected void onStart() {
         mGoogleApiClient.connect();
         super.onStart();
+
+        // FIXME: Use dialog at beginning? Or restart quiz button?
+//        if (isFirstTimeFlag) {
+//            AlertDialog.Builder continueDialog = new AlertDialog.Builder(this);
+//            continueDialog.setTitle(R.string.app_name)
+//                    .setMessage(R.string.dialog_quit_demographics)
+//                    .setPositiveButton(R.string.dialog_take_quiz, new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            Intent intent = new Intent(DemographicsActivity.this, QuizActivity.class);
+//                            startActivity(intent);
+//                            finish();
+//                        }
+//                    }).setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//
+//                }
+//            }).setNeutralButton(R.string.dialog_leave, new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    finish();
+//                }
+//            });
+//        }
     }
 
     @Override
@@ -186,7 +215,7 @@ public class QuizActivity extends AppCompatActivity
         // Ensure that state is NOT kept for bar if I don't want it to
         SharedPreferences preferences = getPreferences(0);
         if (!preferences.contains(SAVE_TIMESTAMP))
-            answerBar.setAnswer(0);
+            sliderView.setIndex(0);
     }
 
     @Override
@@ -241,7 +270,7 @@ public class QuizActivity extends AppCompatActivity
 
         // Show previously saved answer if previous button is clicked
         if (scores.questionIsVisited(questionNumber))
-            answerBar.setAnswer(scores.getQuestionScore(questionNumber));
+            sliderView.setIndex(scores.getQuestionScore(questionNumber));
 
         // Hide previous button on first question
         if (questionNumber == 0)
@@ -258,8 +287,8 @@ public class QuizActivity extends AppCompatActivity
     }
 
     private void putSeekBar() {
-        if (answerBar.getVisibility() != View.VISIBLE)
-            answerBar.setVisibility(View.VISIBLE);
+        if (sliderView.getVisibility() != View.VISIBLE)
+            sliderView.setVisibility(View.VISIBLE);
         if (containerBarText.getVisibility() != View.VISIBLE)
             containerBarText.setVisibility(View.VISIBLE);
         if (containerButtons.getVisibility() != View.GONE)
@@ -276,8 +305,8 @@ public class QuizActivity extends AppCompatActivity
     }
 
     private void putButtons() {
-        if (answerBar.getVisibility() != View.INVISIBLE)
-            answerBar.setVisibility(View.INVISIBLE);
+        if (sliderView.getVisibility() != View.INVISIBLE)
+            sliderView.setVisibility(View.INVISIBLE);
         if (containerBarText.getVisibility() != View.INVISIBLE)
             containerBarText.setVisibility(View.INVISIBLE);
         if (containerButtons.getVisibility() != View.VISIBLE)
@@ -318,7 +347,7 @@ public class QuizActivity extends AppCompatActivity
     public void onClick(View v) {
         if (v.equals(nextArrow)) {
             if (questionNumber < RED_FLAG_QUESTION)
-                addScore(questionNumber, answerBar.getAnswer());
+                addScore(questionNumber, sliderView.getCurrentIndex());
 
             handleQuiz(true);
         } else if (v.equals(prevArrow)) {
