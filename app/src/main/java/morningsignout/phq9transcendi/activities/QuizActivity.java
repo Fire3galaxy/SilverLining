@@ -297,7 +297,7 @@ public class QuizActivity extends AppCompatActivity
         // Landscape only: above scrollbar
         if (questionContainer != null && !aboveSeekbarFlag) {
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) questionContainer.getLayoutParams();
-            params.addRule(RelativeLayout.ABOVE, R.id.seekBar_quiz_answer);
+            params.addRule(RelativeLayout.ABOVE, R.id.range_slider);
 
             aboveSeekbarFlag = true;
             aboveButtonsFlag = false;
