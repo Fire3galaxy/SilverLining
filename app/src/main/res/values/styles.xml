@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="IceAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="android:textColor">@color/timber_green</item>
         <item name="colorPrimary">@color/downy</item>
@@ -31,7 +31,12 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="IceAppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="CashmereAppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

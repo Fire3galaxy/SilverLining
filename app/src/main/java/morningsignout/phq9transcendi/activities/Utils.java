@@ -20,7 +20,6 @@ public class Utils {
      */
     public static void changeToTheme(Activity activity)
     {
-
         activity.finish();
         activity.startActivity(new Intent(activity, activity.getClass()));
     }
@@ -29,12 +28,12 @@ public class Utils {
         switch (sTheme) {
 
             case THEME_WHITE:
-                activity.setTheme(R.style.CashmereAppTheme);
+                activity.setTheme(R.style.CashmereAppTheme_NoActionBar);
                 break;
 
             case THEME_DEFAULT:
             default:
-                activity.setTheme(R.style.AppTheme);
+                activity.setTheme(R.style.IceAppTheme_NoActionBar);
                 break;
 
         }

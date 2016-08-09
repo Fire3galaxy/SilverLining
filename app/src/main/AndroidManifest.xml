@@ -8,13 +8,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
+        android:theme="@style/IceAppTheme"
         android:name=".activities.PHQApplication">
 
         <activity
             android:name=".activities.IndexActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/IceAppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
@@ -31,7 +31,7 @@
             android:label="@string/resource_activity" />
         <activity android:name=".activities.QuizIntroActivity"
             android:label="@string/quizintro_activity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/IceAppTheme"/>
         <activity
             android:name=".activities.DemographicsIntroActivity"
             android:label="@string/demographics_intro_activity" />
@@ -41,7 +41,7 @@
         <activity
             android:name=".activities.QuizActivity"
             android:label="@string/quiz_activity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/IceAppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
@@ -49,7 +49,7 @@
 
         <activity android:name=".activities.ResultsActivity"
             android:label="@string/results_activity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/IceAppTheme"/>
 
         <!--Not used for now because no login-->
         <activity
@@ -61,7 +61,7 @@
             android:name=".activities.NewUserActivity"
             android:label="@string/title_activity_new_user"
             android:parentActivityName=".activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/IceAppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="morningsignout.phq9transcendi.activities.MainActivity" />

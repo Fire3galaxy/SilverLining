@@ -30,19 +30,16 @@ public class IndexActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "PHQ9 Preference File";
 
     Button resourceButton, refButton, themeButton;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-        */
-        private GoogleApiClient client;
 
-        private static int sTheme = 0;
+    private GoogleApiClient client;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            // Set up layout and toolbar
+    private static int sTheme = 0;
 
-            // Utils.onActivityCreateSetTheme(this, sTheme);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        // Set up layout and toolbar
+
+        Utils.onActivityCreateSetTheme(this, sTheme);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_index);
