@@ -128,30 +128,13 @@ public class QuizActivity extends AppCompatActivity
                     }
                 });
 
-        //Reinitialize state variables
-        if (preferences.contains(SAVE_TIMESTAMP)) {
-            startTimestamp = preferences.getString(SAVE_TIMESTAMP, getTimestamp());
-            int questionNumber = preferences.getInt(SAVE_QUESTION_NUM, 0);
-            String scoresA = preferences.getString(SAVE_SCORES_A, null);
-            String scoresB = preferences.getString(SAVE_SCORES_B, null);
-            scores = new Scores(scoresA, scoresB);
 
-            Log.d(LOG_NAME, String.valueOf(startTimestamp));
-            Log.d(LOG_NAME, String.valueOf(questionNumber));
-            Log.d(LOG_NAME, String.valueOf(scoresA));
-            Log.d(LOG_NAME, String.valueOf(scoresB));
-            scores.getFinalScore();
+        startTimestamp = getTimestamp();
+        questionNumber = -1;
+        scores = new Scores();
+        answerSliderView.setIndex(0);
 
-            setQuestion(questionNumber);    // Everything is set up, start quiz
-        }
-        else {
-            startTimestamp = getTimestamp();
-            questionNumber = -1;
-            scores = new Scores();
-            answerSliderView.setIndex(0);
-
-            handleQuiz(true);               // Everything is set up, start quiz
-        }
+        handleQuiz(true);               // Everything is set up, start quiz
 
         // Set all buttons to onClickListener function here
         nextArrow.setOnClickListener(this);
@@ -164,31 +147,6 @@ public class QuizActivity extends AppCompatActivity
     protected void onStart() {
         mGoogleApiClient.connect();
         super.onStart();
-
-        // FIXME: Use dialog at beginning? Or restart quiz button?
-//        if (isFirstTimeFlag) {
-//            AlertDialog.Builder continueDialog = new AlertDialog.Builder(this);
-//            continueDialog.setTitle(R.string.app_name)
-//                    .setMessage(R.string.dialog_quit_demographics)
-//                    .setPositiveButton(R.string.dialog_take_quiz, new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            Intent intent = new Intent(DemographicsActivity.this, QuizActivity.class);
-//                            startActivity(intent);
-//                            finish();
-//                        }
-//                    }).setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//
-//                }
-//            }).setNeutralButton(R.string.dialog_leave, new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    finish();
-//                }
-//            });
-//        }
     }
 
     @Override
@@ -212,10 +170,23 @@ public class QuizActivity extends AppCompatActivity
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        // Ensure that state is NOT kept for bar if I don't want it to
+        // Reinitialize state variables
         SharedPreferences preferences = getPreferences(0);
-        if (!preferences.contains(SAVE_TIMESTAMP))
-            answerSliderView.setIndex(0);
+        if (savedInstanceState != null && preferences.contains(SAVE_TIMESTAMP)) {
+            startTimestamp = preferences.getString(SAVE_TIMESTAMP, getTimestamp());
+            int questionNumber = preferences.getInt(SAVE_QUESTION_NUM, 0);
+            String scoresA = preferences.getString(SAVE_SCORES_A, null);
+            String scoresB = preferences.getString(SAVE_SCORES_B, null);
+            scores = new Scores(scoresA, scoresB);
+
+            Log.d(LOG_NAME, String.valueOf(startTimestamp));
+            Log.d(LOG_NAME, String.valueOf(questionNumber));
+            Log.d(LOG_NAME, String.valueOf(scoresA));
+            Log.d(LOG_NAME, String.valueOf(scoresB));
+            scores.getFinalScore();
+
+            setQuestion(questionNumber);    // Everything is set up, start quiz
+        }
     }
 
     @Override

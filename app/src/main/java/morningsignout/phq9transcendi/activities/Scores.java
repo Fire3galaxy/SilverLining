@@ -41,8 +41,8 @@ public class Scores {
 
     // Categories of questions
     static private final String[] categoryNames = {
-            "anhedonia", "mood", "sleep", "fatigue", "appetite", "guilt", "concentration",
-            "psychomotor", "suicidality", "redflag"
+            "anhedonia", "mood", "sleep-disturbance", "energy", "appetite", "guilt", "cognition-concentration",
+            "psychomotor", "suicide", "red-flag"
     };
 
     // Array of which category each question is associated with
@@ -183,10 +183,10 @@ public class Scores {
         userRef.child("testIDs").push().setValue(testID);
 
         // Tests
-        ArrayList<Integer> answers = new ArrayList<>(questions.length);
+        ArrayList<String> answers = new ArrayList<>(questions.length);
         Map<String, Integer> scores = new HashMap<>(categoryNames.length);
         for (String q : questions)
-            answers.add(scoreDictionary.get(q));
+            answers.add(firebaseAnswerStrings[scoreDictionary.get(q)]);
 
         for (int i = 0; i < categoryNames.length; i++)
             scores.put(categoryNames[i], getCategoryScore(i));
