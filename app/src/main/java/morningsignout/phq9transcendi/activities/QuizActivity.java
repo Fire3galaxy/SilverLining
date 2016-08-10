@@ -349,7 +349,7 @@ public class QuizActivity extends AppCompatActivity
 
         timestamp += String.valueOf(date.get(Calendar.YEAR)) + "-";
         timestamp += month + "-";
-        timestamp += day + " 'at' ";
+        timestamp += day + " at ";
         timestamp += hour + ":";
         timestamp += minute;
 
