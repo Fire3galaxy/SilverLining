@@ -1,7 +1,10 @@
 package morningsignout.phq9transcendi.activities.RangeSliderCustom;
 
 /* Code in this package is copied and modified from https://github.com/channguyen/range-slider-view
- * under his respective apache license (see license text in app). Removed animateRipple(). */
+ * under his respective apache license (see license text in app).
+ * 1. Removed animateRipple() from ACTION_UP
+ * 2. Made ACTION_DOWN and ACTION_MOVE draw the circle wherever the finger is, even if not in the
+ *    current spot. */
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -382,9 +385,14 @@ public class RangeSliderView extends View {
         final int action = event.getActionMasked();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                gotSlot = isInSelectedSlot(x, y);
+                gotSlot = true; //isInSelectedSlot(x, y);
                 downX = x;
                 downY = y;
+                if (x >= slotPositions[0] && x <= slotPositions[rangeCount - 1]) {
+                    currentSlidingX = x;
+                    currentSlidingY = y;
+                    invalidate();
+                }
                 break;
 
             case MotionEvent.ACTION_MOVE:
