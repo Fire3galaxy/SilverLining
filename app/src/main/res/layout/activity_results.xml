@@ -47,12 +47,11 @@
             android:layout_gravity="center_horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
                 android:layout_gravity="center"
                 android:id="@+id/imageView_score_fan"
                 android:src="@drawable/score_fan"
-                android:maxHeight="120dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/description_score_fan"/>
 
