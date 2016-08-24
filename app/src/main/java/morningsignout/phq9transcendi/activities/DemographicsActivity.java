@@ -33,6 +33,8 @@ public class DemographicsActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Setup layout
+
+        Utils.onActivityCreateSetTheme(this, Utils.GetTheme(this));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.demographics);
 

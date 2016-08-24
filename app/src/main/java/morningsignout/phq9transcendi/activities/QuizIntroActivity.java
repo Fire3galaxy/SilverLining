@@ -14,6 +14,7 @@ import morningsignout.phq9transcendi.R;
 public class QuizIntroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Utils.onActivityCreateSetTheme(this, Utils.GetTheme(this));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_intro);
 

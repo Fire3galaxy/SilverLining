@@ -33,12 +33,12 @@ public class IndexActivity extends AppCompatActivity {
 
     private GoogleApiClient client;
 
-    private static int sTheme = 0;
+    public static int sTheme = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Set up layout and toolbar
-
+        Utils.SaveTheme("theme", sTheme, this);
         Utils.onActivityCreateSetTheme(this, sTheme);
         super.onCreate(savedInstanceState);
 
@@ -78,6 +78,7 @@ public class IndexActivity extends AppCompatActivity {
         themeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 sTheme = (sTheme + 1) % 2;
+                Utils.SaveTheme("theme", sTheme, IndexActivity.this);
                 Utils.changeToTheme(IndexActivity.this);
             }
         });
@@ -196,17 +197,5 @@ public class IndexActivity extends AppCompatActivity {
     }
 
 
-//    public void SaveTheme(String key, int theme) {
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        SharedPreferences.Editor editor = preferences.edit();
-//        editor.putInt(key, theme);
-//        editor.apply();
-//    }
-//
-//    public int GetTheme() {
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        int theme = preferences.getInt("theme", 0);
-//        return theme;
-//    }
 
 }

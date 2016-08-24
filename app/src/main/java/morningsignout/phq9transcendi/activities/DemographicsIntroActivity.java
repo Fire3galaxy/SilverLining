@@ -13,6 +13,7 @@ import morningsignout.phq9transcendi.R;
 public class DemographicsIntroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Utils.onActivityCreateSetTheme(this, Utils.GetTheme(this));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.demographics_intro);
 
