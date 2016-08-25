@@ -89,6 +89,7 @@
     <string-array name="gender_array">
         <item>Male</item>
         <item>Female</item>
+        <item>Enter option</item>
     </string-array>
 
     <string-array name="ethnicity_array">
@@ -103,10 +104,14 @@
         <item>Korean</item>
         <item>Other Asian/South Asian</item>
         <item>White</item>
+        <item>Enter option</item>
     </string-array>
 
     <string-array name="school_year">
-        <item>1–5</item>
+        <item>First</item>
+        <item>Second</item>
+        <item>Third</item>
+        <item>Fourth</item>
         <item>Graduate student</item>
         <item>Not currently enrolled</item>
     </string-array>
@@ -114,6 +119,19 @@
     <string-array name="yes_no_array">
         <item>Yes</item>
         <item>No</item>
+    </string-array>
+
+    <string-array name="college_name_array">
+        <item>University of California, Berkeley</item>
+        <item>University of California, Davis</item>
+        <item>University of California, Irvine</item>
+        <item>University of California, Los Angeles</item>
+        <item>University of California, Merced</item>
+        <item>University of California, Riverside</item>
+        <item>University of California, San Diego</item>
+        <item>University of California, Santa Cruz</item>
+        <item>Not currently enrolled</item>
+        <item>Enter option</item>
     </string-array>
 
     <!--Quiz questions-->

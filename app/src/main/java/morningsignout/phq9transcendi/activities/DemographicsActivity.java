@@ -24,7 +24,7 @@ public class DemographicsActivity extends AppCompatActivity implements
         AdapterView.OnItemSelectedListener {
     static final String demo_log_name = "DemographicsActivity";
 
-    private Spinner gender, ethnicity, schoolYear, familyFirst;
+    private Spinner gender, ethnicity, schoolYear, familyFirst, collegeName;
     private EditText ageField;
 
     private String gender_answer, ethnicity_answer, schoolYear_answer, familyFirst_answer;
@@ -72,6 +72,14 @@ public class DemographicsActivity extends AppCompatActivity implements
         familyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         familyFirst.setAdapter(familyAdapter);
         familyFirst.setOnItemSelectedListener(this);
+
+        // Name of college attended
+        collegeName = (Spinner) findViewById(R.id.demo_college_answer);
+        ArrayAdapter<CharSequence> collegeNameAdapter = ArrayAdapter.createFromResource(this,
+                R.array.college_name_array, android.R.layout.simple_spinner_item);
+        collegeNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        collegeName.setAdapter(collegeNameAdapter);
+        collegeName.setOnItemSelectedListener(this);
 
         // Start the questionnaire/submit the demographics
         // FIXME: Should prevent user from continuing if demographics is complete, to at least ask "are you sure?"

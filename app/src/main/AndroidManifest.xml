@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="morningsignout.phq9transcendi">
+    package="morningsignout.phq9transcendi" >
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name=".activities.PHQApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name=".activities.PHQApplication">
-
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".activities.IndexActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,37 +31,39 @@
         <activity
             android:name=".activities.ResourceActivity"
             android:label="@string/resource_activity" />
-        <activity android:name=".activities.QuizIntroActivity"
+        <activity
+            android:name=".activities.QuizIntroActivity"
             android:label="@string/quizintro_activity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.DemographicsIntroActivity"
             android:label="@string/demographics_intro_activity" />
         <activity
             android:name=".activities.DemographicsActivity"
-            android:label="@string/demographics_activity"/>
+            android:label="@string/demographics_activity" />
         <activity
             android:name=".activities.QuizActivity"
             android:label="@string/quiz_activity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
         </activity>
-        <activity android:name=".activities.ResultsActivity"
+        <activity
+            android:name=".activities.ResultsActivity"
             android:label="@string/results_activity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
-        <!--Not used for now because no login-->
+        <!-- Not used for now because no login -->
         <activity
             android:name=".activities.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".activities.NewUserActivity"
             android:label="@string/title_activity_new_user"
             android:parentActivityName=".activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="morningsignout.phq9transcendi.activities.MainActivity" />
