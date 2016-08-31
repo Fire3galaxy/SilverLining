@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="IceAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -73,7 +72,7 @@
     </style>
 
     <style name="ButtonAppTheme" parent="android:Widget.Holo.Light.Button">
-        <item name="android:background">@drawable/button_style</item>"
+        <item name="android:background">@drawable/button_custom</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
