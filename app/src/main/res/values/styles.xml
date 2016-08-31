@@ -49,12 +49,12 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="IceButtonAppTheme" parent="android:Widget.Holo.Light.Button">
-        <item name="android:background">@drawable/ice_button_style</item>
+        <item name="android:background">@drawable/ice_button_custom</item>
         <item name="android:textColor">@color/timber_green</item>
     </style>
 
     <style name="CashmereButtonAppTheme" parent="android:Widget.Holo.Light.Button">
-        <item name="android:background">@drawable/cashmere_button_style</item>
+        <item name="android:background">@drawable/cashmere_button_custom</item>
         <item name="android:textColor">@color/cork</item>
     </style>
 
