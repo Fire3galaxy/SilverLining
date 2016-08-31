@@ -3,11 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <morningsignout.phq9transcendi.activities.BlinkScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_above="@+id/button_start_quiz">
+        android:layout_above="@+id/button_start_quiz"
+        android:id="@+id/container_quiz_intro"
+        style="@style/BlinkScrollViewStyle">
 
         <TextView
             android:layout_width="match_parent"
@@ -18,7 +20,7 @@
             android:textSize="20sp"
             android:gravity="center_horizontal"/>
 
-    </ScrollView>
+    </morningsignout.phq9transcendi.activities.BlinkScrollView>
 
     <Button
         android:layout_width="match_parent"

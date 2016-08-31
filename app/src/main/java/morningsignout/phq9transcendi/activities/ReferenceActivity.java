@@ -50,7 +50,8 @@ public class ReferenceActivity extends AppCompatActivity {
         homeButton = (Button)findViewById(R.id.back_button);
         homeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(ReferenceActivity.this, IndexActivity.class);
+                startActivity(intent);
             }
         });
 

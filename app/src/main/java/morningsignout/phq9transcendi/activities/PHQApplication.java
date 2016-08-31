@@ -1,6 +1,8 @@
 package morningsignout.phq9transcendi.activities;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.firebase.client.Firebase;
@@ -21,5 +23,12 @@ public class PHQApplication extends Application {
         singleton = this;
         Firebase.setAndroidContext(this);                           // ----Firebase setup----
         Firebase.getDefaultConfig().setPersistenceEnabled(true);    // Keep sync data if app closes
+    }
+
+    // To avoid the 64K Build limit on my emulator
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }

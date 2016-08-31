@@ -26,6 +26,7 @@ public class DemographicsActivity extends AppCompatActivity implements
 
     private Spinner gender, ethnicity, schoolYear, familyFirst;
     private EditText ageField;
+    private AlertDialog.Builder dialogBuilder;
 
     private String gender_answer, ethnicity_answer, schoolYear_answer, familyFirst_answer;
     private int age_answer = -1;
@@ -90,6 +91,33 @@ public class DemographicsActivity extends AppCompatActivity implements
                 confirmSubmission();
             }
         });
+
+        dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setTitle(R.string.app_name)
+                .setMessage(R.string.dialog_quit_demographics)
+                .setPositiveButton(R.string.dialog_take_quiz, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(DemographicsActivity.this, QuizActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }).setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).setNeutralButton(R.string.dialog_leave, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+    }
+
+    @Override
+    public void onBackPressed() {
+        dialogBuilder.create().show();
     }
 
     // FIXME: Maybe one day include allowed range of age (not 1000, for example)
@@ -106,9 +134,7 @@ public class DemographicsActivity extends AppCompatActivity implements
 
     //ALERT BOX: Make sure user wants to submit Demographics then start quiz activity
     void confirmSubmission() {
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(
-                DemographicsActivity.this);
+        AlertDialog.Builder alert = new AlertDialog.Builder(DemographicsActivity.this);
         alert.setMessage("Are you sure you want to submit?")
              .setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
@@ -125,7 +151,6 @@ public class DemographicsActivity extends AppCompatActivity implements
 
              })
              .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
                  @Override
                  public void onClick(DialogInterface dialog, int which) {
 

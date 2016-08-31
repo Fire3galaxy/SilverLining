@@ -10,6 +10,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -28,4 +29,5 @@ dependencies {
     compile ('com.google.android.gms:play-services:9.2.0') {
         exclude group: 'com.google.firebase', module: 'firebase-common'
     }
+    compile 'com.android.support:multidex:1.0.1'
 }

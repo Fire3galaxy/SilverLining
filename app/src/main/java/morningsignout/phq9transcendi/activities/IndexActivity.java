@@ -21,9 +21,6 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import morningsignout.phq9transcendi.R;
 
 public class IndexActivity extends AppCompatActivity {
@@ -58,7 +55,7 @@ public class IndexActivity extends AppCompatActivity {
             }
         });
 
-        resourceButton = (Button) findViewById(R.id.resrcButton);
+        resourceButton = (Button) findViewById(R.id.resources_button);
         resourceButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(IndexActivity.this, ResourceActivity.class);
@@ -100,11 +97,6 @@ public class IndexActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
 
         return super.onOptionsItemSelected(item);
     }

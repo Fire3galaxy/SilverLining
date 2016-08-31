@@ -64,8 +64,6 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
-
-
     <style name="IceSpinnerItem">
         <item name="android:background">@drawable/ice_textbox</item>
     </style>
@@ -74,5 +72,13 @@
         <item name="android:background">@drawable/cashmere_textbox</item>
     </style>
 
+    <style name="ButtonAppTheme" parent="android:Widget.Holo.Light.Button">
+        <item name="android:background">@drawable/button_style</item>"
+        <item name="android:textColor">@color/white</item>
+    </style>
 
+    <style name="BlinkScrollViewStyle">
+        <item name="android:scrollbarFadeDuration">50</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">50</item>
+    </style>
 </resources>

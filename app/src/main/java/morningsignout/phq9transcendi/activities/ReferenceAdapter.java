@@ -42,7 +42,6 @@ public class ReferenceAdapter extends BaseAdapter {
         View row = convertView;
         ReferencesViewHolder viewHolder;
 
-
         if (row == null) {
             viewHolder = new ReferencesViewHolder();
 

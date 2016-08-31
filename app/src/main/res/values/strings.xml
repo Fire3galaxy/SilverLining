@@ -26,7 +26,8 @@
     <string name="description_next">Next question</string>
     <string name="description_white_border">White border between buttons and questionnaire</string>
     <string name="description_score_fan">Green fan-shaped background for score</string>
-    <string name="all_done">You\'re all done!\n\nYour score is</string>
+    <string name="all_done">You\'re all done!\n\nYour score is %1$d.</string>
+    <string name="all_done_land">You\'re all done!\nYour score is %1$d.</string>
     <string name="red_flag_text">There were also some red flag symptoms</string>
     <string name="what_does_it_mean">What does that all mean?</string>
     <string name="finish_up">Finish Up</string>
@@ -155,10 +156,13 @@
         <item>@string/answer_crippling</item>
     </string-array>
 
-    <string name="dialog_quit_questionnaire">Are you sure you want to quit? You can continue this
-        questionnaire next time you come back.</string>
+    <string name="dialog_quit_demographics">Are you sure you want to quit? You can still take the
+        quiz without submitting anything.</string>
+    <string name="dialog_quit_quiz">Are you sure you want to quit?</string>
     <string name="dialog_quit_results">Do you want to return to the home screen now?</string>
     <string name="dialog_return_home">Yes</string>
+    <string name="dialog_take_quiz">Take Quiz</string>
+    <string name="dialog_leave">Leave</string>
     <string name="dialog_cancel">No</string>
 
     <!--Results strings-->
@@ -198,6 +202,5 @@
 
     <string name="title_activity_index">IndexActivity</string>
     <string name="title_activity_new_user">NewUserActivity</string>
-
 
 </resources>
