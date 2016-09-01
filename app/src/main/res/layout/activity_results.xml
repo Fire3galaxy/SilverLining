@@ -47,8 +47,8 @@
             android:layout_gravity="center_horizontal">
 
             <ImageView
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:id="@+id/imageView_score_fan"
                 android:src="@drawable/score_fan"

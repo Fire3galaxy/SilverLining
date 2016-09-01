@@ -63,7 +63,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         scoreFan = (ImageView) findViewById(R.id.imageView_score_fan);
         detailsText = (TextView) findViewById(R.id.textView_details);       // Second screen
         blinkScrollView = (BlinkScrollView) findViewById(R.id.container_detail);
-
+        
         // Blink when scrollable (once)
         detailsText.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
