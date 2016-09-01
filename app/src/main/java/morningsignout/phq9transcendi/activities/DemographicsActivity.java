@@ -25,9 +25,9 @@ public class DemographicsActivity extends AppCompatActivity implements
     static final String demo_log_name = "DemographicsActivity";
 
     private Spinner gender, ethnicity, schoolYear, familyFirst, collegeName;
-    private EditText ageField;
+    private EditText ageField, genderField, ethnicityField, collegeNameField;
 
-    private String gender_answer, ethnicity_answer, schoolYear_answer, familyFirst_answer;
+    private String gender_answer, ethnicity_answer, schoolYear_answer, familyFirst_answer, collegeName_answer;
     private int age_answer = -1;
 
     @Override
@@ -49,6 +49,9 @@ public class DemographicsActivity extends AppCompatActivity implements
         gender.setAdapter(genderAdapter);
         gender.setOnItemSelectedListener(this);
 
+        genderField = (EditText) findViewById(R.id.gender_custom_answer);
+        genderField.setVisibility(View.GONE);
+
         // Ethnicity - list of possibilities in string.xml
         ethnicity = (Spinner) findViewById(R.id.demo_ethnic_answer);
         ArrayAdapter<CharSequence> ethnicityAdapter = ArrayAdapter.createFromResource(this,
@@ -56,6 +59,9 @@ public class DemographicsActivity extends AppCompatActivity implements
         ethnicityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ethnicity.setAdapter(ethnicityAdapter);
         ethnicity.setOnItemSelectedListener(this);
+
+        ethnicityField = (EditText) findViewById(R.id.ethnicity_custom_answer);
+        ethnicityField.setVisibility(View.GONE);
 
         // School year - list of possibilities in string.xml
         schoolYear = (Spinner) findViewById(R.id.demo_sch_yr_answer);
@@ -80,6 +86,10 @@ public class DemographicsActivity extends AppCompatActivity implements
         collegeNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         collegeName.setAdapter(collegeNameAdapter);
         collegeName.setOnItemSelectedListener(this);
+
+        collegeNameField = (EditText) findViewById(R.id.college_name_custom_answer);
+        collegeNameField.setVisibility(View.GONE);
+
 
         // Start the questionnaire/submit the demographics
         // FIXME: Should prevent user from continuing if demographics is complete, to at least ask "are you sure?"
@@ -158,6 +168,7 @@ public class DemographicsActivity extends AppCompatActivity implements
             userRef.child("ethnicity").setValue(ethnicity_answer);
             userRef.child("firstGenerationCollege").setValue(familyFirst_answer);
             userRef.child("yearInSchool").setValue(schoolYear_answer);
+            userRef.child("collegeName").setValue(collegeName_answer);
 
             Log.d(demo_log_name, "Submitted Data");
         }
@@ -168,6 +179,7 @@ public class DemographicsActivity extends AppCompatActivity implements
         Log.d(demo_log_name, ethnicity_answer);
         Log.d(demo_log_name, schoolYear_answer);
         Log.d(demo_log_name, familyFirst_answer);
+        Log.d(demo_log_name, collegeName_answer);
     }
 
     // Checks that every field is answered (for spinner, at least touched)
@@ -189,20 +201,43 @@ public class DemographicsActivity extends AppCompatActivity implements
         return gender_answer == null
                 || ethnicity_answer == null
                 || schoolYear_answer == null
-                || familyFirst == null;
+                || familyFirst == null
+                || collegeName == null;
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Spinner spinner = (Spinner) parent;
-        if (gender.equals(spinner))
+        if (gender.equals(spinner)) {
             gender_answer = String.valueOf(spinner.getItemAtPosition(position));
-        else if (ethnicity.equals(spinner))
+            if (gender_answer.equals("Enter option")) {
+                genderField.setVisibility(View.VISIBLE);
+                gender_answer = genderField.getText().toString();
+            } else {
+                genderField.setVisibility(View.GONE);
+            }
+        } else if (ethnicity.equals(spinner)) {
             ethnicity_answer = String.valueOf(spinner.getItemAtPosition(position));
-        else if (schoolYear.equals(spinner))
+            if (ethnicity_answer.equals("Enter option")) {
+                ethnicityField.setVisibility(View.VISIBLE);
+                ethnicity_answer = ethnicityField.getText().toString();
+            } else {
+                ethnicityField.setVisibility(View.GONE);
+            }
+        } else if (schoolYear.equals(spinner)) {
             schoolYear_answer = String.valueOf(spinner.getItemAtPosition(position));
-        else
+        } else if (familyFirst.equals(spinner)) {
             familyFirst_answer = String.valueOf(spinner.getItemAtPosition(position));
+        } else {
+            collegeName_answer = String.valueOf(spinner.getItemAtPosition(position));
+            if (collegeName_answer.equals("Enter option")) {
+                collegeNameField.setVisibility(View.VISIBLE);
+                collegeName_answer = collegeNameField.getText().toString();
+            } else {
+                collegeNameField.setVisibility(View.GONE);
+            }
+        }
+
     }
 
     @Override

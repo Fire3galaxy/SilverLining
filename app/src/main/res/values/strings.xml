@@ -73,6 +73,7 @@
     <string name="_ethnicity">Ethnicity</string>
     <string name="_school_year">School Year</string>
     <string name="_family">Are you the first in your family to go to college?</string>
+    <string name="_college_name">College Name</string>
     <string name="_resources">Resources</string>
     <string name="_references">References</string>
     <string name="answer_not_at_all">Not at all</string>
