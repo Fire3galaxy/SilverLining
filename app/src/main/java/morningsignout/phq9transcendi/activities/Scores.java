@@ -131,7 +131,7 @@ public class Scores {
         for (int i = RED_FLAG_QUESTION; i < questions.length; i++) {
             Log.d("Scores", "9: " + scoreDictionary.get(questions[i]));
 
-            if ((i == INTERFERENCE_QUESTION && scoreDictionary.get(questions[i]) == 3)
+            if ((i == INTERFERENCE_QUESTION && scoreDictionary.get(questions[i]) >= 2)
                     || scoreDictionary.get(questions[i]) == 1)
                 return true;
         }

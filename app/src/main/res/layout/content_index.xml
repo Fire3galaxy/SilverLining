@@ -46,7 +46,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_below="@+id/startButton" />
+        android:layout_below="@+id/startButton"
+        android:visibility="gone"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -59,7 +60,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginStart="30dp"
-        android:layout_below="@+id/startButton" />
+        android:layout_below="@+id/startButton"
+        android:visibility="gone"/>
 
     <Button
         android:layout_width="wrap_content"

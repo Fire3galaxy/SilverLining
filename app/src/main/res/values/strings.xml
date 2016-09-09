@@ -20,7 +20,7 @@
     <string name="quiz_start">Get Started!</string>
     <string name="demo_continue">Share a little about myself</string>
     <string name="demo_skip">No thanks, maybe next time</string>
-    <string name="demo_first_in_fam">Are you first in family to go to college?</string>
+    <string name="demo_first_in_fam">Are you the first in your family to go to college?</string>
     <string name="demo_start_quiz">Start Quiz</string>
     <string name="description_previous">Previous question</string>
     <string name="description_next">Next question</string>
@@ -85,7 +85,7 @@
     <string name="answer_no">No</string>
     <string name="answer_not_affected">Doesn\'t affect me</string>
     <string name="answer_somewhat">Somewhat</string>
-    <string name="answer_a_lot">A lot</string>
+    <string name="answer_a_lot">Very much</string>
     <string name="answer_crippling">Crippling</string>
 
     <string-array name="gender_array">

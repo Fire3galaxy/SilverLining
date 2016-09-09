@@ -25,13 +25,14 @@
         android:layout_marginTop="0dp"
         android:id="@+id/index_space"/>
 
+    <!--centerInParent is supposed to be centerHorizontal, if references/res buttons are visible-->
     <Button
         android:layout_width="wrap_content"
         android:layout_height="75dp"
         android:text="@string/main_start_quiz"
         android:id="@+id/startButton"
         android:padding="@dimen/text_button_padding"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:layout_above="@+id/resources_button"/>
 
     <Button
@@ -46,7 +47,8 @@
         android:layout_marginRight="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -60,5 +62,16 @@
         android:layout_marginLeft="30dp"
         android:layout_marginStart="30dp"
         android:layout_marginBottom="30dp"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="change theme"
+        android:id="@+id/themeButton"
+        android:padding="@dimen/text_button_padding"
+        android:layout_alignTop="@id/startButton"
+        android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
