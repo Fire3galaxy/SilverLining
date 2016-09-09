@@ -1,6 +1,7 @@
 package morningsignout.phq9transcendi.activities;
 
 import android.util.Log;
+import android.util.Pair;
 
 import com.firebase.client.Firebase;
 
@@ -13,6 +14,8 @@ import java.util.TreeMap;
  * Created by pokeforce on 5/26/16.
  */
 public class Scores {
+    static public final int INTERFERENCE_QUESTION = 18; // Index for interference question (special answer text)
+
     static private final int RED_FLAG_QUESTION = 16;    // Index where red flag starts
 
     // Appended to saved scores string to ensure string corresponds with this order of questions
@@ -128,7 +131,8 @@ public class Scores {
         for (int i = RED_FLAG_QUESTION; i < questions.length; i++) {
             Log.d("Scores", "9: " + scoreDictionary.get(questions[i]));
 
-            if (scoreDictionary.get(questions[i]) == 1)
+            if ((i == INTERFERENCE_QUESTION && scoreDictionary.get(questions[i]) == 3)
+                    || scoreDictionary.get(questions[i]) == 1)
                 return true;
         }
 
@@ -203,7 +207,11 @@ public class Scores {
         // FIXME: add check for success
     }
 
-    public String getScoreString() {
+    public Pair<String, String> getScoreStateStrings() {
+        return new Pair<>(getScoreString(), getVisitedString());
+    }
+
+    private String getScoreString() {
         String score = "";
         for (String q : questions) {
             score += Integer.toString(scoreDictionary.get(q));
@@ -214,7 +222,7 @@ public class Scores {
         return score;
     }
 
-    public String getVisitedString() {
+    private String getVisitedString() {
         String visited = "";
         for (String q : questions) {
             visited += questionIsVisited.get(q).compareTo(false);   // Returns 1 or 0 (true/false)

@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -41,7 +42,8 @@ public class QuizActivity extends AppCompatActivity
     private static final int NUM_QUESTIONS = 21;        // total number of questions
     private static final String SAVE_TIMESTAMP = "Timestamp", SAVE_QUESTION_NUM = "Question Number",
         SAVE_SCORES_A = "Score Values", SAVE_SCORES_B = "Visit values",
-        SAVE_ABV_BTTNS = "aboveButtonsFlag", SAVE_ABV_SKBR = "aboveSeekbarFlag";
+        SAVE_ABV_BTTNS = "aboveButtonsFlag", SAVE_ABV_SKBR = "aboveSeekbarFlag",
+        SAVE_INTERFERENCE = "Interference Text Flag";
 
     // Use String.format() with this to display current question
     private final String numberString = "%1$d/" + String.valueOf(NUM_QUESTIONS);
@@ -62,12 +64,15 @@ public class QuizActivity extends AppCompatActivity
     private boolean aboveSeekbarFlag;               // Landscape: change height of question view
     private boolean isFinishingFlag;                // Used in onPause() to save/not save
     private boolean isFirstTimeFlag;                // Used in onCreate() and onStart() for continue dialog
+    private boolean isInterferenceTextFlag;         // Which text is shown in containerBarText layout
     private AlertDialog.Builder dialogBuilder;      // To confirm user wants to quit
     private GoogleApiClient mGoogleApiClient;
     private ReentrantLock gpsLock = new ReentrantLock();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("QuizActivity", "In onCreate");
+
         int theme = Utils.GetTheme(this);
         Utils.onActivityCreateSetTheme(this, theme);
         super.onCreate(savedInstanceState);
@@ -84,8 +89,8 @@ public class QuizActivity extends AppCompatActivity
 
         isFirstTimeFlag = (savedInstanceState == null);
 
-        //Grab and set content; inital setup
-        SharedPreferences preferences = getPreferences(0);
+        // Grab and set content; inital setup (Use restoreInstanceState() for "continue where you last left off" code)
+//        SharedPreferences preferences = getPreferences(0);
 
         questionTextView = (TextView) findViewById(R.id.questionView);
         questionNumText = (TextView) findViewById(R.id.textView_question_number);
@@ -112,6 +117,7 @@ public class QuizActivity extends AppCompatActivity
         aboveButtonsFlag = false;
         aboveSeekbarFlag = false;
         isFinishingFlag = false;
+        isInterferenceTextFlag = false;
         questionArray = getResources().getStringArray(R.array.questions);
         dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setTitle(R.string.app_name)
@@ -136,7 +142,7 @@ public class QuizActivity extends AppCompatActivity
         scores = new Scores();
         answerSliderView.setIndex(0);
 
-        handleQuiz(true);               // Everything is set up, start quiz
+        handleQuiz(true);   // Everything is set up, start quiz
 
         // Set all buttons to onClickListener function here
         nextArrow.setOnClickListener(this);
@@ -171,6 +177,7 @@ public class QuizActivity extends AppCompatActivity
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        Log.d("QuizActivity", "restoring state");
 
         // Reinitialize state variables
         SharedPreferences preferences = getPreferences(0);
@@ -179,13 +186,16 @@ public class QuizActivity extends AppCompatActivity
             int questionNumber = preferences.getInt(SAVE_QUESTION_NUM, 0);
             String scoresA = preferences.getString(SAVE_SCORES_A, null);
             String scoresB = preferences.getString(SAVE_SCORES_B, null);
+            isInterferenceTextFlag = preferences.getBoolean(SAVE_INTERFERENCE, false);
             scores = new Scores(scoresA, scoresB);
 
-            Log.d(LOG_NAME, String.valueOf(startTimestamp));
-            Log.d(LOG_NAME, String.valueOf(questionNumber));
-            Log.d(LOG_NAME, String.valueOf(scoresA));
-            Log.d(LOG_NAME, String.valueOf(scoresB));
-            scores.getFinalScore();
+
+            Log.d(LOG_NAME, String.valueOf(isInterferenceTextFlag));
+//            Log.d(LOG_NAME, String.valueOf(startTimestamp));
+//            Log.d(LOG_NAME, String.valueOf(questionNumber));
+//            Log.d(LOG_NAME, String.valueOf(scoresA));
+//            Log.d(LOG_NAME, String.valueOf(scoresB));
+//            scores.getFinalScore();
 
             setQuestion(questionNumber);    // Everything is set up, start quiz
         }
@@ -236,10 +246,14 @@ public class QuizActivity extends AppCompatActivity
         questionTextView.setText(questionArray[questionNumber]);                    // Question text
         questionNumText.setText(String.format(numberString, questionNumber + 1));   // Question #
 
-        if (questionNumber < RED_FLAG_QUESTION)         // Normal questions (Use bar)
+        // Normal questions or interference red flag question (Use bar)
+        if (questionNumber < RED_FLAG_QUESTION || questionNumber == Scores.INTERFERENCE_QUESTION)
             putSeekBar();
-        else if (questionNumber >= RED_FLAG_QUESTION)   // Red flag questions (Use buttons)
+        // Other red flag questions (Use buttons)
+        else if (questionNumber >= RED_FLAG_QUESTION)
             putButtons();
+
+        isInterferenceTextFlag = (questionNumber == Scores.INTERFERENCE_QUESTION);
 
         // Show previously saved answer if previous button is clicked
         if (scores.questionIsVisited(questionNumber))
@@ -251,8 +265,8 @@ public class QuizActivity extends AppCompatActivity
         else if (prevArrow.getVisibility() != View.VISIBLE)
             prevArrow.setVisibility(View.VISIBLE);
 
-        // Hide nextArrow button on red flag questions unless already answered
-        if (questionNumber >= RED_FLAG_QUESTION
+        // Hide nextArrow button on red flag questions unless already answered or is interference
+        if (questionNumber >= RED_FLAG_QUESTION && questionNumber != Scores.INTERFERENCE_QUESTION
                 && (questionNumber + 1 == NUM_QUESTIONS || !scores.questionIsVisited(questionNumber)))
             nextArrow.setVisibility(View.INVISIBLE);
         else if (nextArrow.getVisibility() != View.VISIBLE)
@@ -319,7 +333,7 @@ public class QuizActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         if (v.equals(nextArrow)) {
-            if (questionNumber < RED_FLAG_QUESTION)
+            if (questionNumber < RED_FLAG_QUESTION || questionNumber == Scores.INTERFERENCE_QUESTION)
                 addScore(questionNumber, answerSliderView.getCurrentIndex());
 
             handleQuiz(true);
@@ -364,15 +378,19 @@ public class QuizActivity extends AppCompatActivity
         editor.remove(SAVE_QUESTION_NUM);
         editor.remove(SAVE_SCORES_A);
         editor.remove(SAVE_SCORES_B);
+        editor.remove(SAVE_INTERFERENCE);
         editor.apply();
     }
 
     void savePreferences() {
+        Pair<String, String> scoreState = scores.getScoreStateStrings();
+
         SharedPreferences.Editor editor = getPreferences(0).edit();
         editor.putString(SAVE_TIMESTAMP, startTimestamp);
         editor.putInt(SAVE_QUESTION_NUM, questionNumber);
-        editor.putString(SAVE_SCORES_A, scores.getScoreString());
-        editor.putString(SAVE_SCORES_B, scores.getVisitedString());
+        editor.putString(SAVE_SCORES_A, scoreState.first);
+        editor.putString(SAVE_SCORES_B, scoreState.second);
+        editor.putBoolean(SAVE_INTERFERENCE, isInterferenceTextFlag);
         editor.apply();
     }
 
