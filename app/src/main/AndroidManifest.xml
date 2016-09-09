@@ -40,7 +40,8 @@
             android:label="@string/demographics_intro_activity" />
         <activity
             android:name=".activities.DemographicsActivity"
-            android:label="@string/demographics_activity" />
+            android:label="@string/demographics_activity"
+            android:windowSoftInputMode="stateUnchanged"/>
         <activity
             android:name=".activities.QuizActivity"
             android:label="@string/quiz_activity"

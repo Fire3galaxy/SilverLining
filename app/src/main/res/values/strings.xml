@@ -88,12 +88,14 @@
     <string name="answer_crippling">Crippling</string>
 
     <string-array name="gender_array">
+        <item>-</item>
         <item>Male</item>
         <item>Female</item>
         <item>Enter option</item>
     </string-array>
 
     <string-array name="ethnicity_array">
+        <item>-</item>
         <item>African American/Black</item>
         <item>Mexican American/Chicano</item>
         <item>Hispanic/Latino</item>
@@ -109,6 +111,7 @@
     </string-array>
 
     <string-array name="school_year">
+        <item>-</item>
         <item>First</item>
         <item>Second</item>
         <item>Third</item>
@@ -118,11 +121,13 @@
     </string-array>
 
     <string-array name="yes_no_array">
+        <item>-</item>
         <item>Yes</item>
         <item>No</item>
     </string-array>
 
     <string-array name="college_name_array">
+        <item>-</item>
         <item>University of California, Berkeley</item>
         <item>University of California, Davis</item>
         <item>University of California, Irvine</item>
