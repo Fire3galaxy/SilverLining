@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -41,9 +42,7 @@ public class QuizActivity extends AppCompatActivity
     private static final int RED_FLAG_QUESTION = 16;    // zero-based number
     private static final int NUM_QUESTIONS = 21;        // total number of questions
     private static final String SAVE_TIMESTAMP = "Timestamp", SAVE_QUESTION_NUM = "Question Number",
-        SAVE_SCORES_A = "Score Values", SAVE_SCORES_B = "Visit values",
-        SAVE_ABV_BTTNS = "aboveButtonsFlag", SAVE_ABV_SKBR = "aboveSeekbarFlag",
-        SAVE_INTERFERENCE = "Interference Text Flag";
+        SAVE_SCORES_A = "Score Values", SAVE_SCORES_B = "Visit values";
 
     // Use String.format() with this to display current question
     private final String numberString = "%1$d/" + String.valueOf(NUM_QUESTIONS);
@@ -56,6 +55,7 @@ public class QuizActivity extends AppCompatActivity
     RangeSliderView answerSliderView;
 
     private String[] questionArray;
+    private String[] answersNormal, answersFlag;
     private String startTimestamp, endTimestamp;
     private double latitude = 0, longitude = 0;
     private Scores scores;                          // Used for keeping track of score
@@ -114,11 +114,15 @@ public class QuizActivity extends AppCompatActivity
             }
         });
 
+        Resources res = getResources();
+
         aboveButtonsFlag = false;
         aboveSeekbarFlag = false;
         isFinishingFlag = false;
         isInterferenceTextFlag = false;
-        questionArray = getResources().getStringArray(R.array.questions);
+        questionArray = res.getStringArray(R.array.questions);
+        answersNormal = res.getStringArray(R.array.answers_normal);
+        answersFlag = res.getStringArray(R.array.answers_flag);
         dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setTitle(R.string.app_name)
                 .setMessage(R.string.dialog_quit_quiz)
@@ -186,7 +190,6 @@ public class QuizActivity extends AppCompatActivity
             int questionNumber = preferences.getInt(SAVE_QUESTION_NUM, 0);
             String scoresA = preferences.getString(SAVE_SCORES_A, null);
             String scoresB = preferences.getString(SAVE_SCORES_B, null);
-            isInterferenceTextFlag = preferences.getBoolean(SAVE_INTERFERENCE, false);
             scores = new Scores(scoresA, scoresB);
 
 
@@ -246,14 +249,27 @@ public class QuizActivity extends AppCompatActivity
         questionTextView.setText(questionArray[questionNumber]);                    // Question text
         questionNumText.setText(String.format(numberString, questionNumber + 1));   // Question #
 
-        // Normal questions or interference red flag question (Use bar)
-        if (questionNumber < RED_FLAG_QUESTION || questionNumber == Scores.INTERFERENCE_QUESTION)
+        // Normal questions (Use bar)
+        if (questionNumber < RED_FLAG_QUESTION) {
             putSeekBar();
+
+            if (isInterferenceTextFlag) {
+                changeAnswerText(false);
+                isInterferenceTextFlag = false;
+            }
+        }
+        // Interference red flag question (Use bar, change text)
+        else if (questionNumber == Scores.INTERFERENCE_QUESTION) {
+            putSeekBar();
+
+            if (!isInterferenceTextFlag) {
+                changeAnswerText(true);
+                isInterferenceTextFlag = true;
+            }
+        }
         // Other red flag questions (Use buttons)
         else if (questionNumber >= RED_FLAG_QUESTION)
             putButtons();
-
-        isInterferenceTextFlag = (questionNumber == Scores.INTERFERENCE_QUESTION);
 
         // Show previously saved answer if previous button is clicked
         if (scores.questionIsVisited(questionNumber))
@@ -306,6 +322,20 @@ public class QuizActivity extends AppCompatActivity
 
             aboveButtonsFlag = true;
             aboveSeekbarFlag = false;
+        }
+    }
+
+    private void changeAnswerText(boolean toInterference) {
+        String[] newText = answersNormal;
+        if (toInterference)
+            newText = answersFlag;
+
+        for (int i = 0; i < containerBarText.getChildCount(); i++) {
+            View child = containerBarText.getChildAt(i);
+
+            if (child instanceof TextView) {
+                ((TextView) child).setText(newText[i]);
+            }
         }
     }
 
@@ -378,7 +408,6 @@ public class QuizActivity extends AppCompatActivity
         editor.remove(SAVE_QUESTION_NUM);
         editor.remove(SAVE_SCORES_A);
         editor.remove(SAVE_SCORES_B);
-        editor.remove(SAVE_INTERFERENCE);
         editor.apply();
     }
 
@@ -390,7 +419,6 @@ public class QuizActivity extends AppCompatActivity
         editor.putInt(SAVE_QUESTION_NUM, questionNumber);
         editor.putString(SAVE_SCORES_A, scoreState.first);
         editor.putString(SAVE_SCORES_B, scoreState.second);
-        editor.putBoolean(SAVE_INTERFERENCE, isInterferenceTextFlag);
         editor.apply();
     }
 
