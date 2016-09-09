@@ -74,6 +74,7 @@
     <string name="_ethnicity">Ethnicity</string>
     <string name="_school_year">School Year</string>
     <string name="_family">Are you the first in your family to go to college?</string>
+    <string name="_college_name">College Name</string>
     <string name="_resources">Resources</string>
     <string name="_references">References</string>
     <string name="answer_not_at_all">Not at all</string>
@@ -88,11 +89,14 @@
     <string name="answer_crippling">Crippling</string>
 
     <string-array name="gender_array">
+        <item>-</item>
         <item>Male</item>
         <item>Female</item>
+        <item>Enter option</item>
     </string-array>
 
     <string-array name="ethnicity_array">
+        <item>-</item>
         <item>African American/Black</item>
         <item>Mexican American/Chicano</item>
         <item>Hispanic/Latino</item>
@@ -104,17 +108,37 @@
         <item>Korean</item>
         <item>Other Asian/South Asian</item>
         <item>White</item>
+        <item>Enter option</item>
     </string-array>
 
     <string-array name="school_year">
-        <item>1–5</item>
+        <item>-</item>
+        <item>First</item>
+        <item>Second</item>
+        <item>Third</item>
+        <item>Fourth</item>
         <item>Graduate student</item>
         <item>Not currently enrolled</item>
     </string-array>
 
     <string-array name="yes_no_array">
+        <item>-</item>
         <item>Yes</item>
         <item>No</item>
+    </string-array>
+
+    <string-array name="college_name_array">
+        <item>-</item>
+        <item>University of California, Berkeley</item>
+        <item>University of California, Davis</item>
+        <item>University of California, Irvine</item>
+        <item>University of California, Los Angeles</item>
+        <item>University of California, Merced</item>
+        <item>University of California, Riverside</item>
+        <item>University of California, San Diego</item>
+        <item>University of California, Santa Cruz</item>
+        <item>Not currently enrolled</item>
+        <item>Enter option</item>
     </string-array>
 
     <!--Quiz questions-->
