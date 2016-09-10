@@ -33,7 +33,7 @@
         android:id="@+id/startButton"
         android:padding="@dimen/text_button_padding"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/index_space" />
+        android:layout_below="@+id/index_space"/>
 
     <Button
         android:layout_width="wrap_content"

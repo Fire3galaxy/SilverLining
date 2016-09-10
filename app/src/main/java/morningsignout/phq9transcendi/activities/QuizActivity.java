@@ -2,6 +2,7 @@ package morningsignout.phq9transcendi.activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,6 +36,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.activities.RangeSliderCustom.RangeSliderView;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class QuizActivity extends AppCompatActivity
         implements ImageButton.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -207,6 +209,11 @@ public class QuizActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         dialogBuilder.create().show();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));   // For custom Rubik font
     }
 
     // Calls all functions to change question. NextQuestion determines if questionNumber increases/decreases.

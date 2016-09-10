@@ -1,6 +1,7 @@
 package morningsignout.phq9transcendi.activities;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import morningsignout.phq9transcendi.R;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by pokeforce on 5/24/16.
@@ -135,6 +137,11 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onBackPressed() {
         dialogBuilder.create().show();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));   // For custom Rubik font
     }
 
     @Override

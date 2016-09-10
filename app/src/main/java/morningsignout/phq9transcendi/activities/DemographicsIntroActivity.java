@@ -1,5 +1,6 @@
 package morningsignout.phq9transcendi.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -12,6 +13,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import morningsignout.phq9transcendi.R;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Stella on 3/20/2016.
@@ -61,5 +63,10 @@ public class DemographicsIntroActivity extends AppCompatActivity {
         
         if (container.canScrollVertically())
             container.blinkScrollBar();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));   // For custom Rubik font
     }
 }
