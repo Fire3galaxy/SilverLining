@@ -8,6 +8,7 @@
         <item name="android:colorBackground">@color/iceberg</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:buttonStyle">@style/IceButtonAppTheme</item>
+        <item name="buttonStyle">@style/IceButtonAppTheme</item>
         <item name="android:spinnerItemStyle">@style/IceSpinnerItem</item>
         <!--<item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>-->
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
@@ -21,6 +22,7 @@
         <item name="android:colorBackground">@color/white_linen</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:buttonStyle">@style/CashmereButtonAppTheme</item>
+        <item name="buttonStyle">@style/CashmereButtonAppTheme</item>
         <item name="android:spinnerItemStyle">@style/CashmereSpinnerItem</item>
         <!--<item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>-->
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
@@ -51,11 +53,13 @@
     <style name="IceButtonAppTheme" parent="android:Widget.Holo.Light.Button">
         <item name="android:background">@drawable/ice_button_custom</item>
         <item name="android:textColor">@color/timber_green</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="CashmereButtonAppTheme" parent="android:Widget.Holo.Light.Button">
         <item name="android:background">@drawable/cashmere_button_custom</item>
         <item name="android:textColor">@color/cork</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="WindowAnimationTransition">

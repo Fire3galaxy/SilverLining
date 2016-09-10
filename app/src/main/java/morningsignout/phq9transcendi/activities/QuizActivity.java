@@ -340,8 +340,16 @@ public class QuizActivity extends AppCompatActivity
         for (int i = 0; i < containerBarText.getChildCount(); i++) {
             View child = containerBarText.getChildAt(i);
 
-            if (child instanceof TextView) {
+            if (child instanceof TextView)
                 ((TextView) child).setText(newText[i]);
+        }
+
+        // Exception: "Somewhat" sometimes gets sent to 2nd line (interference text)
+        if (toInterference) {
+            View somewhatView = containerBarText.getChildAt(1);
+            if (somewhatView instanceof TextView && ((TextView) somewhatView).getLineCount() >= 2) {
+                String dashedSomewhat = getResources().getString(R.string.answer_somewhat_2);
+                ((TextView) somewhatView).setText(dashedSomewhat);
             }
         }
     }

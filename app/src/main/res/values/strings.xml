@@ -85,6 +85,7 @@
     <string name="answer_no">No</string>
     <string name="answer_not_affected">Doesn\'t affect me</string>
     <string name="answer_somewhat">Somewhat</string>
+    <string name="answer_somewhat_2">Some-what</string>
     <string name="answer_a_lot">Very much</string>
     <string name="answer_crippling">Crippling</string>
 
