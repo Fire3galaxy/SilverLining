@@ -4,11 +4,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -63,7 +67,16 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         scoreFan = (ImageView) findViewById(R.id.imageView_score_fan);
         detailsText = (TextView) findViewById(R.id.textView_details);       // Second screen
         blinkScrollView = (BlinkScrollView) findViewById(R.id.container_detail);
-        
+
+        //change color of scoreFan
+        Drawable fan = ContextCompat.getDrawable(getApplicationContext(), R.drawable.score_fan);
+        if(Utils.GetTheme(this)== 0){
+            fan.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.downy), PorterDuff.Mode.SRC_ATOP);
+        }
+        else{
+            fan.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.cashmere), PorterDuff.Mode.SRC_ATOP);
+        }
+        ((ImageView)findViewById(R.id.imageView_score_fan)).setImageDrawable(fan);
         // Blink when scrollable (once)
         detailsText.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override

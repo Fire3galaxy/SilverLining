@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.drive.internal.RemoveEventListenerRequest;
+
 import morningsignout.phq9transcendi.R;
 
 /**
@@ -40,10 +42,8 @@ public class ReferenceActivity extends AppCompatActivity {
         contents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView parent, View view, int position, long id) {
-                String url = "http://morningsignout.com";
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
+                Utils.SaveTheme("theme", position, ReferenceActivity.this);
+                Utils.changeToTheme(ReferenceActivity.this);
             }
         });
 

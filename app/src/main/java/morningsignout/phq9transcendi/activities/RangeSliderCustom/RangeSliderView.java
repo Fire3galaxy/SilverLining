@@ -6,6 +6,7 @@ package morningsignout.phq9transcendi.activities.RangeSliderCustom;
  * 2. Made ACTION_DOWN and ACTION_MOVE draw the circle wherever the finger is, even if not in the
  *    current spot. */
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.*;
@@ -18,6 +19,9 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
 import morningsignout.phq9transcendi.R;
+import morningsignout.phq9transcendi.activities.IndexActivity;
+import morningsignout.phq9transcendi.activities.QuizActivity;
+import morningsignout.phq9transcendi.activities.Utils;
 
 public class RangeSliderView extends View {
 
@@ -25,9 +29,9 @@ public class RangeSliderView extends View {
 
     private static final int DEFAULT_PAINT_STROKE_WIDTH = 5;
 
-    private static final int DEFAULT_FILLED_COLOR = Color.parseColor("#FFA500");
+    private final int DEFAULT_FILLED_COLOR = Color.parseColor("#FFA500");
 
-    private static final int DEFAULT_EMPTY_COLOR = Color.parseColor("#C3C3C3");
+    private final int DEFAULT_EMPTY_COLOR = Color.parseColor("#C3C3C3");
 
     private static final float DEFAULT_BAR_HEIGHT_PERCENT = 0.10f;
 
@@ -94,11 +98,12 @@ public class RangeSliderView extends View {
     }
 
     public RangeSliderView(Context context, AttributeSet attrs) {
-        this(context, attrs, -1);
+        this(context, attrs, R.attr.customRangeSlider);
     }
 
     public RangeSliderView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs, R.attr.customRangeSlider);
+
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RangeSliderView);
             TypedArray sa = context.obtainStyledAttributes(attrs, new int[]{android.R.attr.layout_height});

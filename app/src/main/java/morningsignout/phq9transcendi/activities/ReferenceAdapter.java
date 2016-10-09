@@ -1,6 +1,7 @@
 package morningsignout.phq9transcendi.activities;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,10 @@ public class ReferenceAdapter extends BaseAdapter {
 
     public ReferenceAdapter(Context c){
         this.context = c;
-        this.contents = c.getResources().getStringArray(R.array.resource_array);
+        String activity = this.getClass().getSimpleName();
+        Log.d("Class name", activity);
+        this.contents = c.getResources().getStringArray(R.array.themes);
+
     }
     //private final Integer[] images = {"", "", ""};
 

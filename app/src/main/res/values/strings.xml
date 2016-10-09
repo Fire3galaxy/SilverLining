@@ -203,4 +203,10 @@
     <string name="title_activity_index">IndexActivity</string>
     <string name="title_activity_new_user">NewUserActivity</string>
 
+    <!--Themes-->
+    <string-array name ="themes">
+        <item>ICE</item>
+        <item>CASHMERE</item>
+    </string-array>
+
 </resources>

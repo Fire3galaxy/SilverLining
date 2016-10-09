@@ -43,16 +43,13 @@
         android:id="@+id/range_slider"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/space_quiz"
         app:filledColor="@color/blue"
         app:emptyColor="@color/light_blue"
         app:rangeCount="4"
-        app:barHeightPercent=".07"/>
+        app:barHeightPercent=".07"
+        android:layout_alignTop="@+id/space_quiz"
+        android:layout_alignLeft="@+id/imageButton_prevq"
+        android:layout_alignStart="@+id/imageButton_prevq" />
 
     <LinearLayout
         android:id="@+id/container_bar_text"

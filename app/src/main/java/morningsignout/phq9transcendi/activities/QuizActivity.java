@@ -2,15 +2,22 @@ package morningsignout.phq9transcendi.activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -96,6 +103,21 @@ public class QuizActivity extends AppCompatActivity
         containerButtons = (LinearLayout) findViewById(R.id.container_buttons);
         containerBarText = (LinearLayout) findViewById(R.id.container_bar_text);
         answerSliderView = (RangeSliderView) findViewById(R.id.range_slider);
+
+
+        //change color according to theme
+        Drawable arrows = ContextCompat.getDrawable(getApplicationContext(), R.drawable.green_arrow);
+        Drawable seekbar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_seekbar);
+        if(Utils.GetTheme(this)== 0){
+            arrows.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.jungle_mist), PorterDuff.Mode.SRC_ATOP);
+            seekbar.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.jungle_mist), PorterDuff.Mode.SRC_ATOP);
+        }
+        else{
+            arrows.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.wafer), PorterDuff.Mode.SRC_ATOP);
+            seekbar.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.wafer), PorterDuff.Mode.SRC_ATOP);
+        }
+        ((ImageButton)findViewById(R.id.imageButton_nextq)).setImageDrawable(arrows);
+        ((ImageButton)findViewById(R.id.imageButton_prevq)).setImageDrawable(arrows);
 
         // Auto-scroll up from bottom of scroll view
         questionContainer = (ScrollView) findViewById(R.id.question_container);

@@ -31,13 +31,13 @@ public class IndexActivity extends AppCompatActivity {
 
     private GoogleApiClient client;
 
-    public static int sTheme = 0;
+    //public static int sTheme = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Set up layout and toolbar
-        Utils.SaveTheme("theme", sTheme, this);
-        Utils.onActivityCreateSetTheme(this, sTheme);
+        Utils.onActivityCreateSetTheme(this, Utils.GetTheme(this));
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_index);
@@ -56,13 +56,13 @@ public class IndexActivity extends AppCompatActivity {
             }
         });
 
-        resourceButton = (Button) findViewById(R.id.resources_button);
-        resourceButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(IndexActivity.this, ResourceActivity.class);
-                startActivity(intent);
-            }
-        });
+//        resourceButton = (Button) findViewById(R.id.resources_button);
+//        resourceButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                Intent intent = new Intent(IndexActivity.this, ResourceActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         refButton = (Button) findViewById(R.id.refButton);
         refButton.setOnClickListener(new View.OnClickListener() {
@@ -72,14 +72,14 @@ public class IndexActivity extends AppCompatActivity {
             }
         });
 
-        themeButton = (Button) findViewById(R.id.themeButton);
-        themeButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                sTheme = (sTheme + 1) % 2;
-                Utils.SaveTheme("theme", sTheme, IndexActivity.this);
-                Utils.changeToTheme(IndexActivity.this);
-            }
-        });
+//        themeButton = (Button) findViewById(R.id.themeButton);
+//        themeButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(IndexActivity.this, Themes.class);
+//                startActivity(intent);
+//            }
+//        });
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -112,7 +112,7 @@ public class IndexActivity extends AppCompatActivity {
         super.onWindowFocusChanged(hasFocus);
 
         // Make both buttons the same width for aesthetic
-        resourceButton.setWidth(refButton.getMeasuredWidth());
+        //resourceButton.setWidth(refButton.getMeasuredWidth());
     }
 
     private void handleLogin() {

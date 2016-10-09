@@ -51,6 +51,11 @@
             android:label="@string/results_activity"
             android:theme="@style/IceAppTheme"/>
 
+        <activity
+            android:name=".activities.Themes"
+            android:label="Themes"
+            android:theme="@style/IceAppTheme.NoActionBar"/>
+
         <!--Not used for now because no login-->
         <activity
             android:name=".activities.MainActivity"

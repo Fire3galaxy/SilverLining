@@ -19,7 +19,7 @@ public class Utils {
 
 
     public final static int THEME_DEFAULT = 0;
-    public final static int THEME_WHITE = 1;
+    public final static int THEME_CASH = 1;
     //public final static int THEME_BLUE = 2;
     /**
      * Set the theme of the Activity, and restart it by creating a new Activity of the same type.
@@ -33,7 +33,7 @@ public class Utils {
     public static void onActivityCreateSetTheme(Activity activity, int sTheme) {
         switch (sTheme) {
 
-            case THEME_WHITE:
+            case THEME_CASH:
                 activity.setTheme(R.style.CashmereAppTheme_NoActionBar);
                 break;
 
@@ -48,6 +48,7 @@ public class Utils {
     public static void SaveTheme(String key, int theme, Activity activity){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
         editor.putInt(key, theme);
         editor.apply();
     }
