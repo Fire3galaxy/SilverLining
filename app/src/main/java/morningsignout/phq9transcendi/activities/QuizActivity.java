@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -79,8 +80,6 @@ public class QuizActivity extends AppCompatActivity
         Utils.onActivityCreateSetTheme(this, theme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         if (mGoogleApiClient == null) { // Create an instance of GoogleAPIClient.
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -107,14 +106,14 @@ public class QuizActivity extends AppCompatActivity
 
         //change color according to theme
         Drawable arrows = ContextCompat.getDrawable(getApplicationContext(), R.drawable.green_arrow);
-        Drawable seekbar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_seekbar);
+        ImageView whiteLine = (ImageView) findViewById(R.id.imageView_white_line);
         if(Utils.GetTheme(this)== 0){
             arrows.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.jungle_mist), PorterDuff.Mode.SRC_ATOP);
-            seekbar.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.jungle_mist), PorterDuff.Mode.SRC_ATOP);
+            whiteLine.setBackgroundColor(getResources().getColor(R.color.jungle_mist));
         }
         else{
             arrows.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.wafer), PorterDuff.Mode.SRC_ATOP);
-            seekbar.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.wafer), PorterDuff.Mode.SRC_ATOP);
+            whiteLine.setBackgroundColor(getResources().getColor(R.color.wafer));
         }
         ((ImageButton)findViewById(R.id.imageButton_nextq)).setImageDrawable(arrows);
         ((ImageButton)findViewById(R.id.imageButton_prevq)).setImageDrawable(arrows);
