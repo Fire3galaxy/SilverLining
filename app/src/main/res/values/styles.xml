@@ -88,14 +88,14 @@
         <item name="filledColor">@color/cashmere</item>
         <item name="emptyColor">@color/wafer</item>
         <item name="rangeCount">4</item>
-        <item name="barHeightPercent">0.7</item>
+        <item name="barHeightPercent">0.01</item>
     </style>
 
     <style name="IceRangeSlider">
         <item name="filledColor">@color/downy</item>
         <item name="emptyColor">@color/jungle_mist</item>
         <item name="rangeCount">4</item>
-        <item name="barHeightPercent">0.7</item>
+        <item name="barHeightPercent">0.01</item>
     </style>
 
 </resources>

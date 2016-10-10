@@ -6,22 +6,19 @@ package morningsignout.phq9transcendi.activities.RangeSliderCustom;
  * 2. Made ACTION_DOWN and ACTION_MOVE draw the circle wherever the finger is, even if not in the
  *    current spot. */
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.*;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
 import morningsignout.phq9transcendi.R;
-import morningsignout.phq9transcendi.activities.IndexActivity;
-import morningsignout.phq9transcendi.activities.QuizActivity;
-import morningsignout.phq9transcendi.activities.Utils;
 
 public class RangeSliderView extends View {
 
@@ -102,11 +99,12 @@ public class RangeSliderView extends View {
     }
 
     public RangeSliderView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, R.attr.customRangeSlider);
+        super(context, attrs, defStyleAttr);
 
         if (attrs != null) {
-            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RangeSliderView);
+            TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.RangeSliderView, defStyleAttr, 0);
             TypedArray sa = context.obtainStyledAttributes(attrs, new int[]{android.R.attr.layout_height});
+
             try {
                 layoutHeight = sa.getLayoutDimension(
                         0, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -116,8 +114,6 @@ public class RangeSliderView extends View {
                         R.styleable.RangeSliderView_filledColor, DEFAULT_FILLED_COLOR);
                 emptyColor = a.getColor(
                         R.styleable.RangeSliderView_emptyColor, DEFAULT_EMPTY_COLOR);
-                barHeightPercent = a.getFloat(
-                        R.styleable.RangeSliderView_barHeightPercent, DEFAULT_BAR_HEIGHT_PERCENT);
                 barHeightPercent = a.getFloat(
                         R.styleable.RangeSliderView_barHeightPercent, DEFAULT_BAR_HEIGHT_PERCENT);
                 slotRadiusPercent = a.getFloat(

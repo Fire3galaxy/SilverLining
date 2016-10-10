@@ -1,13 +1,10 @@
 package morningsignout.phq9transcendi.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
-
-import com.firebase.client.core.Context;
-import com.firebase.client.snapshot.Index;
 
 import morningsignout.phq9transcendi.R;
 
@@ -53,8 +50,8 @@ public class Utils {
         editor.apply();
     }
 
-    public static int GetTheme(Activity activity) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+    public static int GetTheme(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         int theme = preferences.getInt("theme", 0);
         return theme;
     }
