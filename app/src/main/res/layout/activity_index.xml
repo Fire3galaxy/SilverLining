@@ -1,26 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".activities.IndexActivity">
+    tools:context=".activities.IndexActivity"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginTop="40dp"
+        android:text="@string/main_menu_text"
+        android:id="@+id/title"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+    <!--android:background="?android:attr/selectableItemBackground" />-->
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+    <Space
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="0dp"
+        android:id="@+id/index_space"/>
 
-    </android.support.design.widget.AppBarLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:text="@string/main_start_quiz"
+        android:id="@+id/startButton"
+        android:padding="@dimen/text_button_padding"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/index_space" />
 
-    <include layout="@layout/content_index" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Theme"
+        android:id="@+id/refButton"
+        android:padding="@dimen/text_button_padding"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/startButton"
+        android:layout_centerHorizontal="true" />
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

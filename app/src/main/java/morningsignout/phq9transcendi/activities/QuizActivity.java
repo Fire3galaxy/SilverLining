@@ -90,9 +90,6 @@ public class QuizActivity extends AppCompatActivity
 
         isFirstTimeFlag = (savedInstanceState == null);
 
-        //Grab and set content; inital setup
-        SharedPreferences preferences = getPreferences(0);
-
         questionTextView = (TextView) findViewById(R.id.questionView);
         questionNumText = (TextView) findViewById(R.id.textView_question_number);
         answerNo = (Button) findViewById(R.id.button_answer_no);

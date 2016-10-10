@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.IndexActivity"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_index">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <TextView
         android:layout_width="wrap_content"
@@ -17,7 +16,6 @@
         android:id="@+id/title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
-        <!--android:background="?android:attr/selectableItemBackground" />-->
 
     <Space
         android:layout_width="0px"
@@ -33,16 +31,33 @@
         android:id="@+id/startButton"
         android:padding="@dimen/text_button_padding"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/index_space" />
+        android:layout_above="@+id/resources_button"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Theme"
+        android:text="@string/resources_button"
+        android:id="@+id/resources_button"
+        android:padding="@dimen/text_button_padding"
+        android:layout_alignRight="@id/index_space"
+        android:layout_alignEnd="@id/index_space"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/references_button"
         android:id="@+id/refButton"
         android:padding="@dimen/text_button_padding"
-        android:layout_marginTop="35dp"
-        android:layout_below="@+id/startButton"
-        android:layout_centerHorizontal="true" />
-
+        android:layout_alignLeft="@id/index_space"
+        android:layout_alignStart="@id/index_space"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

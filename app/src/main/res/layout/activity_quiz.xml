@@ -1,12 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.QuizActivity"
-    android:orientation="vertical">
+    tools:showIn="@layout/activity_quiz">
 
-    <include layout="@layout/content_quiz" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/range_slider"
+        android:layout_alignParentTop="true"
+        android:id="@+id/question_container"
+        android:layout_marginBottom="16dp"
+        android:paddingTop="10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/quiz_activity"
+            android:id="@+id/questionView"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/quiz_text_size"
+            android:paddingTop="20dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"/>
+    </ScrollView>
 
-</LinearLayout>
+    <Space
+        android:id="@+id/space_quiz"
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <morningsignout.phq9transcendi.activities.RangeSliderCustom.RangeSliderView
+        android:id="@+id/range_slider"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignTop="@+id/space_quiz"
+        android:layout_alignLeft="@+id/imageButton_prevq"
+        android:layout_alignStart="@+id/imageButton_prevq"/>
+
+    <LinearLayout
+        android:id="@+id/container_bar_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/range_slider"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:layout_marginEnd="3dp"
+            android:text="@string/answer_not_at_all"
+            android:textSize="15sp"
+            android:gravity="center_horizontal"
+            android:id="@+id/textView_not_at_all"/>
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/answer_few_days"
+            android:textSize="15sp"
+            android:gravity="center_horizontal"
+            android:id="@+id/textView_few_days"/>
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/answer_many_days"
+            android:textSize="15sp"
+            android:gravity="center_horizontal"
+            android:id="@+id/textView_many_days"/>
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:text="@string/answer_many_many_days"
+            android:textSize="15sp"
+            android:gravity="center_horizontal"
+            android:id="@+id/textView_many_many_days"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_alignBottom="@+id/container_bar_text">
+
+        <Button
+            android:id="@+id/button_answer_yes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/answer_yes"/>
+
+        <Button
+            android:id="@+id/button_answer_no"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/answer_no"/>
+    </LinearLayout>
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/imageButton_prevq"
+        android:contentDescription="@string/description_previous"
+        android:src="@drawable/green_arrow"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:rotation="180"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="6dp"/>
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/imageButton_nextq"
+        android:contentDescription="@string/description_next"
+        android:src="@drawable/green_arrow"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="6dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="1/18"
+        android:textSize="32sp"
+        android:gravity="center"
+        android:alpha=".7"
+        android:id="@+id/textView_question_number"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="9dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:id="@+id/imageView_white_line"
+        android:contentDescription="@string/description_white_border"
+        android:layout_above="@+id/imageButton_prevq"
+        android:layout_marginBottom="6dp"
+        android:background="@android:color/white" />
+
+</RelativeLayout>
