@@ -14,13 +14,13 @@ import morningsignout.phq9transcendi.R;
 /**
  * Created by Stella on 3/2/2016.
  */
-public class ReferenceAdapter extends BaseAdapter {
+public class ThemesAdapter extends BaseAdapter {
 
     Context context;
     String[] contents;
 
 
-    public ReferenceAdapter(Context c){
+    public ThemesAdapter(Context c){
         this.context = c;
         String activity = this.getClass().getSimpleName();
         Log.d("Class name", activity);
@@ -49,7 +49,7 @@ public class ReferenceAdapter extends BaseAdapter {
         if (row == null) {
             viewHolder = new ReferencesViewHolder();
 
-            LayoutInflater inflater = ((ReferenceActivity) context).getLayoutInflater();
+            LayoutInflater inflater = ((Themes) context).getLayoutInflater();
             row = inflater.inflate(R.layout.list_item_view, parent, false);
 
             viewHolder.textViewTitle = (TextView) row.findViewById(R.id.textView_rr);

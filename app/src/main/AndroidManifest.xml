@@ -8,30 +8,22 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/IceAppTheme"
+        android:theme="@style/BlankTheme"
         android:name=".activities.PHQApplication">
 
         <activity
             android:name=".activities.IndexActivity"
-            android:label="@string/app_name"
-            android:theme="@style/IceAppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.ReferenceActivity"
+            android:name=".activities.Themes"
             android:label="@string/reference_activity" />
-        <activity
-            android:name=".activities.ResourceActivity"
-            android:label="@string/resource_activity" />
         <activity android:name=".activities.QuizIntroActivity"
-            android:label="@string/quizintro_activity"
-            android:theme="@style/IceAppTheme"/>
+            android:label="@string/quizintro_activity"/>
         <activity
             android:name=".activities.DemographicsIntroActivity"
             android:label="@string/demographics_intro_activity" />
@@ -40,36 +32,12 @@
             android:label="@string/demographics_activity"/>
         <activity
             android:name=".activities.QuizActivity"
-            android:label="@string/quiz_activity"
-            android:theme="@style/IceAppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
+            android:label="@string/quiz_activity">
         </activity>
 
         <activity android:name=".activities.ResultsActivity"
-            android:label="@string/results_activity"
-            android:theme="@style/IceAppTheme"/>
+            android:label="@string/results_activity"/>
 
-        <activity
-            android:name=".activities.Themes"
-            android:label="Themes"
-            android:theme="@style/IceAppTheme.NoActionBar"/>
-
-        <!--Not used for now because no login-->
-        <activity
-            android:name=".activities.MainActivity"
-            android:label="@string/app_name">
-        </activity>
-
-        <activity
-            android:name=".activities.NewUserActivity"
-            android:label="@string/title_activity_new_user"
-            android:theme="@style/IceAppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="morningsignout.phq9transcendi.activities.MainActivity" />
-        </activity>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

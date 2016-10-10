@@ -1,7 +1,6 @@
 package morningsignout.phq9transcendi.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,15 +13,15 @@ import android.widget.TextView;
 import morningsignout.phq9transcendi.R;
 
 /**
- * Created by Stella on 9/1/2016.
+ * Created by Stella on 3/2/2016.
  */
 public class Themes extends AppCompatActivity {
-
+    TextView title;
+    TextView subtitle;
     ListView contents;
     Button homeButton;
-    ReferenceAdapter themeCustomAdapter;
+    ThemesAdapter referenceCustomAdapter;
     LinearLayout linearLayout;
-    int sTheme = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,15 +30,16 @@ public class Themes extends AppCompatActivity {
 
         setContentView(R.layout.reference_view);
 
+        title =(TextView)findViewById(R.id.Title);
+
+        subtitle = (TextView)findViewById(R.id.Subtitle);
 
         contents = (ListView)findViewById(R.id.Contents);
         contents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView parent, View view, int position, long id) {
-
                 Utils.SaveTheme("theme", position, Themes.this);
                 Utils.changeToTheme(Themes.this);
-
             }
         });
 
@@ -51,15 +51,14 @@ public class Themes extends AppCompatActivity {
             }
         });
 
-
+        title.setText(getString(R.string._references));
+        subtitle.setText("");
         // Create the Custom Adapter Object
-        themeCustomAdapter = new ReferenceAdapter(this);
+        referenceCustomAdapter = new ThemesAdapter(this);
 
         // Set the Adapter
-        contents.setAdapter(themeCustomAdapter);
+        contents.setAdapter(referenceCustomAdapter);
 
         linearLayout = (LinearLayout) findViewById(R.id.resourceRefView);
     }
 }
-
-
