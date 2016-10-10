@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import morningsignout.phq9transcendi.R;
 
@@ -16,11 +15,9 @@ import morningsignout.phq9transcendi.R;
  * Created by Stella on 3/2/2016.
  */
 public class Themes extends AppCompatActivity {
-    TextView title;
-    TextView subtitle;
     ListView contents;
     Button homeButton;
-    ThemesAdapter referenceCustomAdapter;
+    ThemesAdapter themeCustomAdapter;
     LinearLayout linearLayout;
 
     @Override
@@ -28,11 +25,7 @@ public class Themes extends AppCompatActivity {
         Utils.onActivityCreateSetTheme(this, Utils.GetTheme(this));
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.reference_view);
-
-        title =(TextView)findViewById(R.id.Title);
-
-        subtitle = (TextView)findViewById(R.id.Subtitle);
+        setContentView(R.layout.themes);
 
         contents = (ListView)findViewById(R.id.Contents);
         contents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -51,14 +44,12 @@ public class Themes extends AppCompatActivity {
             }
         });
 
-        title.setText(getString(R.string._references));
-        subtitle.setText("");
         // Create the Custom Adapter Object
-        referenceCustomAdapter = new ThemesAdapter(this);
+        themeCustomAdapter = new ThemesAdapter(this);
 
         // Set the Adapter
-        contents.setAdapter(referenceCustomAdapter);
+        contents.setAdapter(themeCustomAdapter);
 
-        linearLayout = (LinearLayout) findViewById(R.id.resourceRefView);
+        linearLayout = (LinearLayout) findViewById(R.id.themeView);
     }
 }

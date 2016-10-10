@@ -206,8 +206,8 @@
 
     <!--Themes-->
     <string-array name ="themes">
-        <item>ICE</item>
-        <item>CASHMERE</item>
+        <item>Ice</item>
+        <item>Cashmere</item>
     </string-array>
 
 </resources>

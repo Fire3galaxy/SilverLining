@@ -1,6 +1,8 @@
 package morningsignout.phq9transcendi.activities;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +17,8 @@ import morningsignout.phq9transcendi.R;
  * Created by Stella on 3/2/2016.
  */
 public class ThemesAdapter extends BaseAdapter {
-
     Context context;
     String[] contents;
-
 
     public ThemesAdapter(Context c){
         this.context = c;
@@ -53,10 +53,25 @@ public class ThemesAdapter extends BaseAdapter {
             row = inflater.inflate(R.layout.list_item_view, parent, false);
 
             viewHolder.textViewTitle = (TextView) row.findViewById(R.id.textView_rr);
-            //viewHolder.imageView = (ImageView) row.findViewById(R.id.imageView_rr);
             row.setTag(viewHolder);
         } else {
             viewHolder = (ReferencesViewHolder) row.getTag();
+        }
+
+        if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            if (position == 0)
+                viewHolder.textViewTitle.setCompoundDrawablesWithIntrinsicBounds(
+                        0, 0, R.drawable.ice_front_screen, 0);
+            else if (position == 1)
+                viewHolder.textViewTitle.setCompoundDrawablesWithIntrinsicBounds(
+                        0, 0, R.drawable.cashmere_front_screen, 0);
+        } else {
+            if (position == 0)
+                viewHolder.textViewTitle.setCompoundDrawablesWithIntrinsicBounds(
+                        0, 0, R.drawable.ice_front_screen_land, 0);
+            else if (position == 1)
+                viewHolder.textViewTitle.setCompoundDrawablesWithIntrinsicBounds(
+                        0, 0, R.drawable.cashmere_front_screen_land, 0);
         }
 
         viewHolder.textViewTitle.setText(this.contents[position]);
