@@ -17,6 +17,7 @@
     <string name="main_start_quiz">How am I doing?</string>
     <string name="resources_button">Resources</string>
     <string name="references_button">References</string>
+    <string name="theme_change_button">Change Theme</string>
     <string name="quiz_start">Get Started!</string>
     <string name="demo_continue">Share a little about myself</string>
     <string name="demo_skip">No thanks, maybe next time</string>

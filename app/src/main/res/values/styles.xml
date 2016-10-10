@@ -9,7 +9,6 @@
     <style name="IceAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="android:textColor">@color/timber_green</item>
-        <item name="colorPrimary">@color/downy</item>
         <item name="android:windowBackground">@color/iceberg</item>
         <item name="android:colorBackground">@color/iceberg</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>
@@ -24,7 +23,6 @@
     <style name="CashmereAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="android:textColor">@color/cork</item>
-        <item name="colorPrimary">@color/cashmere</item>
         <item name="android:windowBackground">@color/white_linen</item>
         <item name="android:colorBackground">@color/white_linen</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>
