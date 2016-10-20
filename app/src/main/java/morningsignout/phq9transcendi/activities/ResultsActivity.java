@@ -71,10 +71,10 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         //change color of scoreFan
         Drawable fan = ContextCompat.getDrawable(getApplicationContext(), R.drawable.score_fan);
         if(Utils.GetTheme(this)== 0){
-            fan.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.downy), PorterDuff.Mode.SRC_ATOP);
+            fan.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.jungle_mist), PorterDuff.Mode.SRC_ATOP);
         }
         else{
-            fan.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.cashmere), PorterDuff.Mode.SRC_ATOP);
+            fan.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.wafer), PorterDuff.Mode.SRC_ATOP);
         }
         ((ImageView)findViewById(R.id.imageView_score_fan)).setImageDrawable(fan);
         // Blink when scrollable (once)

@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.firebase.client.Firebase;
+
 import morningsignout.phq9transcendi.R;
 
 /**
@@ -18,7 +20,7 @@ public class Themes extends AppCompatActivity {
     ListView contents;
     Button homeButton;
     ThemesAdapter themeCustomAdapter;
-    LinearLayout linearLayout;
+    Firebase userRef;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,12 +29,18 @@ public class Themes extends AppCompatActivity {
 
         setContentView(R.layout.themes);
 
+        String userID = getSharedPreferences(IndexActivity.PREFS_NAME, MODE_PRIVATE)
+                .getString(FirebaseExtras.USER_ID, null);
+        if(userID != null)
+            userRef = new Firebase(FirebaseExtras.DATA_URL).child("users").child(userID);
+
         contents = (ListView)findViewById(R.id.Contents);
         contents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 Utils.SaveTheme("theme", position, Themes.this);
                 Utils.changeToTheme(Themes.this);
+                userRef.child("themePreference").setValue(Utils.THEME_NAMES[Utils.GetTheme(Themes.this)]);
             }
         });
 
@@ -49,7 +57,5 @@ public class Themes extends AppCompatActivity {
 
         // Set the Adapter
         contents.setAdapter(themeCustomAdapter);
-
-        linearLayout = (LinearLayout) findViewById(R.id.themeView);
     }
 }

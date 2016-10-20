@@ -17,6 +17,9 @@ public class Utils {
 
     public final static int THEME_DEFAULT = 0;
     public final static int THEME_CASH = 1;
+
+    public final static String[] THEME_NAMES = {"ice", "cashmere"};
+
     //public final static int THEME_BLUE = 2;
     /**
      * Set the theme of the Activity, and restart it by creating a new Activity of the same type.
@@ -52,8 +55,7 @@ public class Utils {
 
     public static int GetTheme(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        int theme = preferences.getInt("theme", 0);
-        return theme;
+        return preferences.getInt("theme", 0);
     }
 
 

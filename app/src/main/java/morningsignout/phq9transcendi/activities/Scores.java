@@ -196,7 +196,7 @@ public class Scores {
         testRef.child("latitude").setValue(latitude);
         testRef.child("longitude").setValue(longitude);
         testRef.child("userID").setValue(userID);
-        testRef.child("completed").setValue(Boolean.toString(true)); // FIXME: No way to submit incomplete right now
+        testRef.child("completed").setValue(true); // FIXME: No way to submit incomplete right now
         testRef.child("answers").setValue(answers);
         testRef.child("scores").setValue(scores);
 
