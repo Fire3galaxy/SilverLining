@@ -31,10 +31,10 @@ public class IndexActivity extends AppCompatActivity {
         // Set up layout and toolbar
         Utils.onActivityCreateSetTheme(this, Utils.GetTheme(this));
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_index);
 
         handleLogin(); // Gives user a firebase id
+
 
         // 2 Buttons: How am I doing, Resources, References
         Button startButton = (Button) findViewById(R.id.startButton);
@@ -104,23 +104,11 @@ public class IndexActivity extends AppCompatActivity {
                     Log.e("PHQ9-Transcendi", "Failed connection to server.");
                 }
             });
-        } else {
-            Log.d("IndexActivity", "Login already exists: " + preferences.getString(FirebaseExtras.USER_ID, ""));
         }
-    }
-
-    private void addThemeDemographic(final Firebase ref, String userId) {
-        Firebase userRef = ref.child("users").child(userId);
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
+        else {
+            ref.child(preferences.getString(FirebaseExtras.USER_ID, ""))    // Update theme preference
+                    .child("themePreference")
+                    .setValue(Utils.THEME_NAMES[Utils.GetTheme(this)]);
+        }
     }
 }
