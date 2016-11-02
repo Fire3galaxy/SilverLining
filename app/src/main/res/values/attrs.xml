@@ -8,4 +8,8 @@
         <attr name="slotRadiusPercent" format="float"/>
         <attr name="sliderRadiusPercent" format="float"/>
     </declare-styleable>
+
+    <declare-styleable name="CustomTheme">
+        <attr name="customRangeSlider" format="reference" />
+    </declare-styleable>
 </resources>

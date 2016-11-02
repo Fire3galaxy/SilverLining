@@ -1,13 +1,10 @@
 package morningsignout.phq9transcendi.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
-
-import com.firebase.client.core.Context;
-import com.firebase.client.snapshot.Index;
 
 import morningsignout.phq9transcendi.R;
 
@@ -19,7 +16,10 @@ public class Utils {
 
 
     public final static int THEME_DEFAULT = 0;
-    public final static int THEME_WHITE = 1;
+    public final static int THEME_CASH = 1;
+
+    public final static String[] THEME_NAMES = {"ice", "cashmere"};
+
     //public final static int THEME_BLUE = 2;
     /**
      * Set the theme of the Activity, and restart it by creating a new Activity of the same type.
@@ -33,7 +33,7 @@ public class Utils {
     public static void onActivityCreateSetTheme(Activity activity, int sTheme) {
         switch (sTheme) {
 
-            case THEME_WHITE:
+            case THEME_CASH:
                 activity.setTheme(R.style.CashmereAppTheme_NoActionBar);
                 break;
 
@@ -48,14 +48,14 @@ public class Utils {
     public static void SaveTheme(String key, int theme, Activity activity){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
         editor.putInt(key, theme);
         editor.apply();
     }
 
-    public static int GetTheme(Activity activity) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        int theme = preferences.getInt("theme", 0);
-        return theme;
+    public static int GetTheme(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getInt("theme", 0);
     }
 
 

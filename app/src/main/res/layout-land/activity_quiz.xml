@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activities.QuizActivity"
-    tools:showIn="@layout/activity_quiz">
+    tools:context=".activities.QuizActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,11 +36,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_centerInParent="true"
-        app:filledColor="@color/blue"
-        app:emptyColor="@color/light_blue"
-        app:rangeCount="4"
-        app:barHeightPercent=".07"/>
+        android:layout_centerInParent="true"/>
 
     <LinearLayout
         android:id="@+id/container_bar_text"

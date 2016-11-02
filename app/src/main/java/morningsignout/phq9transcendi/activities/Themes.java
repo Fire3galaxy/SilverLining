@@ -1,8 +1,6 @@
 package morningsignout.phq9transcendi.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,59 +8,54 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import com.firebase.client.Firebase;
 
 import morningsignout.phq9transcendi.R;
 
 /**
  * Created by Stella on 3/2/2016.
  */
-public class ReferenceActivity extends AppCompatActivity {
-    TextView title;
-    TextView subtitle;
+public class Themes extends AppCompatActivity {
     ListView contents;
     Button homeButton;
-    ReferenceAdapter referenceCustomAdapter;
-    LinearLayout linearLayout;
+    ThemesAdapter themeCustomAdapter;
+    Firebase userRef;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Utils.onActivityCreateSetTheme(this, Utils.GetTheme(this));
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.reference_view);
+        setContentView(R.layout.themes);
 
-        title =(TextView)findViewById(R.id.Title);
-
-        subtitle = (TextView)findViewById(R.id.Subtitle);
+        String userID = getSharedPreferences(IndexActivity.PREFS_NAME, MODE_PRIVATE)
+                .getString(FirebaseExtras.USER_ID, null);
+        if(userID != null)
+            userRef = new Firebase(FirebaseExtras.DATA_URL).child("users").child(userID);
 
         contents = (ListView)findViewById(R.id.Contents);
         contents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView parent, View view, int position, long id) {
-                String url = "http://morningsignout.com";
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
+                Utils.SaveTheme("theme", position, Themes.this);
+                Utils.changeToTheme(Themes.this);
+                userRef.child("themePreference").setValue(Utils.THEME_NAMES[Utils.GetTheme(Themes.this)]);
             }
         });
 
         homeButton = (Button)findViewById(R.id.back_button);
         homeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(ReferenceActivity.this, IndexActivity.class);
+                Intent intent = new Intent(Themes.this, IndexActivity.class);
                 startActivity(intent);
             }
         });
 
-        title.setText(getString(R.string._references));
-        subtitle.setText("");
         // Create the Custom Adapter Object
-        referenceCustomAdapter = new ReferenceAdapter(this);
+        themeCustomAdapter = new ThemesAdapter(this);
 
         // Set the Adapter
-        contents.setAdapter(referenceCustomAdapter);
-
-        linearLayout = (LinearLayout) findViewById(R.id.resourceRefView);
+        contents.setAdapter(themeCustomAdapter);
     }
 }

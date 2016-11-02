@@ -2,21 +2,29 @@ package morningsignout.phq9transcendi.activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -72,8 +80,6 @@ public class QuizActivity extends AppCompatActivity
         Utils.onActivityCreateSetTheme(this, theme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         if (mGoogleApiClient == null) { // Create an instance of GoogleAPIClient.
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -84,9 +90,6 @@ public class QuizActivity extends AppCompatActivity
 
         isFirstTimeFlag = (savedInstanceState == null);
 
-        //Grab and set content; inital setup
-        SharedPreferences preferences = getPreferences(0);
-
         questionTextView = (TextView) findViewById(R.id.questionView);
         questionNumText = (TextView) findViewById(R.id.textView_question_number);
         answerNo = (Button) findViewById(R.id.button_answer_no);
@@ -96,6 +99,21 @@ public class QuizActivity extends AppCompatActivity
         containerButtons = (LinearLayout) findViewById(R.id.container_buttons);
         containerBarText = (LinearLayout) findViewById(R.id.container_bar_text);
         answerSliderView = (RangeSliderView) findViewById(R.id.range_slider);
+
+
+        //change color according to theme
+        Drawable arrows = ContextCompat.getDrawable(getApplicationContext(), R.drawable.green_arrow);
+        ImageView whiteLine = (ImageView) findViewById(R.id.imageView_white_line);
+        if(Utils.GetTheme(this)== 0){
+            arrows.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.jungle_mist), PorterDuff.Mode.SRC_ATOP);
+            whiteLine.setBackgroundColor(getResources().getColor(R.color.jungle_mist));
+        }
+        else{
+            arrows.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.wafer), PorterDuff.Mode.SRC_ATOP);
+            whiteLine.setBackgroundColor(getResources().getColor(R.color.wafer));
+        }
+        ((ImageButton)findViewById(R.id.imageButton_nextq)).setImageDrawable(arrows);
+        ((ImageButton)findViewById(R.id.imageButton_prevq)).setImageDrawable(arrows);
 
         // Auto-scroll up from bottom of scroll view
         questionContainer = (ScrollView) findViewById(R.id.question_container);

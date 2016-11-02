@@ -12,6 +12,7 @@ import android.graphics.*;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +26,9 @@ public class RangeSliderView extends View {
 
     private static final int DEFAULT_PAINT_STROKE_WIDTH = 5;
 
-    private static final int DEFAULT_FILLED_COLOR = Color.parseColor("#FFA500");
+    private final int DEFAULT_FILLED_COLOR = Color.parseColor("#FFA500");
 
-    private static final int DEFAULT_EMPTY_COLOR = Color.parseColor("#C3C3C3");
+    private final int DEFAULT_EMPTY_COLOR = Color.parseColor("#C3C3C3");
 
     private static final float DEFAULT_BAR_HEIGHT_PERCENT = 0.10f;
 
@@ -94,14 +95,16 @@ public class RangeSliderView extends View {
     }
 
     public RangeSliderView(Context context, AttributeSet attrs) {
-        this(context, attrs, -1);
+        this(context, attrs, R.attr.customRangeSlider);
     }
 
     public RangeSliderView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
         if (attrs != null) {
-            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RangeSliderView);
+            TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.RangeSliderView, defStyleAttr, 0);
             TypedArray sa = context.obtainStyledAttributes(attrs, new int[]{android.R.attr.layout_height});
+
             try {
                 layoutHeight = sa.getLayoutDimension(
                         0, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -111,8 +114,6 @@ public class RangeSliderView extends View {
                         R.styleable.RangeSliderView_filledColor, DEFAULT_FILLED_COLOR);
                 emptyColor = a.getColor(
                         R.styleable.RangeSliderView_emptyColor, DEFAULT_EMPTY_COLOR);
-                barHeightPercent = a.getFloat(
-                        R.styleable.RangeSliderView_barHeightPercent, DEFAULT_BAR_HEIGHT_PERCENT);
                 barHeightPercent = a.getFloat(
                         R.styleable.RangeSliderView_barHeightPercent, DEFAULT_BAR_HEIGHT_PERCENT);
                 slotRadiusPercent = a.getFloat(
