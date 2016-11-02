@@ -1,5 +1,6 @@
 package morningsignout.phq9transcendi.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import com.firebase.client.Firebase;
 
 import morningsignout.phq9transcendi.R;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Stella on 3/2/2016.
@@ -57,5 +59,10 @@ public class Themes extends AppCompatActivity {
 
         // Set the Adapter
         contents.setAdapter(themeCustomAdapter);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));   // For custom Rubik font
     }
 }

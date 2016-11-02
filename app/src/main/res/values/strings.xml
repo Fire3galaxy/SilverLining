@@ -21,6 +21,7 @@
     <string name="quiz_start">Get Started!</string>
     <string name="demo_continue">Share a little about myself</string>
     <string name="demo_skip">No thanks, maybe next time</string>
+
     <string name="demo_start_quiz">Start Quiz</string>
     <string name="description_previous">Previous question</string>
     <string name="description_next">Next question</string>
@@ -85,18 +86,19 @@
     <string name="answer_no">No</string>
     <string name="answer_not_affected">Doesn\'t affect me</string>
     <string name="answer_somewhat">Somewhat</string>
-    <string name="answer_a_lot">A lot</string>
+    <string name="answer_somewhat_2">Some-what</string>
+    <string name="answer_a_lot">Very much</string>
     <string name="answer_crippling">Crippling</string>
 
     <string-array name="gender_array">
-        <item>-</item>
+        <item></item>
         <item>Male</item>
         <item>Female</item>
         <item>Enter option</item>
     </string-array>
 
     <string-array name="ethnicity_array">
-        <item>-</item>
+        <item></item>
         <item>African American/Black</item>
         <item>Mexican American/Chicano</item>
         <item>Hispanic/Latino</item>
@@ -112,7 +114,7 @@
     </string-array>
 
     <string-array name="school_year">
-        <item>-</item>
+        <item></item>
         <item>First</item>
         <item>Second</item>
         <item>Third</item>
@@ -122,13 +124,13 @@
     </string-array>
 
     <string-array name="yes_no_array">
-        <item>-</item>
+        <item></item>
         <item>Yes</item>
         <item>No</item>
     </string-array>
 
     <string-array name="college_name_array">
-        <item>-</item>
+        <item></item>
         <item>University of California, Berkeley</item>
         <item>University of California, Davis</item>
         <item>University of California, Irvine</item>

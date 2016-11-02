@@ -35,7 +35,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/demo_gender_answer"
-            android:background="@null"
             android:textSize="15sp"/>
 
         <EditText
@@ -58,7 +57,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/demo_ethnic_answer"
-            android:background="@null"
             android:textSize="15sp"/>
 
         <EditText
@@ -81,7 +79,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/demo_sch_yr_answer"
-            android:background="@null"
             android:textSize="15sp"/>
 
         <TextView
@@ -97,7 +94,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/demo_first_answer"
-            android:background="@null"
             android:textSize="15sp"/>
 
         <TextView

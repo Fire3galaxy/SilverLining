@@ -1,11 +1,14 @@
 package morningsignout.phq9transcendi.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
@@ -20,11 +23,12 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import morningsignout.phq9transcendi.R;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class IndexActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "PHQ9 Preference File";
 
-    Button refButton;
+    Button resourceButton, refButton, themeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,11 @@ public class IndexActivity extends AppCompatActivity {
 
         // Make both buttons the same width for aesthetic
         //resourceButton.setWidth(refButton.getMeasuredWidth());
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));   // For custom Rubik font
     }
 
     private void handleLogin() {

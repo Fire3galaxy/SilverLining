@@ -1,5 +1,6 @@
 package morningsignout.phq9transcendi.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Spinner;
 import com.firebase.client.Firebase;
 
 import morningsignout.phq9transcendi.R;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Stella on 3/20/2016.
@@ -135,6 +137,11 @@ public class DemographicsActivity extends AppCompatActivity implements
     @Override
     public void onBackPressed() {
         dialogBuilder.create().show();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));   // For custom Rubik font
     }
 
     // Get contents of age editText and turn into number (parsing fails if the field is empty or not a number)

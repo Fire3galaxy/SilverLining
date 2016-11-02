@@ -1,5 +1,6 @@
 package morningsignout.phq9transcendi.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import morningsignout.phq9transcendi.R;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by pokeforce on 5/6/16.
@@ -52,5 +54,10 @@ public class QuizIntroActivity extends AppCompatActivity {
 
         if (container.canScrollVertically())
             container.blinkScrollBar();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));   // For custom Rubik font
     }
 }
