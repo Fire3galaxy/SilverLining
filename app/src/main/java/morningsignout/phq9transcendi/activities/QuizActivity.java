@@ -132,8 +132,7 @@ public class QuizActivity extends AppCompatActivity
         isFinishingFlag = false;
         questionArray = getResources().getStringArray(R.array.questions);
         dialogBuilder = new AlertDialog.Builder(this);
-        dialogBuilder.setTitle(R.string.app_name)
-                .setMessage(R.string.dialog_quit_quiz)
+        dialogBuilder.setMessage(R.string.dialog_quit_quiz)
                 .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

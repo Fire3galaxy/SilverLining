@@ -112,8 +112,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         scoreText.setText(String.valueOf(totalScore));
         finishUpButton.setOnClickListener(this);
         dialogBuilder = new AlertDialog.Builder(this);
-        dialogBuilder.setTitle(R.string.app_name)
-                .setMessage(R.string.dialog_quit_results)
+        dialogBuilder.setMessage(R.string.dialog_quit_results)
                 .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -188,6 +187,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case 2:
                 Intent backHome = new Intent(this, IndexActivity.class);
+                backHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(backHome);
                 finish();
                 break;

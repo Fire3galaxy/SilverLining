@@ -38,6 +38,13 @@
             android:background="@null"
             android:textSize="15sp"/>
 
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/_gender"
+            android:id="@+id/gender_custom_answer"
+            android:inputType="text"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,6 +60,13 @@
             android:id="@+id/demo_ethnic_answer"
             android:background="@null"
             android:textSize="15sp"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/_ethnicity"
+            android:id="@+id/ethnicity_custom_answer"
+            android:inputType="text"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -85,6 +99,26 @@
             android:id="@+id/demo_first_answer"
             android:background="@null"
             android:textSize="15sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/_college_name"
+            android:textSize="20sp"
+            android:id="@+id/demo_college_name"
+            android:paddingTop="10dp"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/demo_college_answer" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/_college_name"
+            android:id="@+id/college_name_custom_answer"
+            android:inputType="text"/>
 
         <Button
             android:layout_width="wrap_content"
