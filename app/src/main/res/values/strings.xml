@@ -119,21 +119,21 @@
 
     <!--Quiz questions-->
     <string-array name="questions">
-        <item>Do you find that you’ve lost a lot of interest in things you used to be interested in? This can include hobbies, friends, work, food, or sex.</item>
+        <item>Do you find that you\'ve lost a lot of interest in things you used to be interested in? This can include hobbies, friends, work, food, or sex.</item>
         <item>Do you find that a lot of things are no longer enjoyable to you that you previously found enjoyable, or that you simply don’t go out and try to do enjoyable things anymore?</item>
         <item>Do you ever have feelings of being down or depressed?</item>
         <item>Do you ever have feelings of hopelessness?</item>
-        <item>Sleep is incredibly important for maintaining our brains' cognitive functions. How much of it we have had sheds light on how our brain is functioning. Have you had problems with falling asleep, staying asleep, or sleeping a lot less in the last two months?</item>
-        <item>How about on the other hand? Many depressed people often have feelings of lethargy and sleep much more than they normally do.</item>
+        <item>Sleep is incredibly important for maintaining our brains\' cognitive functions. How much of it we get sheds light on how our brains are functioning. Have you had problems with falling asleep, staying asleep, or sleeping a lot less in the last two months?</item>
+        <item>How about on the other hand? Many depressed people often have feelings of lethargy and tend to sleep much more than they normally do.</item>
         <item>How has your energy level been? Do you feel tired? Drained? Do you feel like there is no energy to do anything?</item>
-        <item>One's appetite can be a very good indicator of becoming depressed. Have you noticed yourself eating less than you normally do?</item>
+        <item>One\'s appetite can be a very good indicator of becoming depressed. Have you noticed yourself eating less than you normally do?</item>
         <item>Okay, how about a lot more than you normally do? Have you been eating lots of food at once?</item>
         <item>A lot of people with depression have negative thoughts creep in that are hard to control. Have you had thoughts that you’re a failure?</item>
         <item>How’s your concentration been? Lots of people with depression have trouble concentrating on reading books or doing their homework. Have you had trouble with concentrating lately?</item>
         <item>Have you noticed it becoming harder to finish something you started?</item>
         <item>Some people with depression actually feel a sense of physical slowing. Have you felt a sense of physical “slowness” about yourself, like moving slowly?</item>
         <item>Other people have said that they’ve been told they move or talk more slowly when they’re depressed. Have you had anyone comment on this lately?</item>
-        <item>This one is really important - do you ever thinking about hurting yourself in some way, or ending your life?</item>
+        <item>This one is really important&#8212;do you ever thinking about hurting yourself in some way, or ending your life?</item>
         <item>How about the thought that you’d be better off dead or that it would be great to just fall asleep and never wake up?</item>
         <item>Would you say you’ve felt depressed or down for more than two weeks?</item>
         <item>In the past year, have you felt depressed or sad most days, even if you felt okay sometimes?</item>
