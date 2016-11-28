@@ -23,7 +23,7 @@ public class ThemesAdapter extends BaseAdapter {
     public ThemesAdapter(Context c){
         this.context = c;
         String activity = this.getClass().getSimpleName();
-        Log.d("Class name", activity);
+        //Log.d("Class name", activity);
         this.contents = c.getResources().getStringArray(R.array.themes);
 
     }

@@ -1,75 +1,23 @@
 package morningsignout.phq9transcendi.activities;
 
-import android.content.Context;
-import android.content.Intent;
+import android.app.Activity;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
-import morningsignout.phq9transcendi.R;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+/**
+ * Created by Daniel on 11/27/2016.
+ */
 
-public class IndexActivity extends AppCompatActivity {
-    Button resourceButton, refButton, themeButton;
+public class SplashScreenActivity extends Activity {
+    public static final String PREFS_NAME = "PHQ9 Preference File";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Set up layout and toolbar
-        Utils.onActivityCreateSetTheme(this, Utils.GetTheme(this));
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_index);
-
-        handleLogin(); // Gives user a firebase id
-
-        // 2 Buttons: How am I doing, Theme
-        Button startButton = (Button) findViewById(R.id.startButton);
-        startButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                beginQuiz();
-            }
-        });
-
-        refButton = (Button) findViewById(R.id.themeButton);
-        refButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(IndexActivity.this, Themes.class);
-                startActivity(intent);
-            }
-        });
-
-//        themeButton = (Button) findViewById(R.id.themeButton);
-//        themeButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//
-//                Intent intent = new Intent(IndexActivity.this, Themes.class);
-//                startActivity(intent);
-//            }
-//        });
-    }
-
-    private void beginQuiz() {
-        Intent quizIntro = new Intent(this, QuizIntroActivity.class);
-        startActivity(quizIntro);
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-
-        // Make both buttons the same width for aesthetic
-        //resourceButton.setWidth(refButton.getMeasuredWidth());
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));   // For custom Rubik font
     }
 
     private void handleLogin() {

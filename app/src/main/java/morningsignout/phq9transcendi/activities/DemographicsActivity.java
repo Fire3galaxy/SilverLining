@@ -235,16 +235,16 @@ public class DemographicsActivity extends AppCompatActivity implements
             if (!collegeName.getSelectedItem().equals("-"))
                 userRef.child("collegeName").setValue(collegeName_answer.toLowerCase());
 
-            Log.d(demo_log_name, "Submitted Data");
+            //Log.d(demo_log_name, "Submitted Data");
         }
 
 
-        Log.d(demo_log_name, String.valueOf(age_answer));
-        Log.d(demo_log_name, gender_answer);
-        Log.d(demo_log_name, ethnicity_answer);
-        Log.d(demo_log_name, schoolYear_answer);
-        Log.d(demo_log_name, familyFirst_answer);
-        Log.d(demo_log_name, collegeName_answer);
+        //Log.d(demo_log_name, String.valueOf(age_answer));
+        //Log.d(demo_log_name, gender_answer);
+        //Log.d(demo_log_name, ethnicity_answer);
+        //Log.d(demo_log_name, schoolYear_answer);
+        //Log.d(demo_log_name, familyFirst_answer);
+        //Log.d(demo_log_name, collegeName_answer);
     }
 
     // Make sure all strings are answered

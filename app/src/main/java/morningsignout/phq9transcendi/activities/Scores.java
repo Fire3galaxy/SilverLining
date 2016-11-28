@@ -112,7 +112,7 @@ public class Scores {
 
             // Next category
             if (i + 1 < categoryIndices.length && currentCategory != categoryIndices[i + 1]) {
-                Log.d("Scores", String.valueOf(currentCategory) + ": " + String.valueOf(max) + ", " + String.valueOf(sum + max));
+                //Log.d("Scores", String.valueOf(currentCategory) + ": " + String.valueOf(max) + ", " + String.valueOf(sum + max));
 
                 sum += max;
                 max = 0;
@@ -120,23 +120,23 @@ public class Scores {
             }
         }
 
-        Log.d("Scores", getScoreString());
-        Log.d("Scores", getVisitedString());
-        Log.d("Scores", "---------------------------------------");
+        //Log.d("Scores", getScoreString());
+        //Log.d("Scores", getVisitedString());
+        //Log.d("Scores", "---------------------------------------");
 
         return sum;
     }
 
     public boolean containsRedFlag() {
         for (int i = RED_FLAG_QUESTION; i < questions.length; i++) {
-            Log.d("Scores", "9: " + scoreDictionary.get(questions[i]));
+            //Log.d("Scores", "9: " + scoreDictionary.get(questions[i]));
 
             if ((i == INTERFERENCE_QUESTION && scoreDictionary.get(questions[i]) >= 2)
                     || scoreDictionary.get(questions[i]) == 1)
                 return true;
         }
 
-        Log.d("Scores", "---------------------------------------");
+        //Log.d("Scores", "---------------------------------------");
 
         return false;
     }
@@ -161,7 +161,7 @@ public class Scores {
     public void uploadDataToDatabase(Firebase ref, String userID,
                                         String startTime, String endTime,
                                         double latitude, double longitude) {
-        Log.d("Scores", "In upload function");
+        //Log.d("Scores", "In upload function");
 
         Firebase testRef = ref.child("tests").push(),
                 userRef = ref.child("users").child(userID),

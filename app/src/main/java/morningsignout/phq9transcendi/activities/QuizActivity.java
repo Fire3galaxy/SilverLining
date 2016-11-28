@@ -80,7 +80,7 @@ public class QuizActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("QuizActivity", "In onCreate");
+        //Log.d("QuizActivity", "In onCreate");
 
         int theme = Utils.GetTheme(this);
         Utils.onActivityCreateSetTheme(this, theme);
@@ -194,14 +194,14 @@ public class QuizActivity extends AppCompatActivity
         // Save answers and state variables
         if (!isFinishingFlag) {
             savePreferences();
-            Log.d(LOG_NAME, "Saving!");
+            //Log.d(LOG_NAME, "Saving!");
         }
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Log.d("QuizActivity", "restoring state");
+        //Log.d("QuizActivity", "restoring state");
 
         // Reinitialize state variables
         SharedPreferences preferences = getPreferences(0);
@@ -213,7 +213,7 @@ public class QuizActivity extends AppCompatActivity
             scores = new Scores(scoresA, scoresB);
 
 
-            Log.d(LOG_NAME, String.valueOf(isInterferenceTextFlag));
+            //Log.d(LOG_NAME, String.valueOf(isInterferenceTextFlag));
 //            Log.d(LOG_NAME, String.valueOf(startTimestamp));
 //            Log.d(LOG_NAME, String.valueOf(questionNumber));
 //            Log.d(LOG_NAME, String.valueOf(scoresA));
@@ -389,7 +389,7 @@ public class QuizActivity extends AppCompatActivity
             gpsLock.unlock();
         }
 
-        Log.d("QuizActivity", "Finished writing data");
+        //Log.d("QuizActivity", "Finished writing data");
     }
 
     // Which view was clicked: arrows (nextArrow/prevArrow) or buttons (yes/no)
@@ -469,7 +469,7 @@ public class QuizActivity extends AppCompatActivity
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             // FIXME: Same thing with onConnectionFailed. Should we ask for location permission?
-            Log.e("QuizActivity", "Not given permission to access location");
+            //Log.e("QuizActivity", "Not given permission to access location");
 
             return;
         }
@@ -480,7 +480,7 @@ public class QuizActivity extends AppCompatActivity
             gpsLock.lock();
             latitude = location.getLatitude();
             longitude = location.getLongitude();
-            Log.d("QuizActivity", latitude + " " + longitude);
+            //Log.d("QuizActivity", latitude + " " + longitude);
             gpsLock.unlock();
         }
     }
@@ -492,7 +492,7 @@ public class QuizActivity extends AppCompatActivity
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.e("QuizActivity", "Failed to connect to google play services");
+        //Log.e("QuizActivity", "Failed to connect to google play services");
 
         /* FIXME: If we can't connect to google, should we force the user to update? It kinda
          * says "Hey, we're sending data about you!" */

@@ -199,7 +199,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
                 break;
             default:
-                Log.e("ResultsActivity", "Should not happen");
+                //Log.e("ResultsActivity", "Should not happen");
                 break;
         }
     }

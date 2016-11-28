@@ -119,6 +119,7 @@
         <item>Second</item>
         <item>Third</item>
         <item>Fourth</item>
+        <item>Fifth or Above</item>
         <item>Graduate student</item>
         <item>Not currently enrolled</item>
     </string-array>
@@ -139,6 +140,7 @@
         <item>University of California, Riverside</item>
         <item>University of California, San Diego</item>
         <item>University of California, Santa Cruz</item>
+        <item>Whitney High School</item>
         <item>Not currently enrolled</item>
         <item>Enter option</item>
     </string-array>

@@ -1,8 +1,7 @@
 <resources>
     <!-- Base application theme. -->
     <style name="BlankTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:windowBackground">@android:color/white</item>
-        <item name="android:colorBackground">@android:color/white</item>
+        <item name="android:windowBackground">@drawable/launch_screen</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="customRangeSlider">@style/IceRangeSlider</item>
     </style>
