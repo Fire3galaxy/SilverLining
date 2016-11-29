@@ -6,10 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -214,9 +212,8 @@ public class DemographicsActivity extends AppCompatActivity implements
 
     void uploadDataToDatabase() {
         //reference to firebase and create child
-
         Firebase ref = new Firebase(FirebaseExtras.DATA_URL);
-        String userID = getSharedPreferences(IndexActivity.PREFS_NAME, MODE_PRIVATE)
+        String userID = getSharedPreferences(LaunchScreenActivity.PREFS_NAME, MODE_PRIVATE)
                 .getString(FirebaseExtras.USER_ID, null);
 
         if(userID != null) {

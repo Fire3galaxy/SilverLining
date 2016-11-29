@@ -7,10 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
+import android.content.res.Configuration;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.content.res.Resources;
 import android.location.Location;
@@ -20,9 +19,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Pair;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -73,6 +72,7 @@ public class QuizActivity extends AppCompatActivity
     private boolean aboveSeekbarFlag;               // Landscape: change height of question view
     private boolean isFinishingFlag;                // Used in onPause() to save/not save
     private boolean isFirstTimeFlag;                // Used in onCreate() and onStart() for continue dialog
+                                                    // Note: Currently not using "continue" feature except for saving state
     private boolean isInterferenceTextFlag;         // Which text is shown in containerBarText layout
     private AlertDialog.Builder dialogBuilder;      // To confirm user wants to quit
     private GoogleApiClient mGoogleApiClient;
@@ -94,6 +94,7 @@ public class QuizActivity extends AppCompatActivity
                     .build();
         }
 
+        Resources res = getResources();
         isFirstTimeFlag = (savedInstanceState == null);
 
         // Grab and set content; inital setup (Use restoreInstanceState() for "continue where you last left off" code)
@@ -107,7 +108,6 @@ public class QuizActivity extends AppCompatActivity
         containerButtons = (LinearLayout) findViewById(R.id.container_buttons);
         containerBarText = (LinearLayout) findViewById(R.id.container_bar_text);
         answerSliderView = (RangeSliderView) findViewById(R.id.range_slider);
-
 
         //change color according to theme
         Drawable arrows = ContextCompat.getDrawable(getApplicationContext(), R.drawable.green_arrow);
@@ -123,19 +123,53 @@ public class QuizActivity extends AppCompatActivity
         ((ImageButton)findViewById(R.id.imageButton_nextq)).setImageDrawable(arrows);
         ((ImageButton)findViewById(R.id.imageButton_prevq)).setImageDrawable(arrows);
 
-        // Auto-scroll up from bottom of scroll view
-        questionContainer = (ScrollView) findViewById(R.id.question_container);
-        questionTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                if (v.getHeight() > questionContainer.getHeight() && questionContainer.getHeight() > 0) {
-                    questionContainer.setScrollY(questionContainer.getMaxScrollAmount());
-                    questionContainer.fullScroll(View.FOCUS_UP);
+        // Auto-scroll up from bottom of scroll view (Landscape only)
+        if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            questionContainer = (ScrollView) findViewById(R.id.question_container);
+            questionTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                @Override
+                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                    if (v.getHeight() > questionContainer.getHeight() && questionContainer.getHeight() > 0) {
+                        questionTextView.setTextSize(20);
+                        //                    questionContainer.setScrollY(questionContainer.getMaxScrollAmount());
+                        //                    questionContainer.fullScroll(View.FOCUS_UP);
+                    } else {
+                        questionTextView.setTextSize(24);
+                    }
                 }
-            }
-        });
+            });
+        }
+        // Text size changes when body of text is too big
+        else {
+            questionTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                @Override
+                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                    if (questionTextView.getLineCount() < 3) {
+                        questionTextView.setTextSize(24);
+                    } else if (bottom - top > 0) {
+                        Rect bounds = new Rect();
+                        questionTextView.getLineBounds(1, bounds);
+                        float lineHeight = 24 * getResources().getDisplayMetrics().scaledDensity;
+                        float spacingHeight = bounds.height() - lineHeight;
+                        float textHeight = (lineHeight + spacingHeight)
+                                * questionTextView.getLineCount();
+                        float neededTextHeight = questionTextView.getHeight()
+                                - questionTextView.getPaddingTop()
+                                - questionTextView.getPaddingBottom();
 
-        Resources res = getResources();
+                        if (textHeight <= neededTextHeight) {
+                            if (questionTextView.getTextSize() != lineHeight) {
+                                questionTextView.setTextSize(24);
+                            }
+                        } else {
+                            float neededLineHeight = (neededTextHeight
+                                    / questionTextView.getLineCount()) - spacingHeight;
+                            questionTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, neededLineHeight);
+                        }
+                    }
+                }
+            });
+        }
 
         aboveButtonsFlag = false;
         aboveSeekbarFlag = false;
@@ -379,7 +413,7 @@ public class QuizActivity extends AppCompatActivity
     // Uploads score data to Firebase. If no user ID exists, creates and stores one
     private void uploadToDatabase() {
         Firebase firebaseRef = new Firebase(FirebaseExtras.DATA_URL);
-        String userID = getSharedPreferences(IndexActivity.PREFS_NAME, MODE_PRIVATE)
+        String userID = getSharedPreferences(LaunchScreenActivity.PREFS_NAME, MODE_PRIVATE)
                 .getString(FirebaseExtras.USER_ID, null);
 
         if (userID != null) {

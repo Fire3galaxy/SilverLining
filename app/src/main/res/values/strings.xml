@@ -145,6 +145,8 @@
         <item>Enter option</item>
     </string-array>
 
+    <string name="question_test">Sleep is incredibly important for maintaining our brains\' cognitive functions. How much of it we get sheds light on how our brains are functioning. Have you had problems with falling asleep, staying asleep, or sleeping a lot less in the last two months?</string>
+
     <!--Quiz questions-->
     <string-array name="questions">
         <item>Do you find that you\'ve lost a lot of interest in things you used to be interested in? This can include hobbies, friends, work, food, or sex.</item>

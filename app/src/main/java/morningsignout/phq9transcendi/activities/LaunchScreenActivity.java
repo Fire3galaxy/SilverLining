@@ -1,23 +1,32 @@
 package morningsignout.phq9transcendi.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+import morningsignout.phq9transcendi.R;
+
 /**
  * Created by Daniel on 11/27/2016.
  */
 
-public class SplashScreenActivity extends Activity {
+public class LaunchScreenActivity extends Activity {
     public static final String PREFS_NAME = "PHQ9 Preference File";
+    long timeCreated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_launch_screen);
+        handleLogin();
+        timeCreated = System.currentTimeMillis();
     }
 
     private void handleLogin() {
@@ -40,20 +49,40 @@ public class SplashScreenActivity extends Activity {
 
                     editor.apply();
 
-                    //Log.d("IndexActivity", "User ID: " + authData.getUid());
+                    ref.child(preferences.getString(FirebaseExtras.USER_ID, ""))    // Update theme preference
+                            .child("themePreference")
+                            .setValue(Utils.THEME_NAMES[Utils.GetTheme(LaunchScreenActivity.this)]);
+
+//                    Log.d("IndexActivity", "User ID: " + authData.getUid());
+                    startApp();
                 }
 
                 @Override
                 public void onAuthenticationError(FirebaseError firebaseError) {
                     // there was an error, just don't send demographics
-                    //Log.e("PHQ9-Transcendi", "Failed connection to server.");
+//                    Log.e("PHQ9-Transcendi", "Failed connection to server.");
+                    startApp();
                 }
             });
         }
+        //
         else {
             ref.child(preferences.getString(FirebaseExtras.USER_ID, ""))    // Update theme preference
                     .child("themePreference")
                     .setValue(Utils.THEME_NAMES[Utils.GetTheme(this)]);
+            startApp();
         }
+    }
+
+    void startApp() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(LaunchScreenActivity.this, IndexActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, Math.max(3000 - (System.currentTimeMillis() - timeCreated), 0));
     }
 }

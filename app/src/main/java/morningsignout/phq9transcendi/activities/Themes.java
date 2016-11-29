@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.firebase.client.Firebase;
@@ -31,7 +30,7 @@ public class Themes extends AppCompatActivity {
 
         setContentView(R.layout.themes);
 
-        String userID = getSharedPreferences(IndexActivity.PREFS_NAME, MODE_PRIVATE)
+        String userID = getSharedPreferences(LaunchScreenActivity.PREFS_NAME, MODE_PRIVATE)
                 .getString(FirebaseExtras.USER_ID, null);
         if(userID != null)
             userRef = new Firebase(FirebaseExtras.DATA_URL).child("users").child(userID);
