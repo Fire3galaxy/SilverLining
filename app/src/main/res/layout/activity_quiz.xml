@@ -29,7 +29,7 @@
             android:layout_alignParentTop="true"
             android:layout_above="@id/space_quiz"
             android:layout_centerHorizontal="true"
-            android:text="@string/question_test"
+            android:text="@string/quiz_start"
             android:id="@+id/questionView"
             android:gravity="center_horizontal"
             android:textSize="@dimen/quiz_text_size"

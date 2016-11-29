@@ -34,6 +34,7 @@
     <string name="finish_up">Finish Up</string>
     <string name="take_me_home">Take me home</string>
     <string name="return_to_home">Return to home</string>
+    <string name="feedback">Provide Feedback?</string>
 
     <!-- Resources and References -->
     <string name="resource1">We\'ve prepared some resources for people who want to learn more
@@ -145,8 +146,6 @@
         <item>Enter option</item>
     </string-array>
 
-    <string name="question_test">Sleep is incredibly important for maintaining our brains\' cognitive functions. How much of it we get sheds light on how our brains are functioning. Have you had problems with falling asleep, staying asleep, or sleeping a lot less in the last two months?</string>
-
     <!--Quiz questions-->
     <string-array name="questions">
         <item>Do you find that you\'ve lost a lot of interest in things you used to be interested in? This can include hobbies, friends, work, food, or sex.</item>
@@ -228,7 +227,7 @@
         It’s worthwhile to examine your score from time to time as depression symptoms fluctuate
         just like any of your vital signs.\n\n
         Also, if you found this app helpful, tell others about it! We hope to make life better on
-        campuses one mind at a time.</string>
+        campuses one mind at a time.\n\n</string>
 
     <string name="title_activity_index">IndexActivity</string>
     <string name="title_activity_new_user">NewUserActivity</string>

@@ -1,6 +1,7 @@
 package morningsignout.phq9transcendi.activities;
 
 import android.app.AlertDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -42,6 +43,9 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     BlinkScrollView blinkScrollView;
     TextView detailsText;
 
+    // Third Screen
+    Button feedbackButton;
+
     int totalScore;
     boolean redFlag;
     int screenNumber = 0;
@@ -69,6 +73,10 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         scoreFan = (ImageView) findViewById(R.id.imageView_score_fan);
         detailsText = (TextView) findViewById(R.id.textView_details);       // Second screen
         blinkScrollView = (BlinkScrollView) findViewById(R.id.container_detail);
+
+        // Third Screen
+        feedbackButton = (Button) findViewById(R.id.button_feedback);
+        feedbackButton.setOnClickListener(this);
 
         //change color of scoreFan
         Drawable fan = ContextCompat.getDrawable(getApplicationContext(), R.drawable.score_fan);
@@ -158,49 +166,57 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch (screenNumber) {
-            case 0:
-                // Remove unneeded views
-                if (scoreContainer != null)
-                    scoreContainer.setVisibility(View.GONE);
-                else {
-                    allDoneText.setVisibility(View.GONE);
-                    scoreText.setVisibility(View.GONE);
-                    redFlagText.setVisibility(View.GONE);
-                    scoreFan.setVisibility(View.GONE);
-                }
+        if (v != null && v.equals(feedbackButton)) {
+            Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+//            intent.putExtra(SearchManager.QUERY, )
+//            startActivity(intent);
+//            finish()
+        } else {
+            switch (screenNumber) {
+                case 0:
+                    // Remove unneeded views
+                    if (scoreContainer != null)
+                        scoreContainer.setVisibility(View.GONE);    // portrait
+                    else {
+                        allDoneText.setVisibility(View.GONE);       // landscape
+                        scoreText.setVisibility(View.GONE);
+                        redFlagText.setVisibility(View.GONE);
+                        scoreFan.setVisibility(View.GONE);
+                    }
 
-                // Set new text & blink to indicate scrolling
-                detailsText.setText(getResult());
-                finishUpButton.setText(getResources().getText(R.string.finish_up));
+                    // Set new text & blink to indicate scrolling
+                    detailsText.setText(getResult());
+                    finishUpButton.setText(getResources().getText(R.string.finish_up));
 
-                screenNumber = 1;
-                break;
-            case 1:
-                // Remove unneeded views (in case of config changes)
-                if (scoreContainer != null)
-                    scoreContainer.setVisibility(View.GONE);
-                else {
-                    allDoneText.setVisibility(View.GONE);
-                    scoreText.setVisibility(View.GONE);
-                    redFlagText.setVisibility(View.GONE);
-                    scoreFan.setVisibility(View.GONE);
-                }
+                    screenNumber = 1;
+                    break;
+                case 1:
+                    // Remove unneeded views (in case of config changes, only screenNumber state is preserved)
+                    if (scoreContainer != null)
+                        scoreContainer.setVisibility(View.GONE);    // portrait
+                    else {
+                        allDoneText.setVisibility(View.GONE);       // landscape
+                        scoreText.setVisibility(View.GONE);
+                        redFlagText.setVisibility(View.GONE);
+                        scoreFan.setVisibility(View.GONE);
+                    }
 
-                blinkScrollView.setScrollY(0);
-                detailsText.setText(getResources().getText(R.string.wrap_up_text));
-                finishUpButton.setText(getResources().getText(R.string.take_me_home));
-                screenNumber = 2;
-                break;
-            case 2:
-                Intent backHome = new Intent(this, IndexActivity.class);
-                backHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(backHome);
-                finish();
-                break;
-            default:
-                //Log.e("ResultsActivity", "Should not happen");
-                break;
+                    feedbackButton.setVisibility(View.VISIBLE);
+                    blinkScrollView.setScrollY(0);
+                    detailsText.setText(getResources().getText(R.string.wrap_up_text));
+                    finishUpButton.setText(getResources().getText(R.string.take_me_home));
+                    screenNumber = 2;
+                    break;
+                case 2:
+                    Intent backHome = new Intent(this, IndexActivity.class);
+                    backHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(backHome);
+                    finish();
+                    break;
+                default:
+                    //Log.e("ResultsActivity", "Should not happen");
+                    break;
+            }
         }
     }
 

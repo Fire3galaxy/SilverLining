@@ -3,26 +3,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:layout_width="275dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/what_does_it_mean"
-        android:textSize="20sp"
-        android:id="@+id/button_finish_up"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp"
-        android:padding="20dp" />
+        android:id="@+id/container_button"
+        android:orientation="vertical">
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/feedback"
+            android:textSize="18sp"
+            android:id="@+id/button_feedback"
+            android:visibility="gone"/>
+        <Button
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:text="@string/what_does_it_mean"
+            android:textSize="20sp"
+            android:id="@+id/button_finish_up"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="30dp"
+            android:padding="20dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/container_score"
         android:orientation="vertical"
-        android:layout_above="@id/button_finish_up">
+        android:layout_above="@id/container_button">
 
         <TextView
             android:layout_width="wrap_content"
@@ -84,7 +98,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/container_detail"
-        android:layout_above="@+id/button_finish_up"
+        android:layout_above="@+id/container_button"
         style="@style/BlinkScrollViewStyle">
 
         <TextView

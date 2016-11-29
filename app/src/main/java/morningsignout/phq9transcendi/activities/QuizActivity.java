@@ -130,16 +130,13 @@ public class QuizActivity extends AppCompatActivity
                 @Override
                 public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                     if (v.getHeight() > questionContainer.getHeight() && questionContainer.getHeight() > 0) {
-                        questionTextView.setTextSize(20);
-                        //                    questionContainer.setScrollY(questionContainer.getMaxScrollAmount());
-                        //                    questionContainer.fullScroll(View.FOCUS_UP);
-                    } else {
-                        questionTextView.setTextSize(24);
+                        questionContainer.setScrollY(questionContainer.getMaxScrollAmount());
+                        questionContainer.fullScroll(View.FOCUS_UP);
                     }
                 }
             });
         }
-        // Text size changes when body of text is too big
+        // Text size changes when body of text is too big (Portrait only)
         else {
             questionTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                 @Override
