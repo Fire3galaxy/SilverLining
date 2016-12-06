@@ -49,8 +49,8 @@ public class LaunchScreenActivity extends Activity {
 
                     editor.apply();
 
-                    ref.child(preferences.getString(FirebaseExtras.USER_ID, ""))    // Update theme preference
-                            .child("themePreference")
+                    // Update theme preference
+                    ref.child("users").child(authData.getUid()).child("themePreference")
                             .setValue(Utils.THEME_NAMES[Utils.GetTheme(LaunchScreenActivity.this)]);
 
 //                    Log.d("IndexActivity", "User ID: " + authData.getUid());
@@ -67,9 +67,12 @@ public class LaunchScreenActivity extends Activity {
         }
         //
         else {
-            ref.child(preferences.getString(FirebaseExtras.USER_ID, ""))    // Update theme preference
-                    .child("themePreference")
-                    .setValue(Utils.THEME_NAMES[Utils.GetTheme(this)]);
+            String userID = preferences.getString(FirebaseExtras.USER_ID, "");
+            if (!userID.isEmpty()) {
+                // Update theme preference
+                ref.child("users").child(userID).child("themePreference")
+                        .setValue(Utils.THEME_NAMES[Utils.GetTheme(this)]);
+            }
             startApp();
         }
     }
