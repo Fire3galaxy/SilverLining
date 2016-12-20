@@ -1,9 +1,7 @@
-package morningsignout.phq9transcendi.activities;
+package morningsignout.phq9transcendi.activities.HelperClasses;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

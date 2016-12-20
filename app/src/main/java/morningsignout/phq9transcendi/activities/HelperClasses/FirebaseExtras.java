@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities;
+package morningsignout.phq9transcendi.activities.HelperClasses;
 
 /**
  * Created by pokeforce on 6/25/16.

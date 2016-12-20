@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <morningsignout.phq9transcendi.activities.BlinkScrollView
+    <morningsignout.phq9transcendi.activities.HelperClasses.BlinkScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
@@ -20,7 +20,7 @@
             android:textSize="20sp"
             android:gravity="center_horizontal"/>
 
-    </morningsignout.phq9transcendi.activities.BlinkScrollView>
+    </morningsignout.phq9transcendi.activities.HelperClasses.BlinkScrollView>
 
     <Button
         android:layout_width="match_parent"

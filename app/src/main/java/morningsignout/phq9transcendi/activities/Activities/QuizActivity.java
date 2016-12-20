@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities;
+package morningsignout.phq9transcendi.activities.Activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -34,6 +34,7 @@ import android.widget.TextView;
 import com.firebase.client.Firebase;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.quest.Quest;
 import com.google.android.gms.location.LocationServices;
 
 import java.util.Calendar;
@@ -41,19 +42,22 @@ import java.util.Date;
 import java.util.concurrent.locks.ReentrantLock;
 
 import morningsignout.phq9transcendi.R;
+import morningsignout.phq9transcendi.activities.HelperClasses.FirebaseExtras;
+import morningsignout.phq9transcendi.activities.HelperClasses.QuestionData;
+import morningsignout.phq9transcendi.activities.HelperClasses.Scores;
+import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
 import morningsignout.phq9transcendi.activities.RangeSliderCustom.RangeSliderView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class QuizActivity extends AppCompatActivity
         implements ImageButton.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final String LOG_NAME = "QuizActivity";
-    private static final int RED_FLAG_QUESTION = 16;    // zero-based number
-    private static final int NUM_QUESTIONS = 21;        // total number of questions
     private static final String SAVE_TIMESTAMP = "Timestamp", SAVE_QUESTION_NUM = "Question Number",
-        SAVE_SCORES_A = "Score Values", SAVE_SCORES_B = "Visit values";
+        SAVE_SCORES_A = "Score Values", SAVE_SCORES_B = "Visit values",
+        CURRENT_CHOICE = "Current Answer Array";
 
     // Use String.format() with this to display current question
-    private final String numberString = "%1$d/" + String.valueOf(NUM_QUESTIONS);
+    private final String numberString = "%1$d/" + String.valueOf(QuestionData.NUM_QUESTIONS);
 
     private ScrollView questionContainer;
     private TextView questionTextView, questionNumText; //The text of the question
@@ -63,7 +67,8 @@ public class QuizActivity extends AppCompatActivity
     RangeSliderView answerSliderView;
 
     private String[] questionArray;
-    private String[] answersNormal, answersFlag;
+    QuestionData allAnswers;
+    int currentChoice;
     private String startTimestamp, endTimestamp;
     private double latitude = 0, longitude = 0;
     private Scores scores;                          // Used for keeping track of score
@@ -73,7 +78,6 @@ public class QuizActivity extends AppCompatActivity
     private boolean isFinishingFlag;                // Used in onPause() to save/not save
     private boolean isFirstTimeFlag;                // Used in onCreate() and onStart() for continue dialog
                                                     // Note: Currently not using "continue" feature except for saving state
-    private boolean isInterferenceTextFlag;         // Which text is shown in containerBarText layout
     private AlertDialog.Builder dialogBuilder;      // To confirm user wants to quit
     private GoogleApiClient mGoogleApiClient;
     private ReentrantLock gpsLock = new ReentrantLock();
@@ -171,10 +175,12 @@ public class QuizActivity extends AppCompatActivity
         aboveButtonsFlag = false;
         aboveSeekbarFlag = false;
         isFinishingFlag = false;
-        isInterferenceTextFlag = false;
         questionArray = res.getStringArray(R.array.questions);
-        answersNormal = res.getStringArray(R.array.answers_normal);
-        answersFlag = res.getStringArray(R.array.answers_flag);
+        allAnswers = new QuestionData();
+        allAnswers.answerChoices[0] = res.getStringArray(R.array.answers_normal);
+        allAnswers.answerChoices[1] = res.getStringArray(R.array.answers_flag);
+        allAnswers.answerChoices[2] = res.getStringArray(R.array.answers_depression);
+        currentChoice = QuestionData.NORMAL;
         dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setMessage(R.string.dialog_quit_quiz)
                 .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
@@ -224,7 +230,15 @@ public class QuizActivity extends AppCompatActivity
 
         // Save answers and state variables
         if (!isFinishingFlag) {
-            savePreferences();
+            Pair<String, String> scoreState = scores.getScoreStateStrings();
+
+            SharedPreferences.Editor editor = getPreferences(0).edit();
+            editor.putString(SAVE_TIMESTAMP, startTimestamp);
+            editor.putInt(SAVE_QUESTION_NUM, questionNumber);
+            editor.putString(SAVE_SCORES_A, scoreState.first);
+            editor.putString(SAVE_SCORES_B, scoreState.second);
+            editor.putInt(CURRENT_CHOICE, currentChoice);
+            editor.apply();
             //Log.d(LOG_NAME, "Saving!");
         }
     }
@@ -242,9 +256,9 @@ public class QuizActivity extends AppCompatActivity
             String scoresA = preferences.getString(SAVE_SCORES_A, null);
             String scoresB = preferences.getString(SAVE_SCORES_B, null);
             scores = new Scores(scoresA, scoresB);
+            currentChoice = preferences.getInt(CURRENT_CHOICE, QuestionData.NORMAL);
 
-
-            //Log.d(LOG_NAME, String.valueOf(isInterferenceTextFlag));
+//            Log.d(LOG_NAME, String.valueOf(isInterferenceTextFlag));
 //            Log.d(LOG_NAME, String.valueOf(startTimestamp));
 //            Log.d(LOG_NAME, String.valueOf(questionNumber));
 //            Log.d(LOG_NAME, String.valueOf(scoresA));
@@ -270,7 +284,7 @@ public class QuizActivity extends AppCompatActivity
         if (nextQuestion) {
             questionNumber++;
 
-            if (questionNumber == NUM_QUESTIONS)
+            if (questionNumber == QuestionData.NUM_QUESTIONS)
                 finishQuiz();
             else
                 updateQuestions();
@@ -281,7 +295,7 @@ public class QuizActivity extends AppCompatActivity
     }
 
     private void setQuestion(int questionNumber) {
-        if (questionNumber >= 0 && questionNumber < NUM_QUESTIONS) {
+        if (questionNumber >= 0 && questionNumber < QuestionData.NUM_QUESTIONS) {
             this.questionNumber = questionNumber;
             updateQuestions();
         }
@@ -289,7 +303,7 @@ public class QuizActivity extends AppCompatActivity
 
     private void finishQuiz() {
         endTimestamp = getTimestamp();
-        uploadToDatabase();
+//        uploadToDatabase();
 
         clearPreferences();
         isFinishingFlag = true;
@@ -305,27 +319,33 @@ public class QuizActivity extends AppCompatActivity
         questionTextView.setText(questionArray[questionNumber]);                    // Question text
         questionNumText.setText(String.format(numberString, questionNumber + 1));   // Question #
 
-        // Normal questions (Use bar)
-        if (questionNumber < RED_FLAG_QUESTION) {
+        if (QuestionData.USES_SLIDER[questionNumber]) {
             putSeekBar();
-
-            if (isInterferenceTextFlag) {
-                changeAnswerText(false);
-                isInterferenceTextFlag = false;
-            }
-        }
-        // Interference red flag question (Use bar, change text)
-        else if (questionNumber == Scores.INTERFERENCE_QUESTION) {
-            putSeekBar();
-
-            if (!isInterferenceTextFlag) {
-                changeAnswerText(true);
-                isInterferenceTextFlag = true;
-            }
-        }
-        // Other red flag questions (Use buttons)
-        else if (questionNumber >= RED_FLAG_QUESTION)
+            changeAnswerText(QuestionData.ANSW_CHOICE[questionNumber]);
+        } else {
             putButtons();
+        }
+//        // Normal questions (Use bar)
+//        if (questionNumber < QuestionData.RED_FLAG_QUESTION) {
+//            putSeekBar();
+//
+//            if (isInterferenceTextFlag) {
+//                changeAnswerText(false);
+//                isInterferenceTextFlag = false;
+//            }
+//        }
+//        // Interference red flag question (Use bar, change text)
+//        else if (questionNumber == QuestionData.INTERFERENCE_QUESTION) {
+//            putSeekBar();
+//
+//            if (!isInterferenceTextFlag) {
+//                changeAnswerText(true);
+//                isInterferenceTextFlag = true;
+//            }
+//        }
+//        // Other red flag questions (Use buttons)
+//        else if (questionNumber >= QuestionData.RED_FLAG_QUESTION)
+//            putButtons();
 
         // Show previously saved answer if previous button is clicked
         if (scores.questionIsVisited(questionNumber))
@@ -338,10 +358,11 @@ public class QuizActivity extends AppCompatActivity
             prevArrow.setVisibility(View.VISIBLE);
 
         // Hide nextArrow button on red flag questions unless already answered or is interference
-        if (questionNumber >= RED_FLAG_QUESTION && questionNumber != Scores.INTERFERENCE_QUESTION
-                && (questionNumber + 1 == NUM_QUESTIONS || !scores.questionIsVisited(questionNumber)))
+//        if (questionNumber >= QuestionData.RED_FLAG_QUESTION && questionNumber != QuestionData.INTERFERENCE_QUESTION
+        if (!QuestionData.USES_SLIDER[questionNumber]
+                && (questionNumber + 1 == QuestionData.NUM_QUESTIONS || !scores.questionIsVisited(questionNumber)))
             nextArrow.setVisibility(View.INVISIBLE);
-        else if (nextArrow.getVisibility() != View.VISIBLE)
+        else
             nextArrow.setVisibility(View.VISIBLE);
     }
 
@@ -381,25 +402,34 @@ public class QuizActivity extends AppCompatActivity
         }
     }
 
-    private void changeAnswerText(boolean toInterference) {
-        String[] newText = answersNormal;
-        if (toInterference)
-            newText = answersFlag;
+    private void changeAnswerText(int answerIndex) {
+//        Log.d("QuizActivity", String.valueOf(toInterference));
+//        int answerIndex = QuestionData.ANSW_CHOICE[questionNumber];
+        String[] newText = allAnswers.answerChoices[answerIndex];
+//        String[] newText = answersNormal;
+//        if (toInterference)
+//            newText = answersFlag;
 
-        for (int i = 0; i < containerBarText.getChildCount(); i++) {
-            View child = containerBarText.getChildAt(i);
+        if (answerIndex != currentChoice) {
+            Log.d("QuizActivity", "" + currentChoice);
+            for (int i = 0; i < containerBarText.getChildCount(); i++) {
+                View child = containerBarText.getChildAt(i);
 
-            if (child instanceof TextView)
-                ((TextView) child).setText(newText[i]);
-        }
-
-        // Exception: "Somewhat" sometimes gets sent to 2nd line (interference text)
-        if (toInterference) {
-            View somewhatView = containerBarText.getChildAt(1);
-            if (somewhatView instanceof TextView && ((TextView) somewhatView).getLineCount() >= 2) {
-                String dashedSomewhat = getResources().getString(R.string.answer_somewhat_2);
-                ((TextView) somewhatView).setText(dashedSomewhat);
+                if (child instanceof TextView)
+                    ((TextView) child).setText(newText[i]);
             }
+
+            // Exception: "Somewhat" sometimes gets sent to 2nd line (interference text)
+            if (answerIndex == QuestionData.FLAG) {
+                Log.d("QuizActivity", "Might change somewhat");
+                View somewhatView = containerBarText.getChildAt(1);
+                if (somewhatView instanceof TextView && ((TextView) somewhatView).getLineCount() >= 2) {
+                    String dashedSomewhat = getResources().getString(R.string.answer_somewhat_2);
+                    ((TextView) somewhatView).setText(dashedSomewhat);
+                }
+            }
+
+            currentChoice = answerIndex;
         }
     }
 
@@ -427,16 +457,20 @@ public class QuizActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         if (v.equals(nextArrow)) {
-            if (questionNumber < RED_FLAG_QUESTION || questionNumber == Scores.INTERFERENCE_QUESTION)
+//            if (questionNumber < QuestionData.RED_FLAG_QUESTION || questionNumber == QuestionData.INTERFERENCE_QUESTION)
+            // Clicked next for a slider question, not a yes/no question
+            if (QuestionData.USES_SLIDER[questionNumber])
                 addScore(questionNumber, answerSliderView.getCurrentIndex());
 
             handleQuiz(true);
         } else if (v.equals(prevArrow)) {
             handleQuiz(false);
         } else if (v.equals(answerNo)) {
+            // Value is from yes/no button
             addScore(questionNumber, 0);
             handleQuiz(true);
         } else if (v.equals(answerYes)) {
+            // Value is from yes/no button
             addScore(questionNumber, 1);
             handleQuiz(true);
         }
@@ -475,17 +509,6 @@ public class QuizActivity extends AppCompatActivity
         editor.apply();
     }
 
-    void savePreferences() {
-        Pair<String, String> scoreState = scores.getScoreStateStrings();
-
-        SharedPreferences.Editor editor = getPreferences(0).edit();
-        editor.putString(SAVE_TIMESTAMP, startTimestamp);
-        editor.putInt(SAVE_QUESTION_NUM, questionNumber);
-        editor.putString(SAVE_SCORES_A, scoreState.first);
-        editor.putString(SAVE_SCORES_B, scoreState.second);
-        editor.apply();
-    }
-
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -499,6 +522,7 @@ public class QuizActivity extends AppCompatActivity
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+
             // FIXME: Same thing with onConnectionFailed. Should we ask for location permission?
             //Log.e("QuizActivity", "Not given permission to access location");
 
@@ -526,7 +550,8 @@ public class QuizActivity extends AppCompatActivity
         //Log.e("QuizActivity", "Failed to connect to google play services");
 
         /* FIXME: If we can't connect to google, should we force the user to update? It kinda
-         * says "Hey, we're sending data about you!" */
+         * FIXME: says "Hey, we're sending data about you!" */
+
 //        int error = connectionResult.getErrorCode();
 //        if (error == ConnectionResult.SERVICE_MISSING
 //                || error == ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED
