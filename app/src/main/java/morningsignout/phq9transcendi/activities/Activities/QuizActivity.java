@@ -34,7 +34,6 @@ import android.widget.TextView;
 import com.firebase.client.Firebase;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.games.quest.Quest;
 import com.google.android.gms.location.LocationServices;
 
 import java.util.Calendar;
@@ -49,12 +48,14 @@ import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
 import morningsignout.phq9transcendi.activities.RangeSliderCustom.RangeSliderView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+/* What to update when question is added: If new answer type is added, add string array to
+ * QuestionData allAnswers in constructor
+ */
 public class QuizActivity extends AppCompatActivity
         implements ImageButton.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final String LOG_NAME = "QuizActivity";
     private static final String SAVE_TIMESTAMP = "Timestamp", SAVE_QUESTION_NUM = "Question Number",
-        SAVE_SCORES_A = "Score Values", SAVE_SCORES_B = "Visit values",
-        CURRENT_CHOICE = "Current Answer Array";
+        SAVE_SCORES_A = "Score Values", SAVE_SCORES_B = "Visit values";
 
     // Use String.format() with this to display current question
     private final String numberString = "%1$d/" + String.valueOf(QuestionData.NUM_QUESTIONS);
@@ -68,7 +69,8 @@ public class QuizActivity extends AppCompatActivity
 
     private String[] questionArray;
     QuestionData allAnswers;
-    int currentChoice;
+    int currentSeekbarChoice;
+    int currentButtonChoice;
     private String startTimestamp, endTimestamp;
     private double latitude = 0, longitude = 0;
     private Scores scores;                          // Used for keeping track of score
@@ -177,10 +179,14 @@ public class QuizActivity extends AppCompatActivity
         isFinishingFlag = false;
         questionArray = res.getStringArray(R.array.questions);
         allAnswers = new QuestionData();
-        allAnswers.answerChoices[0] = res.getStringArray(R.array.answers_normal);
-        allAnswers.answerChoices[1] = res.getStringArray(R.array.answers_flag);
-        allAnswers.answerChoices[2] = res.getStringArray(R.array.answers_depression);
-        currentChoice = QuestionData.NORMAL;
+        allAnswers.answerChoices[QuestionData.NORMAL] = res.getStringArray(R.array.answers_normal);
+        allAnswers.answerChoices[QuestionData.FLAG] = res.getStringArray(R.array.answers_flag);
+        allAnswers.answerChoices[QuestionData.DEPRESSION] = res.getStringArray(R.array.answers_depression);
+        allAnswers.answerChoices[QuestionData.SITUATION] = res.getStringArray(R.array.answers_situation);
+        allAnswers.answerChoices[QuestionData.APPOINTMENT] = res.getStringArray(R.array.answers_appointment);
+        allAnswers.answerChoices[QuestionData.YES_NO] = res.getStringArray(R.array.answers_yes_no);
+        currentSeekbarChoice = QuestionData.NORMAL;
+        currentButtonChoice = QuestionData.YES_NO;
         dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setMessage(R.string.dialog_quit_quiz)
                 .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
@@ -237,16 +243,15 @@ public class QuizActivity extends AppCompatActivity
             editor.putInt(SAVE_QUESTION_NUM, questionNumber);
             editor.putString(SAVE_SCORES_A, scoreState.first);
             editor.putString(SAVE_SCORES_B, scoreState.second);
-            editor.putInt(CURRENT_CHOICE, currentChoice);
             editor.apply();
-            //Log.d(LOG_NAME, "Saving!");
+//            Log.d(LOG_NAME, "Saving!");
         }
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        //Log.d("QuizActivity", "restoring state");
+        Log.d("QuizActivity", "restoring state");
 
         // Reinitialize state variables
         SharedPreferences preferences = getPreferences(0);
@@ -256,9 +261,7 @@ public class QuizActivity extends AppCompatActivity
             String scoresA = preferences.getString(SAVE_SCORES_A, null);
             String scoresB = preferences.getString(SAVE_SCORES_B, null);
             scores = new Scores(scoresA, scoresB);
-            currentChoice = preferences.getInt(CURRENT_CHOICE, QuestionData.NORMAL);
 
-//            Log.d(LOG_NAME, String.valueOf(isInterferenceTextFlag));
 //            Log.d(LOG_NAME, String.valueOf(startTimestamp));
 //            Log.d(LOG_NAME, String.valueOf(questionNumber));
 //            Log.d(LOG_NAME, String.valueOf(scoresA));
@@ -319,33 +322,14 @@ public class QuizActivity extends AppCompatActivity
         questionTextView.setText(questionArray[questionNumber]);                    // Question text
         questionNumText.setText(String.format(numberString, questionNumber + 1));   // Question #
 
-        if (QuestionData.USES_SLIDER[questionNumber]) {
+        // Seekbar is for 3+ answers, Buttons for 2 answers
+        if (QuestionData.USES_SLIDER[questionNumber])
             putSeekBar();
-            changeAnswerText(QuestionData.ANSW_CHOICE[questionNumber]);
-        } else {
+        else
             putButtons();
-        }
-//        // Normal questions (Use bar)
-//        if (questionNumber < QuestionData.RED_FLAG_QUESTION) {
-//            putSeekBar();
-//
-//            if (isInterferenceTextFlag) {
-//                changeAnswerText(false);
-//                isInterferenceTextFlag = false;
-//            }
-//        }
-//        // Interference red flag question (Use bar, change text)
-//        else if (questionNumber == QuestionData.INTERFERENCE_QUESTION) {
-//            putSeekBar();
-//
-//            if (!isInterferenceTextFlag) {
-//                changeAnswerText(true);
-//                isInterferenceTextFlag = true;
-//            }
-//        }
-//        // Other red flag questions (Use buttons)
-//        else if (questionNumber >= QuestionData.RED_FLAG_QUESTION)
-//            putButtons();
+
+        // Possible string array options for answers are listed in QuestionData
+        changeAnswerText(QuestionData.ANSW_CHOICE[questionNumber]);
 
         // Show previously saved answer if previous button is clicked
         if (scores.questionIsVisited(questionNumber))
@@ -374,7 +358,7 @@ public class QuizActivity extends AppCompatActivity
         if (containerButtons.getVisibility() != View.GONE)
             containerButtons.setVisibility(View.GONE);
 
-        // Landscape only: above scrollbar
+        // Landscape only: above seekbar
         if (questionContainer != null && !aboveSeekbarFlag) {
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) questionContainer.getLayoutParams();
             params.addRule(RelativeLayout.ABOVE, R.id.range_slider);
@@ -404,32 +388,39 @@ public class QuizActivity extends AppCompatActivity
 
     private void changeAnswerText(int answerIndex) {
 //        Log.d("QuizActivity", String.valueOf(toInterference));
-//        int answerIndex = QuestionData.ANSW_CHOICE[questionNumber];
         String[] newText = allAnswers.answerChoices[answerIndex];
-//        String[] newText = answersNormal;
-//        if (toInterference)
-//            newText = answersFlag;
 
-        if (answerIndex != currentChoice) {
-            Log.d("QuizActivity", "" + currentChoice);
-            for (int i = 0; i < containerBarText.getChildCount(); i++) {
-                View child = containerBarText.getChildAt(i);
+        if (QuestionData.USES_SLIDER[questionNumber]) {
+            if (answerIndex != currentSeekbarChoice) {
+//            Log.d("QuizActivity", "" + currentSeekbarChoice);
 
-                if (child instanceof TextView)
-                    ((TextView) child).setText(newText[i]);
-            }
 
-            // Exception: "Somewhat" sometimes gets sent to 2nd line (interference text)
-            if (answerIndex == QuestionData.FLAG) {
-                Log.d("QuizActivity", "Might change somewhat");
-                View somewhatView = containerBarText.getChildAt(1);
-                if (somewhatView instanceof TextView && ((TextView) somewhatView).getLineCount() >= 2) {
-                    String dashedSomewhat = getResources().getString(R.string.answer_somewhat_2);
-                    ((TextView) somewhatView).setText(dashedSomewhat);
+                for (int i = 0; i < containerBarText.getChildCount(); i++) {
+                    View child = containerBarText.getChildAt(i);
+
+                    if (child instanceof TextView)
+                        ((TextView) child).setText(newText[i]);
                 }
-            }
 
-            currentChoice = answerIndex;
+                // Exception: "Somewhat" sometimes gets sent to 2nd line (interference text)
+                if (answerIndex == QuestionData.FLAG) {
+//                Log.d("QuizActivity", "Might change somewhat");
+                    View somewhatView = containerBarText.getChildAt(1);
+                    if (somewhatView instanceof TextView && ((TextView) somewhatView).getLineCount() >= 2) {
+                        String dashedSomewhat = getResources().getString(R.string.answer_somewhat_2);
+                        ((TextView) somewhatView).setText(dashedSomewhat);
+                    }
+                }
+                
+                currentSeekbarChoice = answerIndex;
+            }
+        } else {
+            if (answerIndex != currentButtonChoice) {
+                answerNo.setText(newText[0]);
+                answerYes.setText(newText[1]);
+
+                currentButtonChoice = answerIndex;
+            }
         }
     }
 

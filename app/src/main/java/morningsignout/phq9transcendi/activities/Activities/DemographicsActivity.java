@@ -22,6 +22,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Stella on 3/20/2016.
+ * If new school is added in Demographics: just change string.xml. No need to change code here.
  */
 public class DemographicsActivity extends AppCompatActivity implements
         AdapterView.OnItemSelectedListener {
@@ -99,7 +100,6 @@ public class DemographicsActivity extends AppCompatActivity implements
 
         collegeNameField = (EditText) findViewById(R.id.college_name_custom_answer);
         collegeNameField.setVisibility(View.GONE);
-
 
         // Start the questionnaire/submit the demographics
         Button start = (Button) findViewById(R.id.start);
@@ -245,15 +245,6 @@ public class DemographicsActivity extends AppCompatActivity implements
         //Log.d(demo_log_name, schoolYear_answer);
         //Log.d(demo_log_name, familyFirst_answer);
         //Log.d(demo_log_name, collegeName_answer);
-    }
-
-    // Make sure all strings are answered
-    boolean checkForNullSpinnerAnswers() {
-        return gender_answer == null
-                || ethnicity_answer == null
-                || schoolYear_answer == null
-                || familyFirst == null
-                || collegeName == null;
     }
 
     @Override

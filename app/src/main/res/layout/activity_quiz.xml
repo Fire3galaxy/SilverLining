@@ -173,7 +173,7 @@
         android:id="@+id/textView_question_number"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="9dp" />
+        android:layout_marginBottom="6dp" />
 
     <ImageView
         android:layout_width="match_parent"

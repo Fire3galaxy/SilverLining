@@ -14,6 +14,8 @@ import java.util.TreeMap;
  * Created by pokeforce on 5/26/16.
  * Contains information about answer-categorization and answer-values for quiz
  * Must be updated when questions are changed around
+ *
+ * What to update when question added: String[] questions, categoryNames, int[] categoryIndices
  */
 public class Scores {
     // Appended to saved scores string to ensure string corresponds with this order of questions
@@ -48,18 +50,19 @@ public class Scores {
             "continuousdepression_flag", "longdepression_flag", "interference", "suicidality_flag",
             "suicideaction_flag",
 
-            "nothing"
+            // research
+            "familyunderstands", "familysituation", "culturalbackground", "appointment"
     };
 
     // Categories of questions
     private static final String[] categoryNames = {
             "anhedonia", "mood", "sleep-disturbance", "energy", "appetite", "guilt", "cognition-concentration",
-            "psychomotor", "suicide", "red-flag", "nothing"
+            "psychomotor", "suicide", "red-flag", "research"
     };
 
     // Array of which category each question is associated with
     private static final int[] categoryIndices = {
-            0, 0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 9, 9, 9, 10
+            0, 0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10
     };
 
     // Score value that would trigger a red flag alert
@@ -121,7 +124,7 @@ public class Scores {
 
             // Next category
             if (i + 1 < categoryIndices.length && currentCategory != categoryIndices[i + 1]) {
-                // 9 = red flag, 10 = uncategorized
+                // 9 = red flag, 10 = research
                 if (currentCategory < 9) {
                     sum += max;
 //                    Log.d("Scores", "for " + currentCategory + ", max: " + max);
@@ -147,10 +150,10 @@ public class Scores {
 
     public boolean containsRedFlag() {
         int redFlagNum = 0;
-        int redFlagQuestion = RED_FLAG_QUESTION;
-        int end = redFlagQuestion + redFlagThreshold.length;
+        int end = RED_FLAG_QUESTION + redFlagThreshold.length;
 
-        for (int i = redFlagQuestion; i < end; i++, redFlagNum++)
+        // Assumes that red flag questions are consecutive
+        for (int i = RED_FLAG_QUESTION; i < end; i++, redFlagNum++)
             if (scoreDictionary.get(questions[i]) >= redFlagThreshold[redFlagNum])
                 return true;
 

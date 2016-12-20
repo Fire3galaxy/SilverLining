@@ -76,7 +76,7 @@
     <string name="_ethnicity">Ethnicity</string>
     <string name="_school_year">School Year</string>
     <string name="_family">Are you the first in your family to go to college?</string>
-    <string name="_college_name">College Name</string>
+    <string name="_college_name">School Name</string>
     <string name="_resources">Resources</string>
     <string name="_references">References</string>
     <string name="answer_not_at_all">Not at all</string>
@@ -92,6 +92,8 @@
     <string name="answer_crippling">Crippling</string>
     <string name="answer_not_very">Not very</string>
     <string name="answer_very_understanding">Very understanding</string>
+    <string name="answer_not_much">Not much</string>
+    <string name="answer_a_little">A little</string>
     <string name="answer_hard_time">I have a hard time seeing myself making an appointment</string>
     <string name="answer_can_see">I can see myself making an appointment</string>
     <string name="answer_could_stop">Yes, and it could stop me from getting help</string>
@@ -155,6 +157,8 @@
         <item>University of California, San Diego</item>
         <item>University of California, Santa Cruz</item>
         <item>Whitney High School</item>
+        <item>Artesia High School</item>
+        <item>Cerritos High School</item>
         <item>Not currently enrolled</item>
         <item>Enter option</item>
     </string-array>
@@ -183,6 +187,9 @@
         <item>Has there been a time in the past month when you have had serious thoughts about ending your life?</item>
         <item>Have you ever in your whole life tried to kill yourself or make a suicide attempt?</item>
         <item>How understanding would your family be if they knew you had depression?</item>
+        <item>To what degree do you think your family situation, such as your relationship with your parents, plays or can play a role in your depression?</item>
+        <item>To what degree do you think your cultural background plays or can play a role in your depression?</item>
+        <item>Could you see yourself setting up an appointment to go talk with a therapist or psychiatrist about depression?</item>
     </string-array>
 
     <string-array name="answers_normal">
@@ -204,6 +211,13 @@
         <item>@string/answer_not_very</item>
         <item>@string/answer_somewhat</item>
         <item>@string/answer_very_understanding</item>
+    </string-array>
+    
+    <string-array name="answers_situation">
+        <item>@string/answer_not_much</item>
+        <item>@string/answer_a_little</item>
+        <item>@string/answer_somewhat</item>
+        <item>@string/answer_a_lot</item>
     </string-array>
     
     <string-array name="answers_appointment">
