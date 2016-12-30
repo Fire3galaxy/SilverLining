@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities;
+package morningsignout.phq9transcendi.activities.HelperClasses;
 
 import android.app.Activity;
 import android.content.Context;

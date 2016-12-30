@@ -1,17 +1,18 @@
-package morningsignout.phq9transcendi.activities;
+package morningsignout.phq9transcendi.activities.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 import morningsignout.phq9transcendi.R;
+import morningsignout.phq9transcendi.activities.HelperClasses.FirebaseExtras;
+import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
 
 /**
  * Created by Daniel on 11/27/2016.

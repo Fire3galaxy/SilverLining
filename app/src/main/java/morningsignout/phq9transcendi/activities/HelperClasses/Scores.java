@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities;
+package morningsignout.phq9transcendi.activities.HelperClasses;
 
 import android.util.Log;
 import android.util.Pair;
@@ -12,21 +12,30 @@ import java.util.TreeMap;
 
 /**
  * Created by pokeforce on 5/26/16.
+ * Contains information about answer-categorization and answer-values for quiz
+ * Must be updated when questions are changed around
+ *
+ * What to update when question added: String[] questions, categoryNames, int[] categoryIndices
  */
 public class Scores {
-    static public final int INTERFERENCE_QUESTION = 18; // Index for interference question (special answer text)
-
-    static private final int RED_FLAG_QUESTION = 16;    // Index where red flag starts
-
     // Appended to saved scores string to ensure string corresponds with this order of questions
     // It could change in the future.
-    static private final int VERSION_OF_ORDER_NUM = 1;
+    static private final int VERSION_OF_ORDER_NUM = 2;
 
+    // Index where red flag starts
+    static private final int RED_FLAG_QUESTION = 16;
+
+    // Keys used in uploading to Firebase (Note: false = a, true = b).
+    static private final String[] firebaseAnswerStrings = {
+            "answer-a", "answer-b", "answer-c", "answer-d", "answer-e"
+    };
+
+    // Relevant question data variables
     // Using names instead of numbers for FireBase on the off-chance that
     // the order of questions is not fixed (would be bad for database to use #).
     //
     // Ordered by current order of questions, arranged by category
-    static private final String[] questions = {
+    private static final String[] questions = {
             "anhedoniainterest", "anhedoniaenjoy",
             "mooddepress", "moodhopeless",
             "sleeplow", "sleephigh",
@@ -39,23 +48,27 @@ public class Scores {
 
             // red flag
             "continuousdepression_flag", "longdepression_flag", "interference", "suicidality_flag",
-            "suicideaction_flag"
+            "suicideaction_flag",
+
+            // research
+            "familyunderstands", "familysituation", "culturalbackground", "appointment",
+            "fearofstranger", "adequateresources"
     };
 
     // Categories of questions
-    static private final String[] categoryNames = {
+    private static final String[] categoryNames = {
             "anhedonia", "mood", "sleep-disturbance", "energy", "appetite", "guilt", "cognition-concentration",
-            "psychomotor", "suicide", "red-flag"
+            "psychomotor", "suicide", "red-flag", "research"
     };
 
     // Array of which category each question is associated with
-    static private final int[] categoryIndices = {
-        0, 0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 9, 9, 9
+    private static final int[] categoryIndices = {
+            0, 0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10
     };
 
-    // Keys used in uploading to Firebase (Note: false = a, true = b).
-    static private final String[] firebaseAnswerStrings = {
-            "answer-a", "answer-b", "answer-c", "answer-d"
+    // Score value that would trigger a red flag alert
+    private static final int[] redFlagThreshold = {
+            1, 1, 2, 1, 1
     };
 
     // Container of score values and if question is "visited"
@@ -107,18 +120,27 @@ public class Scores {
         int max = 0;
         int currentCategory = categoryIndices[0];
 
-        for (int i = 0; i < RED_FLAG_QUESTION; i++) {
+        for (int i = 0; i < questions.length; i++) {
             max = Math.max(scoreDictionary.get(questions[i]), max);
 
             // Next category
             if (i + 1 < categoryIndices.length && currentCategory != categoryIndices[i + 1]) {
-                //Log.d("Scores", String.valueOf(currentCategory) + ": " + String.valueOf(max) + ", " + String.valueOf(sum + max));
-
-                sum += max;
+                // 9 = red flag, 10 = research
+                if (currentCategory < 9) {
+                    sum += max;
+//                    Log.d("Scores", "for " + currentCategory + ", max: " + max);
+                }
                 max = 0;
                 currentCategory = categoryIndices[i + 1];
             }
+            Log.d("Scores", i + ": " + categoryIndices[i] + ", " + scoreDictionary.get(questions[i]));
         }
+
+        for (String q : questions)
+            Log.d("Scores", q + ": " + scoreDictionary.get(q));
+
+        for (int i = 0; i < categoryNames.length; i++)
+            Log.d("Scores", categoryNames[i] + ": " + getCategoryScore(i));
 
         //Log.d("Scores", getScoreString());
         //Log.d("Scores", getVisitedString());
@@ -128,13 +150,13 @@ public class Scores {
     }
 
     public boolean containsRedFlag() {
-        for (int i = RED_FLAG_QUESTION; i < questions.length; i++) {
-            //Log.d("Scores", "9: " + scoreDictionary.get(questions[i]));
+        int redFlagNum = 0;
+        int end = RED_FLAG_QUESTION + redFlagThreshold.length;
 
-            if ((i == INTERFERENCE_QUESTION && scoreDictionary.get(questions[i]) >= 2)
-                    || scoreDictionary.get(questions[i]) == 1)
+        // Assumes that red flag questions are consecutive
+        for (int i = RED_FLAG_QUESTION; i < end; i++, redFlagNum++)
+            if (scoreDictionary.get(questions[i]) >= redFlagThreshold[redFlagNum])
                 return true;
-        }
 
         //Log.d("Scores", "---------------------------------------");
 
@@ -148,7 +170,7 @@ public class Scores {
         throw new IndexOutOfBoundsException(); // Should not happen
     }
 
-    public int getCategoryScore(int category) {
+    private int getCategoryScore(int category) {
         int max = 0;
 
         for (int i = 0; i < categoryIndices.length && categoryIndices[i] <= category; i++)

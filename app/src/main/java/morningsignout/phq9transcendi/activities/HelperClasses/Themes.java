@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities;
+package morningsignout.phq9transcendi.activities.HelperClasses;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.widget.ListView;
 import com.firebase.client.Firebase;
 
 import morningsignout.phq9transcendi.R;
+import morningsignout.phq9transcendi.activities.Activities.IndexActivity;
+import morningsignout.phq9transcendi.activities.Activities.LaunchScreenActivity;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**

@@ -144,18 +144,26 @@ public class RangeSliderView extends View {
             @Override
             public boolean onPreDraw() {
                 getViewTreeObserver().removeOnPreDrawListener(this);
-
-                // Update radius after we got new height
-                updateRadius(getHeight());
-
-                // Compute drawing position again
-                preComputeDrawingPosition();
+                resetDrawValues();
 
                 // Ready to draw now
                 return true;
             }
         });
         currentIndex = 0;
+    }
+
+    // If the number of slots changes, then these values have to change too
+    public void resetDrawValues() {
+        // Update currentIndex (needed for preComputeDrawingPosition()
+        if (currentIndex >= rangeCount)
+            currentIndex = rangeCount - 1;
+
+        // Update radius after we got new height
+        updateRadius(getHeight());
+
+        // Compute drawing position again
+        preComputeDrawingPosition();
     }
 
     private void updateRadius(int height) {
@@ -206,6 +214,10 @@ public class RangeSliderView extends View {
             throw new IllegalArgumentException("Slider radius percent must be in (0, 1]");
         }
         this.sliderRadiusPercent = percent;
+    }
+
+    public float getSegmentWidth() {
+        return getWidthWithPadding() / getRangeCount();
     }
 
     @AnimateMethod

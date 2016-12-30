@@ -99,7 +99,7 @@
 
     </FrameLayout>
 
-    <morningsignout.phq9transcendi.activities.BlinkScrollView
+    <morningsignout.phq9transcendi.activities.HelperClasses.BlinkScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/container_detail"
@@ -120,7 +120,7 @@
             android:paddingRight="20dp"
             android:paddingEnd="20dp"/>
 
-    </morningsignout.phq9transcendi.activities.BlinkScrollView>
+    </morningsignout.phq9transcendi.activities.HelperClasses.BlinkScrollView>
 
     <Space
         android:layout_width="0px"
