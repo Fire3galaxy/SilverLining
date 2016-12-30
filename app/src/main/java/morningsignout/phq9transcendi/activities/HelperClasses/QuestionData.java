@@ -46,7 +46,7 @@ public class QuestionData {
             true,  // 21
             true,  // 22
             true,  // 23
-            false  // 24
+            true  // 24
     };
 
     static public final char[] ANSW_CHOICE = {

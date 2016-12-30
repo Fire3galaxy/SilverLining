@@ -91,7 +91,7 @@
     <string name="answer_a_lot">A lot</string>
     <string name="answer_crippling">Crippling</string>
     <string name="answer_not_very">Not very</string>
-    <string name="answer_very_understanding">Very understanding</string>
+    <string name="answer_very_understanding">Very\nunderstanding</string>
     <string name="answer_not_much">Not much</string>
     <string name="answer_a_little">A little</string>
     <string name="answer_hard_time">I have a hard time seeing myself making an appointment</string>

@@ -45,6 +45,7 @@ import morningsignout.phq9transcendi.activities.HelperClasses.FirebaseExtras;
 import morningsignout.phq9transcendi.activities.HelperClasses.QuestionData;
 import morningsignout.phq9transcendi.activities.HelperClasses.Scores;
 import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
+import morningsignout.phq9transcendi.activities.RangeSliderCustom.RangeSliderTextAddOns;
 import morningsignout.phq9transcendi.activities.RangeSliderCustom.RangeSliderView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -64,8 +65,9 @@ public class QuizActivity extends AppCompatActivity
     private TextView questionTextView, questionNumText; //The text of the question
     private Button answerNo, answerYes;
     private ImageButton nextArrow, prevArrow;
-    private LinearLayout containerButtons, containerBarText;
+    private LinearLayout containerButtons;
     RangeSliderView answerSliderView;
+    RangeSliderTextAddOns answerSliderWrapper;
 
     private String[] questionArray;
     QuestionData allAnswers;
@@ -112,8 +114,8 @@ public class QuizActivity extends AppCompatActivity
         nextArrow = (ImageButton) findViewById(R.id.imageButton_nextq);
         prevArrow = (ImageButton) findViewById(R.id.imageButton_prevq);
         containerButtons = (LinearLayout) findViewById(R.id.container_buttons);
-        containerBarText = (LinearLayout) findViewById(R.id.container_bar_text);
         answerSliderView = (RangeSliderView) findViewById(R.id.range_slider);
+        answerSliderWrapper = new RangeSliderTextAddOns(answerSliderView, this);
 
         //change color according to theme
         Drawable arrows = ContextCompat.getDrawable(getApplicationContext(), R.drawable.green_arrow);
@@ -185,8 +187,8 @@ public class QuizActivity extends AppCompatActivity
         allAnswers.answerChoices[QuestionData.SITUATION] = res.getStringArray(R.array.answers_situation);
         allAnswers.answerChoices[QuestionData.APPOINTMENT] = res.getStringArray(R.array.answers_appointment);
         allAnswers.answerChoices[QuestionData.YES_NO] = res.getStringArray(R.array.answers_yes_no);
-        currentSeekbarChoice = QuestionData.NORMAL;
-        currentButtonChoice = QuestionData.YES_NO;
+        currentSeekbarChoice = -1;
+        currentButtonChoice = -1;
         dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setMessage(R.string.dialog_quit_quiz)
                 .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
@@ -322,14 +324,14 @@ public class QuizActivity extends AppCompatActivity
         questionTextView.setText(questionArray[questionNumber]);                    // Question text
         questionNumText.setText(String.format(numberString, questionNumber + 1));   // Question #
 
-        // Seekbar is for 3+ answers, Buttons for 2 answers
+        // Possible string array options for answers are listed in QuestionData
+        changeAnswerText(QuestionData.ANSW_CHOICE[questionNumber]);
+
+        // Seekbar is for 2+ answers, Buttons for 2 answers
         if (QuestionData.USES_SLIDER[questionNumber])
             putSeekBar();
         else
             putButtons();
-
-        // Possible string array options for answers are listed in QuestionData
-        changeAnswerText(QuestionData.ANSW_CHOICE[questionNumber]);
 
         // Show previously saved answer if previous button is clicked
         if (scores.questionIsVisited(questionNumber))
@@ -352,9 +354,7 @@ public class QuizActivity extends AppCompatActivity
 
     private void putSeekBar() {
         if (answerSliderView.getVisibility() != View.VISIBLE)
-            answerSliderView.setVisibility(View.VISIBLE);
-        if (containerBarText.getVisibility() != View.VISIBLE)
-            containerBarText.setVisibility(View.VISIBLE);
+            answerSliderWrapper.setVisibility(View.VISIBLE);
         if (containerButtons.getVisibility() != View.GONE)
             containerButtons.setVisibility(View.GONE);
 
@@ -370,9 +370,7 @@ public class QuizActivity extends AppCompatActivity
 
     private void putButtons() {
         if (answerSliderView.getVisibility() != View.INVISIBLE)
-            answerSliderView.setVisibility(View.INVISIBLE);
-        if (containerBarText.getVisibility() != View.INVISIBLE)
-            containerBarText.setVisibility(View.INVISIBLE);
+            answerSliderWrapper.setVisibility(View.INVISIBLE);
         if (containerButtons.getVisibility() != View.VISIBLE)
             containerButtons.setVisibility(View.VISIBLE);
 
@@ -394,24 +392,7 @@ public class QuizActivity extends AppCompatActivity
             if (answerIndex != currentSeekbarChoice) {
 //            Log.d("QuizActivity", "" + currentSeekbarChoice);
 
-
-                for (int i = 0; i < containerBarText.getChildCount(); i++) {
-                    View child = containerBarText.getChildAt(i);
-
-                    if (child instanceof TextView)
-                        ((TextView) child).setText(newText[i]);
-                }
-
-                // Exception: "Somewhat" sometimes gets sent to 2nd line (interference text)
-                if (answerIndex == QuestionData.FLAG) {
-//                Log.d("QuizActivity", "Might change somewhat");
-                    View somewhatView = containerBarText.getChildAt(1);
-                    if (somewhatView instanceof TextView && ((TextView) somewhatView).getLineCount() >= 2) {
-                        String dashedSomewhat = getResources().getString(R.string.answer_somewhat_2);
-                        ((TextView) somewhatView).setText(dashedSomewhat);
-                    }
-                }
-                
+                answerSliderWrapper.setAnswers(newText);
                 currentSeekbarChoice = answerIndex;
             }
         } else {

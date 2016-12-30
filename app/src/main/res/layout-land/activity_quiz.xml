@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activities.Activities.QuizActivity">
+    tools:context=".activities.Activities.QuizActivity"
+    android:id="@+id/container_quiz">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,83 +38,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_centerInParent="true"/>
-
-    <LinearLayout
-        android:id="@+id/container_bar_text"
-        android:layout_width="@dimen/seekbar_width"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/range_slider"
-        android:layout_centerHorizontal="true">
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="3dp"
-            android:layout_marginEnd="3dp"
-            android:text="@string/answer_not_at_all"
-            android:textSize="15sp"
-            android:gravity="center_horizontal"
-            android:id="@+id/textView_not_at_all"/>
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginRight="2dp"
-            android:layout_marginEnd="2dp"
-            android:text="@string/answer_few_days"
-            android:textSize="15sp"
-            android:gravity="center_horizontal"
-            android:id="@+id/textView_few_days"/>
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_marginStart="3dp"
-            android:layout_marginRight="2dp"
-            android:layout_marginEnd="2dp"
-            android:text="@string/answer_many_days"
-            android:textSize="15sp"
-            android:gravity="center_horizontal"
-            android:id="@+id/textView_many_days"/>
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_marginStart="3dp"
-            android:text="@string/answer_many_many_days"
-            android:textSize="15sp"
-            android:gravity="center_horizontal"
-            android:id="@+id/textView_many_many_days"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/container_buttons"
-        android:layout_width="@dimen/seekbar_width"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:layout_centerHorizontal="true"
-        android:layout_alignTop="@+id/container_bar_text">
-
-        <Button
-            android:id="@+id/button_answer_yes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/answer_yes"
-            android:layout_marginRight="10dp" />
-
-        <Button
-            android:id="@+id/button_answer_no"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/answer_no"
-            android:layout_marginLeft="10dp" />
-    </LinearLayout>
 
     <ImageButton
         android:layout_width="40dp"
@@ -170,4 +94,59 @@
         android:layout_marginBottom="6dp"
         android:background="@android:color/white" />
 
+    <!--Moved around by RangeSliderTextAddOns class-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/range_answer_0"
+        fontPath="Rubik-Regular.ttf"
+        tools:ignore="MissingPrefix"
+        android:textSize="15sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/range_answer_1"
+        fontPath="Rubik-Regular.ttf"
+        tools:ignore="MissingPrefix"
+        android:textSize="15sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/range_answer_2"
+        fontPath="Rubik-Regular.ttf"
+        tools:ignore="MissingPrefix"
+        android:textSize="15sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/range_answer_3"
+        fontPath="Rubik-Regular.ttf"
+        tools:ignore="MissingPrefix"
+        android:textSize="15sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/range_answer_4"
+        fontPath="Rubik-Regular.ttf"
+        tools:ignore="MissingPrefix"
+        android:textSize="15sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="gone"/>
 </RelativeLayout>
