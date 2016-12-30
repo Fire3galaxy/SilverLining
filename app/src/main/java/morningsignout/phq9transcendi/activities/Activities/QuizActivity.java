@@ -354,14 +354,14 @@ public class QuizActivity extends AppCompatActivity
         if (containerButtons.getVisibility() != View.GONE)
             containerButtons.setVisibility(View.GONE);
 
-        // Landscape only: above seekbar
-        if (questionContainer != null && !aboveSeekbarFlag) {
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) questionContainer.getLayoutParams();
-            params.addRule(RelativeLayout.ABOVE, R.id.range_slider);
-
-            aboveSeekbarFlag = true;
-            aboveButtonsFlag = false;
-        }
+//        // Landscape only: above seekbar
+//        if (questionContainer != null && !aboveSeekbarFlag) {
+//            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) questionContainer.getLayoutParams();
+//            params.addRule(RelativeLayout.ABOVE, R.id.range_slider);
+//
+//            aboveSeekbarFlag = true;
+//            aboveButtonsFlag = false;
+//        }
     }
 
     private void putButtons() {
@@ -370,14 +370,14 @@ public class QuizActivity extends AppCompatActivity
         if (containerButtons.getVisibility() != View.VISIBLE)
             containerButtons.setVisibility(View.VISIBLE);
 
-        // Landscape only: above buttons
-        if (questionContainer != null && !aboveButtonsFlag) {
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) questionContainer.getLayoutParams();
-            params.addRule(RelativeLayout.ABOVE, R.id.container_buttons);
-
-            aboveButtonsFlag = true;
-            aboveSeekbarFlag = false;
-        }
+//        // Landscape only: above buttons
+//        if (questionContainer != null && !aboveButtonsFlag) {
+//            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) questionContainer.getLayoutParams();
+//            params.addRule(RelativeLayout.ABOVE, R.id.container_buttons);
+//
+//            aboveButtonsFlag = true;
+//            aboveSeekbarFlag = false;
+//        }
     }
 
     private void changeAnswerText(int answerIndex) {

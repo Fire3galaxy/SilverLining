@@ -15,7 +15,7 @@ import morningsignout.phq9transcendi.R;
  * Created by Daniel on 12/22/2016.
  */
 public class RangeSliderTextAddOns implements View.OnLayoutChangeListener {
-    class CircleCenter {
+    private class CircleCenter {
         RangeSliderView slider;
         int circleIndex;
         float x, y;
