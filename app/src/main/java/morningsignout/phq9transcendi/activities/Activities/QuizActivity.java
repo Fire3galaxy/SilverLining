@@ -19,6 +19,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextPaint;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -57,6 +60,7 @@ public class QuizActivity extends AppCompatActivity
     private static final String LOG_NAME = "QuizActivity";
     private static final String SAVE_TIMESTAMP = "Timestamp", SAVE_QUESTION_NUM = "Question Number",
         SAVE_SCORES_A = "Score Values", SAVE_SCORES_B = "Visit values";
+    private static final int DFLT_QUESTION_FONT_SIZE = 24; // in Pixels
 
     // Use String.format() with this to display current question
     private final String numberString = "%1$d/" + String.valueOf(QuestionData.NUM_QUESTIONS);
@@ -149,29 +153,52 @@ public class QuizActivity extends AppCompatActivity
             questionTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                 @Override
                 public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                    if (questionTextView.getLineCount() < 3) {
-                        questionTextView.setTextSize(24);
-                    } else if (bottom - top > 0) {
+                    if (bottom - top > 0) {
                         Rect bounds = new Rect();
                         questionTextView.getLineBounds(1, bounds);
                         float lineHeight = 24 * getResources().getDisplayMetrics().scaledDensity;
                         float spacingHeight = bounds.height() - lineHeight;
-                        float textHeight = (lineHeight + spacingHeight)
-                                * questionTextView.getLineCount();
-                        float neededTextHeight = questionTextView.getHeight()
+                        float maxTextHeight = questionTextView.getHeight()
                                 - questionTextView.getPaddingTop()
                                 - questionTextView.getPaddingBottom();
-
-                        if (textHeight <= neededTextHeight) {
-                            if (questionTextView.getTextSize() != lineHeight) {
-                                questionTextView.setTextSize(24);
-                            }
-                        } else {
-                            float neededLineHeight = (neededTextHeight
-                                    / questionTextView.getLineCount()) - spacingHeight;
-                            questionTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, neededLineHeight);
-                        }
+                        int maxLines = (int) (maxTextHeight / (lineHeight + spacingHeight));
+                        questionTextView.setMaxLines(maxLines);
+                        v.removeOnLayoutChangeListener(this);
                     }
+//
+//                    Log.d("LayoutChangeListener+", top + ", " + bottom);
+////                    if (questionTextView.getLineCount() < 3) {
+////                        questionTextView.setTextSize(24);
+////                    } else
+//                    if (bottom - top > 0) {
+//                        Rect bounds = new Rect();
+//                        questionTextView.getLineBounds(1, bounds);
+//                        float lineHeight = questionTextView.getTextSize(); //24 * getResources().getDisplayMetrics().scaledDensity;
+//                        float spacingHeight = bounds.height() - lineHeight;
+//                        float textHeight = (lineHeight + spacingHeight)
+//                                * questionTextView.getLineCount();
+//                        float neededTextHeight = questionTextView.getHeight()
+//                                - questionTextView.getPaddingTop()
+//                                - questionTextView.getPaddingBottom();
+//                        Log.d("LayoutChangeListener+", textHeight + "," + neededTextHeight);
+//
+//                        if (textHeight <= neededTextHeight) {
+//                            if (questionTextView.getTextSize() != lineHeight) {
+//                                questionTextView.setTextSize(DFLT_QUESTION_FONT_SIZE);
+//                            }
+//                        }
+//                        /* New font size can undershoot, leaving space in the textView. This is
+//                         * because, as the text shrinks, more words can fit in a single line,
+//                         * possibly resulting in less lines overall. The neededLineHeight was
+//                         * calculated assuming a certain amount of lines, so this number could
+//                         * actually be greater. Leaving space in the textView however is preferable.
+//                         */
+//                        else {
+//                            float neededLineHeight = (neededTextHeight
+//                                    / questionTextView.getLineCount()) - spacingHeight;
+//                            questionTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, neededLineHeight);
+//                        }
+//                    }
                 }
             });
         }
