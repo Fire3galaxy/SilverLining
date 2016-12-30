@@ -97,7 +97,7 @@
     <string name="answer_hard_time">I have a hard time seeing myself making an appointment</string>
     <string name="answer_can_see">I can see myself making an appointment</string>
     <string name="answer_could_stop">Yes, and it could stop me from getting help</string>
-    <string name="answer_would_not_stop">Yes, but it wouldn\’t stop me from getting help</string>
+    <string name="answer_would_not_stop">Yes, but it wouldn\'t stop me from getting help</string>
     <string name="answer_not_really">No, not really</string>
     <string name="answer_very_poor">Very poor</string>
     <string name="answer_poor">Poor</string>
@@ -190,6 +190,8 @@
         <item>To what degree do you think your family situation, such as your relationship with your parents, plays or can play a role in your depression?</item>
         <item>To what degree do you think your cultural background plays or can play a role in your depression?</item>
         <item>Could you see yourself setting up an appointment to go talk with a therapist or psychiatrist about depression?</item>
+        <item>Would you find talking to a stranger, even though they are a mental health professional, about your depression, scary or intimidating?</item>
+        <item>How adequate and/or supportive are your school\'s mental health resources?</item>
     </string-array>
 
     <string-array name="answers_normal">

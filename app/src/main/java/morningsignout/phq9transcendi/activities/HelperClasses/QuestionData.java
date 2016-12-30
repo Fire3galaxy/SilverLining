@@ -10,6 +10,8 @@ package morningsignout.phq9transcendi.activities.HelperClasses;
  *
  * What to update when question is added: Every variable. If no new answer type is needed, there is
  * no need to add a new type. If so, add a new type and change the class constructor.
+ * If you have more than 5 possible answers for a question, then RangeSliderTextAddOns,
+ * activity_quiz.xml, and @style/[every styleName]RangeSlider need to be updated to accommodate this.
  */
 public class QuestionData {
     static public final int NORMAL = 0, // Answer array types
@@ -18,9 +20,9 @@ public class QuestionData {
             SITUATION = 3,
             APPOINTMENT = 4,
             STRANGER = 5,
-            SUPPORTIVE = 6,
+            SUPPORTIVE = 6, // Currently the most slider answers with 5. (Fixed max of textviews in activity_quiz.xml)
             YES_NO = 7;
-    static public final int NUM_QUESTIONS = 25; // total number of questions
+    static public final int NUM_QUESTIONS = 27; // total number of questions
     static public final boolean[] USES_SLIDER = {
             true,  // 0
             true,  // 1
@@ -46,7 +48,9 @@ public class QuestionData {
             true,  // 21
             true,  // 22
             true,  // 23
-            true  // 24
+            true,  // 24
+            true,  // 25
+            true   // 26
     };
 
     static public final char[] ANSW_CHOICE = {
@@ -74,7 +78,9 @@ public class QuestionData {
             DEPRESSION, // 21
             SITUATION,  // 22
             SITUATION,  // 23
-            APPOINTMENT // 24
+            APPOINTMENT,// 24
+            STRANGER,   // 25
+            SUPPORTIVE  // 26
     };
 
     public String[][] answerChoices;

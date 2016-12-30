@@ -156,7 +156,8 @@ public class QuizActivity extends AppCompatActivity
                     if (bottom - top > 0) {
                         Rect bounds = new Rect();
                         questionTextView.getLineBounds(1, bounds);
-                        float lineHeight = 24 * getResources().getDisplayMetrics().scaledDensity;
+                        float lineHeight = DFLT_QUESTION_FONT_SIZE
+                                * getResources().getDisplayMetrics().scaledDensity;
                         float spacingHeight = bounds.height() - lineHeight;
                         float maxTextHeight = questionTextView.getHeight()
                                 - questionTextView.getPaddingTop()
@@ -165,40 +166,6 @@ public class QuizActivity extends AppCompatActivity
                         questionTextView.setMaxLines(maxLines);
                         v.removeOnLayoutChangeListener(this);
                     }
-//
-//                    Log.d("LayoutChangeListener+", top + ", " + bottom);
-////                    if (questionTextView.getLineCount() < 3) {
-////                        questionTextView.setTextSize(24);
-////                    } else
-//                    if (bottom - top > 0) {
-//                        Rect bounds = new Rect();
-//                        questionTextView.getLineBounds(1, bounds);
-//                        float lineHeight = questionTextView.getTextSize(); //24 * getResources().getDisplayMetrics().scaledDensity;
-//                        float spacingHeight = bounds.height() - lineHeight;
-//                        float textHeight = (lineHeight + spacingHeight)
-//                                * questionTextView.getLineCount();
-//                        float neededTextHeight = questionTextView.getHeight()
-//                                - questionTextView.getPaddingTop()
-//                                - questionTextView.getPaddingBottom();
-//                        Log.d("LayoutChangeListener+", textHeight + "," + neededTextHeight);
-//
-//                        if (textHeight <= neededTextHeight) {
-//                            if (questionTextView.getTextSize() != lineHeight) {
-//                                questionTextView.setTextSize(DFLT_QUESTION_FONT_SIZE);
-//                            }
-//                        }
-//                        /* New font size can undershoot, leaving space in the textView. This is
-//                         * because, as the text shrinks, more words can fit in a single line,
-//                         * possibly resulting in less lines overall. The neededLineHeight was
-//                         * calculated assuming a certain amount of lines, so this number could
-//                         * actually be greater. Leaving space in the textView however is preferable.
-//                         */
-//                        else {
-//                            float neededLineHeight = (neededTextHeight
-//                                    / questionTextView.getLineCount()) - spacingHeight;
-//                            questionTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, neededLineHeight);
-//                        }
-//                    }
                 }
             });
         }
@@ -214,6 +181,8 @@ public class QuizActivity extends AppCompatActivity
         allAnswers.answerChoices[QuestionData.SITUATION] = res.getStringArray(R.array.answers_situation);
         allAnswers.answerChoices[QuestionData.APPOINTMENT] = res.getStringArray(R.array.answers_appointment);
         allAnswers.answerChoices[QuestionData.YES_NO] = res.getStringArray(R.array.answers_yes_no);
+        allAnswers.answerChoices[QuestionData.STRANGER] = res.getStringArray(R.array.answers_stranger);
+        allAnswers.answerChoices[QuestionData.SUPPORTIVE] = res.getStringArray(R.array.answers_supportive);
         currentSeekbarChoice = -1;
         currentButtonChoice = -1;
         dialogBuilder = new AlertDialog.Builder(this);

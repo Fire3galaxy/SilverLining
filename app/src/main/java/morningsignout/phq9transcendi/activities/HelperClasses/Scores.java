@@ -51,7 +51,8 @@ public class Scores {
             "suicideaction_flag",
 
             // research
-            "familyunderstands", "familysituation", "culturalbackground", "appointment"
+            "familyunderstands", "familysituation", "culturalbackground", "appointment",
+            "fearofstranger", "adequateresources"
     };
 
     // Categories of questions
@@ -62,7 +63,7 @@ public class Scores {
 
     // Array of which category each question is associated with
     private static final int[] categoryIndices = {
-            0, 0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10
+            0, 0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10
     };
 
     // Score value that would trigger a red flag alert
