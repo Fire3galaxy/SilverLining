@@ -155,6 +155,10 @@ public class RangeSliderView extends View {
 
     // If the number of slots changes, then these values have to change too
     public void resetDrawValues() {
+        // Update currentIndex (needed for preComputeDrawingPosition()
+        if (currentIndex >= rangeCount)
+            currentIndex = rangeCount - 1;
+
         // Update radius after we got new height
         updateRadius(getHeight());
 

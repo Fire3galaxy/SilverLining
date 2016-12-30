@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -19,18 +18,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextPaint;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Pair;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -133,40 +126,25 @@ public class QuizActivity extends AppCompatActivity
         ((ImageButton)findViewById(R.id.imageButton_nextq)).setImageDrawable(arrows);
         ((ImageButton)findViewById(R.id.imageButton_prevq)).setImageDrawable(arrows);
 
-//        // Auto-scroll up from bottom of scroll view (Landscape only)
-//        if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            questionContainer = (ScrollView) findViewById(R.id.question_container);
-//            questionTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-//                @Override
-//                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-//                    if (v.getHeight() > questionContainer.getHeight() && questionContainer.getHeight() > 0) {
-//                        questionContainer.setScrollY(questionContainer.getMaxScrollAmount());
-//                        questionContainer.fullScroll(View.FOCUS_UP);
-//                    }
-//                }
-//            });
-//        }
-//        // Text size changes when body of text is too big (Portrait only)
-//        else {
-            questionTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                @Override
-                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                    if (bottom - top > 0) {
-                        Rect bounds = new Rect();
-                        questionTextView.getLineBounds(1, bounds);
-                        float lineHeight = DFLT_QUESTION_FONT_SIZE
-                                * getResources().getDisplayMetrics().scaledDensity;
-                        float spacingHeight = bounds.height() - lineHeight;
-                        float maxTextHeight = questionTextView.getHeight()
-                                - questionTextView.getPaddingTop()
-                                - questionTextView.getPaddingBottom();
-                        int maxLines = (int) (maxTextHeight / (lineHeight + spacingHeight));
-                        questionTextView.setMaxLines(maxLines);
-                        v.removeOnLayoutChangeListener(this);
-                    }
+        // Autofit setup for Question textView
+        questionTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if (bottom - top > 0) {
+                    Rect bounds = new Rect();
+                    questionTextView.getLineBounds(1, bounds);
+                    float lineHeight = DFLT_QUESTION_FONT_SIZE
+                            * getResources().getDisplayMetrics().scaledDensity;
+                    float spacingHeight = bounds.height() - lineHeight;
+                    float maxTextHeight = questionTextView.getHeight()
+                            - questionTextView.getPaddingTop()
+                            - questionTextView.getPaddingBottom();
+                    int maxLines = (int) (maxTextHeight / (lineHeight + spacingHeight));
+                    questionTextView.setMaxLines(maxLines);
+                    v.removeOnLayoutChangeListener(this);
                 }
-            });
-//        }
+            }
+        });
 
         isFinishingFlag = false;
         questionArray = res.getStringArray(R.array.questions);
@@ -245,7 +223,7 @@ public class QuizActivity extends AppCompatActivity
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Log.d("QuizActivity", "restoring state");
+//        Log.d("QuizActivity", "restoring state");
 
         // Reinitialize state variables
         SharedPreferences preferences = getPreferences(0);
@@ -300,7 +278,7 @@ public class QuizActivity extends AppCompatActivity
 
     private void finishQuiz() {
         endTimestamp = getTimestamp();
-//        uploadToDatabase();
+        uploadToDatabase();
 
         clearPreferences();
         isFinishingFlag = true;
@@ -336,7 +314,6 @@ public class QuizActivity extends AppCompatActivity
             prevArrow.setVisibility(View.VISIBLE);
 
         // Hide nextArrow button on red flag questions unless already answered or is interference
-//        if (questionNumber >= QuestionData.RED_FLAG_QUESTION && questionNumber != QuestionData.INTERFERENCE_QUESTION
         if (!QuestionData.USES_SLIDER[questionNumber]
                 && (questionNumber + 1 == QuestionData.NUM_QUESTIONS || !scores.questionIsVisited(questionNumber)))
             nextArrow.setVisibility(View.INVISIBLE);
@@ -371,8 +348,8 @@ public class QuizActivity extends AppCompatActivity
             }
         } else {
             if (answerIndex != currentButtonChoice) {
-                answerNo.setText(newText[0]);
-                answerYes.setText(newText[1]);
+                answerYes.setText(newText[0]);
+                answerNo.setText(newText[1]);
 
                 currentButtonChoice = answerIndex;
             }
@@ -403,7 +380,6 @@ public class QuizActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         if (v.equals(nextArrow)) {
-//            if (questionNumber < QuestionData.RED_FLAG_QUESTION || questionNumber == QuestionData.INTERFERENCE_QUESTION)
             // Clicked next for a slider question, not a yes/no question
             if (QuestionData.USES_SLIDER[questionNumber])
                 addScore(questionNumber, answerSliderView.getCurrentIndex());

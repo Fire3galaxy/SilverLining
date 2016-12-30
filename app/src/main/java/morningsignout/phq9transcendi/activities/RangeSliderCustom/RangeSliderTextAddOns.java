@@ -92,7 +92,7 @@ public class RangeSliderTextAddOns implements View.OnLayoutChangeListener {
     }
 
     public void setAnswers(String[] answers) {
-        Log.d("RangeSlider+", "in changeAnswers");
+//        Log.d("RangeSlider+", "in changeAnswers");
         for (int i = 0; i < answers.length; i++)
             answerViews[i].setText(answers[i]);
 
