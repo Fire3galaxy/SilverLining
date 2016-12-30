@@ -81,8 +81,6 @@ public class QuizActivity extends AppCompatActivity
     private double latitude = 0, longitude = 0;
     private Scores scores;                          // Used for keeping track of score
     private int questionNumber;                     // Which question the user is on (zero-based)
-    private boolean aboveButtonsFlag;               // Landscape: change height of question view
-    private boolean aboveSeekbarFlag;               // Landscape: change height of question view
     private boolean isFinishingFlag;                // Used in onPause() to save/not save
     private boolean isFirstTimeFlag;                // Used in onCreate() and onStart() for continue dialog
                                                     // Note: Currently not using "continue" feature except for saving state
@@ -135,21 +133,21 @@ public class QuizActivity extends AppCompatActivity
         ((ImageButton)findViewById(R.id.imageButton_nextq)).setImageDrawable(arrows);
         ((ImageButton)findViewById(R.id.imageButton_prevq)).setImageDrawable(arrows);
 
-        // Auto-scroll up from bottom of scroll view (Landscape only)
-        if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            questionContainer = (ScrollView) findViewById(R.id.question_container);
-            questionTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                @Override
-                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                    if (v.getHeight() > questionContainer.getHeight() && questionContainer.getHeight() > 0) {
-                        questionContainer.setScrollY(questionContainer.getMaxScrollAmount());
-                        questionContainer.fullScroll(View.FOCUS_UP);
-                    }
-                }
-            });
-        }
-        // Text size changes when body of text is too big (Portrait only)
-        else {
+//        // Auto-scroll up from bottom of scroll view (Landscape only)
+//        if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            questionContainer = (ScrollView) findViewById(R.id.question_container);
+//            questionTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+//                @Override
+//                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+//                    if (v.getHeight() > questionContainer.getHeight() && questionContainer.getHeight() > 0) {
+//                        questionContainer.setScrollY(questionContainer.getMaxScrollAmount());
+//                        questionContainer.fullScroll(View.FOCUS_UP);
+//                    }
+//                }
+//            });
+//        }
+//        // Text size changes when body of text is too big (Portrait only)
+//        else {
             questionTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                 @Override
                 public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -168,10 +166,8 @@ public class QuizActivity extends AppCompatActivity
                     }
                 }
             });
-        }
+//        }
 
-        aboveButtonsFlag = false;
-        aboveSeekbarFlag = false;
         isFinishingFlag = false;
         questionArray = res.getStringArray(R.array.questions);
         allAnswers = new QuestionData();
@@ -353,15 +349,6 @@ public class QuizActivity extends AppCompatActivity
             answerSliderWrapper.setVisibility(View.VISIBLE);
         if (containerButtons.getVisibility() != View.GONE)
             containerButtons.setVisibility(View.GONE);
-
-//        // Landscape only: above seekbar
-//        if (questionContainer != null && !aboveSeekbarFlag) {
-//            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) questionContainer.getLayoutParams();
-//            params.addRule(RelativeLayout.ABOVE, R.id.range_slider);
-//
-//            aboveSeekbarFlag = true;
-//            aboveButtonsFlag = false;
-//        }
     }
 
     private void putButtons() {
@@ -369,15 +356,6 @@ public class QuizActivity extends AppCompatActivity
             answerSliderWrapper.setVisibility(View.INVISIBLE);
         if (containerButtons.getVisibility() != View.VISIBLE)
             containerButtons.setVisibility(View.VISIBLE);
-
-//        // Landscape only: above buttons
-//        if (questionContainer != null && !aboveButtonsFlag) {
-//            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) questionContainer.getLayoutParams();
-//            params.addRule(RelativeLayout.ABOVE, R.id.container_buttons);
-//
-//            aboveButtonsFlag = true;
-//            aboveSeekbarFlag = false;
-//        }
     }
 
     private void changeAnswerText(int answerIndex) {
