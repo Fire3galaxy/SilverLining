@@ -48,7 +48,7 @@ public class Utils {
     public static void SaveTheme(String key, int theme, Activity activity){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
+        editor.remove(key);
         editor.putInt(key, theme);
         editor.apply();
     }

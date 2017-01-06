@@ -68,7 +68,7 @@ public class Scores {
 
     // Score value that would trigger a red flag alert
     private static final int[] redFlagThreshold = {
-            1, 1, 2, 1, 1
+            1, 1, 1, 1, 1
     };
 
     // Container of score values and if question is "visited"

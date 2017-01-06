@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import morningsignout.phq9transcendi.R;
-import morningsignout.phq9transcendi.activities.HelperClasses.Themes;
 import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 

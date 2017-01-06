@@ -42,7 +42,7 @@ public class QuestionData {
             true,  // 15
             false, // 16
             false, // 17
-            true,  // 18
+            false, // 18
             false, // 19
             false, // 20
             true,  // 21
@@ -72,7 +72,7 @@ public class QuestionData {
             NORMAL,     // 15
             YES_NO,     // 16
             YES_NO,     // 17
-            FLAG,       // 18
+            YES_NO,     // 18
             YES_NO,     // 19
             YES_NO,     // 20
             DEPRESSION, // 21

@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities.HelperClasses;
+package morningsignout.phq9transcendi.activities.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +12,9 @@ import android.widget.ListView;
 import com.firebase.client.Firebase;
 
 import morningsignout.phq9transcendi.R;
-import morningsignout.phq9transcendi.activities.Activities.IndexActivity;
-import morningsignout.phq9transcendi.activities.Activities.LaunchScreenActivity;
+import morningsignout.phq9transcendi.activities.HelperClasses.FirebaseExtras;
+import morningsignout.phq9transcendi.activities.HelperClasses.ThemesAdapter;
+import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
@@ -41,9 +42,9 @@ public class Themes extends AppCompatActivity {
         contents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView parent, View view, int position, long id) {
+                userRef.child("themePreference").setValue(Utils.THEME_NAMES[position]);
                 Utils.SaveTheme("theme", position, Themes.this);
                 Utils.changeToTheme(Themes.this);
-                userRef.child("themePreference").setValue(Utils.THEME_NAMES[Utils.GetTheme(Themes.this)]);
             }
         });
 
@@ -52,6 +53,7 @@ public class Themes extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Themes.this, IndexActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -65,5 +67,12 @@ public class Themes extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));   // For custom Rubik font
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Themes.this, IndexActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
