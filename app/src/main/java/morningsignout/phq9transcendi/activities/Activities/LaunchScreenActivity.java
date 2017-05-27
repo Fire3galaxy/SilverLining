@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,8 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import morningsignout.phq9transcendi.R;
-import morningsignout.phq9transcendi.activities.HelperClasses.FirebaseExtras;
 import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
+import morningsignout.phq9transcendi.activities.PHQApplication;
 
 /**
  * Created by Daniel on 11/27/2016.
@@ -26,7 +27,6 @@ import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
 
 public class LaunchScreenActivity extends Activity implements OnCompleteListener<AuthResult> {
     public static final String PREFS_NAME = "PHQ9 Preference File";
-    long timeCreated;
 
     //FIXME: Next time, change onCreate to use different themed splash screen based on preferences
     @Override
@@ -34,16 +34,17 @@ public class LaunchScreenActivity extends Activity implements OnCompleteListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch_screen);
         handleLogin();
-        timeCreated = System.currentTimeMillis();
     }
 
     private void handleLogin() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance(PHQApplication.getFirebaseAppInstance());
         FirebaseUser user = auth.getCurrentUser();
         if (user == null) {
             auth.signInAnonymously().addOnCompleteListener(this, this);
+            Log.d("LaunchScreenActivity", "No user");
         } else {
             Log.d("LaunchScreenActivity", "Signed in already: " + user.getUid());
+            updateThemePref();
         }
     }
 
@@ -68,8 +69,9 @@ public class LaunchScreenActivity extends Activity implements OnCompleteListener
     }
 
     private void updateThemePref() {
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference themePref = FirebaseDatabase.getInstance()
+        String userID = FirebaseAuth.getInstance(PHQApplication.getFirebaseAppInstance())
+                .getCurrentUser().getUid();
+        DatabaseReference themePref = FirebaseDatabase.getInstance(PHQApplication.getFirebaseAppInstance())
                 .getReference("users/" + userID + "/themePreference");
         themePref.setValue(Utils.THEME_NAMES[Utils.GetTheme(LaunchScreenActivity.this)]);
     }
