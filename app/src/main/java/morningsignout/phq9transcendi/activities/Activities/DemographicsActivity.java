@@ -12,8 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.firebase.client.Firebase;
-
 import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.activities.HelperClasses.DemographicsAdapter;
 import morningsignout.phq9transcendi.activities.HelperClasses.FirebaseExtras;
@@ -214,29 +212,30 @@ public class DemographicsActivity extends AppCompatActivity implements
     }
 
     void uploadDataToDatabase() {
-        //reference to firebase and create child
-        Firebase ref = new Firebase(FirebaseExtras.DATA_URL);
-        String userID = getSharedPreferences(LaunchScreenActivity.PREFS_NAME, MODE_PRIVATE)
-                .getString(FirebaseExtras.USER_ID, null);
-
-        if(userID != null) {
-            Firebase userRef = ref.child("users").child(userID);
-
-            if (age_answer != -1)
-                userRef.child("age").setValue(age_answer);
-            if (!gender.getSelectedItem().equals("-"))  // Check that spinner is not on dash item
-                userRef.child("gender").setValue(gender_answer.toLowerCase());
-            if (!ethnicity.getSelectedItem().equals("-"))
-                userRef.child("ethnicity").setValue(ethnicity_answer.toLowerCase());
-            if (!familyFirst.getSelectedItem().equals("-"))
-                userRef.child("firstGenerationCollege").setValue(familyFirst_answer.toLowerCase());
-            if (!schoolYear.getSelectedItem().equals("-"))
-                userRef.child("yearInSchool").setValue(schoolYear_answer.toLowerCase());
-            if (!collegeName.getSelectedItem().equals("-"))
-                userRef.child("collegeName").setValue(collegeName_answer.toLowerCase());
-
-            //Log.d(demo_log_name, "Submitted Data");
-        }
+        // FIXME: Demographics
+//        //reference to firebase and create child
+//        Firebase ref = new Firebase(FirebaseExtras.getDataURL());
+//        String userID = getSharedPreferences(LaunchScreenActivity.PREFS_NAME, MODE_PRIVATE)
+//                .getString(FirebaseExtras.USER_ID, null);
+//
+//        if(userID != null) {
+//            Firebase userRef = ref.child("users").child(userID);
+//
+//            if (age_answer != -1)
+//                userRef.child("age").setValue(age_answer);
+//            if (!gender.getSelectedItem().equals("-"))  // Check that spinner is not on dash item
+//                userRef.child("gender").setValue(gender_answer.toLowerCase());
+//            if (!ethnicity.getSelectedItem().equals("-"))
+//                userRef.child("ethnicity").setValue(ethnicity_answer.toLowerCase());
+//            if (!familyFirst.getSelectedItem().equals("-"))
+//                userRef.child("firstGenerationCollege").setValue(familyFirst_answer.toLowerCase());
+//            if (!schoolYear.getSelectedItem().equals("-"))
+//                userRef.child("yearInSchool").setValue(schoolYear_answer.toLowerCase());
+//            if (!collegeName.getSelectedItem().equals("-"))
+//                userRef.child("collegeName").setValue(collegeName_answer.toLowerCase());
+//
+//            //Log.d(demo_log_name, "Submitted Data");
+//        }
 
 
         //Log.d(demo_log_name, String.valueOf(age_answer));

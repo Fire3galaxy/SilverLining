@@ -18,6 +18,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +28,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.firebase.client.Firebase;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -362,14 +362,14 @@ public class QuizActivity extends AppCompatActivity
 
     // Uploads score data to Firebase. If no user ID exists, creates and stores one
     private void uploadToDatabase() {
-        Firebase firebaseRef = new Firebase(FirebaseExtras.DATA_URL);
         String userID = getSharedPreferences(LaunchScreenActivity.PREFS_NAME, MODE_PRIVATE)
                 .getString(FirebaseExtras.USER_ID, null);
 
         if (userID != null) {
             gpsLock.lock();
-            scores.uploadDataToDatabase(firebaseRef, userID, startTimestamp, endTimestamp,
-                    latitude, longitude);
+            // FIXME: upload scores to database
+//            scores.uploadDataToDatabase(firebaseRef, userID, startTimestamp, endTimestamp,
+//                    latitude, longitude);
             gpsLock.unlock();
         }
 
@@ -437,15 +437,7 @@ public class QuizActivity extends AppCompatActivity
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-
-            // FIXME: Same thing with onConnectionFailed. Should we ask for location permission?
+            // Same thing with onConnectionFailed. We're not asking for location permission for now
             //Log.e("QuizActivity", "Not given permission to access location");
 
             return;
@@ -469,20 +461,6 @@ public class QuizActivity extends AppCompatActivity
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        //Log.e("QuizActivity", "Failed to connect to google play services");
-
-        /* FIXME: If we can't connect to google, should we force the user to update? It kinda
-         * FIXME: says "Hey, we're sending data about you!" */
-
-//        int error = connectionResult.getErrorCode();
-//        if (error == ConnectionResult.SERVICE_MISSING
-//                || error == ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED
-//                || error == ConnectionResult.SERVICE_DISABLED) {
-//            try {
-//                connectionResult.startResolutionForResult(this, UPDATE_GOOGLE);
-//            } catch (IntentSender.SendIntentException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        Log.e("QuizActivity", "Failed to connect to google play services");
     }
 }

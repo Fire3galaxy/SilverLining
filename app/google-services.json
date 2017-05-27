@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "389035711724",
+    "firebase_url": "https://android-silver-lining-debug.firebaseio.com",
+    "project_id": "android-silver-lining-debug",
+    "storage_bucket": "android-silver-lining-debug.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389035711724:android:33e4a0d819b5b631",
+        "android_client_info": {
+          "package_name": "morningsignout.phq9transcendi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389035711724-7ce24ju54re0bdqc418mi3krqiku8bdl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyD4M9-vTisSMBrxSN83uf4bQQnoH4LQ4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

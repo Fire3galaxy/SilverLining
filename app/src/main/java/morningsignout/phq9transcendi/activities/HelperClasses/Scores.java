@@ -3,8 +3,6 @@ package morningsignout.phq9transcendi.activities.HelperClasses;
 import android.util.Log;
 import android.util.Pair;
 
-import com.firebase.client.Firebase;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -180,54 +178,53 @@ public class Scores {
         return max;
     }
 
-    public void uploadDataToDatabase(Firebase ref, String userID,
-                                        String startTime, String endTime,
-                                        double latitude, double longitude) {
-        //Log.d("Scores", "In upload function");
-
-        Firebase testRef = ref.child("tests").push(),
-                userRef = ref.child("users").child(userID),
-                questionsRef = ref.child("questions-analytics");
-        String testID = testRef.getKey();
-
-        // Questions analytics
-        for (String q : questions) {
-            StringBuilder path = new StringBuilder();
-            int currAnswer = scoreDictionary.get(q);
-
-            // question/answer-#/userID/"testID"
-            path.append(q).append("/")
-                    .append(firebaseAnswerStrings[currAnswer]).append("/")
-                    .append(userID).append("/")
-                    .append("testID");
-
-            // add "new val":testID to database
-            questionsRef.child(path.toString()).push().setValue(testID);
-        }
-
-        // Users
-        userRef.child("testIDs").push().setValue(testID);
-
-        // Tests
-        ArrayList<String> answers = new ArrayList<>(questions.length);
-        Map<String, Integer> scores = new HashMap<>(categoryNames.length);
-        for (String q : questions)
-            answers.add(firebaseAnswerStrings[scoreDictionary.get(q)]);
-
-        for (int i = 0; i < categoryNames.length; i++)
-            scores.put(categoryNames[i], getCategoryScore(i));
-
-        testRef.child("startTimestamp").setValue(startTime);
-        testRef.child("endTimestamp").setValue(endTime);
-        testRef.child("latitude").setValue(latitude);
-        testRef.child("longitude").setValue(longitude);
-        testRef.child("userID").setValue(userID);
-        testRef.child("completed").setValue(true); // FIXME: No way to submit incomplete right now
-        testRef.child("answers").setValue(answers);
-        testRef.child("scores").setValue(scores);
-
-        // FIXME: add check for success
-    }
+    // FIXME: upload scores to database
+//    public void uploadDataToDatabase(Firebase ref, String userID,
+//                                        String startTime, String endTime,
+//                                        double latitude, double longitude) {
+//        //Log.d("Scores", "In upload function");
+//
+//        Firebase testRef = ref.child("tests").push(),
+//                userRef = ref.child("users").child(userID),
+//                questionsRef = ref.child("questions-analytics");
+//        String testID = testRef.getKey();
+//
+//        // Questions analytics
+//        for (String q : questions) {
+//            StringBuilder path = new StringBuilder();
+//            int currAnswer = scoreDictionary.get(q);
+//
+//            // question/answer-#/userID/"testID"
+//            path.append(q).append("/")
+//                    .append(firebaseAnswerStrings[currAnswer]).append("/")
+//                    .append(userID).append("/")
+//                    .append("testID");
+//
+//            // add "new val":testID to database
+//            questionsRef.child(path.toString()).push().setValue(testID);
+//        }
+//
+//        // Users
+//        userRef.child("testIDs").push().setValue(testID);
+//
+//        // Tests
+//        ArrayList<String> answers = new ArrayList<>(questions.length);
+//        Map<String, Integer> scores = new HashMap<>(categoryNames.length);
+//        for (String q : questions)
+//            answers.add(firebaseAnswerStrings[scoreDictionary.get(q)]);
+//
+//        for (int i = 0; i < categoryNames.length; i++)
+//            scores.put(categoryNames[i], getCategoryScore(i));
+//
+//        testRef.child("timestamp").setValue(endTime);
+//        testRef.child("latitude").setValue(latitude);
+//        testRef.child("longitude").setValue(longitude);
+//        testRef.child("userID").setValue(userID);
+//        testRef.child("answers").setValue(answers);
+//        testRef.child("scores").setValue(scores);
+//
+//        // FIXME: add check for success
+//    }
 
     public Pair<String, String> getScoreStateStrings() {
         return new Pair<>(getScoreString(), getVisitedString());
