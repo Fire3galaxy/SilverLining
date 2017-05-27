@@ -1,32 +1,27 @@
 package morningsignout.phq9transcendi.activities.HelperClasses;
 
-import android.content.Context;
 import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import morningsignout.phq9transcendi.R;
-import morningsignout.phq9transcendi.activities.Activities.Themes;
+import morningsignout.phq9transcendi.activities.Activities.ThemesActivity;
 
 /**
  * Created by Stella on 3/2/2016.
  */
 public class ThemesAdapter extends BaseAdapter {
-    Context context;
-    String[] contents;
+    private ThemesActivity themeActivity;
+    private String[] contents;
 
-    public ThemesAdapter(Context c){
-        this.context = c;
-        String activity = this.getClass().getSimpleName();
-        //Log.d("Class name", activity);
-        this.contents = c.getResources().getStringArray(R.array.themes);
+    public ThemesAdapter(ThemesActivity t){
+        this.themeActivity = t;
+        this.contents = t.getResources().getStringArray(R.array.themes);
 
     }
-    //private final Integer[] images = {"", "", ""};
 
     public int getCount() {
         return contents.length;
@@ -48,7 +43,7 @@ public class ThemesAdapter extends BaseAdapter {
         if (row == null) {
             viewHolder = new ReferencesViewHolder();
 
-            LayoutInflater inflater = ((Themes) context).getLayoutInflater();
+            LayoutInflater inflater = themeActivity.getLayoutInflater();
             row = inflater.inflate(R.layout.list_item_view, parent, false);
 
             viewHolder.textViewTitle = (TextView) row.findViewById(R.id.textView_rr);
@@ -57,7 +52,7 @@ public class ThemesAdapter extends BaseAdapter {
             viewHolder = (ReferencesViewHolder) row.getTag();
         }
 
-        if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+        if (themeActivity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             if (position == 0)
                 viewHolder.textViewTitle.setCompoundDrawablesWithIntrinsicBounds(
                         0, 0, R.drawable.ice_front_screen, 0);
@@ -74,15 +69,11 @@ public class ThemesAdapter extends BaseAdapter {
         }
 
         viewHolder.textViewTitle.setText(this.contents[position]);
-        //viewHolder.imageView.setImageResource(this.images[position]);
 
         return row;
     }
 
     private class ReferencesViewHolder {
         TextView textViewTitle;
-        ImageView imageView;
     }
-
-
 }

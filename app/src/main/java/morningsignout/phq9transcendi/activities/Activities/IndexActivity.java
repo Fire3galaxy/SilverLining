@@ -12,16 +12,12 @@ import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class IndexActivity extends AppCompatActivity {
-    Button resourceButton, refButton, themeButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Set up layout and toolbar
         Utils.onActivityCreateSetTheme(this, Utils.GetTheme(this));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
-
-//        handleLogin(); // Gives user a firebase id
 
         // 2 Buttons: How am I doing, Theme
         Button startButton = (Button) findViewById(R.id.startButton);
@@ -31,10 +27,10 @@ public class IndexActivity extends AppCompatActivity {
             }
         });
 
-        refButton = (Button) findViewById(R.id.themeButton);
-        refButton.setOnClickListener(new View.OnClickListener() {
+        Button themeButton = (Button) findViewById(R.id.themeButton);
+        themeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(IndexActivity.this, Themes.class);
+                Intent intent = new Intent(IndexActivity.this, ThemesActivity.class);
                 startActivity(intent);
             }
         });

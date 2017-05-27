@@ -77,6 +77,6 @@ public class LaunchScreenActivity extends Activity implements OnCompleteListener
                 .getCurrentUser().getUid();
         DatabaseReference themePref = FirebaseDatabase.getInstance(PHQApplication.getFirebaseAppInstance())
                 .getReference("users/" + userID + "/themePreference");
-        themePref.setValue(Utils.THEME_NAMES[Utils.GetTheme(LaunchScreenActivity.this)]);
+        themePref.setValue(Utils.THEME_NAMES[Utils.GetTheme(this)]);
     }
 }

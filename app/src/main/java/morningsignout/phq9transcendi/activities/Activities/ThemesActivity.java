@@ -9,20 +9,24 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.activities.HelperClasses.FirebaseExtras;
 import morningsignout.phq9transcendi.activities.HelperClasses.ThemesAdapter;
 import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
+import morningsignout.phq9transcendi.activities.PHQApplication;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Stella on 3/2/2016.
  */
-public class Themes extends AppCompatActivity {
+public class ThemesActivity extends AppCompatActivity {
     ListView contents;
     Button homeButton;
     ThemesAdapter themeCustomAdapter;
-//    Firebase userRef;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,8 +35,6 @@ public class Themes extends AppCompatActivity {
 
         setContentView(R.layout.themes);
 
-        String userID = getSharedPreferences(LaunchScreenActivity.PREFS_NAME, MODE_PRIVATE)
-                .getString(FirebaseExtras.USER_ID, null);
         // FIXME: update theme in database
 //        if(userID != null)
 //            userRef = new Firebase(FirebaseExtras.getDataURL()).child("users").child(userID);
@@ -41,16 +43,16 @@ public class Themes extends AppCompatActivity {
         contents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView parent, View view, int position, long id) {
-//                userRef.child("themePreference").setValue(Utils.THEME_NAMES[position]);
-                Utils.SaveTheme("theme", position, Themes.this);
-                Utils.changeToTheme(Themes.this);
+                Utils.SaveTheme("theme", position, ThemesActivity.this);
+                Utils.changeToTheme(ThemesActivity.this);
+                updateThemePref();
             }
         });
 
         homeButton = (Button)findViewById(R.id.back_button);
         homeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(Themes.this, IndexActivity.class);
+                Intent intent = new Intent(ThemesActivity.this, IndexActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -70,8 +72,16 @@ public class Themes extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(Themes.this, IndexActivity.class);
+        Intent intent = new Intent(ThemesActivity.this, IndexActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void updateThemePref() {
+        String userID = FirebaseAuth.getInstance(PHQApplication.getFirebaseAppInstance())
+                .getCurrentUser().getUid();
+        DatabaseReference themePref = FirebaseDatabase.getInstance(PHQApplication.getFirebaseAppInstance())
+                .getReference("users/" + userID + "/themePreference");
+        themePref.setValue(Utils.THEME_NAMES[Utils.GetTheme(this)]);
     }
 }

@@ -14,7 +14,7 @@ public class FirebaseExtras {
     public final static String EXPIRES = "Expiration";
     public final static String TEST_ID = "Test ID";
 
-    public final static String getDataURL() {
+    public static String getDataURL() {
         if (DEBUG)
             return DATA_URL_DEBUG;
         return DATA_URL;
