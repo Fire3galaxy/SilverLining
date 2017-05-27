@@ -14,6 +14,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -27,6 +28,7 @@ import morningsignout.phq9transcendi.activities.PHQApplication;
 
 public class LaunchScreenActivity extends Activity implements OnCompleteListener<AuthResult> {
     public static final String PREFS_NAME = "PHQ9 Preference File";
+    private long timeCreated;
 
     //FIXME: Next time, change onCreate to use different themed splash screen based on preferences
     @Override
@@ -34,30 +36,31 @@ public class LaunchScreenActivity extends Activity implements OnCompleteListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch_screen);
         handleLogin();
+        timeCreated = System.currentTimeMillis();
     }
 
     private void handleLogin() {
         FirebaseAuth auth = FirebaseAuth.getInstance(PHQApplication.getFirebaseAppInstance());
         FirebaseUser user = auth.getCurrentUser();
-        if (user == null) {
-            auth.signInAnonymously().addOnCompleteListener(this, this);
-            Log.d("LaunchScreenActivity", "No user");
-        } else {
-            Log.d("LaunchScreenActivity", "Signed in already: " + user.getUid());
+
+        if (user == null)
+            auth.signInAnonymously().addOnCompleteListener(this, this); // App will be started by listener
+        else {
             updateThemePref();
+            startApp();
         }
     }
 
     void startApp() {
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                Intent intent = new Intent(LaunchScreenActivity.this, IndexActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        }, Math.max(3000 - (System.currentTimeMillis() - timeCreated), 0));
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(LaunchScreenActivity.this, IndexActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, Math.max(3000 - (System.currentTimeMillis() - timeCreated), 0));
     }
 
     @Override
@@ -66,6 +69,7 @@ public class LaunchScreenActivity extends Activity implements OnCompleteListener
             updateThemePref();
         else
             Log.e("PHQ9-Transcendi", "Failed connection to server. " + task.getException().getMessage());
+        startApp();
     }
 
     private void updateThemePref() {
