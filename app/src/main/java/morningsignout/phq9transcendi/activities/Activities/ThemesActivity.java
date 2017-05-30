@@ -35,10 +35,6 @@ public class ThemesActivity extends AppCompatActivity {
 
         setContentView(R.layout.themes);
 
-        // FIXME: update theme in database
-//        if(userID != null)
-//            userRef = new Firebase(FirebaseExtras.getDataURL()).child("users").child(userID);
-
         contents = (ListView)findViewById(R.id.Contents);
         contents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

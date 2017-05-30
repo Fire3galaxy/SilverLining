@@ -3,10 +3,17 @@ package morningsignout.phq9transcendi.activities.HelperClasses;
 import android.util.Log;
 import android.util.Pair;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+
+import morningsignout.phq9transcendi.activities.PHQApplication;
 
 /**
  * Created by pokeforce on 5/26/16.
@@ -178,11 +185,17 @@ public class Scores {
         return max;
     }
 
-    // FIXME: upload scores to database
-//    public void uploadDataToDatabase(Firebase ref, String userID,
-//                                        String startTime, String endTime,
+//    // FIXME: upload scores to database
+//    public void uploadDataToDatabase(String userID, String startTime, String endTime,
 //                                        double latitude, double longitude) {
 //        //Log.d("Scores", "In upload function");
+//        FirebaseUser user = FirebaseAuth.getInstance(PHQApplication.getFirebaseAppInstance()).getCurrentUser();
+//
+//        if(user != null) {
+//            DatabaseReference rootRef = FirebaseDatabase.getInstance(PHQApplication.getFirebaseAppInstance());
+//            DatabaseReference userRef = rootRef.getReference("users/" + user.getUid()),
+//                testsRef = ;
+//        }
 //
 //        Firebase testRef = ref.child("tests").push(),
 //                userRef = ref.child("users").child(userID),
