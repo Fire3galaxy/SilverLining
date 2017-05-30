@@ -362,18 +362,10 @@ public class QuizActivity extends AppCompatActivity
 
     // Uploads score data to Firebase. If no user ID exists, creates and stores one
     private void uploadToDatabase() {
-        String userID = getSharedPreferences(LaunchScreenActivity.PREFS_NAME, MODE_PRIVATE)
-                .getString(FirebaseExtras.USER_ID, null);
-
-        if (userID != null) {
-            gpsLock.lock();
-            // FIXME: upload scores to database
-//            scores.uploadDataToDatabase(firebaseRef, userID, startTimestamp, endTimestamp,
-//                    latitude, longitude);
-            gpsLock.unlock();
-        }
-
-        //Log.d("QuizActivity", "Finished writing data");
+        gpsLock.lock();
+        // FIXME: upload scores to database
+        scores.uploadDataToDatabase(startTimestamp, endTimestamp, latitude, longitude);
+        gpsLock.unlock();
     }
 
     // Which view was clicked: arrows (nextArrow/prevArrow) or buttons (yes/no)

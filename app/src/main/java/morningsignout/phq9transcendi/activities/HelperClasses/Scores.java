@@ -56,19 +56,20 @@ public class Scores {
             "suicideaction_flag",
 
             // research
-            "familyunderstands", "familysituation", "culturalbackground", "appointment",
-            "fearofstranger", "adequateresources"
+            "familyunderstands", "familysituation", "culturalbackground", "i_appointment",
+            "fearofstranger", "i_adequateresources"
     };
 
     // Categories of questions
     private static final String[] categoryNames = {
             "anhedonia", "mood", "sleep-disturbance", "energy", "appetite", "guilt", "cognition-concentration",
-            "psychomotor", "suicide", "red-flag", "research"
+            "psychomotor", "suicide", "red-flag", "familyunderstands", "familysituation", "culturalbackground",
+            "i_appointment", "fearofstranger", "i_adequateresources"
     };
 
     // Array of which category each question is associated with
     private static final int[] categoryIndices = {
-            0, 0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10
+            0, 0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 9, 9, 9, 10, 11, 12, 13, 14, 15
     };
 
     // Score value that would trigger a red flag alert
@@ -130,26 +131,13 @@ public class Scores {
 
             // Next category
             if (i + 1 < categoryIndices.length && currentCategory != categoryIndices[i + 1]) {
-                // 9 = red flag, 10 = research
-                if (currentCategory < 9) {
+                // 9 = red flag, 10+ = research
+                if (currentCategory < 9)
                     sum += max;
-//                    Log.d("Scores", "for " + currentCategory + ", max: " + max);
-                }
                 max = 0;
                 currentCategory = categoryIndices[i + 1];
             }
-            Log.d("Scores", i + ": " + categoryIndices[i] + ", " + scoreDictionary.get(questions[i]));
         }
-
-        for (String q : questions)
-            Log.d("Scores", q + ": " + scoreDictionary.get(q));
-
-        for (int i = 0; i < categoryNames.length; i++)
-            Log.d("Scores", categoryNames[i] + ": " + getCategoryScore(i));
-
-        //Log.d("Scores", getScoreString());
-        //Log.d("Scores", getVisitedString());
-        //Log.d("Scores", "---------------------------------------");
 
         return sum;
     }
@@ -185,59 +173,36 @@ public class Scores {
         return max;
     }
 
-//    // FIXME: upload scores to database
-//    public void uploadDataToDatabase(String userID, String startTime, String endTime,
-//                                        double latitude, double longitude) {
-//        //Log.d("Scores", "In upload function");
-//        FirebaseUser user = FirebaseAuth.getInstance(PHQApplication.getFirebaseAppInstance()).getCurrentUser();
-//
-//        if(user != null) {
-//            DatabaseReference rootRef = FirebaseDatabase.getInstance(PHQApplication.getFirebaseAppInstance());
-//            DatabaseReference userRef = rootRef.getReference("users/" + user.getUid()),
-//                testsRef = ;
-//        }
-//
-//        Firebase testRef = ref.child("tests").push(),
-//                userRef = ref.child("users").child(userID),
-//                questionsRef = ref.child("questions-analytics");
-//        String testID = testRef.getKey();
-//
-//        // Questions analytics
-//        for (String q : questions) {
-//            StringBuilder path = new StringBuilder();
-//            int currAnswer = scoreDictionary.get(q);
-//
-//            // question/answer-#/userID/"testID"
-//            path.append(q).append("/")
-//                    .append(firebaseAnswerStrings[currAnswer]).append("/")
-//                    .append(userID).append("/")
-//                    .append("testID");
-//
-//            // add "new val":testID to database
-//            questionsRef.child(path.toString()).push().setValue(testID);
-//        }
-//
-//        // Users
-//        userRef.child("testIDs").push().setValue(testID);
-//
-//        // Tests
-//        ArrayList<String> answers = new ArrayList<>(questions.length);
-//        Map<String, Integer> scores = new HashMap<>(categoryNames.length);
-//        for (String q : questions)
-//            answers.add(firebaseAnswerStrings[scoreDictionary.get(q)]);
-//
-//        for (int i = 0; i < categoryNames.length; i++)
-//            scores.put(categoryNames[i], getCategoryScore(i));
-//
-//        testRef.child("timestamp").setValue(endTime);
-//        testRef.child("latitude").setValue(latitude);
-//        testRef.child("longitude").setValue(longitude);
-//        testRef.child("userID").setValue(userID);
-//        testRef.child("answers").setValue(answers);
-//        testRef.child("scores").setValue(scores);
-//
-//        // FIXME: add check for success
-//    }
+    public void uploadDataToDatabase(String startTime, String endTime,
+                                        double latitude, double longitude) {
+        FirebaseUser user = FirebaseAuth.getInstance(PHQApplication.getFirebaseAppInstance()).getCurrentUser();
+
+        if(user != null) {
+            FirebaseDatabase rootDB = FirebaseDatabase.getInstance(PHQApplication.getFirebaseAppInstance());
+            DatabaseReference userRef = rootDB.getReference("users/" + user.getUid()),
+                testRef = rootDB.getReference("tests/").push();
+            String testID = testRef.getKey();
+
+            // Users
+            userRef.child("testIDs").push().setValue(testID);
+
+            // Tests
+            ArrayList<Integer> answers = new ArrayList<>();
+            Map<String, Integer> scores = new HashMap<>(categoryNames.length);
+            for (String q : questions)
+                answers.add(scoreDictionary.get(q));
+
+            for (int i = 0; i < categoryNames.length; i++)
+                scores.put(categoryNames[i], getCategoryScore(i));
+
+            testRef.child("timestamp").setValue(endTime);
+            testRef.child("latitude").setValue(latitude);
+            testRef.child("longitude").setValue(longitude);
+            testRef.child("userID").setValue(user.getUid());
+            testRef.child("answers").setValue(answers);
+            testRef.child("scores").setValue(scores);
+        }
+    }
 
     public Pair<String, String> getScoreStateStrings() {
         return new Pair<>(getScoreString(), getVisitedString());
