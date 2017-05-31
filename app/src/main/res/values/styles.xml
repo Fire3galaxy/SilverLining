@@ -1,5 +1,5 @@
 <resources>
-    <!-- Base application theme. -->
+    <!-- Base application theme. Used on Launch.-->
     <style name="BlankTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowBackground">@drawable/launch_screen</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
@@ -7,7 +7,6 @@
     </style>
 
     <style name="IceAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="android:textColor">@color/timber_green</item>
         <item name="android:windowBackground">@color/iceberg</item>
         <item name="android:colorBackground">@color/iceberg</item>
@@ -16,8 +15,6 @@
         <item name="buttonStyle">@style/IceButtonAppTheme</item>
         <item name="android:spinnerItemStyle">@style/IceSpinnerItem</item>
         <item name="customRangeSlider">@style/IceRangeSlider</item>
-
-        <!--<item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>-->
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
