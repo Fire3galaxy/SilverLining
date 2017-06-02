@@ -6,7 +6,8 @@
     <string name="action_settings">Settings</string>
     <string name="quiz_activity">Quiz</string>
     <string name="resource_activity">Resources</string>
-    <string name="reference_activity">References</string>
+    <string name="themes_activity">Themes</string>
+    <string name="about_us_activity">About Us</string>
     <string name="quizintro_activity">Introduction</string>
     <string name="demographics_intro_activity">Demographics</string>
     <string name="demographics_activity">Demographics</string>
@@ -19,6 +20,15 @@
     <string name="references_button">References</string>
     <string name="theme_change_button">Customize App</string>
     <string name="about_us_button">About Us</string>
+    <string name="about_health_tool">A mental health tool</string>
+    <string name="about_us_paragraph">Silver Lining is an application from Morning Sign Out at
+        morningsignout.com and its development team, Transcendi. Our application is intended to give
+        you a starting place for dealing with depression by providing you a basic understanding of
+        your symptoms. If you have any feedback, concerns, or advice, please email us at
+        morningsignoutdevs@gmail.com with the subject line <i>Silver Lining Android
+        Feedback</i> so that we can improve the resources we offer to your school.</string>
+    <string name="about_disclaimer">Disclaimer: This app is meant for educational use only, and is
+        not intended for clinical or diagnostic use.</string>
     <string name="quiz_start">Get Started!</string>
     <string name="demo_continue">Share a little about myself</string>
     <string name="demo_skip">No thanks, maybe next time</string>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -31,6 +32,15 @@ public class IndexActivity extends AppCompatActivity {
         themeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(IndexActivity.this, ThemesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button aboutUsButton = (Button) findViewById(R.id.aboutUsButton);
+        aboutUsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.d("IndexActivity", "HERE");
+                Intent intent = new Intent(IndexActivity.this, AboutUsActivity.class);
                 startActivity(intent);
             }
         });
