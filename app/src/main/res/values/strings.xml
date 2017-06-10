@@ -32,6 +32,7 @@
     <string name="red_flag_text">There were also some red flag symptoms</string>
     <string name="what_does_it_mean">What does that all mean?</string>
     <string name="finish_up">Finish Up</string>
+    <string name ="email_results">Email the results</string>
     <string name="take_me_home">Take me home</string>
     <string name="return_to_home">Return to home</string>
     <string name="feedback">Provide Feedback?</string>

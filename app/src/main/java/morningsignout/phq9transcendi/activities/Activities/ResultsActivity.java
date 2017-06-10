@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.activities.HelperClasses.BlinkScrollView;
@@ -45,7 +46,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
     // Third Screen
     Button feedbackButton;
-
+    Button emailresultsButton;
     int totalScore;
     boolean redFlag;
     int screenNumber = 0;
@@ -73,6 +74,8 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         scoreFan = (ImageView) findViewById(R.id.imageView_score_fan);
         detailsText = (TextView) findViewById(R.id.textView_details);       // Second screen
         blinkScrollView = (BlinkScrollView) findViewById(R.id.container_detail);
+        emailresultsButton = (Button) findViewById(R.id.button_email_results);
+        emailresultsButton.setOnClickListener(this);
 
         // Third Screen
         feedbackButton = (Button) findViewById(R.id.button_feedback);
@@ -170,6 +173,17 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse("https://goo.gl/forms/N7L6KslgWUWPzw1J3"));
             startActivity(intent);
+        } else if(v != null && v.equals(emailresultsButton)) {
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+            emailIntent.setData(Uri.parse("mailto:" + "jkapich@gmail.com"));
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Results from Silver Lining");
+            emailIntent.putExtra(Intent.EXTRA_TEXT, "Your score was: " + totalScore);
+
+            try {
+                startActivity(Intent.createChooser(emailIntent, "Send email using..."));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(this, "No email clients installed.", Toast.LENGTH_SHORT).show();
+            }
         } else {
             switch (screenNumber) {
                 case 0:
@@ -186,7 +200,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
                     // Set new text & blink to indicate scrolling
                     detailsText.setText(getResult());
                     finishUpButton.setText(getResources().getText(R.string.finish_up));
-
+                    emailresultsButton.setVisibility(View.VISIBLE);
                     screenNumber = 1;
                     break;
                 case 1:
@@ -199,11 +213,12 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
                         redFlagText.setVisibility(View.GONE);
                         scoreFan.setVisibility(View.GONE);
                     }
-
+                    System.out.println("CASE 1");
                     feedbackButton.setVisibility(View.VISIBLE);
                     blinkScrollView.setScrollY(0);
                     detailsText.setText(getResources().getText(R.string.wrap_up_text));
                     finishUpButton.setText(getResources().getText(R.string.take_me_home));
+                    emailresultsButton.setVisibility(View.GONE);
                     screenNumber = 2;
                     break;
                 case 2:
