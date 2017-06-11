@@ -177,7 +177,8 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
             emailIntent.setData(Uri.parse("mailto:" + "jkapich@gmail.com"));
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Results from Silver Lining");
-            emailIntent.putExtra(Intent.EXTRA_TEXT, "Your score was: " + totalScore);
+            String msg = "Your score was: " + totalScore + ". " + getResult();
+            emailIntent.putExtra(Intent.EXTRA_TEXT, msg);
 
             try {
                 startActivity(Intent.createChooser(emailIntent, "Send email using..."));
@@ -213,7 +214,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
                         redFlagText.setVisibility(View.GONE);
                         scoreFan.setVisibility(View.GONE);
                     }
-                    System.out.println("CASE 1");
+
                     feedbackButton.setVisibility(View.VISIBLE);
                     blinkScrollView.setScrollY(0);
                     detailsText.setText(getResources().getText(R.string.wrap_up_text));
