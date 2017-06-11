@@ -175,7 +175,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
             startActivity(intent);
         } else if(v != null && v.equals(emailresultsButton)) {
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-            emailIntent.setData(Uri.parse("mailto:" + "jkapich@gmail.com"));
+            emailIntent.setData(Uri.parse("mailto:" + ""));
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Results from Silver Lining");
             String msg = "Your score was: " + totalScore + ". " + getResult();
             emailIntent.putExtra(Intent.EXTRA_TEXT, msg);
