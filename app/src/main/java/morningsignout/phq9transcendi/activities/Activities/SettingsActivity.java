@@ -44,7 +44,6 @@ public class SettingsActivity extends AppCompatActivity {
                     justCreated = false;
                     return;
                 }
-                Toast.makeText(context, "On selected", Toast.LENGTH_SHORT).show();
                 switch (frequency) {
                     case 0: //no alarm
                         cancelAlarm(false);
@@ -67,9 +66,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
 
@@ -77,14 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
         alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, NotificationReceiver.class);
         alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-
-        // Set the alarm to start at 10:30 a.m.
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 10);
-        calendar.set(Calendar.MINUTE, 30);
-
-        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
                 frequency, alarmIntent);
 
     }

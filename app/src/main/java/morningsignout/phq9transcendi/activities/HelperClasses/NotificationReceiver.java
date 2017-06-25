@@ -27,8 +27,6 @@ public class NotificationReceiver extends BroadcastReceiver {
         showNotification(context);
         //Release the lock
         wl.release();
-
-
     }
 
 
