@@ -19,7 +19,7 @@ public class IndexActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
 
-        // 2 Buttons: How am I doing, Theme
+        // 3 Buttons: How am I doing, Theme, Notification settings
         Button startButton = (Button) findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -34,6 +34,16 @@ public class IndexActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button settingsButton = (Button) findViewById(R.id.settingsButton);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(IndexActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     private void beginQuiz() {

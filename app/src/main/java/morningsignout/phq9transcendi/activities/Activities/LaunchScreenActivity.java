@@ -79,4 +79,5 @@ public class LaunchScreenActivity extends Activity implements OnCompleteListener
                 .getReference("users/" + userID + "/themePreference");
         themePref.setValue(Utils.THEME_NAMES[Utils.GetTheme(this)]);
     }
+
 }
