@@ -6,21 +6,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import java.util.Calendar;
-
 import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.activities.HelperClasses.NotificationReceiver;
 import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
 
 public class SettingsActivity extends AppCompatActivity {
+    private final int ALARM_ID = 3;
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
 
@@ -31,7 +27,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         context = this;
-
+        alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         //populate the spinner with frequencies of notification
         final Spinner notification_spinner = (Spinner) findViewById(R.id.notification_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -79,9 +75,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setAlarm(long frequency) {
-        alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, NotificationReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        alarmIntent = PendingIntent.getBroadcast(context, ALARM_ID, intent, 0);
         alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + frequency,
                 frequency, alarmIntent);
 
@@ -90,16 +85,17 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void cancelAlarm(boolean switching) {
         // If the alarm has been set, cancel it.
-        if (alarmMgr!= null) {
+
+            if(alarmIntent == null) {
+                Intent intent = new Intent(context, NotificationReceiver.class);
+                alarmIntent = PendingIntent.getBroadcast(context, ALARM_ID, intent, 0);
+            }
+
             alarmMgr.cancel(alarmIntent);
             if (!switching) {
                 Toast.makeText(context, "Reminder is turned off", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            if (!switching) {
-                Toast.makeText(context, "Reminder was already off", Toast.LENGTH_SHORT).show();
-            }
-        }
+
 
     }
 
