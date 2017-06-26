@@ -23,7 +23,7 @@ import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
 public class SettingsActivity extends AppCompatActivity {
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
-    private boolean justCreated;
+
     Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,6 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         context = this;
-        justCreated = true; //this prevents the spinner from firing upon creation
 
         //populate the spinner with frequencies of notification
         final Spinner notification_spinner = (Spinner) findViewById(R.id.notification_spinner);
@@ -50,10 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 //TODO store settings so that when page is opened again,
                 // it correctly shows what the user chose
-                if (justCreated) {
-                    justCreated = false;
-                    return;
-                }
+
                 switch (frequency) {
                     case 0: //no alarm
                         cancelAlarm(false);
@@ -68,6 +64,11 @@ public class SettingsActivity extends AppCompatActivity {
                         setAlarm(alarmMgr.INTERVAL_DAY * 7 * 2);
                         Toast.makeText(context, "Biweekly reminder is turned on", Toast.LENGTH_SHORT).show();
                         break;
+                    case 3: //tester
+                        cancelAlarm(true);
+                        setAlarm(1000*30);
+                        Toast.makeText(context, "Tester reminder is turned on", Toast.LENGTH_SHORT).show();
+                        break;
                     default:
                         break;
                 }
@@ -81,7 +82,7 @@ public class SettingsActivity extends AppCompatActivity {
         alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, NotificationReceiver.class);
         alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
+        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + frequency,
                 frequency, alarmIntent);
 
     }

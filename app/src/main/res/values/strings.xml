@@ -305,6 +305,7 @@
         <item>No reminder</item>
         <item>Weekly</item>
         <item>Biweekly</item>
+        <item>tester</item>
     </string-array>
 
 </resources>
