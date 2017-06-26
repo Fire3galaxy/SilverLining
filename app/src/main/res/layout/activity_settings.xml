@@ -16,14 +16,28 @@
         android:layout_marginBottom="25dp"
         android:layout_marginTop="25dp"
         android:text="@string/change_notification_setting"
-        android:textSize="25sp" />
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <Spinner
         android:id="@+id/notification_spinner"
+        style="@android:style/Widget.Spinner"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
         android:prompt="@string/change_notification_setting"
-        android:paddingTop="25dp" />
+        android:textSize="20sp"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/notification_button"
+        android:layout_height="40dp"
+        android:layout_width = "wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="14sp"
+        android:text ="OK"
+        android:textColor ="@color/black"
+        />
 
 
 </LinearLayout>
