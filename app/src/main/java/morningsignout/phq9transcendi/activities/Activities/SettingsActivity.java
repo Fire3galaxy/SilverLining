@@ -14,6 +14,7 @@ import android.widget.Toast;
 import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.activities.HelperClasses.NotificationReceiver;
 import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SettingsActivity extends AppCompatActivity {
     private final int ALARM_ID = 3;
@@ -52,12 +53,12 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case 1: //weekly alarm
                         cancelAlarm(true);
-                        setAlarm(alarmMgr.INTERVAL_DAY * 7);
+                        setAlarm(AlarmManager.INTERVAL_DAY * 7);
                         Toast.makeText(context, "Weekly reminder is turned on", Toast.LENGTH_SHORT).show();
                         break;
                     case 2: //biweekly alarm
                         cancelAlarm(true);
-                        setAlarm(alarmMgr.INTERVAL_DAY * 7 * 2);
+                        setAlarm(AlarmManager.INTERVAL_DAY * 7 * 2);
                         Toast.makeText(context, "Biweekly reminder is turned on", Toast.LENGTH_SHORT).show();
                         break;
                     case 3: //tester
@@ -101,4 +102,8 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));   // For custom Rubik font
+    }
 }
