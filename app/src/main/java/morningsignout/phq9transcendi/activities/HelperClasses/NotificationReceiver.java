@@ -36,7 +36,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         Intent intent = new Intent(context, SettingsActivity.class);
         PendingIntent pi = PendingIntent.getActivity(context, reqCode, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.launch_icon_bw)
                 .setContentTitle("Silver Lining")
                 .setContentText("Would you like to take the PHQ-9 quiz?");
         // Example of long notification string. Notification should expand to allow longer text. But if this isn't supported
