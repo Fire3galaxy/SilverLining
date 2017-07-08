@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
+
+
     <application
         android:name=".activities.PHQApplication"
         android:allowBackup="true"
@@ -48,7 +50,15 @@
             android:name=".activities.Activities.SettingsActivity"
             android:label="Settings"/>
 
-        <receiver android:name=".activities.HelperClasses.NotificationReceiver"/>
+        <receiver
+            android:name="morningsignout.phq9transcendi.activities.HelperClasses.NotificationReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

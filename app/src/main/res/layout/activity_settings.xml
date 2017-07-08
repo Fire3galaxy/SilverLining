@@ -23,7 +23,7 @@
             android:layout_width="fill_parent"
             android:layout_weight = "1"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="15dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:textSize="30sp"
@@ -44,7 +44,6 @@
     </LinearLayout>
 
 
-
     <TextView
         android:layout_marginTop="40dp"
         android:layout_width="wrap_content"
@@ -61,14 +60,5 @@
         android:id="@+id/Contents"
         android:layout_gravity="center_horizontal"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/return_to_home"
-        android:id="@+id/back_button"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:padding="@dimen/text_button_padding"
-        android:layout_marginBottom="20dp" />
 
 </LinearLayout>
