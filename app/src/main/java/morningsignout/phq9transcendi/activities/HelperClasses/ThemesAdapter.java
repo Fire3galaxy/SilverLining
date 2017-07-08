@@ -8,16 +8,16 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import morningsignout.phq9transcendi.R;
-import morningsignout.phq9transcendi.activities.Activities.ThemesActivity;
+import morningsignout.phq9transcendi.activities.Activities.SettingsActivity;
 
 /**
  * Created by Stella on 3/2/2016.
  */
 public class ThemesAdapter extends BaseAdapter {
-    private ThemesActivity themeActivity;
+    private SettingsActivity themeActivity;
     private String[] contents;
 
-    public ThemesAdapter(ThemesActivity t){
+    public ThemesAdapter(SettingsActivity t){
         this.themeActivity = t;
         this.contents = t.getResources().getStringArray(R.array.themes);
 

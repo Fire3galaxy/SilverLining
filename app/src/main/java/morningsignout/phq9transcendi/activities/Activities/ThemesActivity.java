@@ -55,10 +55,10 @@ public class ThemesActivity extends AppCompatActivity {
         });
 
         // Create the Custom Adapter Object
-        themeCustomAdapter = new ThemesAdapter(this);
+        //themeCustomAdapter = new ThemesAdapter(this);
 
         // Set the Adapter
-        contents.setAdapter(themeCustomAdapter);
+        //contents.setAdapter(themeCustomAdapter);
     }
 
     @Override

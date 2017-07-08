@@ -293,7 +293,7 @@
     <string name="title_activity_index">IndexActivity</string>
     <string name="title_activity_new_user">NewUserActivity</string>
     <string name="change_notification_setting">Change Notification Frequency</string>
-
+    <string name ="settings">Settings</string>
     <!--Themes-->
     <string-array name="themes">
         <item>Ice</item>

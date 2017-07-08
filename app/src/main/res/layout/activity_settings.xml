@@ -1,42 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/NotificationString"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:layout_marginBottom="25dp"
-        android:layout_marginTop="25dp"
         android:text="@string/change_notification_setting"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
-
-    <Spinner
-        android:id="@+id/notification_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:textColor="@color/black" />
-
-    <Button
-        android:id="@+id/notification_button"
-        android:layout_height="40dp"
-        android:layout_width = "wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="14sp"
-        android:text ="OK"
-        android:textColor ="@color/black"
+        android:textSize="23sp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/change_notification_text"
         />
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent">
+
+        <Spinner
+            android:id="@+id/notification_spinner"
+            android:layout_width="fill_parent"
+            android:layout_weight = "1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:id="@+id/notification_button"
+            android:layout_height="40dp"
+            android:layout_width = "wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="0dp"
+            android:textSize="14sp"
+            android:text ="OK"
+            android:textColor ="@color/black"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+
+
+    <TextView
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/theme_change_button"
+        android:textSize="25sp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/Contents"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/return_to_home"
+        android:id="@+id/back_button"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:padding="@dimen/text_button_padding"
+        android:layout_marginBottom="20dp" />
 
 </LinearLayout>
-

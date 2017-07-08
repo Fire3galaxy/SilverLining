@@ -38,27 +38,17 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/index_space" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/theme_change_button"
-        android:textSize="14sp"
-        android:id="@+id/themeButton"
-        android:padding="10dp"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/startButton"
-        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/settingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/themeButton"
+        android:layout_below="@+id/startButton"
         android:layout_marginTop = "25dp"
-        android:padding = "10dp"
+        android:padding ="20dp"
         android:layout_centerHorizontal="true"
-        android:textSize = "14sp"
-        android:text="Notification Settings"
+        android:textSize = "20sp"
+        android:text="Settings"
         />
 
 </RelativeLayout>

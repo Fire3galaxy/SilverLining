@@ -27,14 +27,6 @@ public class IndexActivity extends AppCompatActivity {
             }
         });
 
-        Button themeButton = (Button) findViewById(R.id.themeButton);
-        themeButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(IndexActivity.this, ThemesActivity.class);
-                startActivity(intent);
-            }
-        });
-
         Button settingsButton = (Button) findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

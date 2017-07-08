@@ -7,6 +7,34 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/change_notification_setting"
+        android:textSize="20sp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"/>
+
+
+    <Spinner
+        android:id="@+id/notification_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/notification_button"
+        android:layout_height="40dp"
+        android:layout_width = "wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="14sp"
+        android:text ="OK"
+        android:textColor ="@color/black"
+        android:layout_gravity="center"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/theme_change_button"
         android:textSize="25sp"
         android:layout_margin="10dp"
