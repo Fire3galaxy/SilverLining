@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
@@ -72,7 +73,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 break;
             case 3: //tester
                 cancelAlarm(context, true, false);
-                setAlarm(context, 1000*60*2, timeSet);
+                setAlarm(context, 1000*30, timeSet);
                 Toast.makeText(context, "Tester reminder is turned on", Toast.LENGTH_SHORT).show();
                 break;
             default:
@@ -118,7 +119,10 @@ public class NotificationReceiver extends BroadcastReceiver {
         }
     }
 
-
+    /** Name: restartAlarm
+     *  Is called when phone is rebooted. Sets up the old alarm manager
+     * @param context
+     */
     private static void restartAlarm(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(NOTIF_PREF, Context.MODE_PRIVATE);
         int frequency = prefs.getInt("frequency", 0);
@@ -138,7 +142,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 break;
             case 3: //tester
                 cancelAlarm(context, false, true);
-                setAlarm(context, 1000*60*2, timeSet);
+                setAlarm(context, 1000*30, timeSet);
                 break;
             default:
                 break;
@@ -151,21 +155,19 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         Intent intent = new Intent(context, LaunchScreenActivity.class);
         PendingIntent pi = PendingIntent.getActivity(context, reqCode, intent, 0);
+        String message = "Would you like to take the PHQ-9 quiz?";
+        String message2 = "It's good to regularly take the PHQ-9 to monitor yourself for symptoms of depression. Take the quiz now?";
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.launch_icon_bw)
                 .setContentTitle("Silver Lining")
-                .setContentText("Would you like to take the PHQ-9 quiz?");
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(message2))
+                .setContentText(message2);
 
-        // Note: After lollipop, android requires a certain kind of icon.
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //mBuilder.setSmallIcon(R.drawable.icon_transparent);
-        } else {
-            mBuilder.setSmallIcon(R.drawable.launch_icon_bw);
-        }
+        // Note: After lollipop, android requires a certain kind of icon. Therefore,
+        //in app.gradle, targetSDKVersion is set to 20 for now
 
-        // Example of long notification string. Notification should expand to allow longer text. But if this isn't supported
-        // in older versions of Android (like JellyBean), then just short notification
-                //.setContentText("It's good to regularly take the PHQ-9 to monitor yourself for symptoms of depression. Take the quiz now?");
+        mBuilder.setSmallIcon(R.drawable.launch_icon_bw);
         mBuilder.setContentIntent(pi);
         mBuilder.setDefaults(Notification.DEFAULT_SOUND);
         mBuilder.setAutoCancel(true);
