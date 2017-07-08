@@ -25,14 +25,14 @@
         android:id="@+id/startButton"
         android:padding="20dp"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/themeButton"/>
+        android:layout_above="@+id/settingsButton"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/theme_change_button"
+        android:text="@string/settings"
         android:textSize="14sp"
-        android:id="@+id/themeButton"
+        android:id="@+id/settingsButton"
         android:padding="10dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"

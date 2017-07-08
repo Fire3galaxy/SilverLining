@@ -19,7 +19,7 @@ public class IndexActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
 
-        // 3 Buttons: How am I doing, Theme, Notification settings
+        // 2 Buttons: How am I doing,settings
         Button startButton = (Button) findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

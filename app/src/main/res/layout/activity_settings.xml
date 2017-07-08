@@ -4,11 +4,22 @@
     android:orientation="vertical">
 
     <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings"
+        android:textSize="40sp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/change_notification_setting"
         android:textSize="23sp"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_gravity="center_horizontal"
         android:id="@+id/change_notification_text"
         />
@@ -16,7 +27,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent">
+        android:layout_width="fill_parent"
+        android:layout_marginBottom="40dp">
 
         <Spinner
             android:id="@+id/notification_spinner"
@@ -25,7 +37,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="15dp"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
             android:textSize="30sp"
             android:textColor="@color/black"
             android:layout_gravity="center_horizontal"/>
@@ -35,7 +46,6 @@
             android:layout_height="40dp"
             android:layout_width = "wrap_content"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="0dp"
             android:textSize="14sp"
             android:text ="OK"
             android:textColor ="@color/black"
@@ -44,14 +54,12 @@
     </LinearLayout>
 
 
-
-
     <TextView
         android:layout_marginTop="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/theme_change_button"
-        android:textSize="25sp"
+        android:textSize="23sp"
         android:layout_margin="10dp"
         android:layout_gravity="center_horizontal"/>
 
@@ -67,7 +75,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="15dp"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
             android:textSize="30sp"
             android:textColor="@color/black"
             android:layout_gravity="center_horizontal"/>
