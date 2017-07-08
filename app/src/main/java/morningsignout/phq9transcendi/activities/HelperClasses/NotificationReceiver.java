@@ -38,7 +38,6 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             restartAlarm(context);
-
         } else {
             showNotification(context);
         }
@@ -155,14 +154,14 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         Intent intent = new Intent(context, LaunchScreenActivity.class);
         PendingIntent pi = PendingIntent.getActivity(context, reqCode, intent, 0);
-        String message = "Would you like to take the PHQ-9 quiz?";
-        String message2 = "It's good to regularly take the PHQ-9 to monitor yourself for symptoms of depression. Take the quiz now?";
+        String shortmessage = "Would you like to take the PHQ-9 quiz?";
+        String longmessage = "It's good to regularly take the PHQ-9 to monitor yourself for symptoms of depression. Take the quiz now?";
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.launch_icon_bw)
                 .setContentTitle("Silver Lining")
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(message2))
-                .setContentText(message2);
+                        .bigText(longmessage))
+                .setContentText(longmessage);
 
         // Note: After lollipop, android requires a certain kind of icon. Therefore,
         //in app.gradle, targetSDKVersion is set to 20 for now

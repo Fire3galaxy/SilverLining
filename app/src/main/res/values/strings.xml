@@ -308,4 +308,10 @@
         <item>tester</item>
     </string-array>
 
+    <!-- Themes settings -->
+    <string-array name="themes_array">
+        <item>Ice</item>
+        <item>Cashmere</item>
+
+    </string-array>
 </resources>

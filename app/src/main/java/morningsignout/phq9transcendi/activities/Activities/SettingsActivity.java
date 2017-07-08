@@ -69,11 +69,43 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         // --- SET UP THEMES SETTINGS ---
-        contents = (ListView)findViewById(R.id.Contents);
+/*        contents = (ListView)findViewById(R.id.Contents);
         contents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 Utils.SaveTheme("theme", position, SettingsActivity.this);
+                Utils.changeToTheme(SettingsActivity.this);
+                updateThemePref();
+            }
+        });
+*/
+
+        final Spinner themes_spinner = (Spinner) findViewById(R.id.themes_spinner);
+        ArrayAdapter<CharSequence> themesadapter = ArrayAdapter.createFromResource(this,
+                R.array.themes_array, android.R.layout.simple_spinner_item);
+        themesadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        themes_spinner.setAdapter(themesadapter);
+
+        //set the default spinner text to the saved preferences
+        int savedTheme = prefs.getInt("theme", 0);
+        if (savedTheme != 0) { //now change spinner
+            themes_spinner.setSelection(savedTheme);
+        }
+
+        //Set up notification Button and button listener (ok)
+        Button themes_button = (Button) findViewById(R.id.themes_button);
+        themes_button.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int theme = themes_spinner.getSelectedItemPosition();
+
+                //store theme
+                SharedPreferences.Editor editor = context.getSharedPreferences(NOTIF_PREF, MODE_PRIVATE).edit();
+                editor.putInt("theme", theme);
+                editor.apply();
+
+                //Set the theme
+                Utils.SaveTheme("theme", theme, SettingsActivity.this);
                 Utils.changeToTheme(SettingsActivity.this);
                 updateThemePref();
             }
@@ -84,7 +116,7 @@ public class SettingsActivity extends AppCompatActivity {
         themeCustomAdapter = new ThemesAdapter(this);
 
         //Set the Adapter
-        contents.setAdapter(themeCustomAdapter);
+        //contents.setAdapter(themeCustomAdapter);
     }
 
 

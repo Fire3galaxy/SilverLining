@@ -44,6 +44,8 @@
     </LinearLayout>
 
 
+
+
     <TextView
         android:layout_marginTop="40dp"
         android:layout_width="wrap_content"
@@ -53,12 +55,43 @@
         android:layout_margin="10dp"
         android:layout_gravity="center_horizontal"/>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent">
+
+        <Spinner
+            android:id="@+id/themes_spinner"
+            android:layout_width="fill_parent"
+            android:layout_weight = "1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="15dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:id="@+id/themes_button"
+            android:layout_height="40dp"
+            android:layout_width = "wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="0dp"
+            android:textSize="14sp"
+            android:text ="OK"
+            android:textColor ="@color/black"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+<!--
     <ListView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:id="@+id/Contents"
         android:layout_gravity="center_horizontal"/>
-
+-->
 
 </LinearLayout>
