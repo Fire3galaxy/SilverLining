@@ -14,6 +14,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFffffff</color>
     <color name="launch_blue">#ffd2ffee</color>
+    <color name="icon_blue">#ff74b1e0</color>
 
     <!-- ICE THEME -->
     <color name="downy">#66cccc</color>
