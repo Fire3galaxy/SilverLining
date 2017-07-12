@@ -158,7 +158,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         String longmessage = "It's good to regularly take the PHQ-9 to monitor yourself for symptoms of depression. Take the quiz now?";
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.launch_icon_bw)
-                .setContentTitle("Silver Lining")
+                .setContentTitle("Silver Lining Reminder")
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(longmessage))
                 .setContentText(longmessage);
