@@ -141,7 +141,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 break;
             case 3: //tester
                 cancelAlarm(context, false, true);
-                setAlarm(context, 1000*30, timeSet);
+                setAlarm(context, 1000*5, timeSet);
                 break;
             default:
                 break;
@@ -157,8 +157,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         String shortmessage = "Would you like to take the PHQ-9 quiz?";
         String longmessage = "It's good to regularly take the PHQ-9 to monitor yourself for symptoms of depression. Take the quiz now?";
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.launch_icon_bw)
-                .setContentTitle("Silver Lining")
+                .setContentTitle("Silver Lining Reminder")
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(longmessage))
                 .setContentText(longmessage);
@@ -166,7 +165,8 @@ public class NotificationReceiver extends BroadcastReceiver {
         // Note: After lollipop, android requires a certain kind of icon. Therefore,
         //in app.gradle, targetSDKVersion is set to 20 for now
 
-        mBuilder.setSmallIcon(R.drawable.launch_icon_bw);
+        mBuilder.setSmallIcon(R.drawable.statusbar_icon);
+        mBuilder.setColor(context.getResources().getColor(R.color.icon_blue, null));
         mBuilder.setContentIntent(pi);
         mBuilder.setDefaults(Notification.DEFAULT_SOUND);
         mBuilder.setAutoCancel(true);

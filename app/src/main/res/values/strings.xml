@@ -1,9 +1,7 @@
 ﻿<resources>
     <string name="app_name">Silver Lining</string>
 
-    <!--Activity names/test code-->
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <!--Activity names-->
     <string name="quiz_activity">Quiz</string>
     <string name="resource_activity">Resources</string>
     <string name="reference_activity">References</string>
@@ -12,35 +10,45 @@
     <string name="demographics_activity">Demographics</string>
     <string name="results_activity">Results</string>
 
-    <!--XML Layout strings-->
-    <string name="main_menu_text">PHQ9 Transcendi Quiz Beta</string>
+    <!--XML Layout strings, by activity-->
     <string name="main_start_quiz">How am I doing?</string>
     <string name="resources_button">Resources</string>
     <string name="references_button">References</string>
+    <string name="settings">Settings</string>
+
+    <string name="ok_button">OK</string>
     <string name="theme_change_button">Change Theme</string>
+    <string name="change_notification_setting">Change Notification Frequency</string>
+
     <string name="quiz_start">Get Started!</string>
+
     <string name="demo_continue">Share a little about myself</string>
     <string name="demo_skip">No thanks, maybe next time</string>
 
     <string name="demo_start_quiz">Start Quiz</string>
-    <string name="description_previous">Previous question</string>
-    <string name="description_next">Next question</string>
-    <string name="description_white_border">White border between buttons and questionnaire</string>
-    <string name="description_score_fan">Green fan-shaped background for score</string>
+
     <string name="all_done">You\'re all done!\n\nYour score is %1$d.</string>
     <string name="all_done_land">You\'re all done!\nYour score is %1$d.</string>
     <string name="red_flag_text">There were also some red flag symptoms</string>
     <string name="what_does_it_mean">What does that all mean?</string>
+
     <string name="finish_up">Finish Up</string>
+
     <string name="take_me_home">Take me home</string>
-    <string name="return_to_home">Return to home</string>
     <string name="feedback">Provide Feedback?</string>
+
+    <string name="return_to_home">Return to home</string>
+
+    <!--content descriptions for imageViews-->
+    <string name="description_previous">Previous question</string>
+    <string name="description_next">Next question</string>
+    <string name="description_white_border">White border between buttons and questionnaire</string>
+    <string name="description_score_fan">Green fan-shaped background for score</string>
 
     <!-- Resources and References -->
     <string name="resource1">We\'ve prepared some resources for people who want to learn more
         about depression</string>
     <string name="resource2">Find them here!</string>
-
     <string name="resource_sub">Latest mental health news</string>
 
     <string-array name="resource_array">
@@ -290,10 +298,6 @@
         Also, if you found this app helpful, tell others about it! We hope to make life better on
         campuses one mind at a time.\n\n</string>
 
-    <string name="title_activity_index">IndexActivity</string>
-    <string name="title_activity_new_user">NewUserActivity</string>
-    <string name="change_notification_setting">Change Notification Frequency</string>
-    <string name ="settings">Settings</string>
     <!--Themes-->
     <string-array name="themes">
         <item>Ice</item>
