@@ -21,13 +21,6 @@ public class AboutUsActivity extends AppCompatActivity {
         Utils.onActivityCreateSetTheme(this, Utils.GetTheme(this));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
-
-        Button mainMenuButton = (Button) findViewById(R.id.button_mainMenu);
-        mainMenuButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
     }
 
     @Override
