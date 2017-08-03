@@ -8,8 +8,8 @@ android {
         applicationId "morningsignout.phq9transcendi"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 5
-        versionName "1.4"
+        versionCode 11
+        versionName "1.5"
         multiDexEnabled true
     }
     buildTypes {

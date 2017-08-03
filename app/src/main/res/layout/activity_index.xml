@@ -26,6 +26,7 @@
         android:layout_marginTop="0dp"
         android:id="@+id/index_space"/>
 
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="75dp"
@@ -36,19 +37,34 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/index_space" />
+        android:layout_above="@+id/settingsButton"/>
+
 
 
     <Button
-        android:id="@+id/settingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/startButton"
-        android:layout_marginTop = "25dp"
-        android:padding ="10dp"
-        android:layout_centerHorizontal="true"
-        android:textSize = "14sp"
         android:text="@string/settings"
-        />
+        android:textSize="14sp"
+        android:id="@+id/settingsButton"
+        android:padding="10dp"
+        android:layout_marginTop="25dp"
+        android:layout_above="@+id/aboutUsButton"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/about_us_button"
+        android:textSize="14sp"
+        android:id="@+id/aboutUsButton"
+        android:padding="10dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"/>
+     />
+
 
 </RelativeLayout>
+
