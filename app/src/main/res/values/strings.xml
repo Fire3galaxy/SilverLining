@@ -1,54 +1,58 @@
-﻿<resources>
+﻿<?xml version="1.0" encoding="utf-8"?>﻿
+<resources>
     <string name="app_name">Silver Lining</string>
 
-    <!--Activity names-->
+    <!--Activity names/test code-->
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
     <string name="quiz_activity">Quiz</string>
     <string name="resource_activity">Resources</string>
-    <string name="reference_activity">References</string>
+    <string name="themes_activity">Themes</string>
+    <string name="about_us_activity">About Us</string>
     <string name="quizintro_activity">Introduction</string>
     <string name="demographics_intro_activity">Demographics</string>
     <string name="demographics_activity">Demographics</string>
     <string name="results_activity">Results</string>
 
-    <!--XML Layout strings, by activity-->
+    <!--XML Layout strings-->
+    <string name="main_menu_text">PHQ9 Transcendi Quiz Beta</string>
     <string name="main_start_quiz">How am I doing?</string>
     <string name="resources_button">Resources</string>
     <string name="references_button">References</string>
-    <string name="settings">Settings</string>
-
-    <string name="ok_button">OK</string>
-    <string name="theme_change_button">Change Theme</string>
-    <string name="change_notification_setting">Change Notification Frequency</string>
-
+    <string name="theme_change_button">Customize App</string>
+    <string name="about_us_button">About Us</string>
+    <string name="about_health_tool">A mental health tool</string>
+    <string name="about_us_paragraph">Silver Lining is an application from Morning Sign Out at
+        morningsignout.com and its development team, Transcendi. Our application is intended to give
+        you a starting place for dealing with depression by providing you a basic understanding of
+        your symptoms. If you have any feedback, concerns, or advice, please email us at
+        morningsignoutdevs@gmail.com with the subject line <i>Silver Lining Android
+        Feedback</i> so that we can improve the resources we offer to your school.</string>
+    <string name="about_disclaimer">Disclaimer: This app is meant for educational use only, and is
+        not intended for clinical or diagnostic use.</string>
     <string name="quiz_start">Get Started!</string>
-
     <string name="demo_continue">Share a little about myself</string>
     <string name="demo_skip">No thanks, maybe next time</string>
 
     <string name="demo_start_quiz">Start Quiz</string>
-
-    <string name="all_done">You\'re all done!\n\nYour score is %1$d.</string>
-    <string name="all_done_land">You\'re all done!\nYour score is %1$d.</string>
-    <string name="red_flag_text">There were also some red flag symptoms</string>
-    <string name="what_does_it_mean">What does that all mean?</string>
-
-    <string name="finish_up">Finish Up</string>
-    <string name ="email_results">Email Results</string>
-    <string name="take_me_home">Take me home</string>
-    <string name="feedback">Provide Feedback?</string>
-
-    <string name="return_to_home">Return to home</string>
-
-    <!--content descriptions for imageViews-->
     <string name="description_previous">Previous question</string>
     <string name="description_next">Next question</string>
     <string name="description_white_border">White border between buttons and questionnaire</string>
     <string name="description_score_fan">Green fan-shaped background for score</string>
+    <string name="all_done">You\'re all done!\n\nYour score is %1$d.</string>
+    <string name="all_done_land">You\'re all done!\nYour score is %1$d.</string>
+    <string name="red_flag_text">There were also some red flag symptoms</string>
+    <string name="what_does_it_mean">What does that all mean?</string>
+    <string name="finish_up">Finish Up</string>
+    <string name="take_me_home">Take me home</string>
+    <string name="return_to_home">Return to home</string>
+    <string name="feedback">Provide Feedback?</string>
 
     <!-- Resources and References -->
     <string name="resource1">We\'ve prepared some resources for people who want to learn more
         about depression</string>
     <string name="resource2">Find them here!</string>
+
     <string name="resource_sub">Latest mental health news</string>
 
     <string-array name="resource_array">
@@ -222,14 +226,14 @@
         <item>@string/answer_somewhat</item>
         <item>@string/answer_very_understanding</item>
     </string-array>
-
+    
     <string-array name="answers_situation">
         <item>@string/answer_not_much</item>
         <item>@string/answer_a_little</item>
         <item>@string/answer_somewhat</item>
         <item>@string/answer_a_lot</item>
     </string-array>
-
+    
     <string-array name="answers_appointment">
         <item>@string/answer_hard_time</item>
         <item>@string/answer_can_see</item>
@@ -290,7 +294,7 @@
             Make an appointment to see a physician as soon as possible. This will get you started
             on the path to feeling 100% again.</item>
     </string-array>
-
+    
     <string name="wrap_up_text">We have some resources that we think may be valuable for people
         interested in learning about depression.\n\n
         It\'s worthwhile to examine your score from time to time as depression symptoms fluctuate
@@ -298,24 +302,15 @@
         Also, if you found this app helpful, tell others about it! We hope to make life better on
         campuses one mind at a time.\n\n</string>
 
+    <string name="title_activity_index">IndexActivity</string>
+    <string name="title_activity_new_user">NewUserActivity</string>
+    <string name="settings">Settings</string>
+    <string name= "email_results">Email the results</string>
     <!--Themes-->
-    <string-array name="themes">
+    <string-array name ="themes">
         <item>Ice</item>
         <item>Cashmere</item>
     </string-array>
 
-    <!--Notification Settings -->
-    <string-array name="notifications_array">
-        <item>No reminder</item>
-        <item>Weekly</item>
-        <item>Biweekly</item>
-        <item>tester</item>
-    </string-array>
-
-    <!-- Themes settings -->
-    <string-array name="themes_array">
-        <item>Ice</item>
-        <item>Cashmere</item>
-
-    </string-array>
 </resources>
+

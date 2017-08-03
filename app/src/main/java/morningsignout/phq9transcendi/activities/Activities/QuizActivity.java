@@ -363,7 +363,6 @@ public class QuizActivity extends AppCompatActivity
     // Uploads score data to Firebase. If no user ID exists, creates and stores one
     private void uploadToDatabase() {
         gpsLock.lock();
-        // FIXME: upload scores to database
         scores.uploadDataToDatabase(startTimestamp, endTimestamp, latitude, longitude);
         gpsLock.unlock();
     }

@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "morningsignout.phq9transcendi"
         minSdkVersion 15
-        targetSdkVersion 20
+        targetSdkVersion 25
         versionCode 5
         versionName "1.4"
         multiDexEnabled true
@@ -26,7 +26,10 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    //    compile 'com.firebase:firebase-client-android:2.5.2+'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+//    compile 'com.firebase:firebase-client-android:2.5.2+'
     //    compile 'com.google.android.gms:play-services-ads:9.2.0'
     //    compile 'com.google.android.gms:play-services-auth:9.4.0'
     //    compile 'com.google.android.gms:play-services-gcm:9.4.0'
@@ -34,20 +37,10 @@ dependencies {
 //        exclude group: 'com.google.firebase', module: 'firebase-common'
 //    }
 //    compile 'com.android.support:multidex:1.0.1'
-    // For loading custom fonts everywhere
-    // For authenticating
-    // For the database
-    // For GPS location services
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'  // For loading custom fonts everywhere
     compile 'me.grantland:autofittextview:0.2.1'
-    compile 'com.google.firebase:firebase-auth:10.2.6'
-    compile 'com.google.firebase:firebase-database:10.2.6'
-    compile 'com.google.android.gms:play-services-location:10.2.6'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.google.firebase:firebase-auth:10.2.6'      // For authenticating
+    compile 'com.google.firebase:firebase-database:10.2.6'  // For the database
+    compile 'com.google.android.gms:play-services-location:10.2.6' // For GPS location services
 }
 
-
-apply plugin: 'com.google.gms.google-services'
