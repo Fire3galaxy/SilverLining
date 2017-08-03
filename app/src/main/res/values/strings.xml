@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>﻿
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Silver Lining</string>
 
@@ -65,6 +65,14 @@
         <item>Latest mental health news</item>
         <item>What is PHQ-9</item>
         <item>Contact Us</item>
+    </string-array>
+
+    <!--Notification Settings -->
+    <string-array name="notifications_array">
+        <item>No reminder</item>
+        <item>Weekly</item>
+        <item>Biweekly</item>
+        <item>tester</item>
     </string-array>
 
     <!--Quiz introduction-->
@@ -315,4 +323,3 @@
     <string name="ok_button">OK</string>
 
 </resources>
-

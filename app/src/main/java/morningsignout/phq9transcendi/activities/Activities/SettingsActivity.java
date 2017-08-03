@@ -82,7 +82,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         final Spinner themes_spinner = (Spinner) findViewById(R.id.themes_spinner);
         ArrayAdapter<CharSequence> themesadapter = ArrayAdapter.createFromResource(this,
-                R.array.themes_array, android.R.layout.simple_spinner_item);
+                R.array.themes, android.R.layout.simple_spinner_item);
         themesadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         themes_spinner.setAdapter(themesadapter);
 

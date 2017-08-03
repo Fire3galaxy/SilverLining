@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -41,70 +40,4 @@
         android:layout_marginStart="30dp"
         android:layout_marginBottom="30dp"
         android:layout_alignParentBottom="true"/>
-=======
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.Activities.IndexActivity"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/theme_change_button"
-                android:textSize="14sp"
-                android:id="@+id/themeButton"
-                android:padding="10dp"
-                android:layout_marginBottom="25dp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="75dp"
-                android:text="@string/main_start_quiz"
-                android:textSize="20sp"
-                android:id="@+id/startButton"
-                android:padding="20dp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/about_us_button"
-                android:textSize="14sp"
-                android:id="@+id/aboutUsButton"
-                android:padding="10dp"
-                android:layout_marginTop="25dp" />
-        </LinearLayout>
-    </LinearLayout>
->>>>>>> c69bb181614b58e9ffe6f1db83963feb20587c51
 </RelativeLayout>
