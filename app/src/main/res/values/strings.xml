@@ -311,6 +311,8 @@
         <item>Ice</item>
         <item>Cashmere</item>
     </string-array>
+    <string name="change_notification_setting">Change Notification Setting</string>
+    <string name="ok_button">OK</string>
 
 </resources>
 
