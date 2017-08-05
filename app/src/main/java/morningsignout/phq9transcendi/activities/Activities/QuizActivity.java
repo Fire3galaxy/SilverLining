@@ -11,7 +11,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.content.res.Resources;
-import android.location.Location;
+//import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,7 +30,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
+//import com.google.android.gms.location.LocationServices;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -78,7 +78,7 @@ public class QuizActivity extends AppCompatActivity
     private boolean isFirstTimeFlag;                // Used in onCreate() and onStart() for continue dialog
                                                     // Note: Currently not using "continue" feature except for saving state
     private AlertDialog.Builder dialogBuilder;      // To confirm user wants to quit
-    private GoogleApiClient mGoogleApiClient;
+//    private GoogleApiClient mGoogleApiClient;
     private ReentrantLock gpsLock = new ReentrantLock();
 
     @Override
@@ -89,13 +89,13 @@ public class QuizActivity extends AppCompatActivity
         Utils.onActivityCreateSetTheme(this, theme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        if (mGoogleApiClient == null) { // Create an instance of GoogleAPIClient.
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-        }
+//        if (mGoogleApiClient == null) { // Create an instance of GoogleAPIClient.
+//            mGoogleApiClient = new GoogleApiClient.Builder(this)
+//                    .addConnectionCallbacks(this)
+//                    .addOnConnectionFailedListener(this)
+//                    .addApi(LocationServices.API)
+//                    .build();
+//        }
 
         Resources res = getResources();
         isFirstTimeFlag = (savedInstanceState == null);
@@ -192,13 +192,13 @@ public class QuizActivity extends AppCompatActivity
 
     @Override
     protected void onStart() {
-        mGoogleApiClient.connect();
+//        mGoogleApiClient.connect();
         super.onStart();
     }
 
     @Override
     protected void onStop() {
-        mGoogleApiClient.disconnect();
+//        mGoogleApiClient.disconnect();
         super.onStop();
     }
 
@@ -425,25 +425,26 @@ public class QuizActivity extends AppCompatActivity
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            // Same thing with onConnectionFailed. We're not asking for location permission for now
-            //Log.e("QuizActivity", "Not given permission to access location");
-
-            return;
-        }
-
-        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (location != null) {
-            // Race condition between callback and access in uploadToDatabase()
-            gpsLock.lock();
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-            //Log.d("QuizActivity", latitude + " " + longitude);
-            gpsLock.unlock();
-        }
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+//                != PackageManager.PERMISSION_GRANTED
+//                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            // Same thing with onConnectionFailed. We're not asking for location permission for now
+//            //Log.e("QuizActivity", "Not given permission to access location");
+//
+//            return;
+//        }
+//
+//        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+//        if (location != null) {
+//            // Race condition between callback and access in uploadToDatabase()
+//            gpsLock.lock();
+//            latitude = location.getLatitude();
+//            longitude = location.getLongitude();
+//            //Log.d("QuizActivity", latitude + " " + longitude);
+//            gpsLock.unlock();
+//        }
+        return; // removing GPS location code as per discussion with Daniel
     }
 
     @Override

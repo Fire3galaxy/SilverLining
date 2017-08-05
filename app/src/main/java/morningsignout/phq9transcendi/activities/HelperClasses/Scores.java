@@ -196,8 +196,10 @@ public class Scores {
                 scores.put(categoryNames[i], getCategoryScore(i));
 
             testRef.child("timestamp").setValue(endTime);
-            testRef.child("latitude").setValue(latitude);
-            testRef.child("longitude").setValue(longitude);
+//            testRef.child("latitude").setValue(latitude); // removing locational data
+            testRef.child("latitude").setValue(0.0);        // as per discussion with Daniel
+//            testRef.child("longitude").setValue(longitude);
+            testRef.child("longitude").setValue(0.0);
             testRef.child("userID").setValue(user.getUid());
             testRef.child("answers").setValue(answers);
             testRef.child("scores").setValue(scores);
