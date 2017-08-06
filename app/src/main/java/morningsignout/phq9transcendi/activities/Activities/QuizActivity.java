@@ -79,7 +79,7 @@ public class QuizActivity extends AppCompatActivity
                                                     // Note: Currently not using "continue" feature except for saving state
     private AlertDialog.Builder dialogBuilder;      // To confirm user wants to quit
 //    private GoogleApiClient mGoogleApiClient;
-    private ReentrantLock gpsLock = new ReentrantLock();
+//    private ReentrantLock gpsLock = new ReentrantLock();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -362,10 +362,11 @@ public class QuizActivity extends AppCompatActivity
 
     // Uploads score data to Firebase. If no user ID exists, creates and stores one
     private void uploadToDatabase() {
-        gpsLock.lock();
+//        gpsLock.lock();
         // FIXME: upload scores to database
-        scores.uploadDataToDatabase(startTimestamp, endTimestamp, latitude, longitude);
-        gpsLock.unlock();
+//        scores.uploadDataToDatabase(startTimestamp, endTimestamp, latitude, longitude);
+        scores.uploadDataToDatabase(startTimestamp, endTimestamp);
+//        gpsLock.unlock();
     }
 
     // Which view was clicked: arrows (nextArrow/prevArrow) or buttons (yes/no)

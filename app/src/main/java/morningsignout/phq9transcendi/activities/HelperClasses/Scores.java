@@ -173,8 +173,9 @@ public class Scores {
         return max;
     }
 
-    public void uploadDataToDatabase(String startTime, String endTime,
-                                        double latitude, double longitude) {
+//    public void uploadDataToDatabase(String startTime, String endTime,
+//                                        double latitude, double longitude) {
+    public void uploadDataToDatabase(String startTime, String endTime) {
         FirebaseUser user = FirebaseAuth.getInstance(PHQApplication.getFirebaseAppInstance()).getCurrentUser();
 
         if(user != null) {
