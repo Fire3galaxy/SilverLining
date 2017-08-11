@@ -1,6 +1,5 @@
 package morningsignout.phq9transcendi.activities.HelperClasses;
 
-import android.util.Log;
 import android.util.Pair;
 
 import com.google.firebase.auth.FirebaseAuth;

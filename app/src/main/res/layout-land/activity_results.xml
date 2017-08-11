@@ -143,7 +143,5 @@
         android:layout_width="0px"
         android:layout_height="0px"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/spacer" />
-
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

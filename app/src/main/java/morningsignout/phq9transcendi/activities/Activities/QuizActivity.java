@@ -1,24 +1,17 @@
 package morningsignout.phq9transcendi.activities.Activities;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.content.res.Resources;
-//import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
@@ -28,16 +21,10 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-//import com.google.android.gms.location.LocationServices;
-
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.locks.ReentrantLock;
 
 import morningsignout.phq9transcendi.R;
-import morningsignout.phq9transcendi.activities.HelperClasses.FirebaseExtras;
 import morningsignout.phq9transcendi.activities.HelperClasses.QuestionData;
 import morningsignout.phq9transcendi.activities.HelperClasses.Scores;
 import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
@@ -79,8 +66,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //Log.d("QuizActivity", "In onCreate");
-
         int theme = Utils.GetTheme(this);
         Utils.onActivityCreateSetTheme(this, theme);
         super.onCreate(savedInstanceState);

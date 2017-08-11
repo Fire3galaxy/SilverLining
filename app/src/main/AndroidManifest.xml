@@ -28,8 +28,8 @@
             android:name=".activities.Activities.IndexActivity"
             android:label="@string/app_name"></activity>
         <activity
-            android:name=".activities.Activities.ThemesActivity"
-            android:label="@string/reference_activity" />
+            android:name=".activities.Activities.AboutUsActivity"
+            android:label="@string/about_us_activity" />
         <activity
             android:name=".activities.Activities.QuizIntroActivity"
             android:label="@string/quizintro_activity" />
@@ -64,5 +64,6 @@
             android:value="@integer/google_play_services_version" />
 
     </application>
+
 
 </manifest>
