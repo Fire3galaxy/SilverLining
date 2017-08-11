@@ -66,7 +66,7 @@ public class SettingsActivity extends AppCompatActivity {
         themes_spinner.setAdapter(themesadapter);
 
         //set the default spinner text to the saved preferences
-        int savedTheme = prefs.getInt(Utils.THEME, 0);
+        int savedTheme = Utils.GetTheme(this);
         if (savedTheme != 0) { //now change spinner
             themes_spinner.setSelection(savedTheme);
         }

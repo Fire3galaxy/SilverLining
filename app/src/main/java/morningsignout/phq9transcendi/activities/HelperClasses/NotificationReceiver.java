@@ -155,7 +155,6 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         Intent intent = new Intent(context, LaunchScreenActivity.class);
         PendingIntent pi = PendingIntent.getActivity(context, reqCode, intent, 0);
-        String shortmessage = "Would you like to take the PHQ-9 quiz?";
         String longmessage = "It's good to regularly take the PHQ-9 to monitor yourself for symptoms of depression. Take the quiz now?";
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setContentTitle("Silver Lining Reminder")
