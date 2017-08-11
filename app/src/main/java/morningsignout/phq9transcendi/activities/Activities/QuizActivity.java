@@ -48,8 +48,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 /* What to update when question is added: If new answer type is added, add string array to
  * QuestionData allAnswers in constructor
  */
-public class QuizActivity extends AppCompatActivity
-        implements ImageButton.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class QuizActivity extends AppCompatActivity implements ImageButton.OnClickListener {
     private static final String LOG_NAME = "QuizActivity";
     private static final String SAVE_TIMESTAMP = "Timestamp", SAVE_QUESTION_NUM = "Question Number",
         SAVE_SCORES_A = "Score Values", SAVE_SCORES_B = "Visit values";
@@ -71,15 +70,12 @@ public class QuizActivity extends AppCompatActivity
     int currentSeekbarChoice;
     int currentButtonChoice;
     private String startTimestamp, endTimestamp;
-    private double latitude = 0, longitude = 0;
     private Scores scores;                          // Used for keeping track of score
     private int questionNumber;                     // Which question the user is on (zero-based)
     private boolean isFinishingFlag;                // Used in onPause() to save/not save
     private boolean isFirstTimeFlag;                // Used in onCreate() and onStart() for continue dialog
                                                     // Note: Currently not using "continue" feature except for saving state
     private AlertDialog.Builder dialogBuilder;      // To confirm user wants to quit
-//    private GoogleApiClient mGoogleApiClient;
-//    private ReentrantLock gpsLock = new ReentrantLock();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,13 +85,6 @@ public class QuizActivity extends AppCompatActivity
         Utils.onActivityCreateSetTheme(this, theme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-//        if (mGoogleApiClient == null) { // Create an instance of GoogleAPIClient.
-//            mGoogleApiClient = new GoogleApiClient.Builder(this)
-//                    .addConnectionCallbacks(this)
-//                    .addOnConnectionFailedListener(this)
-//                    .addApi(LocationServices.API)
-//                    .build();
-//        }
 
         Resources res = getResources();
         isFirstTimeFlag = (savedInstanceState == null);
@@ -191,18 +180,6 @@ public class QuizActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onStart() {
-//        mGoogleApiClient.connect();
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-//        mGoogleApiClient.disconnect();
-        super.onStop();
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
 
@@ -216,14 +193,12 @@ public class QuizActivity extends AppCompatActivity
             editor.putString(SAVE_SCORES_A, scoreState.first);
             editor.putString(SAVE_SCORES_B, scoreState.second);
             editor.apply();
-//            Log.d(LOG_NAME, "Saving!");
         }
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-//        Log.d("QuizActivity", "restoring state");
 
         // Reinitialize state variables
         SharedPreferences preferences = getPreferences(0);
@@ -233,12 +208,6 @@ public class QuizActivity extends AppCompatActivity
             String scoresA = preferences.getString(SAVE_SCORES_A, null);
             String scoresB = preferences.getString(SAVE_SCORES_B, null);
             scores = new Scores(scoresA, scoresB);
-
-//            Log.d(LOG_NAME, String.valueOf(startTimestamp));
-//            Log.d(LOG_NAME, String.valueOf(questionNumber));
-//            Log.d(LOG_NAME, String.valueOf(scoresA));
-//            Log.d(LOG_NAME, String.valueOf(scoresB));
-//            scores.getFinalScore();
 
             setQuestion(questionNumber);    // Everything is set up, start quiz
         }
@@ -336,13 +305,10 @@ public class QuizActivity extends AppCompatActivity
     }
 
     private void changeAnswerText(int answerIndex) {
-//        Log.d("QuizActivity", String.valueOf(toInterference));
         String[] newText = allAnswers.answerChoices[answerIndex];
 
         if (QuestionData.USES_SLIDER[questionNumber]) {
             if (answerIndex != currentSeekbarChoice) {
-//            Log.d("QuizActivity", "" + currentSeekbarChoice);
-
                 answerSliderWrapper.setAnswers(newText);
                 currentSeekbarChoice = answerIndex;
             }
@@ -362,11 +328,7 @@ public class QuizActivity extends AppCompatActivity
 
     // Uploads score data to Firebase. If no user ID exists, creates and stores one
     private void uploadToDatabase() {
-//        gpsLock.lock();
-        // FIXME: upload scores to database
-//        scores.uploadDataToDatabase(startTimestamp, endTimestamp, latitude, longitude);
         scores.uploadDataToDatabase(startTimestamp, endTimestamp);
-//        gpsLock.unlock();
     }
 
     // Which view was clicked: arrows (nextArrow/prevArrow) or buttons (yes/no)
@@ -422,39 +384,5 @@ public class QuizActivity extends AppCompatActivity
         editor.remove(SAVE_SCORES_A);
         editor.remove(SAVE_SCORES_B);
         editor.apply();
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-//                != PackageManager.PERMISSION_GRANTED
-//                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            // Same thing with onConnectionFailed. We're not asking for location permission for now
-//            //Log.e("QuizActivity", "Not given permission to access location");
-//
-//            return;
-//        }
-//
-//        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-//        if (location != null) {
-//            // Race condition between callback and access in uploadToDatabase()
-//            gpsLock.lock();
-//            latitude = location.getLatitude();
-//            longitude = location.getLongitude();
-//            //Log.d("QuizActivity", latitude + " " + longitude);
-//            gpsLock.unlock();
-//        }
-        return; // removing GPS location code as per discussion with Daniel
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.e("QuizActivity", "Failed to connect to google play services");
     }
 }

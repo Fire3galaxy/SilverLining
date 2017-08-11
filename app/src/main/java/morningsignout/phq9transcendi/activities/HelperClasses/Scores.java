@@ -151,8 +151,6 @@ public class Scores {
             if (scoreDictionary.get(questions[i]) >= redFlagThreshold[redFlagNum])
                 return true;
 
-        //Log.d("Scores", "---------------------------------------");
-
         return false;
     }
 
@@ -173,8 +171,6 @@ public class Scores {
         return max;
     }
 
-//    public void uploadDataToDatabase(String startTime, String endTime,
-//                                        double latitude, double longitude) {
     public void uploadDataToDatabase(String startTime, String endTime) {
         FirebaseUser user = FirebaseAuth.getInstance(PHQApplication.getFirebaseAppInstance()).getCurrentUser();
 
@@ -197,10 +193,6 @@ public class Scores {
                 scores.put(categoryNames[i], getCategoryScore(i));
 
             testRef.child("timestamp").setValue(endTime);
-//            testRef.child("latitude").setValue(latitude); // removing locational data
-            testRef.child("latitude").setValue(0.0);        // as per discussion with Daniel
-//            testRef.child("longitude").setValue(longitude);
-            testRef.child("longitude").setValue(0.0);
             testRef.child("userID").setValue(user.getUid());
             testRef.child("answers").setValue(answers);
             testRef.child("scores").setValue(scores);
@@ -213,9 +205,8 @@ public class Scores {
 
     private String getScoreString() {
         String score = "";
-        for (String q : questions) {
+        for (String q : questions)
             score += Integer.toString(scoreDictionary.get(q));
-        }
 
         score += "_" + VERSION_OF_ORDER_NUM;
 
@@ -224,9 +215,8 @@ public class Scores {
 
     private String getVisitedString() {
         String visited = "";
-        for (String q : questions) {
+        for (String q : questions)
             visited += questionIsVisited.get(q).compareTo(false);   // Returns 1 or 0 (true/false)
-        }
 
         visited += "_" + VERSION_OF_ORDER_NUM;
 
