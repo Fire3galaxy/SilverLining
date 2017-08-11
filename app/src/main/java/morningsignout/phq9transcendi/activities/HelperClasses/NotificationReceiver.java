@@ -28,6 +28,7 @@ public class NotificationReceiver extends BroadcastReceiver {
     //For notifications
     private static final int ALARM_ID = 3;
     final static String NOTIF_PREF = "Notification_Preferences";
+    public final static String FREQ_PREF = "frequency";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -51,7 +52,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         long timeSet = System.currentTimeMillis();
         //Store preferences for next time
         SharedPreferences.Editor editor = context.getSharedPreferences(NOTIF_PREF, MODE_PRIVATE).edit();
-        editor.putInt("frequency", frequency);
+        editor.putInt(FREQ_PREF, frequency);
         editor.putLong("Time set", timeSet);
         editor.apply();
 
@@ -124,7 +125,7 @@ public class NotificationReceiver extends BroadcastReceiver {
      */
     private static void restartAlarm(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(NOTIF_PREF, Context.MODE_PRIVATE);
-        int frequency = prefs.getInt("frequency", 0);
+        int frequency = prefs.getInt(FREQ_PREF, 0);
         long timeSet = prefs.getLong("Time set",0);
         // it correctly shows what the user chose
         switch (frequency) {

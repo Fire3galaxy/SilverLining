@@ -8,12 +8,9 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -21,7 +18,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.activities.HelperClasses.NotificationReceiver;
-import morningsignout.phq9transcendi.activities.HelperClasses.ThemesAdapter;
 import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
 import morningsignout.phq9transcendi.activities.PHQApplication;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -31,10 +27,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     //For notifications
     final static String NOTIF_PREF = "Notification_Preferences";
-
-    //for themes settings
-    ListView contents;
-    ThemesAdapter themeCustomAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +44,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         //set the default spinner text to the saved preferences
         SharedPreferences prefs = getSharedPreferences(NOTIF_PREF, MODE_PRIVATE);
-        int savedFreq = prefs.getInt("frequency", 0);
+        int savedFreq = prefs.getInt(NotificationReceiver.FREQ_PREF, 0);
         if (savedFreq != 0) { //now change spinner
             notification_spinner.setSelection(savedFreq);
         }
@@ -67,19 +59,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-
-        // --- SET UP THEMES SETTINGS ---
-/*        contents = (ListView)findViewById(R.id.Contents);
-        contents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
-                Utils.SaveTheme("theme", position, SettingsActivity.this);
-                Utils.changeToTheme(SettingsActivity.this);
-                updateThemePref();
-            }
-        });
-*/
-
         final Spinner themes_spinner = (Spinner) findViewById(R.id.themes_spinner);
         ArrayAdapter<CharSequence> themesadapter = ArrayAdapter.createFromResource(this,
                 R.array.themes, android.R.layout.simple_spinner_item);
@@ -87,7 +66,7 @@ public class SettingsActivity extends AppCompatActivity {
         themes_spinner.setAdapter(themesadapter);
 
         //set the default spinner text to the saved preferences
-        int savedTheme = prefs.getInt("theme", 0);
+        int savedTheme = prefs.getInt(Utils.THEME, 0);
         if (savedTheme != 0) { //now change spinner
             themes_spinner.setSelection(savedTheme);
         }
@@ -99,34 +78,18 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int theme = themes_spinner.getSelectedItemPosition();
 
-                //store theme
-                SharedPreferences.Editor editor = context.getSharedPreferences(NOTIF_PREF, MODE_PRIVATE).edit();
-                editor.putInt("theme", theme);
-                editor.apply();
-
                 //Set the theme
-                Utils.SaveTheme("theme", theme, SettingsActivity.this);
+                Utils.SaveTheme(Utils.THEME, theme, SettingsActivity.this);
                 Utils.changeToTheme(SettingsActivity.this);
                 updateThemePref();
             }
         });
-
-
-        // Create the Custom Adapter Object
-        themeCustomAdapter = new ThemesAdapter(this);
-
-        //Set the Adapter
-        //contents.setAdapter(themeCustomAdapter);
     }
-
-
-
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));   // For custom Rubik font
     }
-
 
     @Override
     public void onBackPressed() {
@@ -143,5 +106,4 @@ public class SettingsActivity extends AppCompatActivity {
                 .getReference("users/" + userID + "/themePreference");
         themePref.setValue(Utils.THEME_NAMES[Utils.GetTheme(this)]);
     }
-
 }

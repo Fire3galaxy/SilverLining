@@ -33,6 +33,7 @@ public class IndexActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(IndexActivity.this, SettingsActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -49,14 +50,6 @@ public class IndexActivity extends AppCompatActivity {
     private void beginQuiz() {
         Intent quizIntro = new Intent(this, QuizIntroActivity.class);
         startActivity(quizIntro);
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-
-        // Make both buttons the same width for aesthetic
-        //resourceButton.setWidth(refButton.getMeasuredWidth());
     }
 
     @Override
