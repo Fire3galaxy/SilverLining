@@ -8,6 +8,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -29,10 +30,14 @@ public class Scores {
     // Index where red flag starts
     static private final int RED_FLAG_QUESTION = 16;
 
-    // Keys used in uploading to Firebase (Note: false = a, true = b).
-    static private final String[] firebaseAnswerStrings = {
-            "answer-a", "answer-b", "answer-c", "answer-d", "answer-e"
-    };
+    // Category index that red flags begin (All questions that contribute to score are below red flag)
+    static private final int RED_FLAG_CATEGORY = 9;
+
+    // index constants for email message in results activity
+    static public final int FAMILY_UNDERSTANDS = 21;
+    static public final int FAMILY_SITUATION = 22;
+    static public final int CULTURAL_BACKGROUND = 23;
+    static public final int I_APPOINTMENT = 24;
 
     // Relevant question data variables
     // Using names instead of numbers for FireBase on the off-chance that
@@ -71,7 +76,7 @@ public class Scores {
             0, 0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 9, 9, 9, 10, 11, 12, 13, 14, 15
     };
 
-    // Score value that would trigger a red flag alert
+    // Score value that would trigger a red flag alert (from 0-1)
     private static final int[] redFlagThreshold = {
             1, 1, 1, 1, 1
     };
@@ -98,7 +103,7 @@ public class Scores {
                 savedScore.endsWith(String.valueOf(VERSION_OF_ORDER_NUM)) &&
                 savedVisit.endsWith(String.valueOf(VERSION_OF_ORDER_NUM)))
             for (int i = 0; i < questions.length; i++) {
-                scoreDictionary.put(questions[i], savedScore.charAt(i) - 0x30);     // char to int (0-3)
+                scoreDictionary.put(questions[i], savedScore.charAt(i) - 0x30);     // char to int (0-4)
                 questionIsVisited.put(questions[i], savedVisit.charAt(i) != '0');   // char to bool (0 or 1)
             }
         else
@@ -130,8 +135,7 @@ public class Scores {
 
             // Next category
             if (i + 1 < categoryIndices.length && currentCategory != categoryIndices[i + 1]) {
-                // 9 = red flag, 10+ = research
-                if (currentCategory < 9)
+                if (currentCategory < RED_FLAG_CATEGORY)
                     sum += max;
                 max = 0;
                 currentCategory = categoryIndices[i + 1];
@@ -170,7 +174,7 @@ public class Scores {
         return max;
     }
 
-    public void uploadDataToDatabase(String startTime, String endTime) {
+    public void uploadDataToDatabase(String endTime) {
         FirebaseUser user = FirebaseAuth.getInstance(PHQApplication.getFirebaseAppInstance()).getCurrentUser();
 
         if(user != null) {
@@ -220,5 +224,34 @@ public class Scores {
         visited += "_" + VERSION_OF_ORDER_NUM;
 
         return visited;
+    }
+
+    // Functions below are for emailing results in the results activity
+    public BitSet getRedFlagBits() {
+        BitSet redFlagBitSet = new BitSet(5);
+
+        // Assumes that red flag questions are consecutive
+        int redFlagNum = 0;
+        int end = RED_FLAG_QUESTION + redFlagThreshold.length;
+        for (int i = RED_FLAG_QUESTION; i < end; i++, redFlagNum++)
+            redFlagBitSet.set(redFlagNum,
+                    (scoreDictionary.get(questions[i]) >= redFlagThreshold[redFlagNum]));
+
+        return redFlagBitSet;
+    }
+
+    public BitSet getFamOrCultureBits() {
+        BitSet famOrCultureBits = new BitSet(2);
+        famOrCultureBits.set(0, scoreDictionary.get(questions[FAMILY_SITUATION]) != 0); // convert int to boolean
+        famOrCultureBits.set(1, scoreDictionary.get(questions[CULTURAL_BACKGROUND]) != 0);
+        return famOrCultureBits;
+    }
+
+    public int getFamilyUnderstandsAnswer() {
+        return scoreDictionary.get(questions[FAMILY_UNDERSTANDS]);
+    }
+
+    public int getiAppointmentAnswer() {
+        return scoreDictionary.get(questions[I_APPOINTMENT]);
     }
 }

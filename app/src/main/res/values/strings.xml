@@ -52,7 +52,6 @@
     <string name="resource1">We\'ve prepared some resources for people who want to learn more
         about depression</string>
     <string name="resource2">Find them here!</string>
-
     <string name="resource_sub">Latest mental health news</string>
 
     <string-array name="resource_array">
@@ -72,7 +71,7 @@
         <item>No reminder</item>
         <item>Weekly</item>
         <item>Biweekly</item>
-        <!--<item>tester</item>-->
+        <item>tester</item>
     </string-array>
 
     <!--Quiz introduction-->
@@ -321,5 +320,58 @@
     </string-array>
     <string name="change_notification_setting">Change Notification Setting</string>
     <string name="ok_button">OK</string>
+
+    <!--date, score, scoreEval, red flag, extra 1, extra 2, extra 3-->
+    <string name="email_message">
+        This is a possible email message that you can send to a counselor or therapist. Be sure
+        to add your name to the places indicated in parenthesis like this: "(NAME HERE)". Feel free
+        to edit the message as you see fit and remember to remove this explanation message.
+        \n\nDO NOT REMOVE THE DISCLAIMER AT THE BOTTOM OF THE EMAIL.
+        \n-------------------------------------
+        \n\nTo whom it may concern,
+        \n\nMy name is (NAME HERE). I took a questionnaire from Silver Lining, an application that
+        measures one\'s level of depression, on %1$s. Out of a total score of 27, where 0 indicates
+        no depression and 27 indicates severe depression, I received a %2$d. This result suggests
+        that I have %3$s. %4$s
+        \n\n%5$s%6$sI honestly %7$s myself making an appointment with a therapist or psychiatrist about this.
+        \n\nSilver Lining would like to emphasize that its results are only meant for educational
+        use and that it does not claim to be a clinical or diagnostic tool. However, they do wish
+        to help and provide resources if possible, and they hope that this email can be of some
+        service for you.
+        \n\nAny help you can provide is appreciated.
+        \nSincerely,
+        \n(NAME HERE)
+        \n\n-------------------------------------
+        \nDisclaimer: Silver Lining is meant for educational use only, and is not intended for
+        clinical or diagnostic use.
+    </string>
+    <string name="email_red_flag_1">\n\nIt is worth mentioning that in the questionnaire, %1$s.</string>
+    <array name="email_red_flag_2">
+        <item>I indicated that I have been experiencing depression over the past two weeks</item>
+        <item>I indicated that I have been experiencing depression for at least a year now</item>
+        <item>I answered that I am experiencing depression that interferes with my ability to focus on work, studies, and/or personal relationships</item>
+        <item>I indicated that I have thought about ending my life during this past month</item>
+        <item>I indicated that I have tried to end my life on at least one occasion in my life</item>
+    </array>
+    <array name="email_red_flag_3">
+        <item>My current depression interferes with my ability to focus on work, studies, and/or personal relationships.</item>
+        <item>Over this past month, I have thought about ending my life.</item>
+        <item>I have also tried to end my life on at least one occasion in my life.</item>
+    </array>
+    <array name="email_family_or_cultural">
+        <item>My questionnaire results suggest that my family might play a role in my depression." "</item>
+        <item>My questionnaire results suggest that my cultural background might play a role in my depression." "</item>
+        <item>My questionnaire results suggest that my family and cultural background might play a role in my depression." "</item>
+    </array>
+    <array name="email_family_understands">
+        <item>I think my family will not understand if I tell them I have depression." "</item>
+        <item>I think my family will not understand very much if I tell them I have depression." "</item>
+        <item>I think my family may somewhat understand if I tell them I have depression." "</item>
+        <item>I think my family may be very understanding if I tell them I have depression." "</item>
+    </array>
+    <array name="email_can_see">
+        <item>have a hard time seeing</item>
+        <item>can see</item>
+    </array>
 
 </resources>

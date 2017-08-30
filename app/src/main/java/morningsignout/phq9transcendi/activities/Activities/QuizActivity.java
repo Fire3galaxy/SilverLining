@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -44,7 +43,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     // Use String.format() with this to display current question
     private final String numberString = "%1$d/" + String.valueOf(QuestionData.NUM_QUESTIONS);
 
-    private ScrollView questionContainer;
     private TextView questionTextView, questionNumText; //The text of the question
     private Button answerNo, answerYes;
     private ImageButton nextArrow, prevArrow;
@@ -240,6 +238,10 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         Intent results = new Intent(this, ResultsActivity.class);
         results.putExtra(ResultsActivity.SCORE, scores.getFinalScore());
         results.putExtra(ResultsActivity.RED_FLAG, scores.containsRedFlag());
+        results.putExtra(ResultsActivity.RED_FLAG_BITS, scores.getRedFlagBits());
+        results.putExtra(ResultsActivity.FAM_OR_CULTURE_BITS, scores.getFamOrCultureBits());
+        results.putExtra(ResultsActivity.FAMILY_UNDERSTANDS_ANSWER, scores.getFamilyUnderstandsAnswer());
+        results.putExtra(ResultsActivity.CAN_SEE_ANSWER, scores.getiAppointmentAnswer());
         startActivity(results);
         finish();
     }
@@ -313,7 +315,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
     // Uploads score data to Firebase. If no user ID exists, creates and stores one
     private void uploadToDatabase() {
-        scores.uploadDataToDatabase(startTimestamp, endTimestamp);
+        scores.uploadDataToDatabase(endTimestamp);
     }
 
     // Which view was clicked: arrows (nextArrow/prevArrow) or buttons (yes/no)
@@ -338,6 +340,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         }
     }
 
+    // FIXME: Use a class like DateFormat next time
     String getTimestamp() {
         String timestamp = "";
         Calendar date = Calendar.getInstance();

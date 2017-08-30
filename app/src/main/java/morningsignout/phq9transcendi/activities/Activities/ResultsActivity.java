@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -19,6 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.text.DateFormat;
+import java.util.BitSet;
+import java.util.Calendar;
+
 import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.activities.HelperClasses.BlinkScrollView;
 import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
@@ -29,7 +34,11 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  */
 public class ResultsActivity extends AppCompatActivity implements View.OnClickListener {
     static public final String SCORE = "Score",
-        RED_FLAG = "Red Flag";
+        RED_FLAG = "Red Flag",
+        RED_FLAG_BITS = "Red Flag BitSet",
+        FAM_OR_CULTURE_BITS = "Family or Cultural Background BitSet",
+        FAMILY_UNDERSTANDS_ANSWER = "Family understands answer value",
+        CAN_SEE_ANSWER = "Can see answer value";
 
     // For every screen
     Button finishUpButton;
@@ -50,6 +59,10 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     Button emailresultsButton;
     int totalScore;
     boolean redFlag;
+    BitSet redFlagBitSet;
+    BitSet famOrCultureBitSet;
+    int familyUnderstandsAnswer;
+    int canSeeAnswer;
     int screenNumber = 0;
     AlertDialog.Builder dialogBuilder;
 
@@ -66,6 +79,10 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         // Results of quiz
         totalScore = args.getIntExtra(SCORE, 0);
         redFlag = args.getBooleanExtra(RED_FLAG, false);
+        redFlagBitSet = (BitSet) args.getSerializableExtra(RED_FLAG_BITS);
+        famOrCultureBitSet = (BitSet) args.getSerializableExtra(FAM_OR_CULTURE_BITS);
+        familyUnderstandsAnswer = args.getIntExtra(FAMILY_UNDERSTANDS_ANSWER, 0);
+        canSeeAnswer = args.getIntExtra(CAN_SEE_ANSWER, 0);
 
         // Views for results activity
         finishUpButton = (Button) findViewById(R.id.button_finish_up);      // Moves to next screen
@@ -177,9 +194,9 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         } else if(v != null && v.equals(emailresultsButton)) {
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
             emailIntent.setData(Uri.parse("mailto:" + ""));
-            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Results from Silver Lining");
-            String msg = "Your score was: " + totalScore + ". " + getResult();
-            emailIntent.putExtra(Intent.EXTRA_TEXT, msg);
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Results from the Silver Lining Questionnaire");
+//            String msg = "Your score was: " + totalScore + ". " + getResult();
+            emailIntent.putExtra(Intent.EXTRA_TEXT, getEmailMessage());
 
             try {
                 startActivity(Intent.createChooser(emailIntent, "Send email using..."));
@@ -266,5 +283,81 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         return result;
+    }
+
+    String getEmailMessage() {
+        Resources res = getResources();
+
+        // Today's date
+        String todayDate =
+                DateFormat.getDateInstance(DateFormat.LONG).format(Calendar.getInstance().getTime());
+
+        // Level of depression in regular terms, not number
+        String[] scoreEval = res.getStringArray(R.array.scoreEval);
+        String scoreEvalResult;
+        if(totalScore == 0) {
+            scoreEvalResult = scoreEval[0];
+        } else if(totalScore >= 1 && totalScore < 5) {
+            scoreEvalResult = scoreEval[1];
+        } else if(totalScore >= 5 && totalScore < 10) {
+            scoreEvalResult = scoreEval[2];
+        } else if(totalScore >= 10 && totalScore < 15) {
+            scoreEvalResult = scoreEval[3];
+        } else if(totalScore >= 15 && totalScore < 20) {
+            scoreEvalResult = scoreEval[4];
+        } else {
+            scoreEvalResult = scoreEval[5];
+        }
+
+        // Red flag message
+        String redFlagMessage = "";
+        String[] emailRedFlag2 = res.getStringArray(R.array.email_red_flag_2);
+        String[] emailRedFlag3 = res.getStringArray(R.array.email_red_flag_3);
+        if (redFlag) {
+            int lastTrueFlag = -1;
+
+            // First sentence of red flag (priority to red flag 1)
+            if (redFlagBitSet.get(1))
+                redFlagMessage = res.getString(R.string.email_red_flag_1, emailRedFlag2[1]);
+            else if (redFlagBitSet.get(0))
+                redFlagMessage = res.getString(R.string.email_red_flag_1, emailRedFlag2[0]);
+            else {
+                for (lastTrueFlag = 2; lastTrueFlag < redFlagBitSet.size(); lastTrueFlag++)
+                    if (redFlagBitSet.get(lastTrueFlag))
+                        break;
+                redFlagMessage = res.getString(R.string.email_red_flag_1, emailRedFlag2[lastTrueFlag]);
+            }
+
+            // Extra sentences if needed (only for red flags 2,3,4 (based on zero-index))
+            if (lastTrueFlag == -1)
+                lastTrueFlag = 2;
+            else
+                lastTrueFlag = lastTrueFlag + 1;
+            for (; lastTrueFlag < redFlagBitSet.size(); lastTrueFlag++)
+                if (redFlagBitSet.get(lastTrueFlag))
+                    redFlagMessage += " " + emailRedFlag3[lastTrueFlag - 2]; // 2,3,4 -> 0,1,2
+        }
+
+        // Family or cultural background as cause?
+        String[] emailFamOrCulture = res.getStringArray(R.array.email_family_or_cultural);
+        String famOrCultureResult = "";
+        if (!famOrCultureBitSet.isEmpty()) {
+            if (!famOrCultureBitSet.get(0))
+                famOrCultureResult = emailFamOrCulture[1];
+            else if (!famOrCultureBitSet.get(1))
+                famOrCultureResult = emailFamOrCulture[0];
+            else
+                famOrCultureResult = emailFamOrCulture[2];
+        }
+
+        // Family will understand if I tell them about depression?
+        String[] emailFamily = res.getStringArray(R.array.email_family_understands);
+
+        // Is willing or not willing to meet therapist
+        String[] emailCanSee = res.getStringArray(R.array.email_can_see);
+
+        return res.getString(R.string.email_message,
+                todayDate, totalScore, scoreEvalResult, redFlagMessage, famOrCultureResult,
+                emailFamily[familyUnderstandsAnswer], emailCanSee[canSeeAnswer]);
     }
 }
