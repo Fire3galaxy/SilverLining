@@ -1,7 +1,5 @@
 package morningsignout.phq9transcendi.activities.Activities;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import morningsignout.phq9transcendi.R;
+import morningsignout.phq9transcendi.activities.HelperClasses.NotificationArrayAdapter;
 import morningsignout.phq9transcendi.activities.HelperClasses.NotificationReceiver;
 import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
 import morningsignout.phq9transcendi.activities.PHQApplication;
@@ -59,6 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        // Themes spinner
         final Spinner themes_spinner = (Spinner) findViewById(R.id.themes_spinner);
         ArrayAdapter<CharSequence> themesadapter = ArrayAdapter.createFromResource(this,
                 R.array.themes, android.R.layout.simple_spinner_item);
