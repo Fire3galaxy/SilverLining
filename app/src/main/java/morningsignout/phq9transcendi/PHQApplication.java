@@ -1,13 +1,11 @@
-package morningsignout.phq9transcendi.activities;
+package morningsignout.phq9transcendi;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 
-import morningsignout.phq9transcendi.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**

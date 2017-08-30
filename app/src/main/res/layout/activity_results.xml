@@ -108,7 +108,7 @@
 
     </LinearLayout>
 
-    <morningsignout.phq9transcendi.activities.HelperClasses.BlinkScrollView
+    <morningsignout.phq9transcendi.HelperClasses.BlinkScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/container_detail"
@@ -129,6 +129,6 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp" />
 
-    </morningsignout.phq9transcendi.activities.HelperClasses.BlinkScrollView>
+    </morningsignout.phq9transcendi.HelperClasses.BlinkScrollView>
 
 </RelativeLayout>

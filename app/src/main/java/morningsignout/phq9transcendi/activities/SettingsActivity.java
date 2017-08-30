@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities.Activities;
+package morningsignout.phq9transcendi.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,11 +14,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import morningsignout.phq9transcendi.PHQApplication;
 import morningsignout.phq9transcendi.R;
-import morningsignout.phq9transcendi.activities.HelperClasses.NotificationArrayAdapter;
-import morningsignout.phq9transcendi.activities.HelperClasses.NotificationReceiver;
-import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
-import morningsignout.phq9transcendi.activities.PHQApplication;
+import morningsignout.phq9transcendi.HelperClasses.NotificationReceiver;
+import morningsignout.phq9transcendi.HelperClasses.Utils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SettingsActivity extends AppCompatActivity {

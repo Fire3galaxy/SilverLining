@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities.HelperClasses;
+package morningsignout.phq9transcendi.HelperClasses;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -8,15 +8,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 import morningsignout.phq9transcendi.R;
-import morningsignout.phq9transcendi.activities.Activities.LaunchScreenActivity;
-import morningsignout.phq9transcendi.activities.Activities.SettingsActivity;
+import morningsignout.phq9transcendi.activities.LaunchScreenActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 

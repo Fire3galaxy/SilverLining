@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities.Activities;
+package morningsignout.phq9transcendi.activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,11 +18,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import morningsignout.phq9transcendi.PHQApplication;
 import morningsignout.phq9transcendi.R;
-import morningsignout.phq9transcendi.activities.HelperClasses.DemographicsAdapter;
-import morningsignout.phq9transcendi.activities.HelperClasses.FirebaseExtras;
-import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
-import morningsignout.phq9transcendi.activities.PHQApplication;
+import morningsignout.phq9transcendi.HelperClasses.DemographicsAdapter;
+import morningsignout.phq9transcendi.HelperClasses.Utils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**

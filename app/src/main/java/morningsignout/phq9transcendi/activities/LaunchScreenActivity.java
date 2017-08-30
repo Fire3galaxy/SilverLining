@@ -1,8 +1,7 @@
-package morningsignout.phq9transcendi.activities.Activities;
+package morningsignout.phq9transcendi.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -10,17 +9,15 @@ import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import morningsignout.phq9transcendi.PHQApplication;
 import morningsignout.phq9transcendi.R;
-import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
-import morningsignout.phq9transcendi.activities.PHQApplication;
+import morningsignout.phq9transcendi.HelperClasses.Utils;
 
 /**
  * Created by Daniel on 11/27/2016.

@@ -9,13 +9,13 @@
 
 
     <application
-        android:name=".activities.PHQApplication"
+        android:name=".PHQApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/BlankTheme">
         <activity
-            android:name=".activities.Activities.LaunchScreenActivity"
+            android:name=".activities.LaunchScreenActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -25,33 +25,33 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.Activities.IndexActivity"
+            android:name=".activities.IndexActivity"
             android:label="@string/app_name"></activity>
         <activity
-            android:name=".activities.Activities.AboutUsActivity"
+            android:name=".activities.AboutUsActivity"
             android:label="@string/about_us_activity" />
         <activity
-            android:name=".activities.Activities.QuizIntroActivity"
+            android:name=".activities.QuizIntroActivity"
             android:label="@string/quizintro_activity" />
         <activity
-            android:name=".activities.Activities.DemographicsIntroActivity"
+            android:name=".activities.DemographicsIntroActivity"
             android:label="@string/demographics_intro_activity" />
         <activity
-            android:name=".activities.Activities.DemographicsActivity"
+            android:name=".activities.DemographicsActivity"
             android:label="@string/demographics_activity"
             android:windowSoftInputMode="stateUnchanged" />
         <activity
-            android:name=".activities.Activities.QuizActivity"
+            android:name=".activities.QuizActivity"
             android:label="@string/quiz_activity"></activity>
         <activity
-            android:name=".activities.Activities.ResultsActivity"
+            android:name=".activities.ResultsActivity"
             android:label="@string/results_activity" />
         <activity
-            android:name=".activities.Activities.SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:label="Settings"/>
 
         <receiver
-            android:name="morningsignout.phq9transcendi.activities.HelperClasses.NotificationReceiver"
+            android:name="morningsignout.phq9transcendi.HelperClasses.NotificationReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

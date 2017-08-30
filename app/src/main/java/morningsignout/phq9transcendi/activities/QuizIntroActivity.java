@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities.Activities;
+package morningsignout.phq9transcendi.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.Button;
 
 import morningsignout.phq9transcendi.R;
-import morningsignout.phq9transcendi.activities.HelperClasses.BlinkScrollView;
-import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
+import morningsignout.phq9transcendi.HelperClasses.BlinkScrollView;
+import morningsignout.phq9transcendi.HelperClasses.Utils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**

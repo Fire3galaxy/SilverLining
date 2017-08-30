@@ -1,14 +1,12 @@
-package morningsignout.phq9transcendi.activities.Activities;
+package morningsignout.phq9transcendi.activities;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
 
 import morningsignout.phq9transcendi.R;
-import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
+import morningsignout.phq9transcendi.HelperClasses.Utils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**

@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities.Activities;
+package morningsignout.phq9transcendi.activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -25,8 +25,8 @@ import java.util.BitSet;
 import java.util.Calendar;
 
 import morningsignout.phq9transcendi.R;
-import morningsignout.phq9transcendi.activities.HelperClasses.BlinkScrollView;
-import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
+import morningsignout.phq9transcendi.HelperClasses.BlinkScrollView;
+import morningsignout.phq9transcendi.HelperClasses.Utils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**

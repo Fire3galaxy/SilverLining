@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities.HelperClasses;
+package morningsignout.phq9transcendi.HelperClasses;
 
 import android.util.Pair;
 
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import morningsignout.phq9transcendi.activities.PHQApplication;
+import morningsignout.phq9transcendi.PHQApplication;
 
 /**
  * Created by pokeforce on 5/26/16.

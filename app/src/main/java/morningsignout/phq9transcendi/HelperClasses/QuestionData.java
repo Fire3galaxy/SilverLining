@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities.HelperClasses;
+package morningsignout.phq9transcendi.HelperClasses;
 
 /**
  * Created by Daniel on 12/18/2016.

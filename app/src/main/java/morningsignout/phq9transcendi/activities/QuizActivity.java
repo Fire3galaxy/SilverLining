@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities.Activities;
+package morningsignout.phq9transcendi.activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -24,9 +24,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 import morningsignout.phq9transcendi.R;
-import morningsignout.phq9transcendi.activities.HelperClasses.QuestionData;
-import morningsignout.phq9transcendi.activities.HelperClasses.Scores;
-import morningsignout.phq9transcendi.activities.HelperClasses.Utils;
+import morningsignout.phq9transcendi.HelperClasses.QuestionData;
+import morningsignout.phq9transcendi.HelperClasses.Scores;
+import morningsignout.phq9transcendi.HelperClasses.Utils;
 import morningsignout.phq9transcendi.activities.RangeSliderCustom.RangeSliderTextAddOns;
 import morningsignout.phq9transcendi.activities.RangeSliderCustom.RangeSliderView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
