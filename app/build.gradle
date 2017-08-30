@@ -8,8 +8,8 @@ android {
         applicationId "morningsignout.phq9transcendi"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 11
-        versionName "1.5"
+        versionCode 12
+        versionName "1.6"
         multiDexEnabled true
     }
     buildTypes {
@@ -41,6 +41,5 @@ dependencies {
     compile 'me.grantland:autofittextview:0.2.1'
     compile 'com.google.firebase:firebase-auth:10.2.6'      // For authenticating
     compile 'com.google.firebase:firebase-database:10.2.6'  // For the database
-    compile 'com.google.android.gms:play-services-location:10.2.6' // For GPS location services
 }
 
