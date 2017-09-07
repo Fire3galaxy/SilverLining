@@ -12,8 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_age"
-            android:textSize="20sp"
-            android:id="@+id/demo_age_field" />
+            android:textSize="20sp" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -27,7 +26,6 @@
             android:layout_height="wrap_content"
             android:text="@string/_gender"
             android:textSize="20sp"
-            android:id="@+id/demo_gender_field"
             android:paddingTop="10dp"
             android:paddingBottom="5dp"/>
 
@@ -49,7 +47,6 @@
             android:layout_height="wrap_content"
             android:text="@string/_ethnicity"
             android:textSize="20sp"
-            android:id="@+id/demo_ethnic_field"
             android:paddingTop="10dp"
             android:paddingBottom="5dp"/>
 
@@ -71,7 +68,6 @@
             android:layout_height="wrap_content"
             android:text="@string/_school_year"
             android:textSize="20sp"
-            android:id="@+id/demo_schl_yr_field"
             android:paddingTop="10dp"
             android:paddingBottom="5dp"/>
 
@@ -86,7 +82,6 @@
             android:layout_height="wrap_content"
             android:text="@string/_family"
             android:textSize="20sp"
-            android:id="@+id/demo_first_field"
             android:paddingTop="10dp"
             android:paddingBottom="5dp"/>
 
@@ -101,7 +96,6 @@
             android:layout_height="wrap_content"
             android:text="@string/_college_name"
             android:textSize="20sp"
-            android:id="@+id/demo_college_name"
             android:paddingTop="10dp"/>
 
         <Spinner

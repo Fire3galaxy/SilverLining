@@ -15,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            android:id="@+id/textView_intro"
             android:text="@string/depression_note"
             android:textSize="20sp"
             android:gravity="center_horizontal"/>

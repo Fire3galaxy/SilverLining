@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="red">#FFC66951</color>
-    <color name="red_accent">#FFb46951</color>
     <color name="dark_red">#FFC64B3B</color>
-    <color name="tan">#FFBF974D</color>
-    <color name="green">#FF928B70</color>
-    <color name="purple">#FF87706B</color>
-    <color name="brown">#FF94734E</color>
-    <color name="blue">#FF6F777D</color>
-    <color name="background_dark">#FF534949</color>
-    <color name="text_light">#FFCCD1B9</color>
-    <color name="light_blue">#FFd1d1d1</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFffffff</color>
-    <color name="launch_blue">#ffd2ffee</color>
-    <color name="icon_blue">#ff74b1e0</color>
 
     <!-- ICE THEME -->
     <color name="downy">#66cccc</color>
@@ -27,7 +16,6 @@
     <color name="cashmere">#e4b4a1</color>
     <color name="white_linen">#faf0ec</color>
     <color name="wafer">#e0d1cb</color>
-    <color name="burnt_sienna">#e8865e</color>
     <color name="cork">#3a2118</color>
     <color name="cashmere_dbh">#d49d87</color>
 

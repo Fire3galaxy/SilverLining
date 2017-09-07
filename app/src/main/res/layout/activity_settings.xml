@@ -19,9 +19,7 @@
         android:text="@string/change_notification_setting"
         android:textSize="20sp"
         android:layout_marginBottom="10dp"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/change_notification_text"
-        />
+        android:layout_gravity="center_horizontal" />
 
     <LinearLayout
         android:orientation="horizontal"
