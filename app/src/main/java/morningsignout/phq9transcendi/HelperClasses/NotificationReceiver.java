@@ -10,7 +10,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.activities.LaunchScreenActivity;
@@ -26,6 +30,55 @@ public class NotificationReceiver extends BroadcastReceiver {
     private static final int ALARM_ID = 3;
     final static String NOTIF_PREF = "Notification_Preferences";
     public final static String FREQ_PREF = "frequency";
+    final static long ONE_DAY = 1000*60*60*24;
+    final static long ONE_WEEK = ONE_DAY * 7;
+
+
+    /** setNextAlarmTimeText
+     * Stores when the alarm will go off next in shared preferences
+     * @param context
+     */
+    public static void setNextAlarmTimeText(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(NOTIF_PREF, Context.MODE_PRIVATE);
+        int frequency = prefs.getInt(FREQ_PREF, 0);
+        long prevAlarm = prefs.getLong("Prev alarm",0);
+        boolean noAlarm = false;
+        String newTime = "No alarm set";
+        switch (frequency) {
+            case 0: //no alarm
+                noAlarm = true;
+                break;
+            case 1: //weekly alarm
+                prevAlarm += ONE_WEEK;
+                break;
+            case 2: //biweekly alarm
+                prevAlarm += ONE_WEEK * 2;
+                break;
+            case 3: //tester
+                prevAlarm += 1000*60*5;
+                break;
+            default:
+                break;
+        }
+
+        Date date = new Date(prevAlarm);
+        SimpleDateFormat sdfr = new SimpleDateFormat("dd/MMM/yyyy hh:mm");
+        if (noAlarm) {
+            newTime = "No alarm set";
+        } else {
+            try {
+                newTime = sdfr.format(date);
+            } catch (Exception ex) {
+                System.err.println(ex);
+            }
+        }
+
+        SharedPreferences.Editor editor = context.getSharedPreferences(NOTIF_PREF, MODE_PRIVATE).edit();
+        editor.putLong("Prev alarm", prevAlarm);
+        editor.putString("Next alarm", newTime);
+        editor.apply();
+
+    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -37,6 +90,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             restartAlarm(context);
         } else {
+            setNextAlarmTimeText(context);
             showNotification(context);
         }
         //Release the lock
@@ -44,15 +98,22 @@ public class NotificationReceiver extends BroadcastReceiver {
     }
 
 
-    //This method changes what alarm is called.Stores preferences.
+    /** changeAlarmSettings
+     * This is the main method that calls cancelAlamr and setAlarm. This method is
+     * called by the listener on the settings page and updates the saved time
+     * @param context
+     * @param frequency
+     */
+    //This method changes what alarm is called. Stores preferences.
     public static void changeAlarmSettings(Context context, int frequency) {
         long timeSet = System.currentTimeMillis();
         //Store preferences for next time
         SharedPreferences.Editor editor = context.getSharedPreferences(NOTIF_PREF, MODE_PRIVATE).edit();
         editor.putInt(FREQ_PREF, frequency);
         editor.putLong("Time set", timeSet);
+        editor.putLong("Prev alarm", timeSet);
         editor.apply();
-
+        setNextAlarmTimeText(context);
         // it correctly shows what the user chose
         switch (frequency) {
             case 0: //no alarm
@@ -72,6 +133,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 cancelAlarm(context, true, false);
                 setAlarm(context, 1000*60*5, timeSet);
                 Toast.makeText(context, "Tester reminder is turned on", Toast.LENGTH_SHORT).show();
+
                 break;
             default:
                 break;
@@ -79,6 +141,7 @@ public class NotificationReceiver extends BroadcastReceiver {
     }
 
     /** Name: setAlarm
+     * Helper function:
      * This method sets the notification schedule. Does not create a notification upon creation
      * of alarm. Next notification is timeSet+frequency. Since there is only one alarm, all
      * alarm intents are set with ALARM_ID as the id of the intent.
@@ -97,7 +160,7 @@ public class NotificationReceiver extends BroadcastReceiver {
     }
 
     /** Name: cancelAlarm
-     * Cancels alarm if alarm exists.
+     * Helper function: Cancels alarm if alarm exists.
      * @param context
      * @param switching represents if method is being called due to user switching alarm modes from
      *                  weekly to biweekly or vice versa
@@ -108,7 +171,6 @@ public class NotificationReceiver extends BroadcastReceiver {
         // Create the alarmIntent so that it may be canceled.
         Intent intent = new Intent(context, NotificationReceiver.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, ALARM_ID, intent, 0);
-
         AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         alarmMgr.cancel(alarmIntent);
         if (!switching && !restart) {
@@ -147,6 +209,12 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     }
 
+    /** showNotification
+     *
+     * @param context
+     * Creates a toast message that tells the user to retake their test.
+     * This method is called by onReceive
+     */
     public void showNotification(Context context) {
         int reqCode = 0; //unique number for the intent
 

@@ -42,12 +42,14 @@
     <!-- Resources and References -->
 
     <!--Notification Settings -->
+    <string name ="notification_settings"> Notification Settings</string>
     <string-array name="notifications_array">
         <item>No reminder</item>
         <item>Weekly</item>
         <item>Biweekly</item>
-        <!--<item>tester</item>-->
+        <item>tester</item>
     </string-array>
+    <string name = "next_notification">Notification will go off on: </string>
 
     <!--Quiz introduction-->
     <string name="depression_note">Depression affects hundreds of millions of people worldwide.\n\n

@@ -1,24 +1,31 @@
 package morningsignout.phq9transcendi.activities;
 
+import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Date;
 
 import morningsignout.phq9transcendi.PHQApplication;
 import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.HelperClasses.NotificationReceiver;
 import morningsignout.phq9transcendi.HelperClasses.Utils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import static morningsignout.phq9transcendi.HelperClasses.NotificationReceiver.FREQ_PREF;
 
 public class SettingsActivity extends AppCompatActivity {
     Context context;
@@ -42,11 +49,12 @@ public class SettingsActivity extends AppCompatActivity {
 
         //set the default spinner text to the saved preferences
         SharedPreferences prefs = getSharedPreferences(NOTIF_PREF, MODE_PRIVATE);
-        int savedFreq = prefs.getInt(NotificationReceiver.FREQ_PREF, 0);
+        int savedFreq = prefs.getInt(FREQ_PREF, 0);
         if (savedFreq != 0) { //now change spinner
             notification_spinner.setSelection(savedFreq);
         }
-
+        //set up the textbox that shows the next time the alarm will go off.
+        setNextAlarmText();
         //Set up notification Button and button listener (ok)
         Button notification_button = (Button) findViewById(R.id.notification_button);
         notification_button.setOnClickListener( new View.OnClickListener() {
@@ -54,8 +62,11 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int frequency = notification_spinner.getSelectedItemPosition();
                 NotificationReceiver.changeAlarmSettings(context, frequency);
+                setNextAlarmText();
+
             }
         });
+
 
         // Themes spinner
         final Spinner themes_spinner = (Spinner) findViewById(R.id.themes_spinner);
@@ -83,6 +94,14 @@ public class SettingsActivity extends AppCompatActivity {
                 updateThemePref();
             }
         });
+    }
+
+    public void setNextAlarmText(){
+        String nextAlarm;
+        SharedPreferences prefs = context.getSharedPreferences(NOTIF_PREF, Context.MODE_PRIVATE);
+        nextAlarm = prefs.getString("Next alarm", "");
+        TextView nextAlarmTime = (TextView) findViewById(R.id.next_notification_time);
+        nextAlarmTime.setText(nextAlarm);
     }
 
     @Override
