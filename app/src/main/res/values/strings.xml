@@ -47,7 +47,7 @@
         <item>No reminder</item>
         <item>Weekly</item>
         <item>Biweekly</item>
-        <item>tester</item>
+        <!--<item>tester</item> -->
     </string-array>
     <string name = "next_notification">Notification will go off on: </string>
 
