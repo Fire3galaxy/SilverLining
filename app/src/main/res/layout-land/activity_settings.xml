@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <TextView
+        android:id="@+id/SettingsTitle"
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,9 +14,9 @@
         />
 
 
-
     <TextView
-        android:layout_marginTop="50dp"
+        android:id="@+id/notification_settings_text"
+        android:layout_marginTop="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/notification_settings"
@@ -26,28 +26,27 @@
 
 
     <LinearLayout
-        android:id="@+id/next_notification_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
         <TextView
-            android:layout_marginLeft = "20dp"
+            android:layout_marginLeft = "40dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_weight="1.4"
-            android:textSize = "15sp"
+            android:layout_weight="1"
+            android:textSize = "18sp"
             android:text = "@string/next_notification"/>
 
         <TextView
             android:id="@+id/next_notification_time"
-            android:layout_marginRight= "20dp"
+            android:layout_marginRight= "40dp"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_gravity="right"
+            android:textSize = "18sp"
             android:gravity="right"
-            android:textSize = "15sp"
             android:layout_weight = "1"
             />
     </LinearLayout>
@@ -56,7 +55,7 @@
         android:orientation="horizontal"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_marginBottom="40dp">
+        android:layout_marginBottom="10dp">
 
         <Spinner
             android:id="@+id/notification_spinner"
@@ -82,13 +81,13 @@
 
 
     <TextView
-        android:layout_marginTop="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/theme_change_button"
-        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_marginTop="40dp"
+        android:text="@string/theme_change_button"
+        android:textSize="20sp" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -116,14 +115,4 @@
             android:layout_gravity="center_vertical"
             />
     </LinearLayout>
-
-<!--
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/Contents"
-        android:layout_gravity="center_horizontal"/>
--->
-
 </LinearLayout>
