@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SilverLining.iml" filepath="$PROJECT_DIR$/SilverLining.iml" />
+
+      <module fileurl="file://$PROJECT_DIR$/PHQ9-Transcendi.iml" filepath="$PROJECT_DIR$/PHQ9-Transcendi.iml" />
+
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

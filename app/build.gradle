@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "morningsignout.phq9transcendi"
         minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 6
-        versionName "1.5"
+        targetSdkVersion 27
+        versionCode 7
+        versionName "1.6"
         multiDexEnabled true
     }
     buildTypes {
@@ -26,9 +26,9 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:appcompat-v7:27.1.0'
+    compile 'com.android.support:recyclerview-v7:27.1.0'
+    compile 'com.android.support:design:27.1.0'
 //    compile 'com.firebase:firebase-client-android:2.5.2+'
     //    compile 'com.google.android.gms:play-services-ads:9.2.0'
     //    compile 'com.google.android.gms:play-services-auth:9.4.0'
@@ -39,7 +39,7 @@ dependencies {
 //    compile 'com.android.support:multidex:1.0.1'
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'  // For loading custom fonts everywhere
     compile 'me.grantland:autofittextview:0.2.1'
-    compile 'com.google.firebase:firebase-auth:10.2.6'      // For authenticating
-    compile 'com.google.firebase:firebase-database:10.2.6'  // For the database
+    compile 'com.google.firebase:firebase-auth:11.8.0'      // For authenticating
+    compile 'com.google.firebase:firebase-database:11.8.0'  // For the database
 }
 
