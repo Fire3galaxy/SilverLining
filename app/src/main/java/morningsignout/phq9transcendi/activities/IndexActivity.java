@@ -19,23 +19,16 @@ public class IndexActivity extends AppCompatActivity {
         Utils.onActivityCreateSetTheme(this, Utils.GetTheme(this));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
-        System.out.println("Start button");
+
         // 2 Buttons: How am I doing,settings
         Button startButton = (Button) findViewById(R.id.startButton);
-        System.out.println("startButton listener");
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 beginQuiz();
             }
         });
-        System.out.println("settings button");
-
         Button settingsButton = (Button) findViewById(R.id.settingsButton);
-        System.out.println("Settings button listener");
-        if (settingsButton == null) {
-            System.out.println("Null button");
 
-        }
         settingsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.d("SettingsActivity","HERE");
@@ -45,9 +38,7 @@ public class IndexActivity extends AppCompatActivity {
             }
         });
 
-        System.out.println("about us button");
         Button aboutUsButton = (Button) findViewById(R.id.aboutUsButton);
-        System.out.println("about us Listener");
         aboutUsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.d("IndexActivity", "HERE");
