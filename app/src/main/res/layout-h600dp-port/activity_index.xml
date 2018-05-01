@@ -40,13 +40,15 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/theme_change_button"
+        android:text="@string/settings"
         android:textSize="14sp"
-        android:id="@+id/themeButton"
+        android:id="@+id/settingsButton"
         android:padding="10dp"
         android:layout_marginTop="25dp"
         android:layout_below="@+id/startButton"
         android:layout_centerHorizontal="true" />
+
+
 
     <Button
         android:layout_width="wrap_content"
@@ -56,7 +58,7 @@
         android:id="@+id/aboutUsButton"
         android:padding="10dp"
         android:layout_marginTop="25dp"
-        android:layout_below="@+id/themeButton"
+        android:layout_below="@+id/settingsButton"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
