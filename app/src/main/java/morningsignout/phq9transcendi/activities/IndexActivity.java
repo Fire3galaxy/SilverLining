@@ -31,7 +31,6 @@ public class IndexActivity extends AppCompatActivity {
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.d("SettingsActivity","HERE");
                 Intent intent = new Intent(IndexActivity.this, SettingsActivity.class);
                 startActivity(intent);
                 finish();

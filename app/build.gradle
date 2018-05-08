@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "morningsignout.phq9transcendi"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 7
-        versionName "1.6"
+        versionCode 8
+        versionName "1.7"
         multiDexEnabled true
     }
     buildTypes {
@@ -25,21 +25,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:27.1.0'
-    compile 'com.android.support:recyclerview-v7:27.1.0'
-    compile 'com.android.support:design:27.1.0'
-//    compile 'com.firebase:firebase-client-android:2.5.2+'
-    //    compile 'com.google.android.gms:play-services-ads:9.2.0'
-    //    compile 'com.google.android.gms:play-services-auth:9.4.0'
-    //    compile 'com.google.android.gms:play-services-gcm:9.4.0'
-//    compile('com.google.android.gms:play-services:10.2.6') //{
-//        exclude group: 'com.google.firebase', module: 'firebase-common'
-//    }
-//    compile 'com.android.support:multidex:1.0.1'
-    compile 'uk.co.chrisjenx:calligraphy:2.2.0'  // For loading custom fonts everywhere
-    compile 'me.grantland:autofittextview:0.2.1'
-    compile 'com.google.firebase:firebase-auth:11.8.0'      // For authenticating
-    compile 'com.google.firebase:firebase-database:11.8.0'  // For the database
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //compile 'com.android.support:appcompat-v7:27.1.1'
+    //compile 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'uk.co.chrisjenx:calligraphy:2.2.0'  // For loading custom fonts everywhere
+    implementation 'me.grantland:autofittextview:0.2.1'
+    implementation 'com.google.firebase:firebase-auth:15.1.0'      // For authenticating
+    implementation 'com.google.firebase:firebase-database:15.0.1'  // For the database
 }
 
