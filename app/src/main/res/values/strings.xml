@@ -155,22 +155,22 @@
 
     <!--Quiz questions-->
     <string-array name="questions">
-        <item>Do you find that you\'ve lost a lot of interest in things you used to be interested in? This can include hobbies, friends, work, food, or sex. If so, how often do you notice these symptoms?</item>
+        <item>Do you find that you\'ve lost a lot of interest in things you used to be interested in? This can include hobbies, friends, work, food, or sex. </item>
         <item>Do you find that a lot of things are no longer enjoyable to you that you previously found enjoyable, or that you simply don\'t go out and try to do enjoyable things anymore?</item>
-        <item>Do you ever have feelings of being down or depressed? If so, how often?</item>
+        <item>How often do you ever have feelings of being down or depressed?</item>
         <item>Do you ever have feelings of hopelessness?</item>
-        <item>Sleep is incredibly important for maintaining our brains\' cognitive functions. How much of it we get sheds light on how our brains are functioning. Have you had problems with falling asleep, staying asleep, or sleeping a lot less in the last two months?</item>
+        <item>Have you had problems with falling asleep, staying asleep, or sleeping a lot less in the last two months?</item>
         <item>How about on the other hand? Many depressed people often have feelings of lethargy and tend to sleep much more than they normally do.</item>
-        <item>How has your energy level been? Do you feel tired? Drained? Feel like you have no energy to do anything?</item>
-        <item>One\'s appetite can be a very good indicator of becoming depressed. Have you noticed yourself eating less than you normally do?</item>
-        <item>How about eating more than you normally do, or binge eating, where you eat a lot of food in a short amount of time? If so, how often?</item>
-        <item>How often do you have thoughts that you\'re a failure? Or that you\'ve let yourself down?</item>
-        <item>How has your concentration been? Depression can manifest as difficulty studying or doing homework. Have you had trouble with your concentration lately?</item>
-        <item>Have you found difficulty finishing tasks you start? If so, how often?</item>
+        <item>How often do you feel tired or drained?</item>
+        <item>One's appetite can be a very good indicator of becoming depressed. Have you noticed yourself eating less than you normally do?</item>
+        <item>How about eating more than you normally do, or binge eating, where you eat a lot of food in a short amount of time?</item>
+        <item>How often do you have thoughts that you\'re a failure, or that you\'ve let yourself down?</item>
+        <item>Depression can manifest as difficulty studying or doing homework. Have you had trouble with your concentration lately?</item>
+        <item>Have you found difficulty finishing tasks you start?</item>
         <item>Some people with depression actually feel a sense of physical slowing. Have you felt a sense of physical “slowness” about yourself, like moving slowly?</item>
-        <item>Other people have said that they\'ve been told they move or talk more slowly when they\'re depressed. Have you had anyone comment on this lately?</item>
-        <item>Do you ever think about hurting yourself in some way, or ending your life? If so, how often?</item>
-        <item>How about the thought that you\'d be better off dead or that it would be great to just fall asleep and never wake up?</item>
+        <item>Have you had anyone comment that you move or talk more slowly than usual?</item>
+        <item>Do you ever think about hurting yourself in some way, or ending your life?</item>
+        <item>How about the thought that you\'d be better off dead, or that it would be great to just fall asleep and never wake up?</item>
         <item>Would you say you\'ve felt depressed or down for more than two weeks?</item>
         <item>In the past year, have you felt depressed or sad most days, even if you felt okay sometimes?</item>
         <item>Have any of these symptoms of depression we asked about earlier keep you from being 100% at work, study, or relationships?</item>
