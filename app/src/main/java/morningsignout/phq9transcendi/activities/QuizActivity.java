@@ -12,12 +12,15 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -27,8 +30,8 @@ import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.HelperClasses.QuestionData;
 import morningsignout.phq9transcendi.HelperClasses.Scores;
 import morningsignout.phq9transcendi.HelperClasses.Utils;
-import morningsignout.phq9transcendi.activities.RangeSliderCustom.RangeSliderTextAddOns;
-import morningsignout.phq9transcendi.activities.RangeSliderCustom.RangeSliderView;
+import morningsignout.phq9transcendi.RangeSliderCustom.RangeSliderTextAddOns;
+import morningsignout.phq9transcendi.RangeSliderCustom.RangeSliderView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /* What to update when question is added: If new answer type is added, add string array to
@@ -47,12 +50,13 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private Button answerNo, answerYes;
     private ImageButton nextArrow, prevArrow;
     private LinearLayout containerButtons;
-    RangeSliderView answerSliderView;
-    RangeSliderTextAddOns answerSliderWrapper;
+    private RadioGroup radioButtonGroup;
+    //RangeSliderView answerSliderView;
+    //RangeSliderTextAddOns answerSliderWrapper;
 
     private String[] questionArray;
     QuestionData allAnswers;
-    int currentSeekbarChoice;
+    int currentAnswerChoice;
     int currentButtonChoice;
     private String startTimestamp, endTimestamp;
     private Scores scores;                          // Used for keeping track of score
@@ -81,8 +85,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         nextArrow = (ImageButton) findViewById(R.id.imageButton_nextq);
         prevArrow = (ImageButton) findViewById(R.id.imageButton_prevq);
         containerButtons = (LinearLayout) findViewById(R.id.container_buttons);
-        answerSliderView = (RangeSliderView) findViewById(R.id.range_slider);
-        answerSliderWrapper = new RangeSliderTextAddOns(answerSliderView, this);
+        radioButtonGroup = (RadioGroup) findViewById(R.id.answer_choices);
 
         //change color according to theme
         Drawable arrows = ContextCompat.getDrawable(getApplicationContext(), R.drawable.green_arrow);
@@ -129,7 +132,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         allAnswers.answerChoices[QuestionData.YES_NO] = res.getStringArray(R.array.answers_yes_no);
         allAnswers.answerChoices[QuestionData.STRANGER] = res.getStringArray(R.array.answers_stranger);
         allAnswers.answerChoices[QuestionData.SUPPORTIVE] = res.getStringArray(R.array.answers_supportive);
-        currentSeekbarChoice = -1;
+        currentAnswerChoice = -1;
         currentButtonChoice = -1;
         dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setMessage(R.string.dialog_quit_quiz)
@@ -151,7 +154,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         startTimestamp = getTimestamp();
         questionNumber = -1;
         scores = new Scores();
-        answerSliderView.setIndex(0);
+        //answerSliderView.setIndex(0);
 
         handleQuiz(true);   // Everything is set up, start quiz
 
@@ -206,7 +209,8 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));   // For custom Rubik font
     }
 
-    // Calls all functions to change question. NextQuestion determines if questionNumber increases/decreases.
+    // Calls all functions to change question.
+    // NextQuestion determines if questionNumber increases/decreases.
     private void handleQuiz(boolean nextQuestion) {
         if (nextQuestion) {
             questionNumber++;
@@ -246,23 +250,37 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         finish();
     }
 
+    //changes the question text, answer text, and answer method
+    //also checks the radiobutton that was previously chosen
     private void updateQuestions() {
+        Log.d("UpdateQuestion", "Q#:" + questionNumber + ", Text: "+questionArray[questionNumber] );
         questionTextView.setText(questionArray[questionNumber]);                    // Question text
         questionNumText.setText(String.format(numberString, questionNumber + 1));   // Question #
 
         // Possible string array options for answers are listed in QuestionData
         changeAnswerText(QuestionData.ANSW_CHOICE[questionNumber]);
 
-        // Seekbar is for 2+ answers, Buttons for 2 answers
-        if (QuestionData.USES_SLIDER[questionNumber])
-            putSeekBar();
-        else
+        // Shows either the radio buttons or regular yes/no buttons
+        if (QuestionData.USES_SLIDER[questionNumber]) {
+            putRadioButtons(questionNumber);
+        } else {
             putButtons();
+        }
 
         // Show previously saved answer if previous button is clicked
-        if (scores.questionIsVisited(questionNumber))
-            answerSliderView.setIndex(scores.getQuestionScore(questionNumber));
-
+        if (scores.questionIsVisited(questionNumber)) {
+            //TODO set radoi button to be the score saved
+            //answerSliderView.setIndex(scores.getQuestionScore(questionNumber));
+            int qnScore = scores.getQuestionScore(questionNumber);
+            //if this answer has been chosen, we can check the correct option
+            //TODO: check to see that index is <= number of radio buttons
+            if (qnScore > -1) {
+                System.out.println("ANSWERED: qnscore is " + qnScore);
+                radioButtonGroup.clearCheck();
+                RadioButton rb = ((RadioButton)radioButtonGroup.getChildAt(qnScore));
+                rb.setChecked(true);
+            }
+        }
         // Hide previous button on first question
         if (questionNumber == 0)
             prevArrow.setVisibility(View.INVISIBLE);
@@ -277,16 +295,40 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
             nextArrow.setVisibility(View.VISIBLE);
     }
 
+    //sets the radio buttons to be visible and buttons to be invisible
+    //Number of buttons is determined by what question it is
+    //question number is passed in
+    private void putRadioButtons(int answerIndex) {
+        Log.d("SettingRadioButtons", "AnswerIndex" + answerIndex);
+        int answerType = QuestionData.ANSW_CHOICE[answerIndex];
+        int numButtons = (allAnswers.answerChoices[answerType]).length;
+        Log.d("SettingRadioButtons","NUMBUTTONS:" + numButtons);
+        radioButtonGroup.setVisibility(View.VISIBLE);
+        int i;
+        for (i= 0; i < numButtons && i < 6; i++) {
+            RadioButton rb = (RadioButton)radioButtonGroup.getChildAt(i);
+            rb.setVisibility(View.VISIBLE);
+        }
+        for (i = i ; i < 6; i++) {
+            RadioButton rb = (RadioButton)radioButtonGroup.getChildAt(i);
+            rb.setVisibility(View.GONE);
+        }
+
+        if (containerButtons.getVisibility() != View.GONE) {
+            containerButtons.setVisibility(View.GONE);
+        }
+    }
+/**
     private void putSeekBar() {
         if (answerSliderView.getVisibility() != View.VISIBLE)
             answerSliderWrapper.setVisibility(View.VISIBLE);
         if (containerButtons.getVisibility() != View.GONE)
             containerButtons.setVisibility(View.GONE);
     }
-
+**/
     private void putButtons() {
-        if (answerSliderView.getVisibility() != View.INVISIBLE)
-            answerSliderWrapper.setVisibility(View.INVISIBLE);
+        if (radioButtonGroup.getVisibility() != View.INVISIBLE)
+            radioButtonGroup.setVisibility(View.INVISIBLE);
         if (containerButtons.getVisibility() != View.VISIBLE)
             containerButtons.setVisibility(View.VISIBLE);
     }
@@ -295,9 +337,16 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         String[] newText = allAnswers.answerChoices[answerIndex];
 
         if (QuestionData.USES_SLIDER[questionNumber]) {
-            if (answerIndex != currentSeekbarChoice) {
-                answerSliderWrapper.setAnswers(newText);
-                currentSeekbarChoice = answerIndex;
+
+            radioButtonGroup.clearCheck();
+            //loop through and set each button
+            //TODO only loop through number of questions
+            int count = radioButtonGroup.getChildCount();
+            for (int i=0;i<count;i++) {
+                RadioButton rb = (RadioButton) radioButtonGroup.getChildAt(i);
+                if (i < newText.length) {
+                    rb.setText(newText[i]);
+                }
             }
         } else {
             if (answerIndex != currentButtonChoice) {
@@ -321,13 +370,15 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     // Which view was clicked: arrows (nextArrow/prevArrow) or buttons (yes/no)
     @Override
     public void onClick(View v) {
+        // clicked for a radio button question, not a yes/no question
+        //Move onto the next question
         if (v.equals(nextArrow)) {
-            // Clicked next for a slider question, not a yes/no question
-            if (QuestionData.USES_SLIDER[questionNumber])
-                addScore(questionNumber, answerSliderView.getCurrentIndex());
-
+            saveCurrentScore();
+            System.out.println("NEXT");
             handleQuiz(true);
         } else if (v.equals(prevArrow)) {
+            saveCurrentScore();
+            System.out.println("PREV");
             handleQuiz(false);
         } else if (v.equals(answerNo)) {
             // Value is from yes/no button
@@ -338,6 +389,25 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
             addScore(questionNumber, 1);
             handleQuiz(true);
         }
+    }
+
+    public void saveCurrentScore(){
+        //update currentAnswerChoice
+        int count = radioButtonGroup.getChildCount();
+        for (int i = 0; i < count; i++) {
+            RadioButton rb = (RadioButton) radioButtonGroup.getChildAt(i);
+            if (rb.isChecked()) {
+                currentAnswerChoice = i;
+            }
+        }
+        // Clicked next for a slider question, not a yes/no question
+        // save the score for this question
+        if (QuestionData.USES_SLIDER[questionNumber]) {
+            System.out.println("ANSWER IS BEING SAVED");
+            addScore(questionNumber, currentAnswerChoice);
+        }
+        currentAnswerChoice = -1;
+
     }
 
     // FIXME: Use a class like DateFormat next time

@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities.RangeSliderCustom;
+package morningsignout.phq9transcendi.RangeSliderCustom;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import morningsignout.phq9transcendi.R;
+import morningsignout.phq9transcendi.RangeSliderCustom.RangeSliderView;
 
 /**
  * Created by Daniel on 12/22/2016.

@@ -53,6 +53,7 @@ public class QuestionData {
             true   // 26
     };
 
+    //Answer choice type
     static public final char[] ANSW_CHOICE = {
             NORMAL,     // 0
             NORMAL,     // 1
@@ -83,7 +84,7 @@ public class QuestionData {
             SUPPORTIVE  // 26
     };
 
-    public String[][] answerChoices;
+    public String[][] answerChoices; // Answer type, answers
 
     public QuestionData() {
         answerChoices = new String[8][];

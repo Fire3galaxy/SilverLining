@@ -13,7 +13,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  */
 public class PHQApplication extends Application {
     private static PHQApplication singleton;
-    private static final boolean USE_DEBUG_DB = false; // See comment for getFirebaseAppInstance()
+    private static final boolean USE_DEBUG_DB = true; // See comment for getFirebaseAppInstance()
 
     public static PHQApplication getInstance() {
         return singleton;

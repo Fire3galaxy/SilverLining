@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities.RangeSliderCustom;
+package morningsignout.phq9transcendi.RangeSliderCustom;
 
 /* Code in this package is copied and modified from https://github.com/channguyen/range-slider-view
  * under his respective apache license (see license text in app).
@@ -220,7 +220,7 @@ public class RangeSliderView extends View {
         return getWidthWithPadding() / getRangeCount();
     }
 
-    @AnimateMethod
+    @morningsignout.phq9transcendi.activities.RangeSliderCustom.AnimateMethod
     public void setRadius(final float radius) {
         rippleRadius = radius;
         if (rippleRadius > 0) {
