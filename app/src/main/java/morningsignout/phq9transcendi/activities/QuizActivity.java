@@ -27,8 +27,8 @@ import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.HelperClasses.QuestionData;
 import morningsignout.phq9transcendi.HelperClasses.Scores;
 import morningsignout.phq9transcendi.HelperClasses.Utils;
-import morningsignout.phq9transcendi.activities.RangeSliderCustom.RangeSliderTextAddOns;
-import morningsignout.phq9transcendi.activities.RangeSliderCustom.RangeSliderView;
+import morningsignout.phq9transcendi.RangeSliderCustom.RangeSliderTextAddOns;
+import morningsignout.phq9transcendi.RangeSliderCustom.RangeSliderView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /* What to update when question is added: If new answer type is added, add string array to

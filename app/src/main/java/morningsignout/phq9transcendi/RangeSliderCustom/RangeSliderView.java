@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities.RangeSliderCustom;
+package morningsignout.phq9transcendi.RangeSliderCustom;
 
 /* Code in this package is copied and modified from https://github.com/channguyen/range-slider-view
  * under his respective apache license (see license text in app).
