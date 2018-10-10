@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Silver Lining</string>
+    <string name="debug_app_name">Silver Lining - DEBUG MODE (Remove before release in PHQApplication.java)</string>
 
     <!--Activity names/test code-->
     <string name="quiz_activity">Quiz</string>
@@ -162,7 +163,7 @@
         <item>Have you had problems with falling asleep, staying asleep, or sleeping a lot less in the last two months?</item>
         <item>How about on the other hand? Many depressed people often have feelings of lethargy and tend to sleep much more than they normally do.</item>
         <item>How often do you feel tired or drained?</item>
-        <item>One's appetite can be a very good indicator of becoming depressed. Have you noticed yourself eating less than you normally do?</item>
+        <item>One\'s appetite can be a very good indicator of becoming depressed. Have you noticed yourself eating less than you normally do?</item>
         <item>How about eating more than you normally do, or binge eating, where you eat a lot of food in a short amount of time?</item>
         <item>How often do you have thoughts that you\'re a failure, or that you\'ve let yourself down?</item>
         <item>Depression can manifest as difficulty studying or doing homework. Have you had trouble with your concentration lately?</item>

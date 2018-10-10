@@ -2,14 +2,17 @@ package morningsignout.phq9transcendi.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.HelperClasses.Utils;
+import morningsignout.phq9transcendi.PHQApplication;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class IndexActivity extends AppCompatActivity {
@@ -45,6 +48,13 @@ public class IndexActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Debug Mode: Special title to alert developer
+        if (PHQApplication.USE_DEBUG_DB) {
+            TextView title = (TextView) findViewById(R.id.title);
+            title.setText(R.string.debug_app_name);
+            title.setTextColor(Color.RED);
+        }
     }
 
     private void beginQuiz() {
