@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Silver Lining</string>
+    <string name="debug_app_name">Silver Lining - DEBUG MODE (Remove before release in PHQApplication.java)</string>
 
     <!--Activity names/test code-->
     <string name="quiz_activity">Quiz</string>

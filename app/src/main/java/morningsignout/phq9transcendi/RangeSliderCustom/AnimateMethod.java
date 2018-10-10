@@ -1,4 +1,4 @@
-package morningsignout.phq9transcendi.activities.RangeSliderCustom;
+package morningsignout.phq9transcendi.RangeSliderCustom;
 
 /**
  * Created by pokeforce on 8/8/16.
