@@ -86,12 +86,12 @@ public class SettingsActivity extends AppCompatActivity {
         themes_button.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int theme = themes_spinner.getSelectedItemPosition();
+            int theme = themes_spinner.getSelectedItemPosition();
 
-                //Set the theme
-                Utils.SaveTheme(Utils.THEME, theme, SettingsActivity.this);
-                Utils.changeToTheme(SettingsActivity.this);
-                updateThemePref();
+            //Set the theme
+            Utils.SaveTheme(Utils.THEME, theme, SettingsActivity.this);
+            Utils.changeToTheme(SettingsActivity.this);
+            updateThemePref();
             }
         });
     }

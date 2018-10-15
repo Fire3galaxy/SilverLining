@@ -31,9 +31,9 @@ public class QuizIntroActivity extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent demographics = new Intent(QuizIntroActivity.this, DemographicsIntroActivity.class);
-                startActivity(demographics);
-                QuizIntroActivity.this.finish();
+            Intent demographics = new Intent(QuizIntroActivity.this, DemographicsIntroActivity.class);
+            startActivity(demographics);
+            QuizIntroActivity.this.finish();
             }
         });
     }

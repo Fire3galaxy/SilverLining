@@ -19,6 +19,11 @@
         <item name="android:spinnerItemStyle">@style/IceSpinnerItem</item>
         <item name="customRangeSlider">@style/IceRangeSlider</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <!-- For the radio buttons on the answer screens -->
+        <item name="radioButtonStyle">@style/IceRadioButtonStyle</item>
+        <item name="android:radioButtonStyle">@style/IceRadioButtonStyle</item>
+        <item name="checkboxStyle">@style/IceCheckBoxStyle</item>
+        <item name="android:checkboxStyle">@style/IceCheckBoxStyle</item>
     </style>
 
     <style name="CashmereAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -32,4 +37,5 @@
         <item name="customRangeSlider">@style/CashmereRangeSlider</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
+
 </resources>

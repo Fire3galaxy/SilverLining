@@ -16,6 +16,11 @@
         <item name="android:spinnerItemStyle">@style/IceSpinnerItem</item>
         <item name="customRangeSlider">@style/IceRangeSlider</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <!-- For the radio buttons on the answer screens -->
+        <item name="radioButtonStyle">@style/IceRadioButtonStyle</item>
+        <item name="android:radioButtonStyle">@style/IceRadioButtonStyle</item>
+        <item name="checkboxStyle">@style/IceCheckBoxStyle</item>
+        <item name="android:checkboxStyle">@style/IceCheckBoxStyle</item>
     </style>
 
     <style name="CashmereAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -101,6 +106,17 @@
         <item name="emptyColor">@color/jungle_mist</item>
         <item name="rangeCount">5</item>
         <item name="barHeightPercent">0.01</item>
+    </style>
+
+    <style name="IceCheckBoxStyle" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textColor">@drawable/ice_checkbox_style</item>
+        <item name="buttonTint">@drawable/ice_checkbox_style</item>
+    </style>
+    <style name="IceRadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
+
+        <item name="android:textColor">@drawable/ice_radiobutton_selector</item>
+        <item name="android:button">@drawable/ice_checkbox_style</item>
+
     </style>
 
 </resources>

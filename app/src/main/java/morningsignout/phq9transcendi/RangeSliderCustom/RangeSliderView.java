@@ -220,7 +220,7 @@ public class RangeSliderView extends View {
         return getWidthWithPadding() / getRangeCount();
     }
 
-    @morningsignout.phq9transcendi.activities.RangeSliderCustom.AnimateMethod
+    @morningsignout.phq9transcendi.RangeSliderCustom.AnimateMethod
     public void setRadius(final float radius) {
         rippleRadius = radius;
         if (rippleRadius > 0) {

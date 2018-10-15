@@ -305,11 +305,11 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         Log.d("SettingRadioButtons","NUMBUTTONS:" + numButtons);
         radioButtonGroup.setVisibility(View.VISIBLE);
         int i;
-        for (i= 0; i < numButtons && i < 6; i++) {
+        for (i= 0; i < numButtons && i < 5; i++) {
             RadioButton rb = (RadioButton)radioButtonGroup.getChildAt(i);
             rb.setVisibility(View.VISIBLE);
         }
-        for (i = i ; i < 6; i++) {
+        for (i = i ; i < 5; i++) {
             RadioButton rb = (RadioButton)radioButtonGroup.getChildAt(i);
             rb.setVisibility(View.GONE);
         }

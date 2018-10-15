@@ -93,48 +93,64 @@
 
     <Space
         android:layout_width="0dp"
-        android:layout_height="65sp"
+        android:layout_height="50sp"
         android:layout_above="@id/imageView_white_line"
-        android:id="@+id/space_below" />
+        android:id="@+id/space_below_choices" />
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/answer_choices"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:layout_above="@id/space_below" >
+        android:layout_above="@id/space_below_choices"
+        >
         <RadioButton android:id="@+id/radio_0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:background="@color/jungle_mist"
+            android:paddingLeft="10dp"
+            />
         <RadioButton android:id="@+id/radio_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingLeft="10dp"
+            />
         <RadioButton android:id="@+id/radio_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingLeft="10dp"
+            android:background="@color/jungle_mist"
+            />
         <RadioButton android:id="@+id/radio_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingLeft="10dp"
+            />
         <RadioButton android:id="@+id/radio_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <RadioButton android:id="@+id/radio_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingLeft="10dp"
+            android:background="@color/jungle_mist"
+            />
     </RadioGroup>
 
     <Space
-        android:id="@+id/space_aboveSlider"
+        android:id="@+id/space_aboveAnswerChoices"
         android:layout_width="0dp"
-        android:layout_height="65sp"
+        android:layout_height="50sp"
         android:layout_above="@id/answer_choices" />
 
     <me.grantland.widget.AutofitTextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_alignParentTop="true"
-        android:layout_above="@id/space_aboveSlider"
+        android:layout_above="@id/space_aboveAnswerChoices"
         android:layout_centerHorizontal="true"
         android:text="@string/quiz_start"
         android:id="@+id/questionView"
@@ -149,59 +165,5 @@
         android:paddingStart="16dp"
         android:paddingEnd="16dp"/>
 
-    <!--Moved around by RangeSliderTextAddOns class-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/range_answer_0"
-        fontPath="Rubik-Regular.ttf"
-        tools:ignore="MissingPrefix"
-        android:textSize="15sp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:visibility="gone"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/range_answer_1"
-        fontPath="Rubik-Regular.ttf"
-        tools:ignore="MissingPrefix"
-        android:textSize="15sp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:visibility="gone"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/range_answer_2"
-        fontPath="Rubik-Regular.ttf"
-        tools:ignore="MissingPrefix"
-        android:textSize="15sp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:visibility="gone"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/range_answer_3"
-        fontPath="Rubik-Regular.ttf"
-        tools:ignore="MissingPrefix"
-        android:textSize="15sp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:visibility="gone"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/range_answer_4"
-        fontPath="Rubik-Regular.ttf"
-        tools:ignore="MissingPrefix"
-        android:textSize="15sp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:visibility="gone"/>
 </RelativeLayout>
