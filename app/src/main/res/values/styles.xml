@@ -17,10 +17,12 @@
         <item name="customRangeSlider">@style/IceRangeSlider</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <!-- For the radio buttons on the answer screens -->
+        <item name="tableColor">@color/jungle_mist</item>
         <item name="radioButtonStyle">@style/IceRadioButtonStyle</item>
         <item name="android:radioButtonStyle">@style/IceRadioButtonStyle</item>
         <item name="checkboxStyle">@style/IceCheckBoxStyle</item>
         <item name="android:checkboxStyle">@style/IceCheckBoxStyle</item>
+
     </style>
 
     <style name="CashmereAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -35,6 +37,13 @@
         <item name="customRangeSlider">@style/CashmereRangeSlider</item>
         <!--<item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>-->
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <!-- For the radio buttons on the screens -->
+        <item name="tableColor">@color/wafer</item>
+        <item name="radioButtonStyle">@style/cashmereRadioButtonStyle</item>
+        <item name="android:radioButtonStyle">@style/cashmereRadioButtonStyle</item>
+        <item name="checkboxStyle">@style/cashmereCheckBoxStyle</item>
+        <item name="android:checkboxStyle">@style/cashmereCheckBoxStyle</item>
+
     </style>
 
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
@@ -113,10 +122,19 @@
         <item name="buttonTint">@drawable/ice_checkbox_style</item>
     </style>
     <style name="IceRadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
-
-        <item name="android:textColor">@drawable/ice_radiobutton_selector</item>
+        <item name="android:radioButtonStyle">@drawable/ice_radiobutton_selector</item>
+        <!--
+        <item name="android:textColor">@drawable/ice_radiobutton_selector</item> -->
         <item name="android:button">@drawable/ice_checkbox_style</item>
+    </style>
+    <style name="cashmereCheckBoxStyle" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textColor">@drawable/cashmere_checkbox_style</item>
+        <item name="buttonTint">@drawable/cashmere_checkbox_style</item>
+    </style>
+    <style name="cashmereRadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:radioButtonStyle">@drawable/cashmere_radiobutton_selector</item>
 
+        <item name="android:button">@drawable/cashmere_checkbox_style</item>
     </style>
 
 </resources>

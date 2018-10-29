@@ -12,6 +12,7 @@
     <color name="bay_breaker">#4a9999</color>
     <color name="timber_green">#112625</color>
     <color name="downy_dbh">#6ccccc</color>
+    <color name="harlequin_green">#4cff00</color>
 
     <!-- CASHMERE THEME -->
     <color name="cashmere">#e4b4a1</color>
@@ -20,6 +21,9 @@
     <color name="cork">#3a2118</color>
     <color name="terracotta">#E2774D</color>
     <color name="cashmere_dbh">#d49d87</color>
+    <color name="eunry">#3A2118</color>
+    <color name="eggy">#FCED7C</color>
+
 
 
 

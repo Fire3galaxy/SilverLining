@@ -12,4 +12,5 @@
     <declare-styleable name="CustomTheme">
         <attr name="customRangeSlider" format="reference" />
     </declare-styleable>
+    <attr name="tableColor" format="reference|color"/>
 </resources>

@@ -93,24 +93,29 @@
 
     <Space
         android:layout_width="0dp"
-        android:layout_height="50sp"
+        android:layout_height="30dp"
         android:layout_above="@id/imageView_white_line"
         android:id="@+id/space_below_choices" />
+
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/answer_choices"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="320dp"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:layout_above="@id/space_below_choices"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="40dp"
         >
+
         <RadioButton android:id="@+id/radio_0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:background="@color/jungle_mist"
             android:paddingLeft="10dp"
+            android:background="?tableColor"
             />
         <RadioButton android:id="@+id/radio_1"
             android:layout_width="match_parent"
@@ -123,7 +128,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:paddingLeft="10dp"
-            android:background="@color/jungle_mist"
+            android:background="?tableColor"
             />
         <RadioButton android:id="@+id/radio_3"
             android:layout_width="match_parent"
@@ -136,14 +141,14 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:paddingLeft="10dp"
-            android:background="@color/jungle_mist"
+            android:background="?tableColor"
             />
     </RadioGroup>
 
     <Space
         android:id="@+id/space_aboveAnswerChoices"
         android:layout_width="0dp"
-        android:layout_height="50sp"
+        android:layout_height="5dp"
         android:layout_above="@id/answer_choices" />
 
     <me.grantland.widget.AutofitTextView

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <solid android:color="@android:color/white" />
+            <corners android:radius="6dp" />
+        </shape>
+    </item>
+    <item android:drawable="?android:selectableItemBackground" />
+</layer-list> -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <corners
+        android:radius ="2dp"
+        />
+
+
+    <!--If your shape requires only one solid color-->
+    <solid
+        android:color="@color/white" />
+
+
+    <size
+        android:width="10dp"
+        android:height="10dp" />
+
+    <stroke android:width="1dp"
+        android:color="@color/downy_dbh" />
+    <!--If you want to add padding-->
+    <!-- <padding
+         android:left="10dp"
+         android:top="20dp"
+         android:right="40dp"
+         android:bottom="8dp" />-->
+
+</shape>
