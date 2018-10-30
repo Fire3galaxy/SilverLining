@@ -22,6 +22,8 @@
         <item name="android:radioButtonStyle">@style/IceRadioButtonStyle</item>
         <item name="checkboxStyle">@style/IceCheckBoxStyle</item>
         <item name="android:checkboxStyle">@style/IceCheckBoxStyle</item>
+        <item name="quizbackgroundColor">@color/snowflake</item>
+        <item name="quizbackground">@drawable/ice_quizbackground</item>
 
     </style>
 
@@ -43,7 +45,8 @@
         <item name="android:radioButtonStyle">@style/cashmereRadioButtonStyle</item>
         <item name="checkboxStyle">@style/cashmereCheckBoxStyle</item>
         <item name="android:checkboxStyle">@style/cashmereCheckBoxStyle</item>
-
+        <item name="quizbackgroundColor">@color/white_linen</item>
+        <item name="quizbackground">@drawable/cashmere_quizbackground</item>
     </style>
 
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">

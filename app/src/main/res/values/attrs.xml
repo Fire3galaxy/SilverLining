@@ -13,4 +13,6 @@
         <attr name="customRangeSlider" format="reference" />
     </declare-styleable>
     <attr name="tableColor" format="reference|color"/>
+    <attr name="quizbackgroundColor" format="reference|color"/>
+    <attr name="quizbackground" format="reference"/>
 </resources>

@@ -87,6 +87,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         containerButtons = (LinearLayout) findViewById(R.id.container_buttons);
         radioButtonGroup = (RadioGroup) findViewById(R.id.answer_choices);
 
+
         //change color according to theme
         Drawable arrows = ContextCompat.getDrawable(getApplicationContext(), R.drawable.green_arrow);
         ImageView whiteLine = (ImageView) findViewById(R.id.imageView_white_line);

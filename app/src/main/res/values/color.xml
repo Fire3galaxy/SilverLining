@@ -14,6 +14,8 @@
     <color name="downy_dbh">#6ccccc</color>
     <color name="harlequin_green">#4cff00</color>
 
+    <color name="snowflake">#EFFFFD</color>
+
     <!-- CASHMERE THEME -->
     <color name="cashmere">#e4b4a1</color>
     <color name="white_linen">#faf0ec</color>
@@ -23,6 +25,7 @@
     <color name="cashmere_dbh">#d49d87</color>
     <color name="eunry">#3A2118</color>
     <color name="eggy">#FCED7C</color>
+    <color name="nude">#F2D4C9</color>
 
 
 
