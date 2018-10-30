@@ -92,8 +92,8 @@
         android:background="@android:color/white" />
 
     <Space
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
         android:layout_above="@id/imageView_white_line"
         android:id="@+id/space_below_choices" />
 
@@ -101,13 +101,10 @@
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/answer_choices"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="275dp"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:layout_above="@id/space_below_choices"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="40dp"
         >
 
         <RadioButton android:id="@+id/radio_0"
