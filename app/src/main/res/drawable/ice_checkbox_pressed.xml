@@ -13,8 +13,9 @@
         <shape xmlns:android="http://schemas.android.com/apk/res/android"
             android:shape="rectangle">
 
+            <!-- inner color -->
             <solid
-                android:color="@color/harlequin_green" />
+                android:color="@color/downy_dbh" />
 
             <corners
                 android:radius ="10dp"
@@ -25,7 +26,7 @@
                 android:height="45dp" />
 
             <stroke android:width="5dp"
-                android:color="@color/downy_dbh" />
+                android:color="@color/bay_breaker" />
 
 
         </shape>

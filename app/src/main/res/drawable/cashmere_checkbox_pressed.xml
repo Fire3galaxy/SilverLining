@@ -11,9 +11,9 @@
         android:left="15dp">
         <shape xmlns:android="http://schemas.android.com/apk/res/android"
             android:shape="rectangle">
-
+            <!-- inner checkbox -->
             <solid
-                android:color="@color/eggy" />
+                android:color="@color/terracotta" />
 
             <corners
                 android:radius ="10dp"

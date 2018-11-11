@@ -13,7 +13,7 @@
             android:shape="rectangle">
 
             <solid
-                android:color="@color/white" />
+                android:color="@color/cashmere" />
 
             <corners
                 android:radius ="10dp"
