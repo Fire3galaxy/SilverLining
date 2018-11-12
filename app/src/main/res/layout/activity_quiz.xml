@@ -113,12 +113,15 @@
             android:textSize="20sp"
             android:paddingLeft="10dp"
             android:background="?tableColor"
+            android:foreground="?attr/selectableItemBackground"
+
             />
         <RadioButton android:id="@+id/radio_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:paddingLeft="10dp"
+            android:foreground="?attr/selectableItemBackground"
             />
         <RadioButton android:id="@+id/radio_2"
             android:layout_width="match_parent"
@@ -126,12 +129,14 @@
             android:textSize="20sp"
             android:paddingLeft="10dp"
             android:background="?tableColor"
+            android:foreground="?attr/selectableItemBackground"
             />
         <RadioButton android:id="@+id/radio_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:paddingLeft="10dp"
+            android:foreground="?attr/selectableItemBackground"
             />
         <RadioButton android:id="@+id/radio_4"
             android:layout_width="match_parent"
@@ -139,6 +144,7 @@
             android:textSize="20sp"
             android:paddingLeft="10dp"
             android:background="?tableColor"
+            android:foreground="?attr/selectableItemBackground"
             />
     </RadioGroup>
 

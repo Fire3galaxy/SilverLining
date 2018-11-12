@@ -46,4 +46,24 @@
         <item name="quizbackground">@drawable/cashmere_quizbackground</item>
     </style>
 
+
+    <style name="IceCheckBoxStyle" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textColor">@drawable/ice_checkbox_style</item>
+        <item name="buttonTint">@drawable/ice_checkbox_style</item>
+    </style>
+    <style name="IceRadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:radioButtonStyle">@drawable/ice_radiobutton_selector</item>
+        <!--
+        <item name="android:textColor">@drawable/ice_radiobutton_selector</item> -->
+        <item name="android:button">@drawable/ice_checkbox_style</item>
+    </style>
+    <style name="cashmereCheckBoxStyle" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textColor">@drawable/cashmere_checkbox_style</item>
+        <item name="buttonTint">@drawable/cashmere_checkbox_style</item>
+    </style>
+    <style name="cashmereRadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:radioButtonStyle">@drawable/cashmere_radiobutton_selector</item>
+        <item name="android:button">@drawable/cashmere_checkbox_style</item>
+    </style>
+
 </resources>

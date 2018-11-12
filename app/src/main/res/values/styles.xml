@@ -136,8 +136,8 @@
     </style>
     <style name="cashmereRadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:radioButtonStyle">@drawable/cashmere_radiobutton_selector</item>
-
         <item name="android:button">@drawable/cashmere_checkbox_style</item>
     </style>
+
 
 </resources>
