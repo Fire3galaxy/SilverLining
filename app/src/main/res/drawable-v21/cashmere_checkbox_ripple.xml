@@ -1,5 +1,5 @@
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/eunry">
+    android:color="@color/terracotta">
     <item>
         <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
             <!-- Transparent border as padding-->
