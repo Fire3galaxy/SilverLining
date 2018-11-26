@@ -24,29 +24,45 @@
         </activity>
         <activity
             android:name=".activities.IndexActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activities.AboutUsActivity"
-            android:label="@string/about_us_activity" />
+            android:label="@string/about_us_activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.QuizIntroActivity"
-            android:label="@string/quizintro_activity" />
+            android:label="@string/quizintro_activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.DemographicsIntroActivity"
-            android:label="@string/demographics_intro_activity" />
+            android:label="@string/demographics_intro_activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.DemographicsActivity"
             android:label="@string/demographics_activity"
-            android:windowSoftInputMode="stateUnchanged" />
+            android:windowSoftInputMode="stateUnchanged"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.QuizActivity"
-            android:label="@string/quiz_activity"></activity>
+            android:label="@string/quiz_activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activities.ResultsActivity"
-            android:label="@string/results_activity" />
+            android:label="@string/results_activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.SettingsActivity"
-            android:label="Settings"/>
+            android:label="Settings"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
 
         <receiver
             android:name="morningsignout.phq9transcendi.HelperClasses.NotificationReceiver"
