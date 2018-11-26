@@ -30,8 +30,6 @@ import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.HelperClasses.QuestionData;
 import morningsignout.phq9transcendi.HelperClasses.Scores;
 import morningsignout.phq9transcendi.HelperClasses.Utils;
-import morningsignout.phq9transcendi.RangeSliderCustom.RangeSliderTextAddOns;
-import morningsignout.phq9transcendi.RangeSliderCustom.RangeSliderView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /* What to update when question is added: If new answer type is added, add string array to
@@ -51,8 +49,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private ImageButton nextArrow, prevArrow;
     private LinearLayout containerButtons;
     private RadioGroup radioButtonGroup;
-    //RangeSliderView answerSliderView;
-    //RangeSliderTextAddOns answerSliderWrapper;
 
     private String[] questionArray;
     QuestionData allAnswers;
@@ -319,14 +315,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
             containerButtons.setVisibility(View.GONE);
         }
     }
-/**
-    private void putSeekBar() {
-        if (answerSliderView.getVisibility() != View.VISIBLE)
-            answerSliderWrapper.setVisibility(View.VISIBLE);
-        if (containerButtons.getVisibility() != View.GONE)
-            containerButtons.setVisibility(View.GONE);
-    }
-**/
+
     private void putButtons() {
         if (radioButtonGroup.getVisibility() != View.INVISIBLE)
             radioButtonGroup.setVisibility(View.INVISIBLE);
