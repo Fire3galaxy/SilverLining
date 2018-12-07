@@ -14,6 +14,32 @@ package morningsignout.phq9transcendi.HelperClasses;
  * activity_quiz.xml, and @style/[every styleName]RangeSlider need to be updated to accommodate this.
  */
 public class QuestionData {
+    // Appended to saved scores string to ensure string corresponds with this order of questions
+    // It could change in the future.
+    static public final int VERSION_OF_ORDER_NUM = 2;
+
+    // Index where red flag starts
+    static public final int RED_FLAG_QUESTION = 16;
+
+    // Category index that red flags begin (All questions that contribute to score are below red flag)
+    static public final int RED_FLAG_CATEGORY = 9;
+
+    // index constants for email message in results activity
+    public static final int FAMILY_UNDERSTANDS = 21;
+    public static final int FAMILY_SITUATION = 22;
+    public static final int CULTURAL_BACKGROUND = 23;
+    public static final int I_APPOINTMENT = 24;
+
+    // Array of which category each question is associated with
+    public static final int[] categoryIndices = {
+            0, 0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 9, 9, 9, 10, 11, 12, 13, 14, 15
+    };
+
+    // Score value that would trigger a red flag alert (from 0-1)
+    public static final int[] redFlagThreshold = {
+            1, 1, 1, 1, 1
+    };
+    
     static public final int NORMAL = 0, // Answer array types
             FLAG = 1,
             DEPRESSION = 2,
@@ -52,7 +78,6 @@ public class QuestionData {
             true,  // 25
             true   // 26
     };
-
     //Answer choice type
     static public final char[] ANSW_CHOICE = {
             NORMAL,     // 0
@@ -82,6 +107,37 @@ public class QuestionData {
             APPOINTMENT,// 24
             STRANGER,   // 25
             SUPPORTIVE  // 26
+    };
+    // Relevant question data variables
+    // Using names instead of numbers for FireBase on the off-chance that
+    // the order of questions is not fixed (would be bad for database to use #).
+    //
+    // Ordered by current order of questions, arranged by category
+    public static final String[] questionNames = {
+            // 1-16 (normal)
+            "anhedoniainterest", "anhedoniaenjoy",
+            "mooddepress", "moodhopeless",
+            "sleeplow", "sleephigh",
+            "fatigue",
+            "appetitelow", "appetitehigh",
+            "guilt",
+            "concentrationpoor", "concentrationdistracted",
+            "psychomotorslowself", "psychomotorslowother",
+            "suicidalityactive", "suicidalitypassive",
+
+            // 17-21 (red flag)
+            "continuousdepression_flag", "longdepression_flag", "interference", "suicidality_flag",
+            "suicideaction_flag",
+
+            // 22-27 (research)
+            "familyunderstands", "familysituation", "culturalbackground", "i_appointment",
+            "fearofstranger", "i_adequateresources"
+    };
+    // Categories of questions
+    public static final String[] categoryNames = {
+            "anhedonia", "mood", "sleep-disturbance", "energy", "appetite", "guilt", "cognition-concentration",
+            "psychomotor", "suicide", "red-flag", "familyunderstands", "familysituation", "culturalbackground",
+            "i_appointment", "fearofstranger", "i_adequateresources"
     };
 
     public String[][] answerChoices; // Answer type, answers
