@@ -327,7 +327,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         String[] newText = allAnswers.answerChoices[answerIndex];
 
         if (QuestionData.USES_SLIDER[questionNumber]) {
-
             radioButtonGroup.clearCheck();
             //loop through and set each button
             //TODO only loop through number of questions

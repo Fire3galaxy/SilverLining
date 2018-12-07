@@ -18,6 +18,8 @@ public class QuestionData {
     // It could change in the future.
     static public final int VERSION_OF_ORDER_NUM = 2;
 
+    static public final int NUM_QUESTIONS = 27; // total number of questions
+
     // Index where red flag starts
     static public final int RED_FLAG_QUESTION = 16;
 
@@ -34,6 +36,12 @@ public class QuestionData {
     public static final int[] categoryIndices = {
             0, 0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 9, 9, 9, 10, 11, 12, 13, 14, 15
     };
+    // Categories of questions
+    public static final String[] categoryNames = {
+            "anhedonia", "mood", "sleep-disturbance", "energy", "appetite", "guilt", "cognition-concentration",
+            "psychomotor", "suicide", "red-flag", "familyunderstands", "familysituation", "culturalbackground",
+            "i_appointment", "fearofstranger", "i_adequateresources"
+    };
 
     // Score value that would trigger a red flag alert (from 0-1)
     public static final int[] redFlagThreshold = {
@@ -48,7 +56,6 @@ public class QuestionData {
             STRANGER = 5,
             SUPPORTIVE = 6, // Currently the most slider answers with 5. (Fixed max of textviews in activity_quiz.xml)
             YES_NO = 7;
-    static public final int NUM_QUESTIONS = 27; // total number of questions
     static public final boolean[] USES_SLIDER = {
             true,  // 0
             true,  // 1
@@ -132,12 +139,6 @@ public class QuestionData {
             // 22-27 (research)
             "familyunderstands", "familysituation", "culturalbackground", "i_appointment",
             "fearofstranger", "i_adequateresources"
-    };
-    // Categories of questions
-    public static final String[] categoryNames = {
-            "anhedonia", "mood", "sleep-disturbance", "energy", "appetite", "guilt", "cognition-concentration",
-            "psychomotor", "suicide", "red-flag", "familyunderstands", "familysituation", "culturalbackground",
-            "i_appointment", "fearofstranger", "i_adequateresources"
     };
 
     public String[][] answerChoices; // Answer type, answers

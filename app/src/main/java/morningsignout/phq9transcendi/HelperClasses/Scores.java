@@ -17,38 +17,45 @@ import morningsignout.phq9transcendi.PHQApplication;
 
 /**
  * Created by pokeforce on 5/26/16.
+ * Container of score values and if question is "visited"
  */
 public class Scores {
-    // Container of score values and if question is "visited"
+    // Mapping of question name to score value or visit flag
+    // note: definition of visited is to be seen
     private TreeMap<String, Integer> scoreDictionary;
-    private TreeMap<String, Boolean> questionIsVisited; // Visited = seen (for seekbar q's) or answered (yes/no q's)
+    private TreeMap<String, Boolean> questionIsVisited;
 
     public Scores() {
         scoreDictionary = new TreeMap<>();
         questionIsVisited = new TreeMap<>();
 
+        setZeroScores();
+    }
+
+    // For restoring Scores state
+    public Scores(String savedScore, String savedVisit) {
+        this();
+        if (scoreDataMatchesVersion(savedScore, savedVisit)) restoreScores(savedScore, savedVisit);
+    }
+
+    private void setZeroScores() {
         for (String q : QuestionData.questionNames) {
             scoreDictionary.put(q, 0);
             questionIsVisited.put(q, false);
         }
     }
 
-    public Scores(String savedScore, String savedVisit) {
-        scoreDictionary = new TreeMap<>();
-        questionIsVisited = new TreeMap<>();
+    private void restoreScores(String savedScore, String savedVisit) {
+        for (int i = 0; i < QuestionData.questionNames.length; i++) {
+            scoreDictionary.put(QuestionData.questionNames[i], savedScore.charAt(i) - 0x30);     // char to int (0-4)
+            questionIsVisited.put(QuestionData.questionNames[i], savedVisit.charAt(i) != '0');   // char to bool (0 or 1)
+        }
+    }
 
-        if (savedScore != null && savedVisit != null &&
+    private boolean scoreDataMatchesVersion(String savedScore, String savedVisit) {
+        return savedScore != null && savedVisit != null &&
                 savedScore.endsWith(String.valueOf(QuestionData.VERSION_OF_ORDER_NUM)) &&
-                savedVisit.endsWith(String.valueOf(QuestionData.VERSION_OF_ORDER_NUM)))
-            for (int i = 0; i < QuestionData.questionNames.length; i++) {
-                scoreDictionary.put(QuestionData.questionNames[i], savedScore.charAt(i) - 0x30);     // char to int (0-4)
-                questionIsVisited.put(QuestionData.questionNames[i], savedVisit.charAt(i) != '0');   // char to bool (0 or 1)
-            }
-        else
-            for (String q : QuestionData.questionNames) {
-                scoreDictionary.put(q, 0);
-                questionIsVisited.put(q, false);
-            }
+                savedVisit.endsWith(String.valueOf(QuestionData.VERSION_OF_ORDER_NUM));
     }
 
     public void putScore(int index, int value) {
