@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Demographics -->
+    <string name="full_demographics_intro">We\'re a small group trying to improve mental health
+        services at schools across the country.\n\n
+        Knowing a little bit about you would help us a lot in terms of figuring out how to reach
+        people like you better.\n\n
+        If you share some background information with us, note that all of it is confidential. It
+        will be used to assess what demographics we need to do a better job of reaching out to and
+        help a lot of people in the process.</string>
+    <string name="_age">Age</string>
+    <string name="_gender">Gender</string>
+    <string name="_ethnicity">Ethnicity</string>
+    <string name="_school_year">School Year</string>
+    <string name="_family">Are you the first in your family to go to college?</string>
+    <string name="_college_name">School Name</string>
+    <string name="answer_not_at_all">Not at all</string>
+    <string name="answer_few_days">One or two days a week</string>
+    <string name="answer_many_days">Three to four days a week</string>
+    <string name="answer_many_many_days">Everyday</string>
+    <string name="answer_yes">Yes</string>
+    <string name="answer_no">No</string>
+    <string name="answer_not_affected">Doesn\'t affect me</string>
+    <string name="answer_somewhat">Somewhat</string>
+    <string name="answer_a_lot">A lot</string>
+    <string name="answer_crippling">Crippling</string>
+    <string name="answer_not_very">Not very</string>
+    <string name="answer_very_understanding">Very\nunderstanding</string>
+    <string name="answer_not_much">Not much</string>
+    <string name="answer_a_little">A little</string>
+    <string name="answer_hard_time">I have a hard time seeing myself making an appointment</string>
+    <string name="answer_can_see">I can see myself making an appointment</string>
+    <string name="answer_could_stop">Yes, and it could stop me from getting help</string>
+    <string name="answer_would_not_stop">Yes, but it wouldn\'t stop me from getting help</string>
+    <string name="answer_not_really">No, not really</string>
+    <string name="answer_very_poor">Very poor</string>
+    <string name="answer_poor">Poor</string>
+    <string name="answer_okay">Okay</string>
+    <string name="answer_good">Good</string>
+    <string name="answer_very_good">Very good</string>
+
+    <string-array name="gender_array">
+        <item></item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Enter option</item>
+    </string-array>
+
+    <string-array name="ethnicity_array">
+        <item></item>
+        <item>African American/Black</item>
+        <item>Mexican American/Chicano</item>
+        <item>Hispanic/Latino</item>
+        <item>Native American/Alaska Native</item>
+        <item>Pacific Islander</item>
+        <item>Chinese</item>
+        <item>Filipino</item>
+        <item>Japanese</item>
+        <item>Korean</item>
+        <item>South Asian</item>
+        <item>Other Asian</item>
+        <item>White</item>
+        <item>Enter option</item>
+    </string-array>
+
+    <string-array name="school_year">
+        <item></item>
+        <item>First</item>
+        <item>Second</item>
+        <item>Third</item>
+        <item>Fourth</item>
+        <item>Fifth or Above</item>
+        <item>Graduate student</item>
+        <item>Not currently enrolled</item>
+    </string-array>
+
+    <string-array name="yes_no_array">
+        <item></item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="college_name_array">
+        <item></item>
+        <item>University of California, Berkeley</item>
+        <item>University of California, Davis</item>
+        <item>University of California, Irvine</item>
+        <item>University of California, Los Angeles</item>
+        <item>University of California, Merced</item>
+        <item>University of California, Riverside</item>
+        <item>University of California, San Diego</item>
+        <item>University of California, Santa Cruz</item>
+        <item>Whitney High School</item>
+        <item>Artesia High School</item>
+        <item>Cerritos High School</item>
+        <item>Not currently enrolled</item>
+        <item>Enter option</item>
+    </string-array>
+
+    <string name="dialog_quit_demographics">Are you sure you want to quit? You can still take the
+        quiz without submitting anything.</string>
+    <string name="dialog_quit_quiz">Are you sure you want to quit?</string>
+    <string name="dialog_quit_results">Do you want to return to the home screen now?</string>
+    <string name="dialog_return_home">Yes</string>
+    <string name="dialog_take_quiz">Take Quiz</string>
+    <string name="dialog_leave">Leave</string>
+    <string name="dialog_cancel">No</string>
+</resources>

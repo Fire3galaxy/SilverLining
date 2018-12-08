@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="questions">
+        <item>Do you find that you\'ve lost a lot of interest in things you used to be interested in? This can include hobbies, friends, work, food, or sex. </item>
+        <item>Do you find that a lot of things are no longer enjoyable to you that you previously found enjoyable, or that you simply don\'t go out and try to do enjoyable things anymore?</item>
+        <item>How often do you ever have feelings of being down or depressed?</item>
+        <item>Do you ever have feelings of hopelessness?</item>
+        <item>Have you had problems with falling asleep, staying asleep, or sleeping a lot less in the last two months?</item>
+        <item>How about on the other hand? Many depressed people often have feelings of lethargy and tend to sleep much more than they normally do.</item>
+        <item>How often do you feel tired or drained?</item>
+        <item>One\'s appetite can be a very good indicator of becoming depressed. Have you noticed yourself eating less than you normally do?</item>
+        <item>How about eating more than you normally do, or binge eating, where you eat a lot of food in a short amount of time?</item>
+        <item>How often do you have thoughts that you\'re a failure, or that you\'ve let yourself down?</item>
+        <item>Depression can manifest as difficulty studying or doing homework. Have you had trouble with your concentration lately?</item>
+        <item>Have you found difficulty finishing tasks you start?</item>
+        <item>Some people with depression actually feel a sense of physical slowing. Have you felt a sense of physical “slowness” about yourself, like moving slowly?</item>
+        <item>Have you had anyone comment that you move or talk more slowly than usual?</item>
+        <item>Do you ever think about hurting yourself in some way, or ending your life?</item>
+        <item>How about the thought that you\'d be better off dead, or that it would be great to just fall asleep and never wake up?</item>
+        <item>Would you say you\'ve felt depressed or down for more than two weeks?</item>
+        <item>In the past year, have you felt depressed or sad most days, even if you felt okay sometimes?</item>
+        <item>Have any of these symptoms of depression we asked about earlier keep you from being 100% at work, study, or relationships?</item>
+        <item>Has there been a time in the past month when you have had serious thoughts about ending your life?</item>
+        <item>Has there ever been a time in your life where you tried to kill yourself?</item>
+        <item>How understanding would your family be if they knew you had depression?</item>
+        <item>To what degree do you think your family situation, such as your relationship with your parents, plays or can play a role in your depression?</item>
+        <item>To what degree do you think your cultural background plays or can play a role in your depression?</item>
+        <item>Could you see yourself setting up an appointment to go talk with a therapist or psychiatrist about depression?</item>
+        <item>Would you find talking to a stranger, even though they are a mental health professional, about your depression scary or intimidating?</item>
+        <item>How adequate and/or supportive are your school\'s mental health resources?</item>
+    </string-array>
+
+    <string-array name="answers_normal">
+        <item>@string/answer_not_at_all</item>
+        <item>@string/answer_few_days</item>
+        <item>@string/answer_many_days</item>
+        <item>@string/answer_many_many_days</item>
+    </string-array>
+
+    <string-array name="answers_flag">
+        <item>@string/answer_not_affected</item>
+        <item>@string/answer_somewhat</item>
+        <item>@string/answer_a_lot</item>
+        <item>@string/answer_crippling</item>
+    </string-array>
+
+    <string-array name="answers_depression">
+        <item>@string/answer_not_at_all</item>
+        <item>@string/answer_not_very</item>
+        <item>@string/answer_somewhat</item>
+        <item>@string/answer_very_understanding</item>
+    </string-array>
+
+    <string-array name="answers_situation">
+        <item>@string/answer_not_much</item>
+        <item>@string/answer_a_little</item>
+        <item>@string/answer_somewhat</item>
+        <item>@string/answer_a_lot</item>
+    </string-array>
+
+    <string-array name="answers_appointment">
+        <item>@string/answer_hard_time</item>
+        <item>@string/answer_can_see</item>
+    </string-array>
+
+    <string-array name="answers_stranger">
+        <item>@string/answer_could_stop</item>
+        <item>@string/answer_would_not_stop</item>
+        <item>@string/answer_not_really</item>
+    </string-array>
+
+    <string-array name="answers_supportive">
+        <item>@string/answer_very_poor</item>
+        <item>@string/answer_poor</item>
+        <item>@string/answer_okay</item>
+        <item>@string/answer_good</item>
+        <item>@string/answer_very_good</item>
+    </string-array>
+
+    <string-array name="answers_yes_no">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+</resources>
