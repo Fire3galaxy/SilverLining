@@ -3,6 +3,8 @@ package morningsignout.phq9transcendi.HelperClasses;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Collection;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ScoresTest {
@@ -33,5 +35,29 @@ class ScoresTest {
         assertEquals(scoreVal,
                 scores.getQuestionScore(questionIndex),
                 "Score for question " + questionIndex + " does not match inserted value");
+    }
+
+    @org.junit.jupiter.api.Test
+    void multipleScoresInsertedCorrectly() {
+        Scores scores = new Scores();
+        int[] scoreVals = {0, 1, 2, 3, 0, 1};
+
+        // Insert scores into Scores as scores of the first questions
+        for (int i = 0; i < scoreVals.length; i++) {
+            scores.putScore(i, scoreVals[i]);
+        }
+
+        // Scores inserted should match scoreVals
+        for (int i = 0; i < scoreVals.length; i++) {
+            assertEquals(scoreVals[i],
+                    scores.getQuestionScore(i),
+                    "Inserted values do not match actual scores");
+        }
+        // If score is not inserted for question, its score is 0
+        for (int i = scoreVals.length; i < QuestionData.NUM_QUESTIONS; i++) {
+            assertEquals(0,
+                    scores.getQuestionScore(i),
+                    "All untouched scores should be 0");
+        }
     }
 }
