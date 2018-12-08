@@ -59,6 +59,14 @@ class ScoresTest {
         }
     }
 
+    @org.junit.jupiter.api.Test
+    void newScores_noQuestionsAreVisited() {
+        Scores scores = new Scores();
+
+        for (int i = 0; i < QuestionData.NUM_QUESTIONS; i++)
+            assertFalse(scores.questionIsVisited(i));
+    }
+
     @org.junit.jupiter.params.ParameterizedTest
     @ValueSource(ints = {1, 3, 5})
     void singleQuestionIsVisited(int questionIndex) {
