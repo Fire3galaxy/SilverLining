@@ -132,19 +132,28 @@ public class Scores {
             userRef.child("testIDs").push().setValue(testID);
 
             // Tests
-            ArrayList<Integer> answers = new ArrayList<>();
-            Map<String, Integer> scores = new HashMap<>(QuestionData.categoryNames.length);
-            for (String q : QuestionData.questionNames)
-                answers.add(scoreDictionary.get(q));
-
-            for (int i = 0; i < QuestionData.categoryNames.length; i++)
-                scores.put(QuestionData.categoryNames[i], getCategoryScore(i));
+            ArrayList<Integer> answers = getScoreValsArray();
+            Map<String, Integer> scores = getCategoryScoreMap();
 
             testRef.child("timestamp").setValue(endTime);
             testRef.child("userID").setValue(user.getUid());
             testRef.child("answers").setValue(answers);
             testRef.child("scores").setValue(scores);
         }
+    }
+
+    public HashMap<String, Integer> getCategoryScoreMap() {
+        HashMap<String, Integer> scores = new HashMap<>(QuestionData.categoryNames.length);
+        for (int i = 0; i < QuestionData.categoryNames.length; i++)
+            scores.put(QuestionData.categoryNames[i], getCategoryScore(i));
+        return scores;
+    }
+
+    public ArrayList<Integer> getScoreValsArray() {
+        ArrayList<Integer> answers = new ArrayList<>();
+        for (String q : QuestionData.questionNames)
+            answers.add(scoreDictionary.get(q));
+        return answers;
     }
 
     public Pair<String, String> getScoreStateStrings() {

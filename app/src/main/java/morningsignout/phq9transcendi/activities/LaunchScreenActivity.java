@@ -62,16 +62,26 @@ public class LaunchScreenActivity extends Activity implements OnCompleteListener
 
     @Override
     public void onComplete(@NonNull Task task) {
-        if (task.isSuccessful())
+        if (task.isSuccessful()) {
             updateThemePref();
-        else
-            Log.e("PHQ9-Transcendi", "Failed connection to server. " + task.getException().getMessage());
+        }
+        else {
+            String error = "Failed to get error"; // Default error value
+            if (task.getException() != null && task.getException().getMessage() != null)
+                error = task.getException().getMessage();
+
+            Log.e("Silver Lining", "Failed connection to server. " + error);
+        }
         startApp();
     }
 
     private void updateThemePref() {
-        String userID = FirebaseAuth.getInstance(PHQApplication.getFirebaseAppInstance())
-                .getCurrentUser().getUid();
+        FirebaseUser user = FirebaseAuth.getInstance(PHQApplication.getFirebaseAppInstance())
+                .getCurrentUser();
+        if (user == null)
+            return;
+
+        String userID = user.getUid();
         DatabaseReference themePref = FirebaseDatabase.getInstance(PHQApplication.getFirebaseAppInstance())
                 .getReference("users/" + userID + "/themePreference");
         themePref.setValue(Utils.THEME_NAMES[Utils.GetTheme(this)]);

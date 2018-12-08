@@ -23,9 +23,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
+import morningsignout.phq9transcendi.PHQApplication;
 import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.HelperClasses.QuestionData;
 import morningsignout.phq9transcendi.HelperClasses.Scores;
@@ -40,6 +48,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private static final String SAVE_TIMESTAMP = "Timestamp", SAVE_QUESTION_NUM = "Question Number",
         SAVE_SCORES_A = "Score Values", SAVE_SCORES_B = "Visit values";
     private static final int DFLT_QUESTION_FONT_SIZE = 24; // in Pixels
+    public static final int MAX_NUM_BUTTONS = 5;
 
     // Use String.format() with this to display current question
     private final String numberString = "%1$d/" + String.valueOf(QuestionData.NUM_QUESTIONS);
@@ -58,8 +67,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private Scores scores;                          // Used for keeping track of score
     private int questionNumber;                     // Which question the user is on (zero-based)
     private boolean isFinishingFlag;                // Used in onPause() to save/not save
-    private boolean isFirstTimeFlag;                // Used in onCreate() and onStart() for continue dialog
-                                                    // Note: Currently not using "continue" feature except for saving state
     private AlertDialog.Builder dialogBuilder;      // To confirm user wants to quit
 
     @Override
@@ -68,25 +75,24 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         Utils.onActivityCreateSetTheme(this, theme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-
         Resources res = getResources();
-        isFirstTimeFlag = (savedInstanceState == null);
 
         // Grab and set content; inital setup (Use restoreInstanceState() for "continue where you last left off" code)
-//        SharedPreferences preferences = getPreferences(0);
-        questionTextView = (TextView) findViewById(R.id.questionView);
-        questionNumText = (TextView) findViewById(R.id.textView_question_number);
-        answerNo = (Button) findViewById(R.id.button_answer_no);
-        answerYes = (Button) findViewById(R.id.button_answer_yes);
-        nextArrow = (ImageButton) findViewById(R.id.imageButton_nextq);
-        prevArrow = (ImageButton) findViewById(R.id.imageButton_prevq);
-        containerButtons = (LinearLayout) findViewById(R.id.container_buttons);
-        radioButtonGroup = (RadioGroup) findViewById(R.id.answer_choices);
+        questionTextView = findViewById(R.id.questionView);
+        questionNumText = findViewById(R.id.textView_question_number);
+        answerNo = findViewById(R.id.button_answer_no);
+        answerYes = findViewById(R.id.button_answer_yes);
+        nextArrow = findViewById(R.id.imageButton_nextq);
+        prevArrow = findViewById(R.id.imageButton_prevq);
+        containerButtons = findViewById(R.id.container_buttons);
+        radioButtonGroup = findViewById(R.id.answer_choices);
 
 
         //change color according to theme
         Drawable arrows = ContextCompat.getDrawable(getApplicationContext(), R.drawable.green_arrow);
-        ImageView whiteLine = (ImageView) findViewById(R.id.imageView_white_line);
+        ImageView whiteLine = findViewById(R.id.imageView_white_line);
+        assert arrows != null;
+
         if(Utils.GetTheme(this)== 0){
             arrows.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.jungle_mist), PorterDuff.Mode.SRC_ATOP);
             whiteLine.setBackgroundColor(getResources().getColor(R.color.jungle_mist));
@@ -298,15 +304,16 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private void putRadioButtons(int answerIndex) {
         Log.d("SettingRadioButtons", "AnswerIndex" + answerIndex);
         int answerType = QuestionData.ANSW_CHOICE[answerIndex];
-        int numButtons = (allAnswers.answerChoices[answerType]).length;
-        Log.d("SettingRadioButtons","NUMBUTTONS:" + numButtons);
+        int numButtonsForCurrQuestion = (allAnswers.answerChoices[answerType]).length;
+        Log.d("SettingRadioButtons","NUMBUTTONS:" + numButtonsForCurrQuestion);
         radioButtonGroup.setVisibility(View.VISIBLE);
+
         int i;
-        for (i= 0; i < numButtons && i < 5; i++) {
+        for (i= 0; i < numButtonsForCurrQuestion && i < MAX_NUM_BUTTONS; i++) {
             RadioButton rb = (RadioButton)radioButtonGroup.getChildAt(i);
             rb.setVisibility(View.VISIBLE);
         }
-        for (i = i ; i < 5; i++) {
+        for (; i < MAX_NUM_BUTTONS; i++) {
             RadioButton rb = (RadioButton)radioButtonGroup.getChildAt(i);
             rb.setVisibility(View.GONE);
         }
@@ -352,8 +359,28 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     }
 
     // Uploads score data to Firebase. If no user ID exists, creates and stores one
+    // TODO: Test this function. Just moved code out of Scores into here.
     private void uploadToDatabase() {
-        scores.uploadDataToDatabase(endTimestamp);
+        FirebaseUser user = FirebaseAuth.getInstance(PHQApplication.getFirebaseAppInstance()).getCurrentUser();
+
+        if(user != null) {
+            FirebaseDatabase rootDB = FirebaseDatabase.getInstance(PHQApplication.getFirebaseAppInstance());
+            DatabaseReference userRef = rootDB.getReference("users/" + user.getUid()),
+                    testRef = rootDB.getReference("tests/").push();
+            String testID = testRef.getKey();
+
+            // Users
+            userRef.child("testIDs").push().setValue(testID);
+
+            // Tests
+            ArrayList<Integer> answers = scores.getScoreValsArray();
+            Map<String, Integer> categoryScores = scores.getCategoryScoreMap();
+
+            testRef.child("timestamp").setValue(endTimestamp);
+            testRef.child("userID").setValue(user.getUid());
+            testRef.child("answers").setValue(answers);
+            testRef.child("scores").setValue(categoryScores);
+        }
     }
 
     // Which view was clicked: arrows (nextArrow/prevArrow) or buttons (yes/no)
