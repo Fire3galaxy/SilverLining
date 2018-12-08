@@ -1,5 +1,8 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ScoresTest {
@@ -11,6 +14,7 @@ class ScoresTest {
     @org.junit.jupiter.api.Test
     void newScores_scoresStartWithZero() {
         Scores scores = new Scores();
+
         for (int i = 0; i < QuestionData.NUM_QUESTIONS; i++) {
             assertEquals(0,
                     scores.getQuestionScore(i),
@@ -19,19 +23,15 @@ class ScoresTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
-    void putScore() {
-    }
+    @org.junit.jupiter.params.ParameterizedTest
+    @CsvSource({"0, 2", "10, 3", "4, 0"})
+    void singleScoreInsertedCorrectly(int questionIndex, int scoreVal) {
+        Scores scores = new Scores();
 
-    @org.junit.jupiter.api.Test
-    void getQuestionScore() {
-    }
+        scores.putScore(questionIndex, scoreVal);
 
-    @org.junit.jupiter.api.Test
-    void getFinalScore() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void questionIsVisited() {
+        assertEquals(scoreVal,
+                scores.getQuestionScore(questionIndex),
+                "Score for question " + questionIndex + " does not match inserted value");
     }
 }
