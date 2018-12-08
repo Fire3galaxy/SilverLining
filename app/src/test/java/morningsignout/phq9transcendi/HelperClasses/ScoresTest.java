@@ -77,4 +77,18 @@ class ScoresTest {
 
         assertTrue(scores.questionIsVisited(questionIndex));
     }
+
+    @org.junit.jupiter.api.Test
+    void multipledQuestionsAreVisited() {
+        Scores scores = new Scores();
+        final int NUM_VISITED = 5;
+
+        for (int i = 0; i < NUM_VISITED; i++)
+            scores.putScore(i, 0);
+
+        for (int i = 0; i < NUM_VISITED; i++)
+            assertTrue(scores.questionIsVisited(i));
+        for (int i = NUM_VISITED; i < QuestionData.NUM_QUESTIONS; i++)
+            assertFalse(scores.questionIsVisited(i));
+    }
 }
