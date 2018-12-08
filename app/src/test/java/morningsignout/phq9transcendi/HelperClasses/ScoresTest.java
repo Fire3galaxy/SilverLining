@@ -3,8 +3,6 @@ package morningsignout.phq9transcendi.HelperClasses;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.Collection;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ScoresTest {
@@ -59,5 +57,16 @@ class ScoresTest {
                     scores.getQuestionScore(i),
                     "All untouched scores should be 0");
         }
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @ValueSource(ints = {1, 3, 5})
+    void singleQuestionIsVisited(int questionIndex) {
+        Scores scores = new Scores();
+        final int ARBITRARY_SCORE = 0;
+
+        scores.putScore(questionIndex, ARBITRARY_SCORE);
+
+        assertTrue(scores.questionIsVisited(questionIndex));
     }
 }

@@ -21,13 +21,12 @@ import morningsignout.phq9transcendi.PHQApplication;
  */
 public class Scores {
     // Mapping of question name to score value or visit flag
-    // note: definition of visited is to be seen
     private TreeMap<String, Integer> scoreDictionary;
-    private TreeMap<String, Boolean> questionIsVisited;
+    private TreeMap<String, Boolean> questionIsAnswered;
 
     public Scores() {
         scoreDictionary = new TreeMap<>();
-        questionIsVisited = new TreeMap<>();
+        questionIsAnswered = new TreeMap<>();
 
         setZeroScores();
     }
@@ -41,14 +40,14 @@ public class Scores {
     private void setZeroScores() {
         for (String q : QuestionData.questionNames) {
             scoreDictionary.put(q, 0);
-            questionIsVisited.put(q, false);
+            questionIsAnswered.put(q, false);
         }
     }
 
     private void restoreScores(String savedScore, String savedVisit) {
         for (int i = 0; i < QuestionData.questionNames.length; i++) {
             scoreDictionary.put(QuestionData.questionNames[i], savedScore.charAt(i) - 0x30);     // char to int (0-4)
-            questionIsVisited.put(QuestionData.questionNames[i], savedVisit.charAt(i) != '0');   // char to bool (0 or 1)
+            questionIsAnswered.put(QuestionData.questionNames[i], savedVisit.charAt(i) != '0');   // char to bool (0 or 1)
         }
     }
 
@@ -60,7 +59,7 @@ public class Scores {
 
     public void putScore(int index, int value) {
         scoreDictionary.put(QuestionData.questionNames[index], value);
-        questionIsVisited.put(QuestionData.questionNames[index], true);
+        questionIsAnswered.put(QuestionData.questionNames[index], true);
     }
 
     public int getQuestionScore(int i) {
@@ -103,8 +102,8 @@ public class Scores {
     }
 
     public boolean questionIsVisited(int i) {
-        if (questionIsVisited.containsKey(QuestionData.questionNames[i]))
-            return questionIsVisited.get(QuestionData.questionNames[i]);
+        if (questionIsAnswered.containsKey(QuestionData.questionNames[i]))
+            return questionIsAnswered.get(QuestionData.questionNames[i]);
 
         throw new IndexOutOfBoundsException(); // Should not happen
     }
@@ -173,7 +172,7 @@ public class Scores {
     private String getVisitedString() {
         StringBuilder visited = new StringBuilder();
         for (String q : QuestionData.questionNames)
-            visited.append(questionIsVisited.get(q).compareTo(false));   // Returns 1 or 0 (true/false)
+            visited.append(questionIsAnswered.get(q).compareTo(false));   // Returns 1 or 0 (true/false)
 
         visited.append("_" + QuestionData.VERSION_OF_ORDER_NUM);
 
