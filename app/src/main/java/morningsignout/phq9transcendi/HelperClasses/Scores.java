@@ -118,29 +118,6 @@ public class Scores {
         return max;
     }
 
-    public void uploadDataToDatabase(String endTime) {
-        FirebaseUser user = FirebaseAuth.getInstance(PHQApplication.getFirebaseAppInstance()).getCurrentUser();
-
-        if(user != null) {
-            FirebaseDatabase rootDB = FirebaseDatabase.getInstance(PHQApplication.getFirebaseAppInstance());
-            DatabaseReference userRef = rootDB.getReference("users/" + user.getUid()),
-                testRef = rootDB.getReference("tests/").push();
-            String testID = testRef.getKey();
-
-            // Users
-            userRef.child("testIDs").push().setValue(testID);
-
-            // Tests
-            ArrayList<Integer> answers = getScoreValsArray();
-            Map<String, Integer> scores = getCategoryScoreMap();
-
-            testRef.child("timestamp").setValue(endTime);
-            testRef.child("userID").setValue(user.getUid());
-            testRef.child("answers").setValue(answers);
-            testRef.child("scores").setValue(scores);
-        }
-    }
-
     public HashMap<String, Integer> getCategoryScoreMap() {
         HashMap<String, Integer> scores = new HashMap<>(QuestionData.categoryNames.length);
         for (int i = 0; i < QuestionData.categoryNames.length; i++)
