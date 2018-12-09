@@ -96,13 +96,4 @@
         <item>Not currently enrolled</item>
         <item>Enter option</item>
     </string-array>
-
-    <string name="dialog_quit_demographics">Are you sure you want to quit? You can still take the
-        quiz without submitting anything.</string>
-    <string name="dialog_quit_quiz">Are you sure you want to quit?</string>
-    <string name="dialog_quit_results">Do you want to return to the home screen now?</string>
-    <string name="dialog_return_home">Yes</string>
-    <string name="dialog_take_quiz">Take Quiz</string>
-    <string name="dialog_leave">Leave</string>
-    <string name="dialog_cancel">No</string>
 </resources>

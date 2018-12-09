@@ -200,11 +200,10 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
                         finish();
                     }
                 }).setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
         dialogBuilder.create().show();
     }
 
@@ -237,7 +236,14 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     }
 
     private void notifyUserQuizUnfinished() {
-
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setMessage(R.string.dialog_not_finished)
+                .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+        dialogBuilder.create().show();
     }
 
     private void setQuestion(int questionNumber) {
