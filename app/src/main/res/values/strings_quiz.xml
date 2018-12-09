@@ -81,4 +81,29 @@
         <item>Yes</item>
         <item>No</item>
     </string-array>
+
+    <string name="answer_not_at_all">Not at all</string>
+    <string name="answer_few_days">One or two days a week</string>
+    <string name="answer_many_days">Three to four days a week</string>
+    <string name="answer_many_many_days">Everyday</string>
+    <string name="answer_yes">Yes</string>
+    <string name="answer_no">No</string>
+    <string name="answer_not_affected">Doesn\'t affect me</string>
+    <string name="answer_somewhat">Somewhat</string>
+    <string name="answer_a_lot">A lot</string>
+    <string name="answer_crippling">Crippling</string>
+    <string name="answer_not_very">Not very</string>
+    <string name="answer_very_understanding">Very\nunderstanding</string>
+    <string name="answer_not_much">Not much</string>
+    <string name="answer_a_little">A little</string>
+    <string name="answer_hard_time">I have a hard time seeing myself making an appointment</string>
+    <string name="answer_can_see">I can see myself making an appointment</string>
+    <string name="answer_could_stop">Yes, and it could stop me from getting help</string>
+    <string name="answer_would_not_stop">Yes, but it wouldn\'t stop me from getting help</string>
+    <string name="answer_not_really">No, not really</string>
+    <string name="answer_very_poor">Very poor</string>
+    <string name="answer_poor">Poor</string>
+    <string name="answer_okay">Okay</string>
+    <string name="answer_good">Good</string>
+    <string name="answer_very_good">Very good</string>
 </resources>

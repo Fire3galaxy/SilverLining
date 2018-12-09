@@ -1,0 +1,28 @@
+Question Name,Question Text,Answer Type,Category Type
+anhedoniainterest,"Do you find that you've lost a lot of interest in things you used to be interested in? This can include hobbies, friends, work, food, or sex. ",NORMAL,anhedonia
+anhedoniaenjoy,"Do you find that a lot of things are no longer enjoyable to you that you previously found enjoyable, or that you simply don't go out and try to do enjoyable things anymore?",NORMAL,anhedonia
+mooddepress,How often do you ever have feelings of being down or depressed?,NORMAL,mood
+moodhopeless,Do you ever have feelings of hopelessness?,NORMAL,mood
+sleeplow,"Have you had problems with falling asleep, staying asleep, or sleeping a lot less in the last two months?",NORMAL,sleep-disturbance
+sleephigh,How about on the other hand? Many depressed people often have feelings of lethargy and tend to sleep much more than they normally do.,NORMAL,sleep-disturbance
+fatigue,How often do you feel tired or drained?,NORMAL,energy
+appetitelow,One's appetite can be a very good indicator of becoming depressed. Have you noticed yourself eating less than you normally do?,NORMAL,appetite
+appetitehigh,"How about eating more than you normally do, or binge eating, where you eat a lot of food in a short amount of time?",NORMAL,appetite
+guilt,"How often do you have thoughts that you're a failure, or that you've let yourself down?",NORMAL,guilt
+concentrationpoor,Depression can manifest as difficulty studying or doing homework. Have you had trouble with your concentration lately?,NORMAL,cognition-concentration
+concentrationdistracted,Have you found difficulty finishing tasks you start?,NORMAL,cognition-concentration
+psychomotorslowself,"Some people with depression actually feel a sense of physical slowing. Have you felt a sense of physical “slowness” about yourself, like moving slowly?",NORMAL,psychomotor
+psychomotorslowother,Have you had anyone comment that you move or talk more slowly than usual?,NORMAL,psychomotor
+suicidalityactive,"Do you ever think about hurting yourself in some way, or ending your life?",NORMAL,suicide
+suicidalitypassive,"How about the thought that you'd be better off dead, or that it would be great to just fall asleep and never wake up?",NORMAL,suicide
+continuousdepression_flag,Would you say you've felt depressed or down for more than two weeks?,YES_NO,red-flag
+longdepression_flag,"In the past year, have you felt depressed or sad most days, even if you felt okay sometimes?",YES_NO,red-flag
+interference,"Have any of these symptoms of depression we asked about earlier keep you from being 100% at work, study, or relationships?",YES_NO,red-flag
+suicidality_flag,Has there been a time in the past month when you have had serious thoughts about ending your life?,YES_NO,red-flag
+suicideaction_flag,Has there ever been a time in your life where you tried to kill yourself?,YES_NO,red-flag
+familyunderstands,How understanding would your family be if they knew you had depression?,DEPRESSION,familyunderstands
+familysituation,"To what degree do you think your family situation, such as your relationship with your parents, plays or can play a role in your depression?",SITUATION,familysituation
+culturalbackground,To what degree do you think your cultural background plays or can play a role in your depression?,SITUATION,culturalbackground
+i_appointment,Could you see yourself setting up an appointment to go talk with a therapist or psychiatrist about depression?,APPOINTMENT,i_appointment
+fearofstranger,"Would you find talking to a stranger, even though they are a mental health professional, about your depression scary or intimidating?",STRANGER,fearofstranger
+i_adequateresources,How adequate and/or supportive are your school's mental health resources?,SUPPORTIVE,i_adequateresources
