@@ -1,5 +1,6 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
+import android.util.Log;
 import android.util.Pair;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -106,6 +107,20 @@ public class Scores {
             return questionIsAnswered.get(QuestionData.questionNames[i]);
 
         throw new IndexOutOfBoundsException(); // Should not happen
+    }
+
+    public boolean allQuestionsVisited() {
+        for (Boolean isVisited : questionIsAnswered.values()) {
+            Log.d("Scores", Boolean.toString(isVisited));
+            if (!isVisited) {
+                return false;
+            }
+        }
+
+        for (Integer i : scoreDictionary.values())
+            Log.d("Scores", i.toString());
+
+        return true;
     }
 
     private int getCategoryScore(int category) {

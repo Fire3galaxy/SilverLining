@@ -12,7 +12,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
@@ -67,7 +66,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private Scores scores;                          // Used for keeping track of score
     private int questionNumber;                     // Which question the user is on (zero-based)
     private boolean isFinishingFlag;                // Used in onPause() to save/not save
-    private AlertDialog.Builder dialogBuilder;      // To confirm user wants to quit
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,24 +135,8 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         allAnswers.answerChoices[QuestionData.SUPPORTIVE] = res.getStringArray(R.array.answers_supportive);
         currentAnswerChoice = -1;
         currentButtonChoice = -1;
-        dialogBuilder = new AlertDialog.Builder(this);
-        dialogBuilder.setMessage(R.string.dialog_quit_quiz)
-                .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent backToMenu = new Intent(QuizActivity.this, IndexActivity.class);
-                        startActivity(backToMenu);
-                        finish();
-                    }
-                }).setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                });
-
-
-        startTimestamp = getTimestamp();
+        startTimestamp = getCurrentTimestampStr();
         questionNumber = -1;
         scores = new Scores();
         //answerSliderView.setIndex(0);
@@ -192,7 +174,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         // Reinitialize state variables
         SharedPreferences preferences = getPreferences(0);
         if (savedInstanceState != null && preferences.contains(SAVE_TIMESTAMP)) {
-            startTimestamp = preferences.getString(SAVE_TIMESTAMP, getTimestamp());
+            startTimestamp = preferences.getString(SAVE_TIMESTAMP, getCurrentTimestampStr());
             int questionNumber = preferences.getInt(SAVE_QUESTION_NUM, 0);
             String scoresA = preferences.getString(SAVE_SCORES_A, null);
             String scoresB = preferences.getString(SAVE_SCORES_B, null);
@@ -204,6 +186,25 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
     @Override
     public void onBackPressed() {
+        confirmUserWishesToQuit();
+    }
+
+    private void confirmUserWishesToQuit() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setMessage(R.string.dialog_quit_quiz)
+                .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent backToMenu = new Intent(QuizActivity.this, IndexActivity.class);
+                        startActivity(backToMenu);
+                        finish();
+                    }
+                }).setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
         dialogBuilder.create().show();
     }
 
@@ -213,19 +214,30 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     }
 
     // Calls all functions to change question.
-    // NextQuestion determines if questionNumber increases/decreases.
-    private void handleQuiz(boolean nextQuestion) {
-        if (nextQuestion) {
+    // bool isNextQuestion determines if questionNumber increases/decreases.
+    private void handleQuiz(boolean isNextQuestion) {
+        if (isNextQuestion) {
             questionNumber++;
 
-            if (questionNumber == QuestionData.NUM_QUESTIONS)
-                finishQuiz();
-            else
+            if (questionNumber == QuestionData.NUM_QUESTIONS) {
+                if (scores.allQuestionsVisited()) {
+                    finishQuiz();
+                } else {
+                    notifyUserQuizUnfinished();
+                    questionNumber--;
+                }
+            }
+            else {
                 updateQuestions();
+            }
         } else {
             questionNumber--;
             updateQuestions();
         }
+    }
+
+    private void notifyUserQuizUnfinished() {
+
     }
 
     private void setQuestion(int questionNumber) {
@@ -236,13 +248,14 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     }
 
     private void finishQuiz() {
-        endTimestamp = getTimestamp();
+        endTimestamp = getCurrentTimestampStr();
         uploadToDatabase();
 
         clearPreferences();
         isFinishingFlag = true;
 
-        Intent results = new Intent(this, ResultsActivity.class);
+        Intent results;
+        results = new Intent(this, ResultsActivity.class);
         results.putExtra(ResultsActivity.SCORE, scores.getFinalScore());
         results.putExtra(ResultsActivity.RED_FLAG, scores.containsRedFlag());
         results.putExtra(ResultsActivity.RED_FLAG_BITS, scores.getRedFlagBits());
@@ -385,10 +398,16 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         // clicked for a radio button question, not a yes/no question
         //Move onto the next question
         if (v.equals(nextArrow)) {
-            saveCurrentScore();
+            // We only need an explicit "save answer" for radio buttons since the arrow key is hidden
+            // for yes/no questions.
+            if (QuestionData.USES_SLIDER[questionNumber]) {
+                recordRadioButtonAnswer();
+            }
             handleQuiz(true);
         } else if (v.equals(prevArrow)) {
-            saveCurrentScore();
+            if (QuestionData.USES_SLIDER[questionNumber]) {
+                recordRadioButtonAnswer();
+            }
             handleQuiz(false);
         } else if (v.equals(answerNo)) {
             // Value is from yes/no button
@@ -401,26 +420,24 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         }
     }
 
-    public void saveCurrentScore(){
-        //update currentAnswerChoice
-        int count = radioButtonGroup.getChildCount();
-        for (int i = 0; i < count; i++) {
+    public void recordRadioButtonAnswer(){
+        int currentAnswerChoice = -1;
+        int numRadioButtons = radioButtonGroup.getChildCount();
+
+        for (int i = 0; i < numRadioButtons; i++) {
             RadioButton rb = (RadioButton) radioButtonGroup.getChildAt(i);
             if (rb.isChecked()) {
                 currentAnswerChoice = i;
             }
         }
-        // Clicked next for a slider question, not a yes/no question
-        // save the score for this question
-        if (QuestionData.USES_SLIDER[questionNumber]) {
+
+        if (currentAnswerChoice != -1) {
             addScore(questionNumber, currentAnswerChoice);
         }
-        currentAnswerChoice = -1;
-
     }
 
     // FIXME: Use a class like DateFormat next time
-    String getTimestamp() {
+    String getCurrentTimestampStr() {
         String timestamp = "";
         Calendar date = Calendar.getInstance();
         date.setTime(new Date());
