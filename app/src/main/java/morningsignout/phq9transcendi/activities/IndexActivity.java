@@ -43,7 +43,6 @@ public class IndexActivity extends AppCompatActivity {
         Button aboutUsButton = (Button) findViewById(R.id.aboutUsButton);
         aboutUsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.d("IndexActivity", "HERE");
                 Intent intent = new Intent(IndexActivity.this, AboutUsActivity.class);
                 startActivity(intent);
             }

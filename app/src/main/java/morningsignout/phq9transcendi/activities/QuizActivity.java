@@ -256,7 +256,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     //changes the question text, answer text, and answer method
     //also checks the radiobutton that was previously chosen
     private void updateQuestions() {
-        Log.d("UpdateQuestion", "Q#:" + questionNumber + ", Text: "+questionArray[questionNumber] );
         questionTextView.setText(questionArray[questionNumber]);                    // Question text
         questionNumText.setText(String.format(numberString, questionNumber + 1));   // Question #
 
@@ -278,7 +277,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
             //if this answer has been chosen, we can check the correct option
             //TODO: check to see that index is <= number of radio buttons
             if (qnScore > -1) {
-                System.out.println("ANSWERED: qnscore is " + qnScore);
                 radioButtonGroup.clearCheck();
                 RadioButton rb = ((RadioButton)radioButtonGroup.getChildAt(qnScore));
                 rb.setChecked(true);
@@ -302,10 +300,8 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     //Number of buttons is determined by what question it is
     //question number is passed in
     private void putRadioButtons(int answerIndex) {
-        Log.d("SettingRadioButtons", "AnswerIndex" + answerIndex);
         int answerType = QuestionData.ANSW_CHOICE[answerIndex];
         int numButtonsForCurrQuestion = (allAnswers.answerChoices[answerType]).length;
-        Log.d("SettingRadioButtons","NUMBUTTONS:" + numButtonsForCurrQuestion);
         radioButtonGroup.setVisibility(View.VISIBLE);
 
         int i;
@@ -390,11 +386,9 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         //Move onto the next question
         if (v.equals(nextArrow)) {
             saveCurrentScore();
-            System.out.println("NEXT");
             handleQuiz(true);
         } else if (v.equals(prevArrow)) {
             saveCurrentScore();
-            System.out.println("PREV");
             handleQuiz(false);
         } else if (v.equals(answerNo)) {
             // Value is from yes/no button
@@ -419,7 +413,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         // Clicked next for a slider question, not a yes/no question
         // save the score for this question
         if (QuestionData.USES_SLIDER[questionNumber]) {
-            System.out.println("ANSWER IS BEING SAVED");
             addScore(questionNumber, currentAnswerChoice);
         }
         currentAnswerChoice = -1;

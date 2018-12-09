@@ -237,7 +237,6 @@ public class DemographicsActivity extends AppCompatActivity implements
             if (!collegeName.getSelectedItem().equals("-"))
                 userRef.child("collegeName").setValue(collegeName_answer.toLowerCase());
 
-            Log.d(demo_log_name, "Submitted Data");
         }
 
 
