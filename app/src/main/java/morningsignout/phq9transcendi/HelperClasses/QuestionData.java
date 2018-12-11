@@ -1,5 +1,19 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
  * Created by Daniel on 12/18/2016.
  * Intended to make adding questions much easier. No dependency in QuizActivity for particular
@@ -145,5 +159,21 @@ public class QuestionData {
 
     public QuestionData() {
         answerChoices = new String[8][];
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static void main (String[] args) {
+        // Note: XLSX file temporarily moved to PHQ9-Transcendi root directory
+        try (InputStream inp = new FileInputStream("questions.xlsx")) {
+            Workbook wb = WorkbookFactory.create(inp);
+            Sheet sheet = wb.getSheetAt(0);
+            Row row = sheet.getRow(2);
+            Cell cell = row.getCell(3);
+            System.out.println(cell.getStringCellValue());
+        } catch (FileNotFoundException fe) {
+            System.err.println(fe.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
