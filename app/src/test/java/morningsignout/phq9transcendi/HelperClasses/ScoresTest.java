@@ -6,11 +6,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ScoresTest {
-
-    @org.junit.jupiter.api.BeforeEach
-    void setUp() {
-    }
-
     @org.junit.jupiter.api.Test
     void newScores_scoresStartWithZero() {
         Scores scores = new Scores();

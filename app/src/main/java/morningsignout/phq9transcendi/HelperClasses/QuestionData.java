@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Iterator;
 
 /**
  * Created by Daniel on 12/18/2016.
@@ -167,13 +168,23 @@ public class QuestionData {
         try (InputStream inp = new FileInputStream("questions.xlsx")) {
             Workbook wb = WorkbookFactory.create(inp);
             Sheet sheet = wb.getSheetAt(0);
-            Row row = sheet.getRow(2);
-            Cell cell = row.getCell(3);
-            System.out.println(cell.getStringCellValue());
+
+            // Load Question Names (hard-coded at column 0)
+            Iterator<Row> iterator = sheet.iterator();
+            iterator.next(); // Skip row 0
+            while (iterator.hasNext()) {
+                Row row = iterator.next();
+                Cell cell = row.getCell(0);
+                System.out.println(cell.getStringCellValue());
+            }
         } catch (FileNotFoundException fe) {
             System.err.println(fe.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    String getQuestionText(String questionName) {
+        return null;
     }
 }
