@@ -1,6 +1,7 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class QuestionDataTest {
     // Names of actual questions in the excel sheet. Not likely these will change.
     @org.junit.jupiter.params.ParameterizedTest
-    @CsvSource("anhedoniainterest, guilt, suicidality_flag")
+    @ValueSource(strings = {"anhedoniainterest", "guilt", "suicidality_flag"})
     void loadQuestionNames_containsCorrectStrings(String questionName) {
         QuestionData questionData = new QuestionData();
         assertNotNull(questionData.getQuestionText(questionName),

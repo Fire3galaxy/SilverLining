@@ -185,6 +185,6 @@ public class QuestionData {
     }
 
     String getQuestionText(String questionName) {
-        return null;
+        return "value";
     }
 }
