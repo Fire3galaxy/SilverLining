@@ -187,4 +187,8 @@ public class QuestionData {
     String getQuestionText(String questionName) {
         return "value";
     }
+
+    public int size() {
+        return 1;
+    }
 }
