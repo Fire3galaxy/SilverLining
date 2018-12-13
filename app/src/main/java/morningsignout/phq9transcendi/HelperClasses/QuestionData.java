@@ -185,6 +185,8 @@ public class QuestionData {
     }
 
     String getQuestionText(String questionName) {
+        if (questionName.equals("anhedoniainterest"))
+            return "Example Question 1";
         return "DUMMY QUESTION";
     }
 

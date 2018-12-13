@@ -24,11 +24,12 @@ class QuestionDataTest {
     }
 
     @org.junit.jupiter.params.ParameterizedTest
-    @ValueSource(strings = {"anhedoniainterest", "guilt", "suicidality_flag"})
-    void loadQuestionNames_containsCorrectStrings(String questionName) {
+    @CsvSource(
+            {"anhedoniainterest, Example Question 1"
+            })
+    void loadQuestionNames_containsCorrectStrings(String questionName, String actualQuestionText) {
         QuestionData questionData = new QuestionData();
 
-        assertNotNull(questionData.getQuestionText(questionName),
-                "Value for question (" + questionName + ") should exist");
+        assertEquals(actualQuestionText, questionData.getQuestionText(questionName));
     }
 }
