@@ -185,7 +185,7 @@ public class QuestionData {
     }
 
     String getQuestionText(String questionName) {
-        return "value";
+        return "DUMMY QUESTION";
     }
 
     public int size() {
