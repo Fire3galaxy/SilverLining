@@ -16,11 +16,6 @@ class QuestionDataTest {
     }
 
     @org.junit.jupiter.api.Test
-    void ensureDummySpreadsheetIsUsed() {
-        assertEquals(questionData.getQuestionText("DUMMY"), "DUMMY QUESTION");
-    }
-
-    @org.junit.jupiter.api.Test
     void loadQuestionNames_countIsNonZero() {
         assertNotEquals(0, questionData.size(),
                 "Number of questions in spreadsheet should never be 0");
@@ -28,10 +23,11 @@ class QuestionDataTest {
 
     @org.junit.jupiter.params.ParameterizedTest
     @CsvSource({
+            "DUMMY, DUMMY QUESTION",
             "anhedoniainterest, Example Question 1",
             "guilt, Example Question 2"
             })
-    void loadQuestionNames_containsCorrectStrings(String questionName, String actualQuestionText) {
+    void loadQuestionNames_containsExpectedDummyQuestions(String questionName, String actualQuestionText) {
         assertEquals(actualQuestionText, questionData.getQuestionText(questionName));
     }
 }
