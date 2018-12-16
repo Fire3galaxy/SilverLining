@@ -1,19 +1,14 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
+import java.util.TreeMap;
 
 /**
  * Created by Daniel on 12/18/2016.
@@ -135,7 +130,7 @@ public class QuestionData {
     // the order of questions is not fixed (would be bad for database to use #).
     //
     // Ordered by current order of questions, arranged by category
-    public static final String[] questionNames = {
+    static final String[] questionNames = {
             // 1-16 (normal)
             "anhedoniainterest", "anhedoniaenjoy",
             "mooddepress", "moodhopeless",
@@ -155,39 +150,45 @@ public class QuestionData {
             "familyunderstands", "familysituation", "culturalbackground", "i_appointment",
             "fearofstranger", "i_adequateresources"
     };
+    public static final String QUESTION_SPREADSHEET_NAME = "questions.xlsx";
 
     public String[][] answerChoices; // Answer type, answers
 
+    TreeMap<String, String> questionMap;
+
     public QuestionData() {
         answerChoices = new String[8][];
+        loadQuestionMap();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public static void main (String[] args) {
-        // Note: XLSX file temporarily moved to PHQ9-Transcendi root directory
-        try (InputStream inp = new FileInputStream("questions.xlsx")) {
-            Workbook wb = WorkbookFactory.create(inp);
-            Sheet sheet = wb.getSheetAt(0);
+    private void loadQuestionMap() {
+        questionMap = new TreeMap<>();
 
-            // Load Question Names (hard-coded at column 0)
-            Iterator<Row> iterator = sheet.iterator();
-            iterator.next(); // Skip row 0
-            while (iterator.hasNext()) {
-                Row row = iterator.next();
-                Cell cell = row.getCell(0);
-                System.out.println(cell.getStringCellValue());
-            }
-        } catch (FileNotFoundException fe) {
-            System.err.println(fe.getMessage());
+        try {
+            Workbook wb = openSpreadsheet();
+            addQuestionText(wb);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
+    private void addQuestionText(Workbook wb) {
+        Iterator<Row> iterator = wb.getSheetAt(0).iterator();
+        iterator.next();
+        while (iterator.hasNext()) {
+            Row row = iterator.next();
+            questionMap.put(row.getCell(0).getStringCellValue(),
+                    row.getCell(3).getStringCellValue());
+        }
+    }
+
+    private Workbook openSpreadsheet() throws IOException {
+        InputStream sheetInput = new FileInputStream(QUESTION_SPREADSHEET_NAME);
+        return WorkbookFactory.create(sheetInput);
+    }
+
     String getQuestionText(String questionName) {
-        if (questionName.equals("anhedoniainterest"))
-            return "Example Question 1";
-        return "DUMMY QUESTION";
+        return questionMap.get(questionName);
     }
 
     public int size() {

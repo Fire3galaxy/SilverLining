@@ -17,6 +17,9 @@ class QuestionDataTest {
 
     @org.junit.jupiter.api.Test
     void loadQuestionNames_countIsNonZero() {
+        // TODO: Replace dummy excel sheet with a mocked Apache POI that opens mock data.
+        // Unit tests should only focus on logic of reading files and getting question text, not on
+        // opening files and using Apache POI properly.
         assertNotEquals(0, questionData.size(),
                 "Number of questions in spreadsheet should never be 0");
     }
@@ -27,7 +30,7 @@ class QuestionDataTest {
             "anhedoniainterest, Example Question 1",
             "guilt, Example Question 2"
             })
-    void loadQuestionNames_containsExpectedDummyQuestions(String questionName, String actualQuestionText) {
+    void loadQuestionNames_containsExpectedDummyQuestionNamesAndText(String questionName, String actualQuestionText) {
         assertEquals(actualQuestionText, questionData.getQuestionText(questionName));
     }
 }
