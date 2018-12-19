@@ -185,8 +185,41 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     }
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));   // For custom Rubik font
+    }
+
+    @Override
     public void onBackPressed() {
         confirmUserWishesToQuit();
+    }
+
+    // Which view was clicked: arrows (nextArrow/prevArrow) or buttons (yes/no)
+    @Override
+    public void onClick(View v) {
+        // clicked for a radio button question, not a yes/no question
+        //Move onto the next question
+        if (v.equals(nextArrow)) {
+            // We only need an explicit "save answer" for radio buttons since the arrow key is hidden
+            // for yes/no questions.
+            if (QuestionData.USES_SLIDER[questionNumber]) {
+                recordRadioButtonAnswer();
+            }
+            handleQuiz(true);
+        } else if (v.equals(prevArrow)) {
+            if (QuestionData.USES_SLIDER[questionNumber]) {
+                recordRadioButtonAnswer();
+            }
+            handleQuiz(false);
+        } else if (v.equals(answerNo)) {
+            // Value is from yes/no button
+            addScore(questionNumber, 0);
+            handleQuiz(true);
+        } else if (v.equals(answerYes)) {
+            // Value is from yes/no button
+            addScore(questionNumber, 1);
+            handleQuiz(true);
+        }
     }
 
     private void confirmUserWishesToQuit() {
@@ -205,11 +238,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
                     }
                 });
         dialogBuilder.create().show();
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));   // For custom Rubik font
     }
 
     // Calls all functions to change question.
@@ -373,58 +401,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         scores.putScore(questionNumber, value);
     }
 
-    // Uploads score data to Firebase. If no user ID exists, creates and stores one
-    // TODO: Test this function. Just moved code out of Scores into here.
-    private void uploadToDatabase() {
-        FirebaseUser user = FirebaseAuth.getInstance(PHQApplication.getFirebaseAppInstance()).getCurrentUser();
-
-        if(user != null) {
-            FirebaseDatabase rootDB = FirebaseDatabase.getInstance(PHQApplication.getFirebaseAppInstance());
-            DatabaseReference userRef = rootDB.getReference("users/" + user.getUid()),
-                    testRef = rootDB.getReference("tests/").push();
-            String testID = testRef.getKey();
-
-            // Users
-            userRef.child("testIDs").push().setValue(testID);
-
-            // Tests
-            ArrayList<Integer> answers = scores.getScoreValsArray();
-            Map<String, Integer> categoryScores = scores.getCategoryScoreMap();
-
-            testRef.child("timestamp").setValue(endTimestamp);
-            testRef.child("userID").setValue(user.getUid());
-            testRef.child("answers").setValue(answers);
-            testRef.child("scores").setValue(categoryScores);
-        }
-    }
-
-    // Which view was clicked: arrows (nextArrow/prevArrow) or buttons (yes/no)
-    @Override
-    public void onClick(View v) {
-        // clicked for a radio button question, not a yes/no question
-        //Move onto the next question
-        if (v.equals(nextArrow)) {
-            // We only need an explicit "save answer" for radio buttons since the arrow key is hidden
-            // for yes/no questions.
-            if (QuestionData.USES_SLIDER[questionNumber]) {
-                recordRadioButtonAnswer();
-            }
-            handleQuiz(true);
-        } else if (v.equals(prevArrow)) {
-            if (QuestionData.USES_SLIDER[questionNumber]) {
-                recordRadioButtonAnswer();
-            }
-            handleQuiz(false);
-        } else if (v.equals(answerNo)) {
-            // Value is from yes/no button
-            addScore(questionNumber, 0);
-            handleQuiz(true);
-        } else if (v.equals(answerYes)) {
-            // Value is from yes/no button
-            addScore(questionNumber, 1);
-            handleQuiz(true);
-        }
-    }
 
     public void recordRadioButtonAnswer(){
         int currentAnswerChoice = -1;
@@ -474,5 +450,30 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         editor.remove(SAVE_SCORES_A);
         editor.remove(SAVE_SCORES_B);
         editor.apply();
+    }
+
+    /* Uploads score data to Firebase. If no user ID exists, creates and stores one
+     * TODO: Test this function. Just moved code out of Scores into here. */
+    private void uploadToDatabase() {
+        FirebaseUser user = FirebaseAuth.getInstance(PHQApplication.getFirebaseAppInstance()).getCurrentUser();
+
+        if(user != null) {
+            FirebaseDatabase rootDB = FirebaseDatabase.getInstance(PHQApplication.getFirebaseAppInstance());
+            DatabaseReference userRef = rootDB.getReference("users/" + user.getUid()),
+                    testRef = rootDB.getReference("tests/").push();
+            String testID = testRef.getKey();
+
+            // Users
+            userRef.child("testIDs").push().setValue(testID);
+
+            // Tests
+            ArrayList<Integer> answers = scores.getScoreValsArray();
+            Map<String, Integer> categoryScores = scores.getCategoryScoreMap();
+
+            testRef.child("timestamp").setValue(endTimestamp);
+            testRef.child("userID").setValue(user.getUid());
+            testRef.child("answers").setValue(answers);
+            testRef.child("scores").setValue(categoryScores);
+        }
     }
 }
