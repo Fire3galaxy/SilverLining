@@ -13,7 +13,8 @@ class QuestionDataTest {
     @org.junit.jupiter.api.BeforeAll
     static void setUp() {
         final boolean isUnitTest = true;
-        questionData = new QuestionData(isUnitTest, "3_questions.xlsx");
+        String defaultDummyFile = "3_questions.xlsx";
+        questionData = new QuestionData(isUnitTest, defaultDummyFile);
     }
 
     // TODO: Replace dummy excel sheet with a mocked Apache POI that opens mock data.

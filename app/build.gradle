@@ -22,6 +22,12 @@ android {
         exclude 'META-INF/NOTICE' // It is not include NOTICE file
         exclude 'META-INF/LICENSE' // It is not include LICENSE file
     }
+
+    // TODO: Test that app still runs on phones with SDK 15
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
