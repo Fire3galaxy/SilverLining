@@ -1,7 +1,9 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
 import android.content.Context;
+import android.util.Log;
 
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -152,31 +154,36 @@ public class QuestionData {
             "familyunderstands", "familysituation", "culturalbackground", "i_appointment",
             "fearofstranger", "i_adequateresources"
     };
-    public static final String QUESTION_SPREADSHEET_NAME = "questions.xlsx";
+    public static final int QUESTION_NAME_COLUMN = 0;
+    public static final int QUESTION_TEXT_COLUMN = 3;
 
     public String[][] answerChoices; // Answer type, answers
+
+    public static final String QUESTION_SPREADSHEET_NAME = "questions.xlsx";
 
     TreeMap<String, String> questionMap;
     private boolean isUnitTest;
     private Context context;
+    private String spreadsheetName;
 
     public QuestionData() {
-        this(null,false);
+        this(null,false, QUESTION_SPREADSHEET_NAME);
     }
 
     public QuestionData(Context context) {
-        this(context, false);
+        this(context, false, QUESTION_SPREADSHEET_NAME);
     }
 
-    QuestionData(boolean isUnitTest) {
-        this(null, isUnitTest);
+    QuestionData(boolean isUnitTest, String filename) {
+        this(null, isUnitTest, filename);
     }
 
-    private QuestionData(Context context, boolean isUnitTest) {
+    private QuestionData(Context context, boolean isUnitTest, String filename) {
         answerChoices = new String[8][];
 
         this.context = context;
         this.isUnitTest = isUnitTest;
+        this.spreadsheetName = filename;
         loadQuestionMap();
     }
 
@@ -192,19 +199,30 @@ public class QuestionData {
         }
     }
 
+    private String getCellValue(Row row, int column) {
+        Cell cell = row.getCell(column);
+        return cell != null ? cell.getStringCellValue() : null;
+    }
+
     private void addQuestionText(Workbook wb) {
-        Iterator<Row> iterator = wb.getSheetAt(0).iterator();
+        int onlySheet = 0;
+        Iterator<Row> iterator = wb.getSheetAt(onlySheet).iterator();
         iterator.next();
         while (iterator.hasNext()) {
             Row row = iterator.next();
-            questionMap.put(row.getCell(0).getStringCellValue(),
-                    row.getCell(3).getStringCellValue());
+            String questionName = getCellValue(row, QUESTION_NAME_COLUMN);
+            String questionText = getCellValue(row, QUESTION_TEXT_COLUMN);
+
+            // Guards against poorly parsed XLSX files with empty cells
+            if (questionName == null || questionText == null) return;
+
+            questionMap.put(questionName, questionText);
         }
     }
 
     private Workbook openSpreadsheet() throws IOException, IllegalStateException {
         if (isUnitTest) {
-            return WorkbookFactory.create(new FileInputStream(QUESTION_SPREADSHEET_NAME));
+            return WorkbookFactory.create(new FileInputStream(spreadsheetName));
         } else if (context != null) {
             return WorkbookFactory.create(context.getAssets().open(QUESTION_SPREADSHEET_NAME));
         }
@@ -217,6 +235,6 @@ public class QuestionData {
     }
 
     public int size() {
-        return 1;
+        return questionMap.size();
     }
 }
