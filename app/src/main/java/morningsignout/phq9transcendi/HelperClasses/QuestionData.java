@@ -1,5 +1,7 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
+import android.content.Context;
+
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -155,16 +157,26 @@ public class QuestionData {
     public String[][] answerChoices; // Answer type, answers
 
     TreeMap<String, String> questionMap;
-    private boolean IS_UNIT_TEST;
+    private boolean isUnitTest;
+    private Context context;
 
     public QuestionData() {
-        this(false);
+        this(null,false);
+    }
+
+    public QuestionData(Context context) {
+        this(context, false);
     }
 
     QuestionData(boolean isUnitTest) {
+        this(null, isUnitTest);
+    }
+
+    private QuestionData(Context context, boolean isUnitTest) {
         answerChoices = new String[8][];
 
-        IS_UNIT_TEST = isUnitTest;
+        this.context = context;
+        this.isUnitTest = isUnitTest;
         loadQuestionMap();
     }
 
@@ -190,9 +202,14 @@ public class QuestionData {
         }
     }
 
-    private Workbook openSpreadsheet() throws IOException {
-        InputStream sheetInput = new FileInputStream(QUESTION_SPREADSHEET_NAME);
-        return WorkbookFactory.create(sheetInput);
+    private Workbook openSpreadsheet() throws IOException, IllegalStateException {
+        if (isUnitTest) {
+            return WorkbookFactory.create(new FileInputStream(QUESTION_SPREADSHEET_NAME));
+        } else if (context != null) {
+            return WorkbookFactory.create(context.getAssets().open(QUESTION_SPREADSHEET_NAME));
+        }
+
+        throw new IllegalStateException("Incorrect arguments passed to QuestionData. Code may be outdated.");
     }
 
     String getQuestionText(String questionName) {

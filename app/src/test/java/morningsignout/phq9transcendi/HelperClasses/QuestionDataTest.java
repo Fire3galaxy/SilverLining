@@ -12,7 +12,8 @@ class QuestionDataTest {
 
     @org.junit.jupiter.api.BeforeAll
     static void setUp() {
-        questionData = new QuestionData();
+        final boolean isUnitTest = true;
+        questionData = new QuestionData(isUnitTest);
     }
 
     @org.junit.jupiter.api.Test
