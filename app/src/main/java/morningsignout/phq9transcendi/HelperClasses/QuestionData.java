@@ -166,10 +166,6 @@ public class QuestionData {
     private Context context;
     private String spreadsheetName;
 
-    public QuestionData() {
-        this(null,false, QUESTION_SPREADSHEET_NAME);
-    }
-
     public QuestionData(Context context) {
         this(context, false, QUESTION_SPREADSHEET_NAME);
     }
