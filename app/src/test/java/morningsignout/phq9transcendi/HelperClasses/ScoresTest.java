@@ -10,6 +10,7 @@ class ScoresTest {
     void newScores_scoresStartWithZero() {
         Scores scores = new Scores();
 
+        // Go through all questions
         for (int i = 0; i < QuestionData.NUM_QUESTIONS; i++) {
             assertEquals(0,
                     scores.getQuestionScore(i),
@@ -39,7 +40,6 @@ class ScoresTest {
         for (int i = 0; i < scoreVals.length; i++) {
             scores.putScore(i, scoreVals[i]);
         }
-
         // Scores inserted should match scoreVals
         for (int i = 0; i < scoreVals.length; i++) {
             assertEquals(scoreVals[i],

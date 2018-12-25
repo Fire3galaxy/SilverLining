@@ -155,9 +155,16 @@ public class QuestionData {
     public String[][] answerChoices; // Answer type, answers
 
     TreeMap<String, String> questionMap;
+    private boolean IS_UNIT_TEST;
 
     public QuestionData() {
+        this(false);
+    }
+
+    QuestionData(boolean isUnitTest) {
         answerChoices = new String[8][];
+
+        IS_UNIT_TEST = isUnitTest;
         loadQuestionMap();
     }
 
