@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -123,8 +124,12 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         });
 
         isFinishingFlag = false;
-        allAnswers = new QuestionData(this);
-        questionArray = allAnswers.getQuestionsText();
+        questionArray = res.getStringArray(R.array.questions);
+        try {
+            allAnswers = new QuestionData(this);
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to open resources");
+        }
         allAnswers.answerChoices[QuestionData.NORMAL] = res.getStringArray(R.array.answers_normal);
         allAnswers.answerChoices[QuestionData.FLAG] = res.getStringArray(R.array.answers_flag);
         allAnswers.answerChoices[QuestionData.DEPRESSION] = res.getStringArray(R.array.answers_depression);

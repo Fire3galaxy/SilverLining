@@ -3,14 +3,16 @@ package morningsignout.phq9transcendi.HelperClasses;
 import android.content.Context;
 import android.util.Log;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Iterator;
 import java.util.TreeMap;
 
@@ -154,8 +156,27 @@ public class QuestionData {
             "familyunderstands", "familysituation", "culturalbackground", "i_appointment",
             "fearofstranger", "i_adequateresources"
     };
-    public static final int QUESTION_NAME_COLUMN = 0;
-    public static final int QUESTION_TEXT_COLUMN = 3;
+
+    private static final int QUESTION_NAME_COLUMN = 0;
+    private static final int QUESTION_TEXT_COLUMN = 3;
+
+    private enum Headers {
+        questionName("Question Name"),
+        categoryType("Category Type"),
+        answerType  ("Answer Type"),
+        questionText("Question Text");
+
+        private String readableName;
+
+        Headers(String s) {
+            readableName = s;
+        }
+
+        @Override
+        public String toString() {
+            return readableName;
+        }
+    }
 
     public String[][] answerChoices; // Answer type, answers
 
@@ -164,67 +185,33 @@ public class QuestionData {
     TreeMap<String, String> questionMap;
     private boolean isUnitTest;
     private Context context;
-    private String spreadsheetName;
 
-    public QuestionData(Context context) {
+    public QuestionData(Context context) throws IOException {
         this(context, false, QUESTION_SPREADSHEET_NAME);
     }
 
-    QuestionData(boolean isUnitTest, String filename) {
+    QuestionData(boolean isUnitTest, String filename) throws IOException {
         this(null, isUnitTest, filename);
     }
 
-    private QuestionData(Context context, boolean isUnitTest, String filename) {
-        answerChoices = new String[8][];
-
+    private QuestionData(Context context, boolean isUnitTest, String filename) throws IOException {
+        this.answerChoices = new String[8][];
         this.context = context;
         this.isUnitTest = isUnitTest;
-        this.spreadsheetName = filename;
-        loadQuestionMap();
+        this.questionMap = new TreeMap<>();
+
+        loadQuestionMap(filename);
     }
 
-    private void loadQuestionMap() {
-        questionMap = new TreeMap<>();
+    private void loadQuestionMap(String filename) throws IOException {
+        Reader in = new FileReader(filename);
+        Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(in);
 
-        try {
-            Workbook wb = openSpreadsheet();
-            addQuestionText(wb);
-        } catch (IOException e) {
-            // TODO: Replace with Log.e() or appropriate final catching code.
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private String getCellValue(Row row, int column) {
-        Cell cell = row.getCell(column);
-        return cell != null ? cell.getStringCellValue() : null;
-    }
-
-    private void addQuestionText(Workbook wb) {
-        int onlySheet = 0;
-        Iterator<Row> iterator = wb.getSheetAt(onlySheet).iterator();
-        iterator.next();
-        while (iterator.hasNext()) {
-            Row row = iterator.next();
-            String questionName = getCellValue(row, QUESTION_NAME_COLUMN);
-            String questionText = getCellValue(row, QUESTION_TEXT_COLUMN);
-            Log.d("QuestionData", questionText);
-
-            // Guards against poorly parsed XLSX files with empty cells
-            if (questionName == null || questionText == null) return;
-
+        for (CSVRecord record : records) {
+            String questionName = record.get(Headers.questionName);
+            String questionText = record.get(Headers.questionText);
             questionMap.put(questionName, questionText);
         }
-    }
-
-    private Workbook openSpreadsheet() throws IOException, IllegalStateException {
-        if (isUnitTest) {
-            return WorkbookFactory.create(new FileInputStream(spreadsheetName));
-        } else if (context != null) {
-            return WorkbookFactory.create(context.getAssets().open(QUESTION_SPREADSHEET_NAME));
-        }
-
-        throw new IllegalStateException("Incorrect arguments passed to QuestionData. Code may be outdated.");
     }
 
     String getQuestionText(String questionName) {
