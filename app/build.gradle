@@ -44,8 +44,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.1.0'
     // For the database
     implementation 'com.google.firebase:firebase-database:16.0.5'
-    // https://mvnrepository.com/artifact/org.apache.poi/poi
-    implementation 'org.apache.poi:poi:4.0.1'
-    implementation 'org.apache.poi:poi-ooxml:4.0.1'
+    implementation files('libs/poi-ooxml-4.0.1.jar')
+    implementation files('libs/poi-4.0.1.jar')
 }
 

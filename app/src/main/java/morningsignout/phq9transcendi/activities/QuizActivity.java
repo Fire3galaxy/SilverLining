@@ -139,7 +139,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         startTimestamp = getCurrentTimestampStr();
         questionNumber = -1;
         scores = new Scores();
-        //answerSliderView.setIndex(0);
 
         handleQuiz(true);   // Everything is set up, start quiz
 
