@@ -208,6 +208,7 @@ public class QuestionData {
             Row row = iterator.next();
             String questionName = getCellValue(row, QUESTION_NAME_COLUMN);
             String questionText = getCellValue(row, QUESTION_TEXT_COLUMN);
+            Log.d("QuestionData", questionText);
 
             // Guards against poorly parsed XLSX files with empty cells
             if (questionName == null || questionText == null) return;
@@ -232,5 +233,12 @@ public class QuestionData {
 
     public int size() {
         return questionMap.size();
+    }
+
+    public String[] getQuestionsText() {
+        String[] questionsText = new String[questionMap.size()];
+        questionMap.values().toArray(questionsText);
+
+        return questionsText;
     }
 }
