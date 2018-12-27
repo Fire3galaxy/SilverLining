@@ -152,6 +152,7 @@ public class QuestionData {
             "fearofstranger", "i_adequateresources"
     };
 
+
     private enum Headers {
         questionName("Question Name"),
         categoryType("Category Type"),
@@ -236,5 +237,19 @@ public class QuestionData {
             questionText[i] = questionList.get(i).getQuestionText();
 
         return questionText;
+    }
+
+    int temp = -1;
+
+    public String getAnswerType(String threeQuestionName) {
+        temp++;
+        switch (temp) {
+            case 0:
+                return "DUMMY";
+            case 1:
+                return "NORMAL";
+            default:
+                return "SUPPORTIVE";
+        }
     }
 }

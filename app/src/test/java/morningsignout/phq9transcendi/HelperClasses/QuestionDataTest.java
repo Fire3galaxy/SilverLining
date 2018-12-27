@@ -14,10 +14,26 @@ class QuestionDataTest {
     private static final String TWO_QUESTION_TEST_FILE = "2_questions.csv";
     private static final String THREE_QUESTION_TEST_FILE = "3_questions.csv";
     private static final boolean IS_UNIT_TEST = true;
-    private static final String[] THREE_QUESTION_NAMES
-            = new String[]{"DUMMY", "anhedoniainterest", "guilt"};
-    private static final String[] THREE_QUESTION_TEXT
-            = new String[]{"DUMMY QUESTION", "Example Question 1", "Example Question 2"};
+
+    /* Basically all the values corresponding to THREE_QUESTION_TEST_FILE are here. This
+     * level of hard-coding somewhat makes sense - after all, no one should be changing the dummy
+     * values, so these tests should be able to assume the data is correct.
+     */
+    private static final String[] THREE_QUESTION_NAMES = new String[]{
+            "DUMMY",
+            "anhedoniainterest",
+            "guilt"
+    };
+    private static final String[] THREE_QUESTION_TEXT = new String[]{
+            "DUMMY QUESTION",
+            "Example Question 1",
+            "Example Question 2"
+    };
+    private static final String[] THREE_QUESTION_ANSWER_TYPES = new String[]{
+            "DUMMY",
+            "NORMAL",
+            "SUPPORTIVE"
+    };
 
     private QuestionData defaultTestQuestionData;
 
@@ -68,5 +84,10 @@ class QuestionDataTest {
         }
     }
 
-
+    @org.junit.jupiter.api.Test
+    void getAnswerType_cotainsExpectedAnswerTypes() {
+        for (int i = 0; i < THREE_QUESTION_NAMES.length; i++) {
+            assertEquals(THREE_QUESTION_ANSWER_TYPES[i], defaultTestQuestionData.getAnswerType(THREE_QUESTION_NAMES[i]));
+        }
+    }
 }
