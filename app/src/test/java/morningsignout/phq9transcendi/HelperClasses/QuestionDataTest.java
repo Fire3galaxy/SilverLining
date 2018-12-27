@@ -1,10 +1,12 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.IOException;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -86,5 +88,16 @@ class QuestionDataTest {
         for (int i = 0; i < THREE_QUESTION_ANSWER_TYPES.length; i++) {
             assertEquals(THREE_QUESTION_ANSWER_TYPES[i], defaultTestQuestionData.getAnswerType(i));
         }
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @ValueSource(strings = {
+            "DUMMY, invalid",
+            "NORMAL, Not at all, One or two days a week, Three to four days a week, Everyday",
+            "SUPPORTIVE, Very poor, Poor, Okay, Good, Very good"
+    })
+    void getAnswerValues_containsExpectedAnswerValues(
+            @ConvertWith(ToAnswersMap.class) Map<String, String[]> answerMap) {
+
     }
 }
