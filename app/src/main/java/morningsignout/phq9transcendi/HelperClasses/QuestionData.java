@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -151,10 +152,10 @@ public class QuestionData {
             "familyunderstands", "familysituation", "culturalbackground", "i_appointment",
             "fearofstranger", "i_adequateresources"
     };
+    public static final int MAX_ANSWER_ARRAY_SIZE = 5;
 
 
-
-    private enum Headers {
+    private enum QuestionsHeaders {
         questionName("Question Name"),
         categoryType("Category Type"),
         answerType  ("Answer Type"),
@@ -162,7 +163,27 @@ public class QuestionData {
 
         private String readableName;
 
-        Headers(String s) {
+        QuestionsHeaders(String s) {
+            readableName = s;
+        }
+
+        @Override
+        public String toString() {
+            return readableName;
+        }
+    }
+
+    private enum AnswersHeaders {
+        answerType("Answer Type"),
+        answer1("Answer 1"),
+        answer2("Answer 2"),
+        answer3("Answer 3"),
+        answer4("Answer 4"),
+        answer5("Answer 5");
+
+        private String readableName;
+
+        AnswersHeaders(String s) {
             readableName = s;
         }
 
@@ -174,10 +195,12 @@ public class QuestionData {
 
     public String[][] answerChoices; // Answer type, answers
 
-    // Note: DO NOT CHANGE THIS FILE NAME WHEN UPDATING QUESTIONS.CSV. This is hardcoded.
+    // Note: DO NOT CHANGE THIS FILE NAME WHEN UPDATING CSV. This is hardcoded.
     private static final String QUESTION_SPREADSHEET_NAME = "questions.csv";
+    private static final String ANSWER_SPREADSHEET_NAME = "answers.csv";
 
     private LinkedList<SingleQuestionData> questionList;
+    private HashMap<String, String[]> answerMap;
     private boolean isUnitTest;
     private Context context;
 
@@ -185,6 +208,7 @@ public class QuestionData {
         this(context, false, QUESTION_SPREADSHEET_NAME);
     }
 
+    // Special constructor for custom questions for unit tests.
     QuestionData(boolean isUnitTest, String filename) throws IOException {
         this(null, isUnitTest, filename);
     }
@@ -194,18 +218,61 @@ public class QuestionData {
         this.context = context;
         this.isUnitTest = isUnitTest;
         this.questionList = new LinkedList<>();
+        this.answerMap = new HashMap<>();
 
-        loadDataFromSpreadsheet(filename);
+        loadQuestionDataFromSpreadsheet(filename);
+        loadAnswerDataFromSpreadsheet();
     }
 
-    private void loadDataFromSpreadsheet(String filename) throws IOException {
+    private void loadAnswerDataFromSpreadsheet() throws IOException {
+        Reader in = getAnswersReader();
+        Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(in);
+
+        for (CSVRecord record : records) {
+            String answerType = record.get(AnswersHeaders.answerType);
+            String[] answerArray = getAnswerArray(record);
+            answerMap.put(answerType, answerArray);
+        }
+    }
+
+    private String[] getAnswerArray(CSVRecord record) {
+        String[] answerArray = new String[determineAnswerArraySize(record)];
+
+        // Strangeness of code is due to adherence to using dedicated header names
+        switch (answerArray.length) {
+            case 5:
+                answerArray[4] = record.get(AnswersHeaders.answer5);
+            case 4:
+                answerArray[3] = record.get(AnswersHeaders.answer4);
+            case 3:
+                answerArray[2] = record.get(AnswersHeaders.answer3);
+            case 2:
+                answerArray[1] = record.get(AnswersHeaders.answer2);
+            case 1:
+                answerArray[0] = record.get(AnswersHeaders.answer1);
+                break;
+        }
+
+        return answerArray;
+    }
+
+    private int determineAnswerArraySize(CSVRecord record) {
+        int size = MAX_ANSWER_ARRAY_SIZE;
+
+        while (record.get(size - 1).isEmpty())
+            size--;
+
+        return size;
+    }
+
+    private void loadQuestionDataFromSpreadsheet(String filename) throws IOException {
         Reader in = getQuestionsReader(filename);
         Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(in);
 
         for (CSVRecord record : records) {
-            String questionName = record.get(Headers.questionName);
-            String answerType = record.get(Headers.answerType);
-            String questionText = record.get(Headers.questionText);
+            String questionName = record.get(QuestionsHeaders.questionName);
+            String answerType   = record.get(QuestionsHeaders.answerType);
+            String questionText = record.get(QuestionsHeaders.questionText);
 
             questionList.add(new SingleQuestionData(questionName, answerType, questionText));
         }
@@ -219,6 +286,16 @@ public class QuestionData {
             throw new IllegalStateException("Null value passed in for context");
 
         return new InputStreamReader(this.context.getAssets().open(filename));
+    }
+
+    private Reader getAnswersReader() throws IOException {
+        if (this.isUnitTest)
+            return new FileReader(ANSWER_SPREADSHEET_NAME);
+
+        if (this.context == null)
+            throw new IllegalStateException("Null value passed in for context");
+
+        return new InputStreamReader(this.context.getAssets().open(ANSWER_SPREADSHEET_NAME));
     }
 
     String getQuestionName(int i) {
@@ -235,5 +312,9 @@ public class QuestionData {
 
     public int size() {
         return questionList.size();
+    }
+
+    public String[] getAnswerValues(String answerType) {
+        return answerMap.get(answerType);
     }
 }

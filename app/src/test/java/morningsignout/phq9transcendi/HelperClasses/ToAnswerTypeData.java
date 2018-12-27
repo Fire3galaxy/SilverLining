@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ToAnswersMap implements ArgumentConverter {
+class ToAnswerTypeData implements ArgumentConverter {
     @Override
     public Object convert(Object source, ParameterContext context) throws ArgumentConversionException {
         assertEquals(String.class, source.getClass(), "Expecting a String object");
@@ -16,14 +16,12 @@ class ToAnswersMap implements ArgumentConverter {
         // Split single comma-separated list of strings into array of strings
         String sourceStr = String.valueOf(source);
         String[] parsedValues = sourceStr.split(", ");
-        HashMap<String, String[]> answerMap = new HashMap<>();
 
         // Convert sourceStr into a map of answer type to corresponding answers
         String answerType = parsedValues[0];                         // First string is answer type
         String[] answerValues = new String[parsedValues.length - 1]; // Rest are answers
         System.arraycopy(parsedValues, 1, answerValues, 0, parsedValues.length - 1);
-        answerMap.put(answerType, answerValues);
 
-        return answerMap;
+        return new AnswerTypeData(answerType, answerValues);
     }
 }

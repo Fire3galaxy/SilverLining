@@ -45,7 +45,7 @@ class QuestionDataTest {
         try {
             defaultTestQuestionData = new QuestionData(IS_UNIT_TEST, THREE_QUESTION_TEST_FILE);
         } catch (IOException e) {
-            fail("QuestionData should not throw exception");
+            fail("QuestionData should not throw exception: " + e.getMessage());
         }
     }
 
@@ -92,12 +92,15 @@ class QuestionDataTest {
 
     @org.junit.jupiter.params.ParameterizedTest
     @ValueSource(strings = {
-            "DUMMY, invalid",
             "NORMAL, Not at all, One or two days a week, Three to four days a week, Everyday",
-            "SUPPORTIVE, Very poor, Poor, Okay, Good, Very good"
+            "SUPPORTIVE, Very poor, Poor, Okay, Good, Very good",
     })
     void getAnswerValues_containsExpectedAnswerValues(
-            @ConvertWith(ToAnswersMap.class) Map<String, String[]> answerMap) {
+            @ConvertWith(ToAnswerTypeData.class) AnswerTypeData answerTypeData) {
+        String[] actualAnswerValues = defaultTestQuestionData.getAnswerValues(answerTypeData.getAnswerType());
 
+        for (int i = 0; i < answerTypeData.getAnswerValues().length; i++) {
+            assertEquals(answerTypeData.getAnswerValues()[i], actualAnswerValues[i]);
+        }
     }
 }
