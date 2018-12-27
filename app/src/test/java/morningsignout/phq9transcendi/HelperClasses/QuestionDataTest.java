@@ -13,6 +13,10 @@ class QuestionDataTest {
     private static final String TWO_QUESTION_TEST_FILE = "2_questions.csv";
     private static final String THREE_QUESTION_TEST_FILE = "3_questions.csv";
     private static final boolean IS_UNIT_TEST = true;
+    private static final String[] THREE_QUESTION_NAMES
+            = new String[]{"DUMMY", "anhedoniainterest", "guilt"};
+    private static final String[] THREE_QUESTION_TEXT
+            = new String[]{"DUMMY QUESTION", "Example Question 1", "Example Question 2"};
 
     // TODO: Replace dummy excel sheet with a mocked Apache POI that opens mock data.
     // Unit tests should only focus on logic of reading files and getting question text, not on
@@ -22,7 +26,7 @@ class QuestionDataTest {
             TWO_QUESTION_TEST_FILE      + ", 2",
             THREE_QUESTION_TEST_FILE    + ", 3"
     })
-    void numQuestionsIsCorrect(String filename, int correctNumQuestions) {
+    void size_numQuestionsIsCorrect(String filename, int correctNumQuestions) {
         QuestionData questionData = null;
         try {
             questionData = new QuestionData(IS_UNIT_TEST, filename);
@@ -34,13 +38,8 @@ class QuestionDataTest {
                 "Number of questions in spreadsheet should be " + correctNumQuestions);
     }
 
-    @org.junit.jupiter.params.ParameterizedTest
-    @CsvSource({
-            "DUMMY, DUMMY QUESTION",
-            "anhedoniainterest, Example Question 1",
-            "guilt, Example Question 2"
-            })
-    void containsExpectedDummyQuestionNamesAndText(String questionName, String actualQuestionText) {
+    @org.junit.jupiter.api.Test
+    void getQuestionText_containsExpectedDummyQuestionNamesAndText() {
         QuestionData questionData = null;
         try {
             questionData = new QuestionData(IS_UNIT_TEST, THREE_QUESTION_TEST_FILE);
@@ -48,6 +47,16 @@ class QuestionDataTest {
             fail("QuestionData should not throw exception");
         }
 
-        assertEquals(actualQuestionText, questionData.getQuestionText(questionName));
+        for (int i = 0; i < THREE_QUESTION_NAMES.length; i++) {
+            assertEquals(THREE_QUESTION_TEXT[i], questionData.getQuestionText(THREE_QUESTION_NAMES[i]));
+        }
     }
+
+//    @org.junit.jupiter.params.ParameterizedTest
+//    @ValueSource(strings = {
+//            "DUMMY QUESTION, Example Question 1, Example Question 2"
+//    })
+//    void getQuestionTextArray_expectedTextIsInCorrectOrder(String questionTextValues) {
+//
+//    }
 }

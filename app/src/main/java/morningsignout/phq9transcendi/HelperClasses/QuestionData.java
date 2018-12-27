@@ -222,7 +222,7 @@ public class QuestionData {
         return questionMap.size();
     }
 
-    public String[] getQuestionsText() {
+    public String[] getQuestionTextArray() {
         String[] questionsText = new String[questionMap.size()];
         questionMap.values().toArray(questionsText);
 
