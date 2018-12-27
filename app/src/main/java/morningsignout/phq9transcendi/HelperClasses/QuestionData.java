@@ -1,20 +1,15 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.Iterator;
-import java.util.TreeMap;
+import java.util.LinkedList;
 
 /**
  * Created by Daniel on 12/18/2016.
@@ -157,9 +152,6 @@ public class QuestionData {
             "fearofstranger", "i_adequateresources"
     };
 
-    private static final int QUESTION_NAME_COLUMN = 0;
-    private static final int QUESTION_TEXT_COLUMN = 3;
-
     private enum Headers {
         questionName("Question Name"),
         categoryType("Category Type"),
@@ -180,9 +172,10 @@ public class QuestionData {
 
     public String[][] answerChoices; // Answer type, answers
 
-    public static final String QUESTION_SPREADSHEET_NAME = "questions.xlsx";
+    // Note: DO NOT CHANGE THIS FILE NAME WHEN UPDATING QUESTIONS.CSV. This is hardcoded.
+    private static final String QUESTION_SPREADSHEET_NAME = "questions.csv";
 
-    TreeMap<String, String> questionMap;
+    private LinkedList<SingleQuestionData> questionList;
     private boolean isUnitTest;
     private Context context;
 
@@ -198,34 +191,50 @@ public class QuestionData {
         this.answerChoices = new String[8][];
         this.context = context;
         this.isUnitTest = isUnitTest;
-        this.questionMap = new TreeMap<>();
+        this.questionList = new LinkedList<>();
 
-        loadQuestionMap(filename);
+        loadQuestionList(filename);
     }
 
-    private void loadQuestionMap(String filename) throws IOException {
-        Reader in = new FileReader(filename);
+    private void loadQuestionList(String filename) throws IOException {
+        Reader in = getQuestionsReader(filename);
         Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(in);
 
         for (CSVRecord record : records) {
             String questionName = record.get(Headers.questionName);
             String questionText = record.get(Headers.questionText);
-            questionMap.put(questionName, questionText);
+            questionList.add(new SingleQuestionData(questionName, questionText));
         }
     }
 
+    private Reader getQuestionsReader(String filename) throws IOException {
+        if (this.isUnitTest)
+            return new FileReader(filename);
+
+        if (this.context == null)
+            throw new IllegalStateException("Null value passed in for context");
+
+        return new InputStreamReader(this.context.getAssets().open(filename));
+    }
+
     String getQuestionText(String questionName) {
-        return questionMap.get(questionName);
+        for (SingleQuestionData sqd : questionList)
+            if (sqd.getQuestionName().equals(questionName))
+                return sqd.getQuestionText();
+
+        throw new IllegalStateException("Requested question does not exist");
     }
 
     public int size() {
-        return questionMap.size();
+        return questionList.size();
     }
 
     public String[] getQuestionTextArray() {
-        String[] questionsText = new String[questionMap.size()];
-        questionMap.values().toArray(questionsText);
+        String[] questionText = new String[questionList.size()];
 
-        return questionsText;
+        for (int i = 0; i < questionList.size(); i++)
+            questionText[i] = questionList.get(i).getQuestionText();
+
+        return questionText;
     }
 }

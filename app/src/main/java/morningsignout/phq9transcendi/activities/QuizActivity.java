@@ -124,12 +124,12 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         });
 
         isFinishingFlag = false;
-        questionArray = res.getStringArray(R.array.questions);
         try {
             allAnswers = new QuestionData(this);
         } catch (IOException e) {
             throw new IllegalStateException("Unable to open resources");
         }
+        questionArray = allAnswers.getQuestionTextArray();
         allAnswers.answerChoices[QuestionData.NORMAL] = res.getStringArray(R.array.answers_normal);
         allAnswers.answerChoices[QuestionData.FLAG] = res.getStringArray(R.array.answers_flag);
         allAnswers.answerChoices[QuestionData.DEPRESSION] = res.getStringArray(R.array.answers_depression);
