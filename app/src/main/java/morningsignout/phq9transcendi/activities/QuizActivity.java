@@ -41,7 +41,7 @@ import morningsignout.phq9transcendi.HelperClasses.Utils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /* What to update when question is added: If new answer type is added, add string array to
- * QuestionData allAnswers in constructor
+ * QuestionData questionData in constructor
  */
 public class QuizActivity extends AppCompatActivity implements ImageButton.OnClickListener {
     private static final String LOG_NAME = "QuizActivity";
@@ -60,7 +60,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private RadioGroup radioButtonGroup;
 
     private String[] questionArray;
-    QuestionData allAnswers;
+    QuestionData questionData;
     int currentAnswerChoice;
     int currentButtonChoice;
     private String startTimestamp, endTimestamp;
@@ -125,19 +125,19 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
         isFinishingFlag = false;
         try {
-            allAnswers = new QuestionData(this);
+            questionData = new QuestionData(this);
         } catch (IOException e) {
             throw new IllegalStateException("Unable to open resources");
         }
-        questionArray = allAnswers.getQuestionTextArray();
-        allAnswers.answerChoices[QuestionData.NORMAL] = res.getStringArray(R.array.answers_normal);
-        allAnswers.answerChoices[QuestionData.FLAG] = res.getStringArray(R.array.answers_flag);
-        allAnswers.answerChoices[QuestionData.DEPRESSION] = res.getStringArray(R.array.answers_depression);
-        allAnswers.answerChoices[QuestionData.SITUATION] = res.getStringArray(R.array.answers_situation);
-        allAnswers.answerChoices[QuestionData.APPOINTMENT] = res.getStringArray(R.array.answers_appointment);
-        allAnswers.answerChoices[QuestionData.YES_NO] = res.getStringArray(R.array.answers_yes_no);
-        allAnswers.answerChoices[QuestionData.STRANGER] = res.getStringArray(R.array.answers_stranger);
-        allAnswers.answerChoices[QuestionData.SUPPORTIVE] = res.getStringArray(R.array.answers_supportive);
+        questionArray = questionData.getQuestionTextArray();
+        questionData.answerChoices[QuestionData.NORMAL] = res.getStringArray(R.array.answers_normal);
+        questionData.answerChoices[QuestionData.FLAG] = res.getStringArray(R.array.answers_flag);
+        questionData.answerChoices[QuestionData.DEPRESSION] = res.getStringArray(R.array.answers_depression);
+        questionData.answerChoices[QuestionData.SITUATION] = res.getStringArray(R.array.answers_situation);
+        questionData.answerChoices[QuestionData.APPOINTMENT] = res.getStringArray(R.array.answers_appointment);
+        questionData.answerChoices[QuestionData.YES_NO] = res.getStringArray(R.array.answers_yes_no);
+        questionData.answerChoices[QuestionData.STRANGER] = res.getStringArray(R.array.answers_stranger);
+        questionData.answerChoices[QuestionData.SUPPORTIVE] = res.getStringArray(R.array.answers_supportive);
         currentAnswerChoice = -1;
         currentButtonChoice = -1;
 
@@ -352,7 +352,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     //question number is passed in
     private void putRadioButtons(int answerIndex) {
         int answerType = QuestionData.ANSW_CHOICE[answerIndex];
-        int numButtonsForCurrQuestion = (allAnswers.answerChoices[answerType]).length;
+        int numButtonsForCurrQuestion = (questionData.answerChoices[answerType]).length;
         radioButtonGroup.setVisibility(View.VISIBLE);
 
         int i;
@@ -378,7 +378,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     }
 
     private void changeAnswerText(int answerIndex) {
-        String[] newText = allAnswers.answerChoices[answerIndex];
+        String[] newText = questionData.answerChoices[answerIndex];
 
         if (QuestionData.USES_SLIDER[questionNumber]) {
             radioButtonGroup.clearCheck();

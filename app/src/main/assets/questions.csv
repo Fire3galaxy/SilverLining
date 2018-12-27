@@ -11,7 +11,7 @@ appetitehigh,appetite,NORMAL,"How about eating more than you normally do, or bin
 guilt,guilt,NORMAL,"How often do you have thoughts that you're a failure, or that you've let yourself down?"
 concentrationpoor,cognition-concentration,NORMAL,Depression can manifest as difficulty studying or doing homework. Have you had trouble with your concentration lately?
 concentrationdistracted,cognition-concentration,NORMAL,Have you found difficulty finishing tasks you start?
-psychomotorslowself,psychomotor,NORMAL,"Some people with depression actually feel a sense of physical slowing. Have you felt a sense of physical ???slowness??? about yourself, like moving slowly?"
+psychomotorslowself,psychomotor,NORMAL,"Some people with depression actually feel a sense of physical slowing. Have you felt a sense of physical slowness about yourself, like moving slowly?"
 psychomotorslowother,psychomotor,NORMAL,Have you had anyone comment that you move or talk more slowly than usual?
 suicidalityactive,suicide,NORMAL,"Do you ever think about hurting yourself in some way, or ending your life?"
 suicidalitypassive,suicide,NORMAL,"How about the thought that you'd be better off dead, or that it would be great to just fall asleep and never wake up?"
