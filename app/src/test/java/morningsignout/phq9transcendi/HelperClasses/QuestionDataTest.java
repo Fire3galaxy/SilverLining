@@ -1,5 +1,6 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -17,6 +18,18 @@ class QuestionDataTest {
             = new String[]{"DUMMY", "anhedoniainterest", "guilt"};
     private static final String[] THREE_QUESTION_TEXT
             = new String[]{"DUMMY QUESTION", "Example Question 1", "Example Question 2"};
+
+    private QuestionData defaultTestQuestionData;
+
+    @BeforeEach
+    void setUp() {
+        defaultTestQuestionData = null;
+        try {
+            defaultTestQuestionData = new QuestionData(IS_UNIT_TEST, THREE_QUESTION_TEST_FILE);
+        } catch (IOException e) {
+            fail("QuestionData should not throw exception");
+        }
+    }
 
     // TODO: Replace dummy excel sheet with a mocked Apache POI that opens mock data.
     // Unit tests should only focus on logic of reading files and getting question text, not on
@@ -40,15 +53,8 @@ class QuestionDataTest {
 
     @org.junit.jupiter.api.Test
     void getQuestionText_containsExpectedDummyQuestionNamesAndText() {
-        QuestionData questionData = null;
-        try {
-            questionData = new QuestionData(IS_UNIT_TEST, THREE_QUESTION_TEST_FILE);
-        } catch (IOException e) {
-            fail("QuestionData should not throw exception");
-        }
-
         for (int i = 0; i < THREE_QUESTION_NAMES.length; i++) {
-            assertEquals(THREE_QUESTION_TEXT[i], questionData.getQuestionText(THREE_QUESTION_NAMES[i]));
+            assertEquals(THREE_QUESTION_TEXT[i], defaultTestQuestionData.getQuestionText(THREE_QUESTION_NAMES[i]));
         }
     }
 
