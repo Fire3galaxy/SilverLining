@@ -68,26 +68,23 @@ class QuestionDataTest {
     }
 
     @org.junit.jupiter.api.Test
-    void getQuestionText_containsExpectedDummyQuestionNamesAndText() {
+    void getQuestionText_containsExpectedDummyQuestionNames() {
         for (int i = 0; i < THREE_QUESTION_NAMES.length; i++) {
-            assertEquals(THREE_QUESTION_TEXT[i], defaultTestQuestionData.getQuestionText(THREE_QUESTION_NAMES[i]));
+            assertEquals(THREE_QUESTION_NAMES[i], defaultTestQuestionData.getQuestionName(i));
         }
     }
 
     @org.junit.jupiter.api.Test
-    void getQuestionTextArray_expectedTextIsInCorrectOrder() {
-        int i = 0;
-
-        for (String text : defaultTestQuestionData.getQuestionTextArray()) {
-            assertEquals(THREE_QUESTION_TEXT[i], text);
-            i++;
+    void getQuestionText_containsExpectedDummyQuestionText() {
+        for (int i = 0; i < THREE_QUESTION_TEXT.length; i++) {
+            assertEquals(THREE_QUESTION_TEXT[i],  defaultTestQuestionData.getQuestionText(i));
         }
     }
 
     @org.junit.jupiter.api.Test
-    void getAnswerType_cotainsExpectedAnswerTypes() {
-        for (int i = 0; i < THREE_QUESTION_NAMES.length; i++) {
-            assertEquals(THREE_QUESTION_ANSWER_TYPES[i], defaultTestQuestionData.getAnswerType(THREE_QUESTION_NAMES[i]));
+    void getAnswerType_containsExpectedAnswerTypes() {
+        for (int i = 0; i < THREE_QUESTION_ANSWER_TYPES.length; i++) {
+            assertEquals(THREE_QUESTION_ANSWER_TYPES[i], defaultTestQuestionData.getAnswerType(i));
         }
     }
 }

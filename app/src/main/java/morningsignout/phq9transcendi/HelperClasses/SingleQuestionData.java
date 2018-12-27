@@ -1,19 +1,25 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
-public class SingleQuestionData {
-    private String questionName;
-    private String questionText;
+class SingleQuestionData {
+    private final String questionName;
+    private final String questionText;
+    private final String answerType;
 
-    public SingleQuestionData(String questionName, String questionText) {
+    SingleQuestionData(String questionName, String answerType, String questionText) {
         this.questionName = questionName;
+        this.answerType = answerType;
         this.questionText = questionText;
     }
 
-    public String getQuestionName() {
+    String getQuestionName() {
         return questionName;
     }
 
-    public String getQuestionText() {
+    String getAnswerType() {
+        return answerType;
+    }
+
+    String getQuestionText() {
         return questionText;
     }
 }

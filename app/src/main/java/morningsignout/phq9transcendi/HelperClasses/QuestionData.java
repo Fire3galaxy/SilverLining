@@ -153,6 +153,7 @@ public class QuestionData {
     };
 
 
+
     private enum Headers {
         questionName("Question Name"),
         categoryType("Category Type"),
@@ -194,17 +195,19 @@ public class QuestionData {
         this.isUnitTest = isUnitTest;
         this.questionList = new LinkedList<>();
 
-        loadQuestionList(filename);
+        loadDataFromSpreadsheet(filename);
     }
 
-    private void loadQuestionList(String filename) throws IOException {
+    private void loadDataFromSpreadsheet(String filename) throws IOException {
         Reader in = getQuestionsReader(filename);
         Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(in);
 
         for (CSVRecord record : records) {
             String questionName = record.get(Headers.questionName);
+            String answerType = record.get(Headers.answerType);
             String questionText = record.get(Headers.questionText);
-            questionList.add(new SingleQuestionData(questionName, questionText));
+
+            questionList.add(new SingleQuestionData(questionName, answerType, questionText));
         }
     }
 
@@ -218,12 +221,16 @@ public class QuestionData {
         return new InputStreamReader(this.context.getAssets().open(filename));
     }
 
-    String getQuestionText(String questionName) {
-        for (SingleQuestionData sqd : questionList)
-            if (sqd.getQuestionName().equals(questionName))
-                return sqd.getQuestionText();
+    String getQuestionName(int i) {
+        return questionList.get(i).getQuestionName();
+    }
 
-        throw new IllegalStateException("Requested question does not exist");
+    String getQuestionText(int i) {
+        return questionList.get(i).getQuestionText();
+    }
+
+    String getAnswerType(int i) {
+        return questionList.get(i).getAnswerType();
     }
 
     public int size() {
@@ -239,17 +246,4 @@ public class QuestionData {
         return questionText;
     }
 
-    int temp = -1;
-
-    public String getAnswerType(String threeQuestionName) {
-        temp++;
-        switch (temp) {
-            case 0:
-                return "DUMMY";
-            case 1:
-                return "NORMAL";
-            default:
-                return "SUPPORTIVE";
-        }
-    }
 }
