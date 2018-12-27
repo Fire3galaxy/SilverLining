@@ -225,7 +225,7 @@ public class QuestionData {
         return questionList.get(i).getQuestionName();
     }
 
-    String getQuestionText(int i) {
+    public String getQuestionText(int i) {
         return questionList.get(i).getQuestionText();
     }
 
@@ -236,14 +236,4 @@ public class QuestionData {
     public int size() {
         return questionList.size();
     }
-
-    public String[] getQuestionTextArray() {
-        String[] questionText = new String[questionList.size()];
-
-        for (int i = 0; i < questionList.size(); i++)
-            questionText[i] = questionList.get(i).getQuestionText();
-
-        return questionText;
-    }
-
 }

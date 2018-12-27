@@ -59,7 +59,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     private LinearLayout containerButtons;
     private RadioGroup radioButtonGroup;
 
-    private String[] questionArray;
     QuestionData questionData;
     int currentAnswerChoice;
     int currentButtonChoice;
@@ -129,7 +128,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         } catch (IOException e) {
             throw new IllegalStateException("Unable to open resources");
         }
-        questionArray = questionData.getQuestionTextArray();
         questionData.answerChoices[QuestionData.NORMAL] = res.getStringArray(R.array.answers_normal);
         questionData.answerChoices[QuestionData.FLAG] = res.getStringArray(R.array.answers_flag);
         questionData.answerChoices[QuestionData.DEPRESSION] = res.getStringArray(R.array.answers_depression);
@@ -307,7 +305,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     //changes the question text, answer text, and answer method
     //also checks the radiobutton that was previously chosen
     private void updateQuestions() {
-        questionTextView.setText(questionArray[questionNumber]);                    // Question text
+        questionTextView.setText(questionData.getQuestionText(questionNumber));                    // Question text
         questionNumText.setText(String.format(numberString, questionNumber + 1));   // Question #
 
         // Possible string array options for answers are listed in QuestionData
