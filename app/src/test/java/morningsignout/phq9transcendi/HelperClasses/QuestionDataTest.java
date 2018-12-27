@@ -58,11 +58,13 @@ class QuestionDataTest {
         }
     }
 
-//    @org.junit.jupiter.params.ParameterizedTest
-//    @ValueSource(strings = {
-//            "DUMMY QUESTION, Example Question 1, Example Question 2"
-//    })
-//    void getQuestionTextArray_expectedTextIsInCorrectOrder(String questionTextValues) {
-//
-//    }
+    @org.junit.jupiter.api.Test
+    void getQuestionTextArray_expectedTextIsInCorrectOrder() {
+        int i = 0;
+
+        for (String text : defaultTestQuestionData.getQuestionTextArray()) {
+            assertEquals(THREE_QUESTION_TEXT[i], text);
+            i++;
+        }
+    }
 }
