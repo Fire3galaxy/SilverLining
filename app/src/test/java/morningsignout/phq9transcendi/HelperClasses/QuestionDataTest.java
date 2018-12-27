@@ -70,21 +70,21 @@ class QuestionDataTest {
     }
 
     @org.junit.jupiter.api.Test
-    void getQuestionText_containsExpectedDummyQuestionNames() {
+    void getQuestionText_containsExpectedDummyQuestionNamesInCorrectOrder() {
         for (int i = 0; i < THREE_QUESTION_NAMES.length; i++) {
             assertEquals(THREE_QUESTION_NAMES[i], defaultTestQuestionData.getQuestionName(i));
         }
     }
 
     @org.junit.jupiter.api.Test
-    void getQuestionText_containsExpectedDummyQuestionText() {
+    void getQuestionText_containsExpectedDummyQuestionTextInCorrectOrder() {
         for (int i = 0; i < THREE_QUESTION_TEXT.length; i++) {
             assertEquals(THREE_QUESTION_TEXT[i],  defaultTestQuestionData.getQuestionText(i));
         }
     }
 
     @org.junit.jupiter.api.Test
-    void getAnswerType_containsExpectedAnswerTypes() {
+    void getAnswerType_containsExpectedAnswerTypesInCorrectOrder() {
         for (int i = 0; i < THREE_QUESTION_ANSWER_TYPES.length; i++) {
             assertEquals(THREE_QUESTION_ANSWER_TYPES[i], defaultTestQuestionData.getAnswerType(i));
         }
@@ -102,5 +102,11 @@ class QuestionDataTest {
         for (int i = 0; i < answerTypeData.getAnswerValues().length; i++) {
             assertEquals(answerTypeData.getAnswerValues()[i], actualAnswerValues[i]);
         }
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @ValueSource(strings = {"DUMMY"})
+    void getAnswerValues_invalidAnswerType(String answerType) {
+        assertNull(defaultTestQuestionData.getAnswerValues(answerType));
     }
 }

@@ -314,7 +314,7 @@ public class QuestionData {
         return questionList.size();
     }
 
-    public String[] getAnswerValues(String answerType) {
+    String[] getAnswerValues(String answerType) {
         return answerMap.get(answerType);
     }
 }
