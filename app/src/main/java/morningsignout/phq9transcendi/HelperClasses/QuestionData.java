@@ -1,6 +1,7 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -259,7 +260,7 @@ public class QuestionData {
     private int determineAnswerArraySize(CSVRecord record) {
         int size = MAX_ANSWER_ARRAY_SIZE;
 
-        while (record.get(size - 1).isEmpty())
+        while (record.get(size).isEmpty())
             size--;
 
         return size;
@@ -316,5 +317,9 @@ public class QuestionData {
 
     public String[] getAnswerValues(String answerType) {
         return answerMap.get(answerType);
+    }
+
+    public int getAnswerValuesLength(String answerType) {
+        return answerMap.get(answerType).length;
     }
 }

@@ -109,4 +109,16 @@ class QuestionDataTest {
     void getAnswerValues_invalidAnswerType(String answerType) {
         assertNull(defaultTestQuestionData.getAnswerValues(answerType));
     }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @ValueSource(strings = {
+            "NORMAL, Not at all, One or two days a week, Three to four days a week, Everyday",
+            "SUPPORTIVE, Very poor, Poor, Okay, Good, Very good",
+    })
+    void getAnswerValuesLength_isExpectedLength(
+            @ConvertWith(ToAnswerTypeData.class) AnswerTypeData answerTypeData) {
+        int actualAnswerValuesLength = defaultTestQuestionData.getAnswerValuesLength(answerTypeData.getAnswerType());
+
+        assertEquals(answerTypeData.getAnswerValues().length, actualAnswerValuesLength);
+    }
 }

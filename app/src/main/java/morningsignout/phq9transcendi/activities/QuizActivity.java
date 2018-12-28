@@ -306,7 +306,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     //changes the question text, answer text, and answer method
     //also checks the radiobutton that was previously chosen
     private void updateQuestions() {
-        questionTextView.setText(questionData.getQuestionText(questionNumber));                    // Question text
+        questionTextView.setText(questionData.getQuestionText(questionNumber));     // Question text
         questionNumText.setText(String.format(numberString, questionNumber + 1));   // Question #
 
         // Possible string array options for answers are listed in QuestionData
@@ -314,7 +314,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
 
         // Shows either the radio buttons or regular yes/no buttons
         if (QuestionData.USES_SLIDER[questionNumber]) {
-            putRadioButtons(questionNumber);
+            putRadioButtons();
         } else {
             putButtons();
         }
@@ -349,9 +349,9 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     //sets the radio buttons to be visible and buttons to be invisible
     //Number of buttons is determined by what question it is
     //question number is passed in
-    private void putRadioButtons(int answerIndex) {
-        int answerType = QuestionData.ANSW_CHOICE[answerIndex];
-        int numButtonsForCurrQuestion = (questionData.answerChoices[answerType]).length;
+    private void putRadioButtons() {
+        String answerType = questionData.getAnswerType(questionNumber);
+        int numButtonsForCurrQuestion = questionData.getAnswerValuesLength(answerType);
         radioButtonGroup.setVisibility(View.VISIBLE);
 
         int i;
