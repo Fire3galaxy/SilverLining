@@ -152,8 +152,8 @@ public class QuestionData {
             "familyunderstands", "familysituation", "culturalbackground", "i_appointment",
             "fearofstranger", "i_adequateresources"
     };
-    public static final int MAX_ANSWER_ARRAY_SIZE = 5;
 
+    private static final int MAX_ANSWER_ARRAY_SIZE = 5;
 
     private enum QuestionsHeaders {
         questionName("Question Name"),
@@ -306,7 +306,7 @@ public class QuestionData {
         return questionList.get(i).getQuestionText();
     }
 
-    String getAnswerType(int i) {
+    public String getAnswerType(int i) {
         return questionList.get(i).getAnswerType();
     }
 
@@ -314,7 +314,7 @@ public class QuestionData {
         return questionList.size();
     }
 
-    String[] getAnswerValues(String answerType) {
+    public String[] getAnswerValues(String answerType) {
         return answerMap.get(answerType);
     }
 }

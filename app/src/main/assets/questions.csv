@@ -15,11 +15,11 @@ psychomotorslowself,psychomotor,NORMAL,"Some people with depression actually fee
 psychomotorslowother,psychomotor,NORMAL,Have you had anyone comment that you move or talk more slowly than usual?
 suicidalityactive,suicide,NORMAL,"Do you ever think about hurting yourself in some way, or ending your life?"
 suicidalitypassive,suicide,NORMAL,"How about the thought that you'd be better off dead, or that it would be great to just fall asleep and never wake up?"
-continuousdepression_flag,red-flag,YES_NO,Would you say you've felt depressed or down for more than two weeks?
-longdepression_flag,red-flag,YES_NO,"In the past year, have you felt depressed or sad most days, even if you felt okay sometimes?"
-interference,red-flag,YES_NO,"Have any of these symptoms of depression we asked about earlier keep you from being 100% at work, study, or relationships?"
-suicidality_flag,red-flag,YES_NO,Has there been a time in the past month when you have had serious thoughts about ending your life?
-suicideaction_flag,red-flag,YES_NO,Has there ever been a time in your life where you tried to kill yourself?
+continuousdepression_flag,red-flag,YES/NO,Would you say you've felt depressed or down for more than two weeks?
+longdepression_flag,red-flag,YES/NO,"In the past year, have you felt depressed or sad most days, even if you felt okay sometimes?"
+interference,red-flag,YES/NO,"Have any of these symptoms of depression we asked about earlier keep you from being 100% at work, study, or relationships?"
+suicidality_flag,red-flag,YES/NO,Has there been a time in the past month when you have had serious thoughts about ending your life?
+suicideaction_flag,red-flag,YES/NO,Has there ever been a time in your life where you tried to kill yourself?
 familyunderstands,familyunderstands,DEPRESSION,How understanding would your family be if they knew you had depression?
 familysituation,familysituation,SITUATION,"To what degree do you think your family situation, such as your relationship with your parents, plays or can play a role in your depression?"
 culturalbackground,culturalbackground,SITUATION,To what degree do you think your cultural background plays or can play a role in your depression?

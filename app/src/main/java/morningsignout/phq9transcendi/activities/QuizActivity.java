@@ -12,6 +12,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
@@ -376,7 +377,8 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     }
 
     private void changeAnswerText(int answerIndex) {
-        String[] newText = questionData.answerChoices[answerIndex];
+        String answerType = questionData.getAnswerType(questionNumber);
+        String[] newText = questionData.getAnswerValues(answerType);
 
         if (QuestionData.USES_SLIDER[questionNumber]) {
             radioButtonGroup.clearCheck();
