@@ -194,8 +194,6 @@ public class QuestionData {
         }
     }
 
-    public String[][] answerChoices; // Answer type, answers
-
     // Note: DO NOT CHANGE THIS FILE NAME WHEN UPDATING CSV. This is hardcoded.
     private static final String QUESTION_SPREADSHEET_NAME = "questions.csv";
     private static final String ANSWER_SPREADSHEET_NAME = "answers.csv";
@@ -215,7 +213,6 @@ public class QuestionData {
     }
 
     private QuestionData(Context context, boolean isUnitTest, String filename) throws IOException {
-        this.answerChoices = new String[8][];
         this.context = context;
         this.isUnitTest = isUnitTest;
         this.questionList = new LinkedList<>();
@@ -317,9 +314,5 @@ public class QuestionData {
 
     public String[] getAnswerValues(String answerType) {
         return answerMap.get(answerType);
-    }
-
-    public int getAnswerValuesLength(String answerType) {
-        return answerMap.get(answerType).length;
     }
 }

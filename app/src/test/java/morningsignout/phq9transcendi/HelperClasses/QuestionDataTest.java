@@ -117,8 +117,9 @@ class QuestionDataTest {
     })
     void getAnswerValuesLength_isExpectedLength(
             @ConvertWith(ToAnswerTypeData.class) AnswerTypeData answerTypeData) {
-        int actualAnswerValuesLength = defaultTestQuestionData.getAnswerValuesLength(answerTypeData.getAnswerType());
+        String[] actualAnswerVals = defaultTestQuestionData.getAnswerValues(answerTypeData.getAnswerType());
+        int actualAnswerValsLength = actualAnswerVals.length;
 
-        assertEquals(answerTypeData.getAnswerValues().length, actualAnswerValuesLength);
+        assertEquals(answerTypeData.getAnswerValues().length, actualAnswerValsLength);
     }
 }
