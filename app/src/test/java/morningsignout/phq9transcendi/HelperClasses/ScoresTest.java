@@ -114,4 +114,14 @@ class ScoresTest {
 
         assertTrue(scores.containsRedFlag());
     }
+
+    @org.junit.jupiter.api.Test
+    void containsRedFlag_redFlagAnswerChanged_noRedFlag() {
+        Scores scores = new Scores();
+
+        scores.putScore(QuestionData.RED_FLAG_QUESTION, 1);
+        scores.putScore(QuestionData.RED_FLAG_QUESTION, 0);
+
+        assertFalse(scores.containsRedFlag());
+    }
 }
