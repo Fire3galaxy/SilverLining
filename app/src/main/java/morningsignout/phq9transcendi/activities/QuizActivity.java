@@ -183,6 +183,18 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void onClickNextArrow(View view) {
+        arrowButtonClicked();
+        handleQuiz(true);
+        Log.d(LOG_NAME, "NEXT");
+    }
+
+    public void onClickPrevArrow(View view) {
+        arrowButtonClicked();
+        handleQuiz(false);
+        Log.d(LOG_NAME, "PREV");
+    }
+
+    private void arrowButtonClicked() {
         // We only need an explicit "save answer" action for radio buttons.
         String answerType = questionData.getAnswerType(questionNumber);
         AnswerUITypeEnum answerUIType = questionData.getAnswerUIType(answerType);
@@ -191,15 +203,6 @@ public class QuizActivity extends AppCompatActivity {
             recordRadioButtonAnswer();
             Log.d(LOG_NAME, "Question uses radio buttons");
         }
-        handleQuiz(true);
-    }
-
-    public void onClickPrevArrow(View view) {
-        // We only need an explicit "save answer" action for radio buttons.
-        if (QuestionData.USES_SLIDER[questionNumber]) {
-            recordRadioButtonAnswer();
-        }
-        handleQuiz(false);
     }
 
     public void onClickButtonYes(View view) {
