@@ -296,16 +296,17 @@ public class QuizActivity extends AppCompatActivity {
     //changes the question text, answer text, and answer method
     //also checks the radiobutton that was previously chosen
     private void updateQuestions() {
-        questionTextView.setText(questionData.getQuestionText(questionNumber));     // Question text
+        String answerType = questionData.getAnswerType(questionNumber);
+        AnswerUITypeEnum answerUIType = questionData.getAnswerUIType(answerType);
         int offsetOne = 1;
+
+        questionTextView.setText(questionData.getQuestionText(questionNumber));     // Question text
         questionNumText.setText(String.format(numberString, questionNumber + offsetOne));   // Question #
 
         // Possible string array options for answers are listed in QuestionData
         changeAnswerText();
 
         // Shows either the radio buttons or regular yes/no buttons
-        String answerType = questionData.getAnswerType(questionNumber);
-        AnswerUITypeEnum answerUIType = questionData.getAnswerUIType(answerType);
         if (answerUIType == AnswerUITypeEnum.RadioButtons) {
             putRadioButtons();
         } else {
@@ -332,8 +333,8 @@ public class QuizActivity extends AppCompatActivity {
             prevArrow.setVisibility(View.VISIBLE);
 
         // Hide nextArrow button on red flag questions unless already answered or is interference
-        if (!QuestionData.USES_SLIDER[questionNumber]
-                && (questionNumber + 1 == QuestionData.NUM_QUESTIONS || !scores.questionIsVisited(questionNumber)))
+        if (answerUIType != AnswerUITypeEnum.RadioButtons
+                && !scores.questionIsVisited(questionNumber))
             nextArrow.setVisibility(View.INVISIBLE);
         else
             nextArrow.setVisibility(View.VISIBLE);
