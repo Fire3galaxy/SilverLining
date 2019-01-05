@@ -304,7 +304,9 @@ public class QuizActivity extends AppCompatActivity {
         changeAnswerText();
 
         // Shows either the radio buttons or regular yes/no buttons
-        if (QuestionData.USES_SLIDER[questionNumber]) {
+        String answerType = questionData.getAnswerType(questionNumber);
+        AnswerUITypeEnum answerUIType = questionData.getAnswerUIType(answerType);
+        if (answerUIType == AnswerUITypeEnum.RadioButtons) {
             putRadioButtons();
         } else {
             putButtons();
