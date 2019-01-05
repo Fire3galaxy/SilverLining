@@ -42,9 +42,6 @@ import morningsignout.phq9transcendi.HelperClasses.Scores;
 import morningsignout.phq9transcendi.HelperClasses.Utils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-/* What to update when question is added: If new answer type is added, add string array to
- * QuestionData questionData in constructor
- */
 public class QuizActivity extends AppCompatActivity {
     private static final String LOG_NAME = "QuizActivity";
     private static final String SAVE_TIMESTAMP = "Timestamp", SAVE_QUESTION_NUM = "Question Number",
@@ -133,7 +130,7 @@ public class QuizActivity extends AppCompatActivity {
         startTimestamp = getCurrentTimestampStr();
         questionNumber = -1;
         numberString = "%1$d/" + String.valueOf(questionData.questionsLength());
-        scores = new Scores();
+        scores = new Scores(questionData);
 
         handleQuiz(true);   // Everything is set up, start quiz
     }
@@ -166,7 +163,7 @@ public class QuizActivity extends AppCompatActivity {
             int questionNumber = preferences.getInt(SAVE_QUESTION_NUM, 0);
             String scoresA = preferences.getString(SAVE_SCORES_A, null);
             String scoresB = preferences.getString(SAVE_SCORES_B, null);
-            scores = new Scores(scoresA, scoresB);
+            scores = new Scores(questionData, scoresA, scoresB);
 
             setQuestion(questionNumber);    // Everything is set up, start quiz
         }
@@ -302,8 +299,6 @@ public class QuizActivity extends AppCompatActivity {
 
         questionTextView.setText(questionData.getQuestionText(questionNumber));     // Question text
         questionNumText.setText(String.format(numberString, questionNumber + offsetOne));   // Question #
-
-        // Possible string array options for answers are listed in QuestionData
         changeAnswerText();
 
         // Shows either the radio buttons or regular yes/no buttons

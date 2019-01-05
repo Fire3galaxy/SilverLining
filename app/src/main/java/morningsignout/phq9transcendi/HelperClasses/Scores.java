@@ -24,17 +24,27 @@ public class Scores {
     // Mapping of question name to score value or visit flag
     private TreeMap<String, Integer> scoreDictionary;
     private TreeMap<String, Boolean> questionIsAnswered;
+    private QuestionData questionData;
 
-    public Scores() {
-        scoreDictionary = new TreeMap<>();
-        questionIsAnswered = new TreeMap<>();
+    Scores() {
+        this.scoreDictionary = new TreeMap<>();
+        this.questionIsAnswered = new TreeMap<>();
+        this.questionData = null;
+
+        setZeroScores();
+    }
+
+    public Scores(QuestionData questionData) {
+        this.scoreDictionary = new TreeMap<>();
+        this.questionIsAnswered = new TreeMap<>();
+        this.questionData = questionData;
 
         setZeroScores();
     }
 
     // For restoring Scores state
-    public Scores(String savedScore, String savedVisit) {
-        this();
+    public Scores(QuestionData questionData, String savedScore, String savedVisit) {
+        this(questionData);
         if (scoreDataMatchesVersion(savedScore, savedVisit)) restoreScores(savedScore, savedVisit);
     }
 
