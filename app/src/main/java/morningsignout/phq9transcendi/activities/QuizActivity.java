@@ -139,7 +139,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         handleQuiz(true);   // Everything is set up, start quiz
 
         // Set all buttons to onClickListener function here
-        nextArrow.setOnClickListener(this);
         prevArrow.setOnClickListener(this);
         answerNo.setOnClickListener(this);
         answerYes.setOnClickListener(this);
@@ -192,16 +191,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     // Which view was clicked: arrows (nextArrow/prevArrow) or buttons (yes/no)
     @Override
     public void onClick(View v) {
-        // clicked for a radio button question, not a yes/no question
-        //Move onto the next question
-        if (v.equals(nextArrow)) {
-            // We only need an explicit "save answer" for radio buttons since the arrow key is hidden
-            // for yes/no questions.
-            if (QuestionData.USES_SLIDER[questionNumber]) {
-                recordRadioButtonAnswer();
-            }
-            handleQuiz(true);
-        } else if (v.equals(prevArrow)) {
+        if (v.equals(prevArrow)) {
             if (QuestionData.USES_SLIDER[questionNumber]) {
                 recordRadioButtonAnswer();
             }
@@ -215,6 +205,18 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
             addScore(questionNumber, 1);
             handleQuiz(true);
         }
+
+        Log.d(LOG_NAME, "In onClick");
+    }
+
+    public void onClickNextArrow(View view) {
+        // We only need an explicit "save answer" for radio buttons since the arrow key is hidden
+        // for non-radio-button questions.
+        if (QuestionData.USES_SLIDER[questionNumber]) {
+            recordRadioButtonAnswer();
+        }
+        handleQuiz(true);
+        Log.d(LOG_NAME, "In onClickNextArrow");
     }
 
     private void confirmUserWishesToQuit() {
