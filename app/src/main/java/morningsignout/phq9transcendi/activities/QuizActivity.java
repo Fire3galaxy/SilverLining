@@ -315,7 +315,7 @@ public class QuizActivity extends AppCompatActivity {
 
         // Show previously saved answer if previous button is clicked
         if (scores.questionIsVisited(questionNumber)) {
-            //TODO set radoi button to be the score saved
+            //TODO set radio button to be the score saved
             //answerSliderView.setIndex(scores.getQuestionScore(questionNumber));
             int qnScore = scores.getQuestionScore(questionNumber);
             //if this answer has been chosen, we can check the correct option
@@ -376,8 +376,9 @@ public class QuizActivity extends AppCompatActivity {
     private void changeAnswerText() {
         String answerType = questionData.getAnswerType(questionNumber);
         String[] newText = questionData.getAnswerValues(answerType);
+        AnswerUITypeEnum answerUIType = questionData.getAnswerUIType(answerType);
 
-        if (QuestionData.USES_SLIDER[questionNumber]) {
+        if (answerUIType == AnswerUITypeEnum.RadioButtons) {
             radioButtonGroup.clearCheck();
             //loop through and set each button
             //TODO only loop through number of questions

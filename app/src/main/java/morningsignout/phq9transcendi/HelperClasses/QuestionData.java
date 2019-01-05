@@ -60,36 +60,6 @@ public class QuestionData {
             1, 1, 1, 1, 1
     };
 
-    static public final boolean[] USES_SLIDER = {
-            true,  // 0
-            true,  // 1
-            true,  // 2
-            true,  // 3
-            true,  // 4
-            true,  // 5
-            true,  // 6
-            true,  // 7
-            true,  // 8
-            true,  // 9
-            true,  // 10
-            true,  // 11
-            true,  // 12
-            true,  // 13
-            true,  // 14
-            true,  // 15
-            false, // 16
-            false, // 17
-            false, // 18
-            false, // 19
-            false, // 20
-            true,  // 21
-            true,  // 22
-            true,  // 23
-            true,  // 24
-            true,  // 25
-            true   // 26
-    };
-
     // Relevant question data variables
     // Using names instead of numbers for FireBase on the off-chance that
     // the order of questions is not fixed (would be bad for database to use #).
