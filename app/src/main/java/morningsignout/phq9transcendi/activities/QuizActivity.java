@@ -53,7 +53,7 @@ public class QuizActivity extends AppCompatActivity {
     public static final int MAX_NUM_BUTTONS = 5;
 
     // Use String.format() with this to display current question
-    private final String numberString = "%1$d/" + String.valueOf(QuestionData.NUM_QUESTIONS);
+    private String numberString;
 
     private TextView questionTextView, questionNumText; //The text of the question
     private Button answerNo, answerYes;
@@ -85,7 +85,6 @@ public class QuizActivity extends AppCompatActivity {
         prevArrow = findViewById(R.id.imageButton_prevq);
         containerButtons = findViewById(R.id.container_buttons);
         radioButtonGroup = findViewById(R.id.answer_choices);
-
 
         //change color according to theme
         Drawable arrows = ContextCompat.getDrawable(getApplicationContext(), R.drawable.green_arrow);
@@ -133,6 +132,7 @@ public class QuizActivity extends AppCompatActivity {
 
         startTimestamp = getCurrentTimestampStr();
         questionNumber = -1;
+        numberString = "%1$d/" + String.valueOf(questionData.questionsLength());
         scores = new Scores();
 
         handleQuiz(true);   // Everything is set up, start quiz
@@ -268,7 +268,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void setQuestion(int questionNumber) {
-        if (questionNumber >= 0 && questionNumber < QuestionData.NUM_QUESTIONS) {
+        if (questionNumber >= 0 && questionNumber < questionData.questionsLength()) {
             this.questionNumber = questionNumber;
             updateQuestions();
         }
