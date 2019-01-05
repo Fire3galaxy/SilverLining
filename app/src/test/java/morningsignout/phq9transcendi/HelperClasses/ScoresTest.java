@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ScoresTest {
     @org.junit.jupiter.api.Test
-    void newScores_scoresStartWithZero() {
+    void defaultConstructor_scoresStartWithZero() {
         Scores scores = new Scores();
 
         // Go through all questions
@@ -19,9 +19,17 @@ class ScoresTest {
         }
     }
 
+    @org.junit.jupiter.api.Test
+    void defaultConstructor_noQuestionsAreVisited() {
+        Scores scores = new Scores();
+
+        for (int i = 0; i < QuestionData.NUM_QUESTIONS; i++)
+            assertFalse(scores.questionIsVisited(i));
+    }
+
     @org.junit.jupiter.params.ParameterizedTest
     @CsvSource({"0, 2", "10, 3", "4, 0"})
-    void singleScoreInsertedCorrectly(int questionIndex, int scoreVal) {
+    void putScore_singleScoreInsertedCorrectly(int questionIndex, int scoreVal) {
         Scores scores = new Scores();
 
         scores.putScore(questionIndex, scoreVal);
@@ -32,7 +40,7 @@ class ScoresTest {
     }
 
     @org.junit.jupiter.api.Test
-    void multipleScoresInsertedCorrectly() {
+    void putScore_multipleScoresInsertedCorrectly() {
         Scores scores = new Scores();
         int[] scoreVals = {0, 1, 2, 3, 0, 1};
 
@@ -54,17 +62,9 @@ class ScoresTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
-    void newScores_noQuestionsAreVisited() {
-        Scores scores = new Scores();
-
-        for (int i = 0; i < QuestionData.NUM_QUESTIONS; i++)
-            assertFalse(scores.questionIsVisited(i));
-    }
-
     @org.junit.jupiter.params.ParameterizedTest
     @ValueSource(ints = {1, 3, 5})
-    void singleQuestionIsVisited(int questionIndex) {
+    void questionIsVisited_singleQuestionIsVisited(int questionIndex) {
         Scores scores = new Scores();
         final int ARBITRARY_SCORE = 0;
 
@@ -74,7 +74,7 @@ class ScoresTest {
     }
 
     @org.junit.jupiter.api.Test
-    void multipledQuestionsAreVisited() {
+    void questionIsVisited_multipledQuestionsAreVisited() {
         Scores scores = new Scores();
         final int NUM_VISITED = 5;
 
@@ -85,5 +85,12 @@ class ScoresTest {
             assertTrue(scores.questionIsVisited(i));
         for (int i = NUM_VISITED; i < QuestionData.NUM_QUESTIONS; i++)
             assertFalse(scores.questionIsVisited(i));
+    }
+
+    @org.junit.jupiter.api.Test
+    void containsRedFlag_noRedFlagAnswers() {
+        Scores scores = new Scores();
+
+        assertFalse(scores.containsRedFlag());
     }
 }
