@@ -44,7 +44,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 /* What to update when question is added: If new answer type is added, add string array to
  * QuestionData questionData in constructor
  */
-public class QuizActivity extends AppCompatActivity implements ImageButton.OnClickListener {
+public class QuizActivity extends AppCompatActivity {
     private static final String LOG_NAME = "QuizActivity";
     private static final String SAVE_TIMESTAMP = "Timestamp", SAVE_QUESTION_NUM = "Question Number",
         SAVE_SCORES_A = "Score Values", SAVE_SCORES_B = "Visit values";
@@ -137,9 +137,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         scores = new Scores();
 
         handleQuiz(true);   // Everything is set up, start quiz
-
-        // Set all buttons to onClickListener function here
-        answerNo.setOnClickListener(this);
     }
 
     @Override
@@ -186,18 +183,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         confirmUserWishesToQuit();
     }
 
-    // Which view was clicked: arrows (nextArrow/prevArrow) or buttons (yes/no)
-    @Override
-    public void onClick(View v) {
-        if (v.equals(answerNo)) {
-            // Value is from yes/no button
-            addScore(questionNumber, 0);
-            handleQuiz(true);
-        }
-
-        Log.d(LOG_NAME, "In onClick");
-    }
-
     public void onClickNextArrow(View view) {
         // We only need an explicit "save answer" for radio buttons since the arrow key is hidden
         // for non-radio-button questions.
@@ -220,6 +205,11 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         handleQuiz(true);
 
         Log.d(LOG_NAME, "In onClickButtonYes");
+    }
+
+    public void onClickButtonNo(View view) {
+        addScore(questionNumber, 0);
+        handleQuiz(true);
     }
 
     private void confirmUserWishesToQuit() {
