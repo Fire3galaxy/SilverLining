@@ -86,11 +86,11 @@ public class QuestionData {
             true,  // 13
             true,  // 14
             true,  // 15
-            false, // 16
-            false, // 17
-            false, // 18
-            false, // 19
-            false, // 20
+            true, // 16
+            true, // 17
+            true, // 18
+            true, // 19
+            true, // 20
             true,  // 21
             true,  // 22
             true,  // 23
