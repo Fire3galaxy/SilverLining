@@ -60,15 +60,6 @@ public class QuestionData {
     public static final int[] redFlagThreshold = {
             1, 1, 1, 1, 1
     };
-    
-    static public final int NORMAL = 0, // Answer array types
-            FLAG = 1,
-            DEPRESSION = 2,
-            SITUATION = 3,
-            APPOINTMENT = 4,
-            STRANGER = 5,
-            SUPPORTIVE = 6, // Currently the most slider answers with 5. (Fixed max of textviews in activity_quiz.xml)
-            YES_NO = 7;
     static public final boolean[] USES_SLIDER = {
             true,  // 0
             true,  // 1
@@ -97,36 +88,6 @@ public class QuestionData {
             true,  // 24
             true,  // 25
             true   // 26
-    };
-    //Answer choice type
-    static public final char[] ANSW_CHOICE = {
-            NORMAL,     // 0
-            NORMAL,     // 1
-            NORMAL,     // 2
-            NORMAL,     // 3
-            NORMAL,     // 4
-            NORMAL,     // 5
-            NORMAL,     // 6
-            NORMAL,     // 7
-            NORMAL,     // 8
-            NORMAL,     // 9
-            NORMAL,     // 10
-            NORMAL,     // 11
-            NORMAL,     // 12
-            NORMAL,     // 13
-            NORMAL,     // 14
-            NORMAL,     // 15
-            YES_NO,     // 16
-            YES_NO,     // 17
-            YES_NO,     // 18
-            YES_NO,     // 19
-            YES_NO,     // 20
-            DEPRESSION, // 21
-            SITUATION,  // 22
-            SITUATION,  // 23
-            APPOINTMENT,// 24
-            STRANGER,   // 25
-            SUPPORTIVE  // 26
     };
     // Relevant question data variables
     // Using names instead of numbers for FireBase on the off-chance that
