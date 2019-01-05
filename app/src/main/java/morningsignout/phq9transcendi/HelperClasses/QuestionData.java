@@ -131,8 +131,8 @@ public class QuestionData {
         public String toString() {
             return readableName;
         }
-    }
 
+    }
     private enum AnswersHeaders {
         answerType("Answer Type"),
         answer1("Answer 1"),
@@ -151,26 +151,26 @@ public class QuestionData {
         public String toString() {
             return readableName;
         }
-    }
 
+    }
     // Note: DO NOT CHANGE THIS FILE NAME WHEN UPDATING CSV. This is hardcoded.
+
     private static final String QUESTION_SPREADSHEET_NAME = "questions.csv";
     private static final String ANSWER_SPREADSHEET_NAME = "answers.csv";
-
     private LinkedList<SingleQuestionData> questionList;
+
     private HashMap<String, String[]> answerMap;
     private boolean isUnitTest;
     private Context context;
-
     public QuestionData(Context context) throws IOException {
         this(context, false, QUESTION_SPREADSHEET_NAME);
     }
 
     // Special constructor for custom questions for unit tests.
+
     QuestionData(boolean isUnitTest, String filename) throws IOException {
         this(null, isUnitTest, filename);
     }
-
     private QuestionData(Context context, boolean isUnitTest, String filename) throws IOException {
         this.context = context;
         this.isUnitTest = isUnitTest;
@@ -277,5 +277,9 @@ public class QuestionData {
 
     public String[] getAnswerValues(String answerType) {
         return answerMap.get(answerType);
+    }
+
+    public String getAnswerUIType(String answerType) {
+        return "RadioButtons";
     }
 }

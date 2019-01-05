@@ -1,5 +1,7 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
+import android.support.v4.view.ViewCompat;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -123,5 +125,15 @@ class QuestionDataTest {
         int actualAnswerValsLength = actualAnswerVals.length;
 
         assertEquals(answerTypeData.getAnswerValues().length, actualAnswerValsLength);
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @CsvSource({
+            "NORMAL, RadioButtons"
+    })
+    void getAnswerUIType_isExpectedUIType(String answerType, String UIType) {
+        String actualAnswerUIType = defaultTestQuestionData.getAnswerUIType(answerType);
+
+        assertEquals(UIType, actualAnswerUIType);
     }
 }
