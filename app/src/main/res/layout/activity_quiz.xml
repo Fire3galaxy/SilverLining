@@ -164,7 +164,7 @@
         android:text="@string/quiz_start"
         android:id="@+id/questionView"
         android:gravity="center_horizontal"
-        android:textSize="@dimen/quiz_text_size"
+        android:textSize="24sp"
         autofit:minTextSize="16sp"
         android:lineSpacingExtra="0sp"
         android:lineSpacingMultiplier="1"
