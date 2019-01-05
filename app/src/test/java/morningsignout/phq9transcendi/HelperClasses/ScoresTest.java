@@ -88,8 +88,20 @@ class ScoresTest {
     }
 
     @org.junit.jupiter.api.Test
-    void containsRedFlag_noRedFlagAnswers() {
+    void containsRedFlag_noAnswersInputted_noRedFlags() {
         Scores scores = new Scores();
+
+        assertFalse(scores.containsRedFlag());
+    }
+
+    @org.junit.jupiter.api.Test
+    void containsRedFlag_someAnswersInputted_noRedFlags() {
+        Scores scores = new Scores();
+
+        // Assuming red flag questions are never the first 3 questions
+        scores.putScore(0, 0);
+        scores.putScore(1, 1);
+        scores.putScore(2, 2);
 
         assertFalse(scores.containsRedFlag());
     }
