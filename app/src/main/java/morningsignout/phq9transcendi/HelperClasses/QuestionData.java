@@ -1,7 +1,6 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -131,15 +130,16 @@ public class QuestionData {
         public String toString() {
             return readableName;
         }
-
     }
+
     private enum AnswersHeaders {
         answerType("Answer Type"),
         answer1("Answer 1"),
         answer2("Answer 2"),
         answer3("Answer 3"),
         answer4("Answer 4"),
-        answer5("Answer 5");
+        answer5("Answer 5"),
+        answerUIType("UI Type");
 
         private String readableName;
 
@@ -151,15 +151,14 @@ public class QuestionData {
         public String toString() {
             return readableName;
         }
-
     }
-    // Note: DO NOT CHANGE THIS FILE NAME WHEN UPDATING CSV. This is hardcoded.
 
+    // Note: DO NOT CHANGE THIS FILE NAME WHEN UPDATING CSV. This is hardcoded.
     private static final String QUESTION_SPREADSHEET_NAME = "questions.csv";
     private static final String ANSWER_SPREADSHEET_NAME = "answers.csv";
     private LinkedList<SingleQuestionData> questionList;
 
-    private HashMap<String, String[]> answerMap;
+    private HashMap<String, SingleAnswerTypeData> answerMap;
     private boolean isUnitTest;
     private Context context;
     public QuestionData(Context context) throws IOException {
@@ -167,7 +166,6 @@ public class QuestionData {
     }
 
     // Special constructor for custom questions for unit tests.
-
     QuestionData(boolean isUnitTest, String filename) throws IOException {
         this(null, isUnitTest, filename);
     }
@@ -187,8 +185,11 @@ public class QuestionData {
 
         for (CSVRecord record : records) {
             String answerType = record.get(AnswersHeaders.answerType);
+            String answerUIType = record.get(AnswersHeaders.answerUIType);
             String[] answerArray = getAnswerArray(record);
-            answerMap.put(answerType, answerArray);
+            SingleAnswerTypeData answerData = new SingleAnswerTypeData(answerType, answerUIType, answerArray);
+
+            answerMap.put(answerType, answerData);
         }
     }
 
@@ -276,10 +277,16 @@ public class QuestionData {
     }
 
     public String[] getAnswerValues(String answerType) {
-        return answerMap.get(answerType);
+        if (!answerMap.containsKey(answerType))
+            return null;
+
+        return answerMap.get(answerType).getAnswerValues();
     }
 
     public String getAnswerUIType(String answerType) {
-        return "RadioButtons";
+        if (!answerMap.containsKey(answerType))
+            return null;
+
+        return answerMap.get(answerType).getAnswerUIType();
     }
 }

@@ -4,11 +4,9 @@ import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.converter.ArgumentConversionException;
 import org.junit.jupiter.params.converter.ArgumentConverter;
 
-import java.util.HashMap;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class ToAnswerTypeData implements ArgumentConverter {
+class ToAnswerTypeDataWithoutUIType implements ArgumentConverter {
     @Override
     public Object convert(Object source, ParameterContext context) throws ArgumentConversionException {
         assertEquals(String.class, source.getClass(), "Expecting a String object");
@@ -22,6 +20,6 @@ class ToAnswerTypeData implements ArgumentConverter {
         String[] answerValues = new String[parsedValues.length - 1]; // Rest are answers
         System.arraycopy(parsedValues, 1, answerValues, 0, parsedValues.length - 1);
 
-        return new AnswerTypeData(answerType, answerValues);
+        return new SingleAnswerTypeData(answerType, "", answerValues);
     }
 }

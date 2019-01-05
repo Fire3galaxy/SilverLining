@@ -1,14 +1,11 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
-import android.support.v4.view.ViewCompat;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.IOException;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -99,11 +96,11 @@ class QuestionDataTest {
             "YES/NO, Yes, No"
     })
     void getAnswerValues_containsExpectedAnswerValues(
-            @ConvertWith(ToAnswerTypeData.class) AnswerTypeData answerTypeData) {
-        String[] actualAnswerValues = defaultTestQuestionData.getAnswerValues(answerTypeData.getAnswerType());
+            @ConvertWith(ToAnswerTypeDataWithoutUIType.class) SingleAnswerTypeData singleAnswerTypeData) {
+        String[] actualAnswerValues = defaultTestQuestionData.getAnswerValues(singleAnswerTypeData.getAnswerType());
 
-        for (int i = 0; i < answerTypeData.getAnswerValues().length; i++) {
-            assertEquals(answerTypeData.getAnswerValues()[i], actualAnswerValues[i]);
+        for (int i = 0; i < singleAnswerTypeData.getAnswerValues().length; i++) {
+            assertEquals(singleAnswerTypeData.getAnswerValues()[i], actualAnswerValues[i]);
         }
     }
 
@@ -120,20 +117,22 @@ class QuestionDataTest {
             "YES/NO, Yes, No"
     })
     void getAnswerValuesLength_isExpectedLength(
-            @ConvertWith(ToAnswerTypeData.class) AnswerTypeData answerTypeData) {
-        String[] actualAnswerVals = defaultTestQuestionData.getAnswerValues(answerTypeData.getAnswerType());
+            @ConvertWith(ToAnswerTypeDataWithoutUIType.class) SingleAnswerTypeData singleAnswerTypeData) {
+        String[] actualAnswerVals = defaultTestQuestionData.getAnswerValues(singleAnswerTypeData.getAnswerType());
         int actualAnswerValsLength = actualAnswerVals.length;
 
-        assertEquals(answerTypeData.getAnswerValues().length, actualAnswerValsLength);
+        assertEquals(singleAnswerTypeData.getAnswerValues().length, actualAnswerValsLength);
     }
 
     @org.junit.jupiter.params.ParameterizedTest
     @CsvSource({
-            "NORMAL, RadioButtons"
+            "NORMAL, RadioButtons",
+            "SUPPORTIVE, RadioButtons",
+            "YES/NO, StandardButtons"
     })
     void getAnswerUIType_isExpectedUIType(String answerType, String UIType) {
         String actualAnswerUIType = defaultTestQuestionData.getAnswerUIType(answerType);
 
-        assertEquals(UIType, actualAnswerUIType);
+        assertEquals(UIType, actualAnswerUIType, answerType + " has wrong UI type");
     }
 }

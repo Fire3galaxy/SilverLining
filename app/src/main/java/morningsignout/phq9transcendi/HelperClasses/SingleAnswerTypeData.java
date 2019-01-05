@@ -1,11 +1,13 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
-class AnswerTypeData {
+class SingleAnswerTypeData {
     final private String answerType;
     final private String[] answerValues;
+    final private String answerUIType;
 
-    AnswerTypeData(String answerType, String[] answerValues) {
+    SingleAnswerTypeData(String answerType, String answerUIType, String[] answerValues) {
         this.answerType = answerType;
+        this.answerUIType = answerUIType;
         this.answerValues = answerValues;
     }
 
@@ -15,5 +17,9 @@ class AnswerTypeData {
 
     String[] getAnswerValues() {
         return answerValues;
+    }
+
+    public String getAnswerUIType() {
+        return answerUIType;
     }
 }
