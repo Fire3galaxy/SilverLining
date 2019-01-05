@@ -129,14 +129,6 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         } catch (IOException e) {
             throw new IllegalStateException("Unable to open resources");
         }
-        questionData.answerChoices[QuestionData.NORMAL] = res.getStringArray(R.array.answers_normal);
-        questionData.answerChoices[QuestionData.FLAG] = res.getStringArray(R.array.answers_flag);
-        questionData.answerChoices[QuestionData.DEPRESSION] = res.getStringArray(R.array.answers_depression);
-        questionData.answerChoices[QuestionData.SITUATION] = res.getStringArray(R.array.answers_situation);
-        questionData.answerChoices[QuestionData.APPOINTMENT] = res.getStringArray(R.array.answers_appointment);
-        questionData.answerChoices[QuestionData.YES_NO] = res.getStringArray(R.array.answers_yes_no);
-        questionData.answerChoices[QuestionData.STRANGER] = res.getStringArray(R.array.answers_stranger);
-        questionData.answerChoices[QuestionData.SUPPORTIVE] = res.getStringArray(R.array.answers_supportive);
         currentAnswerChoice = -1;
         currentButtonChoice = -1;
 
