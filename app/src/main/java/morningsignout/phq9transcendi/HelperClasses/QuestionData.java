@@ -245,7 +245,7 @@ public class QuestionData {
         return questionList.get(i).getAnswerType();
     }
 
-    public int size() {
+    public int questionsLength() {
         return questionList.size();
     }
 

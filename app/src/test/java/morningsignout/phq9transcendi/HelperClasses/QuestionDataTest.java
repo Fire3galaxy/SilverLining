@@ -56,7 +56,7 @@ class QuestionDataTest {
             TWO_QUESTION_TEST_FILE      + ", 2",
             THREE_QUESTION_TEST_FILE    + ", 3"
     })
-    void size_numQuestionsIsCorrect(String filename, int correctNumQuestions) {
+    void questionsLength_numQuestionsIsCorrect(String filename, int correctNumQuestions) {
         QuestionData questionData = null;
         try {
             questionData = new QuestionData(IS_UNIT_TEST, filename);
@@ -64,7 +64,7 @@ class QuestionDataTest {
             fail("QuestionData should not throw exception");
         }
 
-        assertEquals(correctNumQuestions, questionData.size(),
+        assertEquals(correctNumQuestions, questionData.questionsLength(),
                 "Number of questions in spreadsheet should be " + correctNumQuestions);
     }
 

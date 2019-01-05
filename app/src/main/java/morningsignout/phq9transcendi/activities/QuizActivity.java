@@ -239,7 +239,7 @@ public class QuizActivity extends AppCompatActivity {
         if (isNextQuestion) {
             questionNumber++;
 
-            if (questionNumber == QuestionData.NUM_QUESTIONS) {
+            if (questionNumber == questionData.questionsLength()) {
                 if (scores.allQuestionsVisited()) {
                     finishQuiz();
                 } else {
