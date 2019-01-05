@@ -139,9 +139,7 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         handleQuiz(true);   // Everything is set up, start quiz
 
         // Set all buttons to onClickListener function here
-        prevArrow.setOnClickListener(this);
         answerNo.setOnClickListener(this);
-        answerYes.setOnClickListener(this);
     }
 
     @Override
@@ -191,18 +189,9 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
     // Which view was clicked: arrows (nextArrow/prevArrow) or buttons (yes/no)
     @Override
     public void onClick(View v) {
-        if (v.equals(prevArrow)) {
-            if (QuestionData.USES_SLIDER[questionNumber]) {
-                recordRadioButtonAnswer();
-            }
-            handleQuiz(false);
-        } else if (v.equals(answerNo)) {
+        if (v.equals(answerNo)) {
             // Value is from yes/no button
             addScore(questionNumber, 0);
-            handleQuiz(true);
-        } else if (v.equals(answerYes)) {
-            // Value is from yes/no button
-            addScore(questionNumber, 1);
             handleQuiz(true);
         }
 
@@ -217,6 +206,20 @@ public class QuizActivity extends AppCompatActivity implements ImageButton.OnCli
         }
         handleQuiz(true);
         Log.d(LOG_NAME, "In onClickNextArrow");
+    }
+
+    public void onClickPrevArrow(View view) {
+        if (QuestionData.USES_SLIDER[questionNumber]) {
+            recordRadioButtonAnswer();
+        }
+        handleQuiz(false);
+    }
+
+    public void onClickButtonYes(View view) {
+        addScore(questionNumber, 1);
+        handleQuiz(true);
+
+        Log.d(LOG_NAME, "In onClickButtonYes");
     }
 
     private void confirmUserWishesToQuit() {
