@@ -34,6 +34,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
+import morningsignout.phq9transcendi.HelperClasses.AnswerUITypeEnum;
 import morningsignout.phq9transcendi.PHQApplication;
 import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.HelperClasses.QuestionData;
@@ -182,9 +183,11 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void onClickNextArrow(View view) {
-        // We only need an explicit "save answer" for radio buttons since the arrow key is hidden
-        // for non-radio-button questions.
-        if (QuestionData.USES_SLIDER[questionNumber]) {
+        // We only need an explicit "save answer" action for radio buttons.
+        String answerType = questionData.getAnswerType(questionNumber);
+        AnswerUITypeEnum answerUIType = questionData.getAnswerUIType(answerType);
+
+        if (answerUIType == AnswerUITypeEnum.RadioButtons) {
             recordRadioButtonAnswer();
             Log.d(LOG_NAME, "Question uses radio buttons");
         }
@@ -192,6 +195,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void onClickPrevArrow(View view) {
+        // We only need an explicit "save answer" action for radio buttons.
         if (QuestionData.USES_SLIDER[questionNumber]) {
             recordRadioButtonAnswer();
         }
