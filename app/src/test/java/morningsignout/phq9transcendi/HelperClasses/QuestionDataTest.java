@@ -131,8 +131,9 @@ class QuestionDataTest {
             "YES/NO, StandardButtons"
     })
     void getAnswerUIType_isExpectedUIType(String answerType, String UIType) {
-        String actualAnswerUIType = defaultTestQuestionData.getAnswerUIType(answerType);
+        AnswerUITypeEnum expectedUIType = AnswerUITypeEnum.valueOf(AnswerUITypeEnum.class, UIType);
+        AnswerUITypeEnum actualUIType = defaultTestQuestionData.getAnswerUIType(answerType);
 
-        assertEquals(UIType, actualAnswerUIType, answerType + " has wrong UI type");
+        assertEquals(expectedUIType, actualUIType, answerType + " has wrong UI type");
     }
 }

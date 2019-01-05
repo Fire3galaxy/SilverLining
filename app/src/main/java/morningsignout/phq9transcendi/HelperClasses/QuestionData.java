@@ -59,6 +59,7 @@ public class QuestionData {
     public static final int[] redFlagThreshold = {
             1, 1, 1, 1, 1
     };
+
     static public final boolean[] USES_SLIDER = {
             true,  // 0
             true,  // 1
@@ -88,6 +89,7 @@ public class QuestionData {
             true,  // 25
             true   // 26
     };
+
     // Relevant question data variables
     // Using names instead of numbers for FireBase on the off-chance that
     // the order of questions is not fixed (would be bad for database to use #).
@@ -185,7 +187,8 @@ public class QuestionData {
 
         for (CSVRecord record : records) {
             String answerType = record.get(AnswersHeaders.answerType);
-            String answerUIType = record.get(AnswersHeaders.answerUIType);
+            AnswerUITypeEnum answerUIType = AnswerUITypeEnum.valueOf(
+                    AnswerUITypeEnum.class, record.get(AnswersHeaders.answerUIType));
             String[] answerArray = getAnswerArray(record);
             SingleAnswerTypeData answerData = new SingleAnswerTypeData(answerType, answerUIType, answerArray);
 
@@ -283,7 +286,7 @@ public class QuestionData {
         return answerMap.get(answerType).getAnswerValues();
     }
 
-    public String getAnswerUIType(String answerType) {
+    public AnswerUITypeEnum getAnswerUIType(String answerType) {
         if (!answerMap.containsKey(answerType))
             return null;
 

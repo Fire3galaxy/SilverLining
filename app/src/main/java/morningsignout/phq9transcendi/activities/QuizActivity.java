@@ -186,6 +186,7 @@ public class QuizActivity extends AppCompatActivity {
         // for non-radio-button questions.
         if (QuestionData.USES_SLIDER[questionNumber]) {
             recordRadioButtonAnswer();
+            Log.d(LOG_NAME, "Question uses radio buttons");
         }
         handleQuiz(true);
     }

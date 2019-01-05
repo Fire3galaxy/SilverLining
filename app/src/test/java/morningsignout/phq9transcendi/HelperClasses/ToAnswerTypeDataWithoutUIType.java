@@ -20,6 +20,7 @@ class ToAnswerTypeDataWithoutUIType implements ArgumentConverter {
         String[] answerValues = new String[parsedValues.length - 1]; // Rest are answers
         System.arraycopy(parsedValues, 1, answerValues, 0, parsedValues.length - 1);
 
-        return new SingleAnswerTypeData(answerType, "", answerValues);
+        // Assume radio buttons. Should not be used.
+        return new SingleAnswerTypeData(answerType, AnswerUITypeEnum.RadioButtons, answerValues);
     }
 }
