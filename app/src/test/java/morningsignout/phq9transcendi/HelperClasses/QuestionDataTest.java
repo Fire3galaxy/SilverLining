@@ -94,6 +94,7 @@ class QuestionDataTest {
     @ValueSource(strings = {
             "NORMAL, Not at all, One or two days a week, Three to four days a week, Everyday",
             "SUPPORTIVE, Very poor, Poor, Okay, Good, Very good",
+            "YES/NO, Yes, No"
     })
     void getAnswerValues_containsExpectedAnswerValues(
             @ConvertWith(ToAnswerTypeData.class) AnswerTypeData answerTypeData) {
@@ -114,6 +115,7 @@ class QuestionDataTest {
     @ValueSource(strings = {
             "NORMAL, Not at all, One or two days a week, Three to four days a week, Everyday",
             "SUPPORTIVE, Very poor, Poor, Okay, Good, Very good",
+            "YES/NO, Yes, No"
     })
     void getAnswerValuesLength_isExpectedLength(
             @ConvertWith(ToAnswerTypeData.class) AnswerTypeData answerTypeData) {

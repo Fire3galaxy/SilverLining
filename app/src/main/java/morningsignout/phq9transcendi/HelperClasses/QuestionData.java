@@ -115,8 +115,6 @@ public class QuestionData {
             "fearofstranger", "i_adequateresources"
     };
 
-    private static final int MAX_ANSWER_ARRAY_SIZE = 5;
-
     private enum QuestionsHeaders {
         questionName("Question Name"),
         categoryType("Category Type"),
@@ -197,7 +195,7 @@ public class QuestionData {
     private String[] getAnswerArray(CSVRecord record) {
         String[] answerArray = new String[determineAnswerArraySize(record)];
 
-        // Strangeness of code is due to adherence to using dedicated header names
+        // Using switch case with falling-through mechanic so I don't have large if statement bodies.
         switch (answerArray.length) {
             case 5:
                 answerArray[4] = record.get(AnswersHeaders.answer5);
@@ -216,12 +214,16 @@ public class QuestionData {
     }
 
     private int determineAnswerArraySize(CSVRecord record) {
-        int size = MAX_ANSWER_ARRAY_SIZE;
+        if (!record.get(AnswersHeaders.answer5).isEmpty())
+            return 5;
+        if (!record.get(AnswersHeaders.answer4).isEmpty())
+            return 4;
+        if (!record.get(AnswersHeaders.answer3).isEmpty())
+            return 3;
+        if (!record.get(AnswersHeaders.answer2).isEmpty())
+            return 2;
 
-        while (record.get(size).isEmpty())
-            size--;
-
-        return size;
+        throw new IllegalStateException("Should not have a question with less than two or more than six answers.");
     }
 
     private void loadQuestionDataFromSpreadsheet(String filename) throws IOException {
