@@ -62,7 +62,6 @@ public class QuizActivity extends AppCompatActivity {
 
     QuestionData questionData;
     int currentAnswerChoice;
-    int currentButtonChoice;
     private String startTimestamp, endTimestamp;
     private Scores scores;                          // Used for keeping track of score
     private int questionNumber;                     // Which question the user is on (zero-based)
@@ -130,7 +129,6 @@ public class QuizActivity extends AppCompatActivity {
             throw new IllegalStateException("Unable to open resources");
         }
         currentAnswerChoice = -1;
-        currentButtonChoice = -1;
 
         startTimestamp = getCurrentTimestampStr();
         questionNumber = -1;
@@ -180,7 +178,7 @@ public class QuizActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        confirmUserWishesToQuit();
+        confirmUserWishesToQuitDialog();
     }
 
     public void onClickNextArrow(View view) {
@@ -190,7 +188,6 @@ public class QuizActivity extends AppCompatActivity {
             recordRadioButtonAnswer();
         }
         handleQuiz(true);
-        Log.d(LOG_NAME, "In onClickNextArrow");
     }
 
     public void onClickPrevArrow(View view) {
@@ -203,8 +200,6 @@ public class QuizActivity extends AppCompatActivity {
     public void onClickButtonYes(View view) {
         addScore(questionNumber, 1);
         handleQuiz(true);
-
-        Log.d(LOG_NAME, "In onClickButtonYes");
     }
 
     public void onClickButtonNo(View view) {
@@ -212,7 +207,7 @@ public class QuizActivity extends AppCompatActivity {
         handleQuiz(true);
     }
 
-    private void confirmUserWishesToQuit() {
+    private void confirmUserWishesToQuitDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setMessage(R.string.dialog_quit_quiz)
                 .setPositiveButton(R.string.dialog_return_home, new DialogInterface.OnClickListener() {
@@ -240,7 +235,7 @@ public class QuizActivity extends AppCompatActivity {
                 if (scores.allQuestionsVisited()) {
                     finishQuiz();
                 } else {
-                    notifyUserQuizUnfinished();
+                    notifyUserQuizUnfinishedDialog();
                     questionNumber--;
                 }
             }
@@ -253,7 +248,7 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-    private void notifyUserQuizUnfinished() {
+    private void notifyUserQuizUnfinishedDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setMessage(R.string.dialog_not_finished)
                 .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
@@ -294,10 +289,11 @@ public class QuizActivity extends AppCompatActivity {
     //also checks the radiobutton that was previously chosen
     private void updateQuestions() {
         questionTextView.setText(questionData.getQuestionText(questionNumber));     // Question text
-        questionNumText.setText(String.format(numberString, questionNumber + 1));   // Question #
+        int offsetOne = 1;
+        questionNumText.setText(String.format(numberString, questionNumber + offsetOne));   // Question #
 
         // Possible string array options for answers are listed in QuestionData
-        changeAnswerText(QuestionData.ANSW_CHOICE[questionNumber]);
+        changeAnswerText();
 
         // Shows either the radio buttons or regular yes/no buttons
         if (QuestionData.USES_SLIDER[questionNumber]) {
@@ -366,7 +362,7 @@ public class QuizActivity extends AppCompatActivity {
             containerButtons.setVisibility(View.VISIBLE);
     }
 
-    private void changeAnswerText(int answerIndex) {
+    private void changeAnswerText() {
         String answerType = questionData.getAnswerType(questionNumber);
         String[] newText = questionData.getAnswerValues(answerType);
 
@@ -382,12 +378,8 @@ public class QuizActivity extends AppCompatActivity {
                 }
             }
         } else {
-            if (answerIndex != currentButtonChoice) {
-                answerYes.setText(newText[0]);
-                answerNo.setText(newText[1]);
-
-                currentButtonChoice = answerIndex;
-            }
+            answerYes.setText(newText[0]);
+            answerNo.setText(newText[1]);
         }
     }
 
