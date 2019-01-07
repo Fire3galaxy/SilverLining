@@ -136,4 +136,12 @@ class QuestionDataTest {
 
         assertEquals(expectedUIType, actualUIType, answerType + " has wrong UI type");
     }
+
+    @org.junit.jupiter.api.Test
+    void getVersionOfQuestionOrder_isNotInvalidVersion() {
+        int versionNum = defaultTestQuestionData.getVersionOfQuestionOrder();
+        final int errorCode = -1;
+
+        assertNotEquals(-1, versionNum);
+    }
 }

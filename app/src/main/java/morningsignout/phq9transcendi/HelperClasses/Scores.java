@@ -26,6 +26,7 @@ public class Scores {
     private TreeMap<String, Boolean> questionIsAnswered;
     private QuestionData questionData;
 
+    // FIXME: Remove this once I figure out what to do with ScoresTest
     Scores() {
         this.scoreDictionary = new TreeMap<>();
         this.questionIsAnswered = new TreeMap<>();

@@ -86,6 +86,10 @@ public class QuestionData {
             "fearofstranger", "i_adequateresources"
     };
 
+    public int getVersionOfQuestionOrder() {
+        return 0;
+    }
+
     private enum QuestionsHeaders {
         questionName("Question Name"),
         categoryType("Category Type"),
