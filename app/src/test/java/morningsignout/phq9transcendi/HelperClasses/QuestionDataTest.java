@@ -139,9 +139,18 @@ class QuestionDataTest {
 
     @org.junit.jupiter.api.Test
     void getVersionOfQuestionOrder_isNotInvalidVersion() {
-        int versionNum = defaultTestQuestionData.getVersionOfQuestionOrder();
+        final int versionNum = defaultTestQuestionData.getVersionOfQuestionOrder();
         final int errorCode = -1;
 
-        assertNotEquals(-1, versionNum);
+        assertNotEquals(errorCode, versionNum);
+    }
+
+    @org.junit.jupiter.api.Test
+    void getVersionOfQuestionOrder_fileRemoved_isInvalidVersion() {
+        // FIXME: need some code here to cause getVersionOfQuestionOrder to fail because file is removed
+        final int versionNum = defaultTestQuestionData.getVersionOfQuestionOrder();
+        final int errorCode = -1;
+
+        assertEquals(errorCode, versionNum);
     }
 }
