@@ -5,6 +5,7 @@ import android.content.Context;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -125,14 +126,31 @@ public class QuestionData {
         }
     }
 
+    private enum ConfigHeaders {
+        questionOrderVers("Question Ordering Version");
+
+        private String readableName;
+
+        ConfigHeaders(String s) {
+            readableName = s;
+        }
+
+        @Override
+        public String toString() {
+            return readableName;
+        }
+    }
+
     // Note: DO NOT CHANGE THIS FILE NAME WHEN UPDATING CSV. This is hardcoded.
     private static final String QUESTION_SPREADSHEET_NAME = "questions.csv";
     private static final String ANSWER_SPREADSHEET_NAME = "answers.csv";
-    private LinkedList<SingleQuestionData> questionList;
+    private static final String CONFIG_SPREADSHEET_NAME = "config.csv";
 
+    private LinkedList<SingleQuestionData> questionList;
     private HashMap<String, SingleAnswerTypeData> answerMap;
     private boolean isUnitTest;
     private Context context;
+    private int questionOrderingVersion;
 
     public QuestionData(Context context) throws IOException {
         this(context, false, QUESTION_SPREADSHEET_NAME);
@@ -151,6 +169,26 @@ public class QuestionData {
 
         loadQuestionDataFromSpreadsheet(questionFilename);
         loadAnswerDataFromSpreadsheet();
+        loadConfigurationFromSpreadsheet();
+    }
+
+    private void loadConfigurationFromSpreadsheet() throws IOException {
+        Reader in = getConfigReader();
+        int firstRow = 0;
+        CSVRecord allConfigVals = CSVFormat.DEFAULT
+                .withFirstRecordAsHeader().parse(in).getRecords().get(firstRow);
+
+        questionOrderingVersion = Integer.parseInt(allConfigVals.get(ConfigHeaders.questionOrderVers));
+    }
+
+    private Reader getConfigReader() throws IOException {
+        if (this.isUnitTest)
+            return new FileReader(CONFIG_SPREADSHEET_NAME);
+
+        if (this.context == null)
+            throw new IllegalStateException("Null value passed in for context");
+
+        return new InputStreamReader(this.context.getAssets().open(CONFIG_SPREADSHEET_NAME));
     }
 
     private void loadAnswerDataFromSpreadsheet() throws IOException {
@@ -271,6 +309,6 @@ public class QuestionData {
     }
 
     public int getVersionOfQuestionOrder() {
-        return 42;
+        return questionOrderingVersion;
     }
 }

@@ -20,7 +20,7 @@ class QuestionDataTest {
     private static final boolean IS_UNIT_TEST = true;
 
     /* Basically all the values corresponding to THREE_QUESTION_TEST_FILE are here. This
-     * level of hard-coding somewhat makes sense - after all, no one should be changing the dummy
+     * level of hard-coding "kinda" makes sense - after all, no one should be changing the dummy
      * values, so these tests should be able to assume the data is correct.
      */
     private static final String[] THREE_QUESTION_NAMES = new String[]{
@@ -38,6 +38,7 @@ class QuestionDataTest {
             "NORMAL",
             "SUPPORTIVE"
     };
+    private static final int QUESTION_ORDERING_VERSION = 42;
 
     private QuestionData defaultTestQuestionData;
 
@@ -154,17 +155,7 @@ class QuestionDataTest {
     @org.junit.jupiter.api.Test
     void getVersionOfQuestionOrder_isCorrectVersion() {
         final int versionNum = defaultTestQuestionData.getVersionOfQuestionOrder();
-        final int expectedCode = 42;
 
-        assertEquals(expectedCode, versionNum);
-    }
-
-    @org.junit.jupiter.api.Test
-    void getVersionOfQuestionOrder_fileRemoved_isInvalidVersion() {
-        // FIXME: need some code here to cause getVersionOfQuestionOrder to fail because file is removed
-        final int versionNum = defaultTestQuestionData.getVersionOfQuestionOrder();
-        final int errorCode = -1;
-
-        assertEquals(errorCode, versionNum);
+        assertEquals(QUESTION_ORDERING_VERSION, versionNum);
     }
 }
