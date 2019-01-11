@@ -86,10 +86,6 @@ public class QuestionData {
             "fearofstranger", "i_adequateresources"
     };
 
-    public int getVersionOfQuestionOrder() {
-        return 0;
-    }
-
     private enum QuestionsHeaders {
         questionName("Question Name"),
         categoryType("Category Type"),
@@ -137,21 +133,23 @@ public class QuestionData {
     private HashMap<String, SingleAnswerTypeData> answerMap;
     private boolean isUnitTest;
     private Context context;
+
     public QuestionData(Context context) throws IOException {
         this(context, false, QUESTION_SPREADSHEET_NAME);
     }
 
     // Special constructor for custom questions for unit tests.
-    QuestionData(boolean isUnitTest, String filename) throws IOException {
-        this(null, isUnitTest, filename);
+    QuestionData(boolean isUnitTest, String unitTestQuestionFilename) throws IOException {
+        this(null, isUnitTest, unitTestQuestionFilename);
     }
-    private QuestionData(Context context, boolean isUnitTest, String filename) throws IOException {
+
+    private QuestionData(Context context, boolean isUnitTest, String questionFilename) throws IOException {
         this.context = context;
         this.isUnitTest = isUnitTest;
         this.questionList = new LinkedList<>();
         this.answerMap = new HashMap<>();
 
-        loadQuestionDataFromSpreadsheet(filename);
+        loadQuestionDataFromSpreadsheet(questionFilename);
         loadAnswerDataFromSpreadsheet();
     }
 
@@ -161,13 +159,18 @@ public class QuestionData {
 
         for (CSVRecord record : records) {
             String answerType = record.get(AnswersHeaders.answerType);
-            AnswerUITypeEnum answerUIType = AnswerUITypeEnum.valueOf(
-                    AnswerUITypeEnum.class, record.get(AnswersHeaders.answerUIType));
+            AnswerUITypeEnum answerUIType = getAnswerUITypeEnum(record);
             String[] answerArray = getAnswerArray(record);
             SingleAnswerTypeData answerData = new SingleAnswerTypeData(answerType, answerUIType, answerArray);
 
             answerMap.put(answerType, answerData);
         }
+    }
+
+    private AnswerUITypeEnum getAnswerUITypeEnum(CSVRecord record) {
+        String answerUITypeStr = record.get(AnswersHeaders.answerUIType);
+        return AnswerUITypeEnum.valueOf(
+                AnswerUITypeEnum.class, answerUITypeStr);
     }
 
     private String[] getAnswerArray(CSVRecord record) {
@@ -265,5 +268,9 @@ public class QuestionData {
             return null;
 
         return answerMap.get(answerType).getAnswerUIType();
+    }
+
+    public int getVersionOfQuestionOrder() {
+        return 0;
     }
 }

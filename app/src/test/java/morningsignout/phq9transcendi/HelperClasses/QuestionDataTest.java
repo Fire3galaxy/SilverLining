@@ -5,6 +5,7 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.io.File;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class QuestionDataTest {
     private static final String TWO_QUESTION_TEST_FILE = "2_questions.csv";
     private static final String THREE_QUESTION_TEST_FILE = "3_questions.csv";
+    private static final String ANSWER_TEST_FILE = "answers.csv";
     private static final boolean IS_UNIT_TEST = true;
 
     /* Basically all the values corresponding to THREE_QUESTION_TEST_FILE are here. This
@@ -40,6 +42,15 @@ class QuestionDataTest {
 
     @BeforeEach
     void setUp() {
+        // Make sure test files exist
+        File twoQuestionFile = new File(TWO_QUESTION_TEST_FILE);
+        File threeQuestionFile = new File(THREE_QUESTION_TEST_FILE);
+        File answerFile = new File(ANSWER_TEST_FILE);
+
+        assertTrue(twoQuestionFile.exists());
+        assertTrue(threeQuestionFile.exists());
+        assertTrue(answerFile.exists());
+
         defaultTestQuestionData = null;
         try {
             defaultTestQuestionData = new QuestionData(IS_UNIT_TEST, THREE_QUESTION_TEST_FILE);
