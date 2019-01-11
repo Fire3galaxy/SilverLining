@@ -29,6 +29,7 @@ import java.util.LinkedList;
 public class QuestionData {
     // Appended to saved scores string to ensure string corresponds with this order of questions
     // It could change in the future.
+    // FIXME: Next time, remove use of this. Figure out how Scores class will get a QuestionData ref.
     static public final int VERSION_OF_ORDER_NUM = 2;
 
     static public final int NUM_QUESTIONS = 27; // total number of questions
