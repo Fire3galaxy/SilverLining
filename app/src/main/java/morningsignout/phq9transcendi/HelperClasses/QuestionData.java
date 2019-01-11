@@ -271,6 +271,6 @@ public class QuestionData {
     }
 
     public int getVersionOfQuestionOrder() {
-        return 0;
+        return 42;
     }
 }

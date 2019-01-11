@@ -16,6 +16,7 @@ class QuestionDataTest {
     private static final String TWO_QUESTION_TEST_FILE = "2_questions.csv";
     private static final String THREE_QUESTION_TEST_FILE = "3_questions.csv";
     private static final String ANSWER_TEST_FILE = "answers.csv";
+    private static final String CONFIG_TEST_FILE = "config.csv";
     private static final boolean IS_UNIT_TEST = true;
 
     /* Basically all the values corresponding to THREE_QUESTION_TEST_FILE are here. This
@@ -46,10 +47,12 @@ class QuestionDataTest {
         File twoQuestionFile = new File(TWO_QUESTION_TEST_FILE);
         File threeQuestionFile = new File(THREE_QUESTION_TEST_FILE);
         File answerFile = new File(ANSWER_TEST_FILE);
+        File configFile = new File(CONFIG_TEST_FILE);
 
         assertTrue(twoQuestionFile.exists());
         assertTrue(threeQuestionFile.exists());
         assertTrue(answerFile.exists());
+        assertTrue(configFile.exists());
 
         defaultTestQuestionData = null;
         try {
@@ -149,11 +152,11 @@ class QuestionDataTest {
     }
 
     @org.junit.jupiter.api.Test
-    void getVersionOfQuestionOrder_isNotInvalidVersion() {
+    void getVersionOfQuestionOrder_isCorrectVersion() {
         final int versionNum = defaultTestQuestionData.getVersionOfQuestionOrder();
-        final int errorCode = -1;
+        final int expectedCode = 42;
 
-        assertNotEquals(errorCode, versionNum);
+        assertEquals(expectedCode, versionNum);
     }
 
     @org.junit.jupiter.api.Test
