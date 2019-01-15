@@ -188,4 +188,18 @@ class ScoresTest {
 
         assertEquals(legacyExpectedString, scores.getVisitedString());
     }
+
+    @Test
+    void getVisitedString_someQuestionsAnswered() {
+        Scores scores = new Scores(questionData);
+        final String legacyExpectedString = "111000000000000000000000000_"
+                + questionData.getVersionOfQuestionOrder();
+        final int arbitraryVal = 2;
+
+        scores.putScore(0, arbitraryVal);
+        scores.putScore(1, arbitraryVal);
+        scores.putScore(2, arbitraryVal);
+
+        assertEquals(legacyExpectedString, scores.getVisitedString());
+    }
 }
