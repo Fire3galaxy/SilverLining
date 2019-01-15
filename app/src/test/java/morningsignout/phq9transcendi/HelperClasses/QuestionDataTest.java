@@ -1,5 +1,6 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -40,10 +41,10 @@ class QuestionDataTest {
     };
     private static final int QUESTION_ORDERING_VERSION = 42;
 
-    private QuestionData defaultTestQuestionData;
+    private static QuestionData defaultTestQuestionData;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void setUp() {
         // Make sure test files exist
         File twoQuestionFile = new File(TWO_QUESTION_TEST_FILE);
         File threeQuestionFile = new File(THREE_QUESTION_TEST_FILE);
