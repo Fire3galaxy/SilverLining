@@ -141,13 +141,11 @@ public class QuizActivity extends AppCompatActivity {
 
         // Save answers and state variables
         if (!isFinishingFlag) {
-            Pair<String, String> scoreState = scores.getScoreStateStrings();
-
             SharedPreferences.Editor editor = getPreferences(0).edit();
             editor.putString(SAVE_TIMESTAMP, startTimestamp);
             editor.putInt(SAVE_QUESTION_NUM, questionNumber);
-            editor.putString(SAVE_SCORES_A, scoreState.first);
-            editor.putString(SAVE_SCORES_B, scoreState.second);
+            editor.putString(SAVE_SCORES_A, scores.getScoreString());
+            editor.putString(SAVE_SCORES_B, scores.getVisitedString());
             editor.apply();
         }
     }

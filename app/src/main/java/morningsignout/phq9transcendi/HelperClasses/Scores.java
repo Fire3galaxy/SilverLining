@@ -149,21 +149,17 @@ public class Scores {
         return answers;
     }
 
-    public Pair<String, String> getScoreStateStrings() {
-        return new Pair<>(getScoreString(), getVisitedString());
-    }
-
-    private String getScoreString() {
+    public String getScoreString() {
         StringBuilder score = new StringBuilder();
         for (String q : QuestionData.questionNames)
             score.append(Integer.toString(scoreDictionary.get(q)));
 
-        score.append("_" + QuestionData.VERSION_OF_ORDER_NUM);
+        score.append("_").append(questionData.getVersionOfQuestionOrder());
 
         return score.toString();
     }
 
-    private String getVisitedString() {
+    public String getVisitedString() {
         StringBuilder visited = new StringBuilder();
         for (String q : QuestionData.questionNames)
             visited.append(questionIsAnswered.get(q).compareTo(false));   // Returns 1 or 0 (true/false)

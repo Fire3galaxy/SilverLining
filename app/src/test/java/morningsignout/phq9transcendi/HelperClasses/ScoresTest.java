@@ -1,5 +1,7 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -16,7 +18,7 @@ class ScoresTest {
 
     private static QuestionData questionData;
 
-    @org.junit.jupiter.api.BeforeAll
+    @BeforeAll
     static void setUp() {
         // Make sure test files exist
         File questionFile = new File(QUESTION_ASSET_FILE);
@@ -35,7 +37,7 @@ class ScoresTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void defaultConstructor_scoresStartWithZero() {
         Scores scores = new Scores(questionData);
 
@@ -48,7 +50,7 @@ class ScoresTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void defaultConstructor_noQuestionsAreVisited() {
         Scores scores = new Scores(questionData);
 
@@ -68,7 +70,7 @@ class ScoresTest {
                 "Score for question " + questionIndex + " does not match inserted value");
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void putScore_multipleScoresInsertedCorrectly() {
         Scores scores = new Scores(questionData);
         int[] scoreVals = {0, 1, 2, 3, 0, 1};
@@ -102,7 +104,7 @@ class ScoresTest {
         assertTrue(scores.questionIsVisited(questionIndex));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void questionIsVisited_multipledQuestionsAreVisited() {
         Scores scores = new Scores(questionData);
         final int NUM_VISITED = 5;
@@ -116,14 +118,14 @@ class ScoresTest {
             assertFalse(scores.questionIsVisited(i));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void containsRedFlag_noAnswersInputted_noRedFlag() {
         Scores scores = new Scores(questionData);
 
         assertFalse(scores.containsRedFlag());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void containsRedFlag_someAnswersInputted_noRedFlag() {
         Scores scores = new Scores(questionData);
 
@@ -135,7 +137,7 @@ class ScoresTest {
         assertFalse(scores.containsRedFlag());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void containsRedFlag_redFlagAnswerInputted_redFlag() {
         Scores scores = new Scores(questionData);
 
@@ -144,7 +146,7 @@ class ScoresTest {
         assertTrue(scores.containsRedFlag());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void containsRedFlag_redFlagAnswerChanged_noRedFlag() {
         Scores scores = new Scores(questionData);
 
@@ -152,5 +154,14 @@ class ScoresTest {
         scores.putScore(QuestionData.RED_FLAG_QUESTION, 0);
 
         assertFalse(scores.containsRedFlag());
+    }
+
+    @Test
+    void getScoreString_noQuestionsAnswered() {
+        Scores scores = new Scores(questionData);
+        final String legacyExpectedString = "000000000000000000000000000_"
+                + questionData.getVersionOfQuestionOrder();
+
+        assertEquals(legacyExpectedString, scores.getScoreString());
     }
 }
