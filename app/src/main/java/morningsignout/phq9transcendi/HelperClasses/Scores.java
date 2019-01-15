@@ -56,8 +56,8 @@ public class Scores {
 
     boolean scoreDataMatchesVersion(String savedScore, String savedVisit) {
         return savedScore != null && savedVisit != null &&
-                savedScore.endsWith(String.valueOf(QuestionData.VERSION_OF_ORDER_NUM)) &&
-                savedVisit.endsWith(String.valueOf(QuestionData.VERSION_OF_ORDER_NUM));
+                savedScore.endsWith(String.valueOf(questionData.getVersionOfQuestionOrder())) &&
+                savedVisit.endsWith(String.valueOf(questionData.getVersionOfQuestionOrder()));
     }
 
     public void putScore(int index, int value) {

@@ -212,4 +212,36 @@ class ScoresTest {
 
         assertTrue(scores.scoreDataMatchesVersion(scoreStr, visitedStr));
     }
+
+    @Test
+    void scoreDataMatchesVersion_incorrectScoreStringVersion() {
+        Scores scores = new Scores(questionData);
+        String correctVersionStr = String.valueOf(questionData.getVersionOfQuestionOrder());
+        String wrongVersionStr = correctVersionStr + "2";
+        String scoreStr = "000000000000000000000000321_" + wrongVersionStr;
+        String visitedStr = "111111111111111111111111111_" + correctVersionStr;
+
+        assertFalse(scores.scoreDataMatchesVersion(scoreStr, visitedStr));
+    }
+
+    @Test
+    void scoreDataMatchesVersion_incorrectVisitedStringVersion() {
+        Scores scores = new Scores(questionData);
+        String correctVersionStr = String.valueOf(questionData.getVersionOfQuestionOrder());
+        String wrongtVersionStr = correctVersionStr + "2";
+        String scoreStr = "000000000000000000000000321_" + correctVersionStr;
+        String visitedStr = "111111111111111111111111111_" + wrongtVersionStr;
+
+        assertFalse(scores.scoreDataMatchesVersion(scoreStr, visitedStr));
+    }
+
+    @Test
+    void scoreDataMatchesVersion_bothStringsIncorrect() {
+        Scores scores = new Scores(questionData);
+        String wrongVersionStr = String.valueOf(questionData.getVersionOfQuestionOrder()) + "2";
+        String scoreStr = "000000000000000000000000321_" + wrongVersionStr;
+        String visitedStr = "111111111111111111111111111_" + wrongVersionStr;
+
+        assertFalse(scores.scoreDataMatchesVersion(scoreStr, visitedStr));
+    }
 }
