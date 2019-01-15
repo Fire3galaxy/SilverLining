@@ -164,7 +164,7 @@ public class Scores {
         for (String q : QuestionData.questionNames)
             visited.append(questionIsAnswered.get(q).compareTo(false));   // Returns 1 or 0 (true/false)
 
-        visited.append("_" + QuestionData.VERSION_OF_ORDER_NUM);
+        visited.append("_").append(questionData.getVersionOfQuestionOrder());
 
         return visited.toString();
     }

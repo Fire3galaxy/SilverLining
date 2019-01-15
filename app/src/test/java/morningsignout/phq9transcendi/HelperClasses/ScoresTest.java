@@ -179,4 +179,13 @@ class ScoresTest {
 
         assertEquals(legacyExpectedString, scores.getScoreString());
     }
+
+    @Test
+    void getVisitedString_noQuestionsAnswered() {
+        Scores scores = new Scores(questionData);
+        final String legacyExpectedString = "000000000000000000000000000_"
+                + questionData.getVersionOfQuestionOrder();
+
+        assertEquals(legacyExpectedString, scores.getVisitedString());
+    }
 }
