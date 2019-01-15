@@ -54,7 +54,7 @@ public class Scores {
         }
     }
 
-    private boolean scoreDataMatchesVersion(String savedScore, String savedVisit) {
+    boolean scoreDataMatchesVersion(String savedScore, String savedVisit) {
         return savedScore != null && savedVisit != null &&
                 savedScore.endsWith(String.valueOf(QuestionData.VERSION_OF_ORDER_NUM)) &&
                 savedVisit.endsWith(String.valueOf(QuestionData.VERSION_OF_ORDER_NUM));

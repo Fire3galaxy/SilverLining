@@ -161,7 +161,7 @@ class ScoresTest {
         Scores scores = new Scores(questionData);
         // Noted as legacy because expected string should really be based on number of questions in
         // csv file, not on hardcoded array in code
-        final String legacyExpectedString = "000000000000000000000000000_"
+        String legacyExpectedString = "000000000000000000000000000_"
                 + questionData.getVersionOfQuestionOrder();
 
         assertEquals(legacyExpectedString, scores.getScoreString());
@@ -170,7 +170,7 @@ class ScoresTest {
     @Test
     void getScoreString_someQuestionsAnswered() {
         Scores scores = new Scores(questionData);
-        final String legacyExpectedString = "013000000000000000000000000_"
+        String legacyExpectedString = "013000000000000000000000000_"
                 + questionData.getVersionOfQuestionOrder();
 
         scores.putScore(0, 0);
@@ -183,7 +183,7 @@ class ScoresTest {
     @Test
     void getVisitedString_noQuestionsAnswered() {
         Scores scores = new Scores(questionData);
-        final String legacyExpectedString = "000000000000000000000000000_"
+        String legacyExpectedString = "000000000000000000000000000_"
                 + questionData.getVersionOfQuestionOrder();
 
         assertEquals(legacyExpectedString, scores.getVisitedString());
@@ -192,14 +192,24 @@ class ScoresTest {
     @Test
     void getVisitedString_someQuestionsAnswered() {
         Scores scores = new Scores(questionData);
-        final String legacyExpectedString = "111000000000000000000000000_"
+        String legacyExpectedString = "111000000000000000000000000_"
                 + questionData.getVersionOfQuestionOrder();
-        final int arbitraryVal = 2;
+        final int ARBITRARY_SCORE = 2;
 
-        scores.putScore(0, arbitraryVal);
-        scores.putScore(1, arbitraryVal);
-        scores.putScore(2, arbitraryVal);
+        scores.putScore(0, ARBITRARY_SCORE);
+        scores.putScore(1, ARBITRARY_SCORE);
+        scores.putScore(2, ARBITRARY_SCORE);
 
         assertEquals(legacyExpectedString, scores.getVisitedString());
+    }
+
+    @Test
+    void scoreDataMatchesVersion_bothStringsMatch() {
+        Scores scores = new Scores(questionData);
+        String correctVersionStr = String.valueOf(questionData.getVersionOfQuestionOrder());
+        String scoreStr = "000000000000000000000000321_" + correctVersionStr;
+        String visitedStr = "111111111111111111111111111_" + correctVersionStr;
+
+        assertTrue(scores.scoreDataMatchesVersion(scoreStr, visitedStr));
     }
 }
