@@ -159,8 +159,23 @@ class ScoresTest {
     @Test
     void getScoreString_noQuestionsAnswered() {
         Scores scores = new Scores(questionData);
+        // Noted as legacy because expected string should really be based on number of questions in
+        // csv file, not on hardcoded array in code
         final String legacyExpectedString = "000000000000000000000000000_"
                 + questionData.getVersionOfQuestionOrder();
+
+        assertEquals(legacyExpectedString, scores.getScoreString());
+    }
+
+    @Test
+    void getScoreString_someQuestionsAnswered() {
+        Scores scores = new Scores(questionData);
+        final String legacyExpectedString = "013000000000000000000000000_"
+                + questionData.getVersionOfQuestionOrder();
+
+        scores.putScore(0, 0);
+        scores.putScore(1, 1);
+        scores.putScore(2, 3);
 
         assertEquals(legacyExpectedString, scores.getScoreString());
     }
