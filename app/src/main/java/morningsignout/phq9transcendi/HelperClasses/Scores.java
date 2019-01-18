@@ -150,13 +150,20 @@ public class Scores {
     }
 
     public String getScoreString() {
-        StringBuilder score = new StringBuilder();
-        for (String q : QuestionData.questionNames)
-            score.append(Integer.toString(scoreDictionary.get(q)));
+        StringBuilder scoreBuilder = new StringBuilder();
+        int i = 0;
+        for (String q : QuestionData.questionNames) {
+            Integer score = scoreDictionary.get(q);
+            if (score != null)
+                scoreBuilder.append(score.toString());
 
-        score.append("_").append(questionData.getVersionOfQuestionOrder());
+            i++;
+            if (i >= 3) break;
+        }
 
-        return score.toString();
+        scoreBuilder.append("_").append(questionData.getVersionOfQuestionOrder());
+
+        return scoreBuilder.toString();
     }
 
     public String getVisitedString() {

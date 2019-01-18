@@ -158,13 +158,11 @@ class ScoresTest {
 
     @Test
     void getScoreString_noQuestionsAnswered() {
+        // Using 3_questions.csv. Expecting string with 3 answers
         Scores scores = new Scores(questionData);
-        // Noted as legacy because expected string should really be based on number of questions in
-        // csv file, not on hardcoded array in code
-        String legacyExpectedString = "000000000000000000000000000_"
-                + questionData.getVersionOfQuestionOrder();
+        String expectedString = "000_" + questionData.getVersionOfQuestionOrder();
 
-        assertEquals(legacyExpectedString, scores.getScoreString());
+        assertEquals(expectedString, scores.getScoreString());
     }
 
     @Test
