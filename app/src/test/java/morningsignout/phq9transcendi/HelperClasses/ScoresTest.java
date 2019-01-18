@@ -94,7 +94,7 @@ class ScoresTest {
     }
 
     @org.junit.jupiter.params.ParameterizedTest
-    @ValueSource(ints = {1, 3, 5})
+    @ValueSource(ints = {0, 1, 2})
     void questionIsVisited_singleQuestionIsVisited(int questionIndex) {
         Scores scores = new Scores(questionData);
         final int ARBITRARY_SCORE = 0;
