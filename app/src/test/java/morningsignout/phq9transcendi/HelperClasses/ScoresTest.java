@@ -38,7 +38,7 @@ class ScoresTest {
     }
 
     @Test
-    void defaultConstructor_scoresStartWithZero() {
+    void constructor_scoresStartWithZero() {
         Scores scores = new Scores(questionData);
 
         // Go through all questions
@@ -51,7 +51,7 @@ class ScoresTest {
     }
 
     @Test
-    void defaultConstructor_noQuestionsAreVisited() {
+    void constructor_noQuestionsAreVisited() {
         Scores scores = new Scores(questionData);
 
         for (int i = 0; i < QuestionData.NUM_QUESTIONS; i++)
@@ -59,7 +59,7 @@ class ScoresTest {
     }
 
     @org.junit.jupiter.params.ParameterizedTest
-    @CsvSource({"0, 2", "10, 3", "4, 0"})
+    @CsvSource({"0, 2", "1, 3", "2, 0"})
     void putScore_singleScoreInsertedCorrectly(int questionIndex, int scoreVal) {
         Scores scores = new Scores(questionData);
 
@@ -168,14 +168,13 @@ class ScoresTest {
     @Test
     void getScoreString_someQuestionsAnswered() {
         Scores scores = new Scores(questionData);
-        String legacyExpectedString = "013000000000000000000000000_"
-                + questionData.getVersionOfQuestionOrder();
+        String expectedString = "013_" + questionData.getVersionOfQuestionOrder();
 
         scores.putScore(0, 0);
         scores.putScore(1, 1);
         scores.putScore(2, 3);
 
-        assertEquals(legacyExpectedString, scores.getScoreString());
+        assertEquals(expectedString, scores.getScoreString());
     }
 
     @Test

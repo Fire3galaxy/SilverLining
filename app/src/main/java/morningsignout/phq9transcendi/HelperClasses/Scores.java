@@ -22,12 +22,12 @@ import morningsignout.phq9transcendi.PHQApplication;
  */
 public class Scores {
     // Mapping of question name to score value or visit flag
-    private TreeMap<String, Integer> scoreDictionary;
+    private int[] scoreDictionary;
     private TreeMap<String, Boolean> questionIsAnswered;
     private QuestionData questionData;
 
     public Scores(QuestionData questionData) {
-        this.scoreDictionary = new TreeMap<>();
+        this.scoreDictionary = new int[questionData.questionsLength()];
         this.questionIsAnswered = new TreeMap<>();
         this.questionData = questionData;
 
@@ -41,15 +41,15 @@ public class Scores {
     }
 
     private void setZeroScores() {
-        for (String q : QuestionData.questionNames) {
-            scoreDictionary.put(q, 0);
-            questionIsAnswered.put(q, false);
+        for (int i = 0; i < questionData.questionsLength(); i++) {
+            scoreDictionary[i] = 0;
+            questionIsAnswered.put(questionData.getQuestionName(i), false);
         }
     }
 
     private void restoreScores(String savedScore, String savedVisit) {
         for (int i = 0; i < QuestionData.questionNames.length; i++) {
-            scoreDictionary.put(QuestionData.questionNames[i], savedScore.charAt(i) - 0x30);     // char to int (0-4)
+            scoreDictionary[i] = ((int) savedScore.charAt(i)) - 0x30;
             questionIsAnswered.put(QuestionData.questionNames[i], savedVisit.charAt(i) != '0');   // char to bool (0 or 1)
         }
     }
@@ -61,13 +61,13 @@ public class Scores {
     }
 
     public void putScore(int index, int value) {
-        scoreDictionary.put(QuestionData.questionNames[index], value);
+        scoreDictionary[index] = value;
         questionIsAnswered.put(QuestionData.questionNames[index], true);
     }
 
     public int getQuestionScore(int i) {
         if (i >= 0 && i <= QuestionData.questionNames.length)
-            return scoreDictionary.get(QuestionData.questionNames[i]);
+            return scoreDictionary[i];
 
         return -1;
     }
@@ -78,7 +78,7 @@ public class Scores {
         int currentCategory = QuestionData.categoryIndices[0];
 
         for (int i = 0; i < QuestionData.questionNames.length; i++) {
-            max = Math.max(scoreDictionary.get(QuestionData.questionNames[i]), max);
+            max = Math.max(scoreDictionary[i], max);
 
             // Next category
             if (i + 1 < QuestionData.categoryIndices.length && currentCategory != QuestionData.categoryIndices[i + 1]) {
@@ -98,7 +98,7 @@ public class Scores {
 
         // Assumes that red flag questions are consecutive
         for (int i = QuestionData.RED_FLAG_QUESTION; i < end; i++, redFlagNum++)
-            if (scoreDictionary.get(QuestionData.questionNames[i]) >= QuestionData.redFlagThreshold[redFlagNum])
+            if (scoreDictionary[i] >= QuestionData.redFlagThreshold[redFlagNum])
                 return true;
 
         return false;
@@ -119,9 +119,6 @@ public class Scores {
             }
         }
 
-        for (Integer i : scoreDictionary.values())
-            Log.d("Scores", i.toString());
-
         return true;
     }
 
@@ -130,7 +127,7 @@ public class Scores {
 
         for (int i = 0; i < QuestionData.categoryIndices.length && QuestionData.categoryIndices[i] <= category; i++)
             if (QuestionData.categoryIndices[i] == category)
-                max = Math.max(scoreDictionary.get(QuestionData.questionNames[i]), max);
+                max = Math.max(scoreDictionary[i], max);
 
         return max;
     }
@@ -144,22 +141,15 @@ public class Scores {
 
     public ArrayList<Integer> getScoreValsArray() {
         ArrayList<Integer> answers = new ArrayList<>();
-        for (String q : QuestionData.questionNames)
-            answers.add(scoreDictionary.get(q));
+        for (int score : scoreDictionary) answers.add(score);
+
         return answers;
     }
 
     public String getScoreString() {
         StringBuilder scoreBuilder = new StringBuilder();
-        int i = 0;
-        for (String q : QuestionData.questionNames) {
-            Integer score = scoreDictionary.get(q);
-            if (score != null)
-                scoreBuilder.append(score.toString());
-
-            i++;
-            if (i >= 3) break;
-        }
+        for (int i = 0; i < questionData.questionsLength(); i++)
+            scoreBuilder.append(scoreDictionary[i]);
 
         scoreBuilder.append("_").append(questionData.getVersionOfQuestionOrder());
 
@@ -185,23 +175,23 @@ public class Scores {
         int end = QuestionData.RED_FLAG_QUESTION + QuestionData.redFlagThreshold.length;
         for (int i = QuestionData.RED_FLAG_QUESTION; i < end; i++, redFlagNum++)
             redFlagBitSet.set(redFlagNum,
-                    (scoreDictionary.get(QuestionData.questionNames[i]) >= QuestionData.redFlagThreshold[redFlagNum]));
+                    (scoreDictionary[i] >= QuestionData.redFlagThreshold[redFlagNum]));
 
         return redFlagBitSet;
     }
 
     public BitSet getFamOrCultureBits() {
         BitSet famOrCultureBits = new BitSet(2);
-        famOrCultureBits.set(0, scoreDictionary.get(QuestionData.questionNames[QuestionData.FAMILY_SITUATION]) != 0); // convert int to boolean
-        famOrCultureBits.set(1, scoreDictionary.get(QuestionData.questionNames[QuestionData.CULTURAL_BACKGROUND]) != 0);
+        famOrCultureBits.set(0, scoreDictionary[QuestionData.FAMILY_SITUATION] != 0); // convert int to boolean
+        famOrCultureBits.set(1, scoreDictionary[QuestionData.CULTURAL_BACKGROUND] != 0);
         return famOrCultureBits;
     }
 
     public int getFamilyUnderstandsAnswer() {
-        return scoreDictionary.get(QuestionData.questionNames[QuestionData.FAMILY_UNDERSTANDS]);
+        return scoreDictionary[QuestionData.FAMILY_UNDERSTANDS];
     }
 
     public int getiAppointmentAnswer() {
-        return scoreDictionary.get(QuestionData.questionNames[QuestionData.I_APPOINTMENT]);
+        return scoreDictionary[QuestionData.I_APPOINTMENT];
     }
 }
