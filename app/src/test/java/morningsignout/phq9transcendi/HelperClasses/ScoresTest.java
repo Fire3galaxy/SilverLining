@@ -149,7 +149,7 @@ class ScoresTest {
     @Test
     void getVisitedString_noQuestionsAnswered() {
         Scores scores = new Scores(questionData);
-        String legacyExpectedString = "000000000000000000000000000_"
+        String legacyExpectedString = "000_"
                 + questionData.getVersionOfQuestionOrder();
 
         assertEquals(legacyExpectedString, scores.getVisitedString());
@@ -158,7 +158,7 @@ class ScoresTest {
     @Test
     void getVisitedString_someQuestionsAnswered() {
         Scores scores = new Scores(questionData);
-        String legacyExpectedString = "111000000000000000000000000_"
+        String legacyExpectedString = "111_"
                 + questionData.getVersionOfQuestionOrder();
         final int ARBITRARY_SCORE = 2;
 

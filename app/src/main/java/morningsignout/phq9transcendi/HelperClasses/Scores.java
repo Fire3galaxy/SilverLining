@@ -23,12 +23,12 @@ import morningsignout.phq9transcendi.PHQApplication;
 public class Scores {
     // Mapping of question name to score value or visit flag
     private int[] scoreDictionary;
-    private TreeMap<String, Boolean> questionIsAnswered;
+    private boolean[] questionIsAnswered;
     private QuestionData questionData;
 
     public Scores(QuestionData questionData) {
         this.scoreDictionary = new int[questionData.questionsLength()];
-        this.questionIsAnswered = new TreeMap<>();
+        this.questionIsAnswered = new boolean[questionData.questionsLength()];
         this.questionData = questionData;
 
         setZeroScores();
@@ -43,14 +43,14 @@ public class Scores {
     private void setZeroScores() {
         for (int i = 0; i < questionData.questionsLength(); i++) {
             scoreDictionary[i] = 0;
-            questionIsAnswered.put(questionData.getQuestionName(i), false);
+            questionIsAnswered[i] = false;
         }
     }
 
     private void restoreScores(String savedScore, String savedVisit) {
         for (int i = 0; i < QuestionData.questionNames.length; i++) {
             scoreDictionary[i] = ((int) savedScore.charAt(i)) - 0x30;
-            questionIsAnswered.put(QuestionData.questionNames[i], savedVisit.charAt(i) != '0');   // char to bool (0 or 1)
+            questionIsAnswered[i] = (savedVisit.charAt(i) != '0');
         }
     }
 
@@ -62,7 +62,7 @@ public class Scores {
 
     public void putScore(int index, int value) {
         scoreDictionary[index] = value;
-        questionIsAnswered.put(QuestionData.questionNames[index], true);
+        questionIsAnswered[index] = true;
     }
 
     public int getQuestionScore(int i) {
@@ -105,15 +105,11 @@ public class Scores {
     }
 
     public boolean questionIsVisited(int i) {
-        if (questionIsAnswered.containsKey(QuestionData.questionNames[i]))
-            return questionIsAnswered.get(QuestionData.questionNames[i]);
-
-        throw new IndexOutOfBoundsException(); // Should not happen
+        return questionIsAnswered[i];
     }
 
     public boolean allQuestionsVisited() {
-        for (Boolean isVisited : questionIsAnswered.values()) {
-            Log.d("Scores", Boolean.toString(isVisited));
+        for (boolean isVisited : questionIsAnswered) {
             if (!isVisited) {
                 return false;
             }
@@ -158,8 +154,8 @@ public class Scores {
 
     public String getVisitedString() {
         StringBuilder visited = new StringBuilder();
-        for (String q : QuestionData.questionNames)
-            visited.append(questionIsAnswered.get(q).compareTo(false));   // Returns 1 or 0 (true/false)
+        for (int i = 0; i < questionData.questionsLength(); i++)
+            visited.append(questionIsAnswered[i] ? 1 : 0);
 
         visited.append("_").append(questionData.getVersionOfQuestionOrder());
 
