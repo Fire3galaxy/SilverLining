@@ -107,22 +107,15 @@ class ScoresTest {
     @Test
     void questionIsVisited_multipledQuestionsAreVisited() {
         Scores scores = new Scores(questionData);
-        final int NUM_VISITED = 5;
+        final int NUM_VISITED = questionData.questionsLength() - 1;
 
         for (int i = 0; i < NUM_VISITED; i++)
             scores.putScore(i, 0);
 
         for (int i = 0; i < NUM_VISITED; i++)
             assertTrue(scores.questionIsVisited(i));
-        for (int i = NUM_VISITED; i < QuestionData.NUM_QUESTIONS; i++)
+        for (int i = NUM_VISITED; i < questionData.questionsLength(); i++)
             assertFalse(scores.questionIsVisited(i));
-    }
-
-    @Test
-    void containsRedFlag_noAnswersInputted_noRedFlag() {
-        Scores scores = new Scores(questionData);
-
-        assertFalse(scores.containsRedFlag());
     }
 
     @Test
