@@ -126,37 +126,6 @@ class ScoresTest {
     }
 
     @Test
-    void containsRedFlag_someAnswersInputted_noRedFlag() {
-        Scores scores = new Scores(questionData);
-
-        // Assuming red flag questions are never the first 3 questions
-        scores.putScore(0, 0);
-        scores.putScore(1, 1);
-        scores.putScore(2, 2);
-
-        assertFalse(scores.containsRedFlag());
-    }
-
-    @Test
-    void containsRedFlag_redFlagAnswerInputted_redFlag() {
-        Scores scores = new Scores(questionData);
-
-        scores.putScore(QuestionData.RED_FLAG_QUESTION, 1);
-
-        assertTrue(scores.containsRedFlag());
-    }
-
-    @Test
-    void containsRedFlag_redFlagAnswerChanged_noRedFlag() {
-        Scores scores = new Scores(questionData);
-
-        scores.putScore(QuestionData.RED_FLAG_QUESTION, 1);
-        scores.putScore(QuestionData.RED_FLAG_QUESTION, 0);
-
-        assertFalse(scores.containsRedFlag());
-    }
-
-    @Test
     void getScoreString_noQuestionsAnswered() {
         // Using 3_questions.csv. Expecting string with 3 answers
         Scores scores = new Scores(questionData);
