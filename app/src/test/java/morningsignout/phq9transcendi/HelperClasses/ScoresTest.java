@@ -203,4 +203,18 @@ class ScoresTest {
 
         assertFalse(scores.scoreDataMatchesVersion(scoreStr, visitedStr));
     }
+
+    @Test
+    void restoreScores_scoreAndVisitedStringRestoredCorrectly_noneVisited() {
+        Scores scores = new Scores(questionData);
+        String zeroScores = "000_" + questionData.getVersionOfQuestionOrder();
+        String noneVisited = "000_" + questionData.getVersionOfQuestionOrder();
+
+        scores.restoreScores(zeroScores, noneVisited);
+
+        for (int i = 0; i < questionData.questionsLength(); i++) {
+            assertEquals(zeroScores.charAt(i) - 0x30, scores.getQuestionScore(i));
+            assertEquals((noneVisited.charAt(i) - 0x30) == 1, scores.questionIsVisited(i));
+        }
+    }
 }

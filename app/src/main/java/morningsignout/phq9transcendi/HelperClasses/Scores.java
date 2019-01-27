@@ -47,8 +47,8 @@ public class Scores {
         }
     }
 
-    private void restoreScores(String savedScore, String savedVisit) {
-        for (int i = 0; i < QuestionData.questionNames.length; i++) {
+    void restoreScores(String savedScore, String savedVisit) {
+        for (int i = 0; i < questionData.questionsLength(); i++) {
             scoreDictionary[i] = ((int) savedScore.charAt(i)) - 0x30;
             questionIsAnswered[i] = (savedVisit.charAt(i) != '0');
         }

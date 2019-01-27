@@ -27,8 +27,6 @@ import java.util.LinkedList;
  * activity_quiz.xml, and @style/[every styleName]RangeSlider need to be updated to accommodate this.
  */
 public class QuestionData {
-    static public final int NUM_QUESTIONS = 27; // total number of questions
-
     // Index where red flag starts
     static public final int RED_FLAG_QUESTION = 16;
 
