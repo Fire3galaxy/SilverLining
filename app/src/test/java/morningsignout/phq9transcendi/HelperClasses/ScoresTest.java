@@ -42,7 +42,7 @@ class ScoresTest {
         Scores scores = new Scores(questionData);
 
         // Go through all questions
-        for (int i = 0; i < QuestionData.NUM_QUESTIONS; i++) {
+        for (int i = 0; i < questionData.questionsLength(); i++) {
             assertEquals(0,
                     scores.getQuestionScore(i),
                     "Score for question " + i + " should be 0"
@@ -54,7 +54,7 @@ class ScoresTest {
     void constructor_noQuestionsAreVisited() {
         Scores scores = new Scores(questionData);
 
-        for (int i = 0; i < QuestionData.NUM_QUESTIONS; i++)
+        for (int i = 0; i < questionData.questionsLength(); i++)
             assertFalse(scores.questionIsVisited(i));
     }
 
@@ -73,7 +73,7 @@ class ScoresTest {
     @Test
     void putScore_multipleScoresInsertedCorrectly() {
         Scores scores = new Scores(questionData);
-        int[] scoreVals = {0, 1, 2, 3, 0, 1};
+        final int[] scoreVals = {0, 1, 2}; // Note: Assumes questionLength() == 3
 
         // Insert scores into Scores as scores of the first questions
         for (int i = 0; i < scoreVals.length; i++) {
@@ -86,7 +86,7 @@ class ScoresTest {
                     "Inserted values do not match actual scores");
         }
         // If score is not inserted for question, its score is 0
-        for (int i = scoreVals.length; i < QuestionData.NUM_QUESTIONS; i++) {
+        for (int i = scoreVals.length; i < questionData.questionsLength(); i++) {
             assertEquals(0,
                     scores.getQuestionScore(i),
                     "All untouched scores should be 0");
