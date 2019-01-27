@@ -217,4 +217,8 @@ class ScoresTest {
             assertEquals((noneVisited.charAt(i) - 0x30) == 1, scores.questionIsVisited(i));
         }
     }
+
+    // FIXME: Make a copy of the above unit test for other score and visited strings.
+    // Better yet, just get rid of the "noneVisited" clause and make this a 
+    // parameterized unit test
 }
