@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.lang.IndexOutOfBoundsException;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
@@ -66,10 +67,10 @@ public class Scores {
     }
 
     public int getQuestionScore(int i) {
-        if (i >= 0 && i <= QuestionData.questionNames.length)
-            return scoreDictionary[i];
+        if (i < 0 || i > questionData.questionsLength())
+            throw new IndexOutOfBoundsException();
 
-        return -1;
+        return scoreDictionary[i];
     }
 
     public int getFinalScore() {
