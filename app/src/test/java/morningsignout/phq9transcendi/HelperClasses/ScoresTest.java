@@ -3,6 +3,7 @@ package morningsignout.phq9transcendi.HelperClasses;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -76,7 +77,7 @@ class ScoresTest {
         Scores scores = new Scores(questionData);
         final int[] scoreVals = {0, 1, 2}; // Note: Assumes questionLength() == 3
 
-        // Insert scores into Scores as scores of the first questions
+        // Insert scores into Scores as scores of the scoreValues questions
         for (int i = 0; i < scoreVals.length; i++) {
             scores.putScore(i, scoreVals[i]);
         }
@@ -207,18 +208,18 @@ class ScoresTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "000"
+            "000,000"
     })
-    void restoreScores_scoreAndVisitedStringRestoredCorrectly_noneVisited() {
+    void restoreScores_scoreAndVisitedStringRestoredCorrectly_noneVisited(
+            @ConvertWith(ToScoreStateContainer.class) ScoreStateContainer expectedScoreObjects)
+    {
         Scores scores = new Scores(questionData);
-        String zeroScores = "000_" + questionData.getVersionOfQuestionOrder();
-        String noneVisited = "000_" + questionData.getVersionOfQuestionOrder();
 
-        scores.restoreScores(zeroScores, noneVisited);
+        scores.restoreScores(expectedScoreObjects.scoreString, expectedScoreObjects.visitedString);
 
         for (int i = 0; i < questionData.questionsLength(); i++) {
-            assertEquals(zeroScores.charAt(i) - 0x30, scores.getQuestionScore(i));
-            assertEquals((noneVisited.charAt(i) - 0x30) == 1, scores.questionIsVisited(i));
+            assertEquals(expectedScoreObjects.scoreValues[i], scores.getQuestionScore(i));
+            assertEquals(expectedScoreObjects.visitedValues[i], scores.questionIsVisited(i));
         }
     }
 

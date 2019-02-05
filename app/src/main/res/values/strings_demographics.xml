@@ -12,7 +12,7 @@
     <string name="_gender">Gender</string>
     <string name="_ethnicity">Ethnicity</string>
     <string name="_school_year">School Year</string>
-    <string name="_family">Are you the first in your family to go to college?</string>
+    <string name="_family">Are you the scoreValues in your family to go to college?</string>
     <string name="_college_name">School Name</string>
 
     <string-array name="gender_array">
