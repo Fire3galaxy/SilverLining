@@ -2,6 +2,7 @@ package morningsignout.phq9transcendi.HelperClasses;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -204,7 +205,10 @@ class ScoresTest {
         assertFalse(scores.scoreDataMatchesVersion(scoreStr, visitedStr));
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "000"
+    })
     void restoreScores_scoreAndVisitedStringRestoredCorrectly_noneVisited() {
         Scores scores = new Scores(questionData);
         String zeroScores = "000_" + questionData.getVersionOfQuestionOrder();

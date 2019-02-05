@@ -2,6 +2,7 @@ package morningsignout.phq9transcendi.HelperClasses;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -67,7 +68,7 @@ class QuestionDataTest {
     // TODO: Replace dummy excel sheet with a mocked Apache POI that opens mock data.
     // Unit tests should only focus on logic of reading files and getting question text, not on
     // opening files and using Apache POI properly.
-    @org.junit.jupiter.params.ParameterizedTest
+    @ParameterizedTest
     @CsvSource({
             TWO_QUESTION_TEST_FILE      + ", 2",
             THREE_QUESTION_TEST_FILE    + ", 3"
@@ -105,7 +106,7 @@ class QuestionDataTest {
         }
     }
 
-    @org.junit.jupiter.params.ParameterizedTest
+    @ParameterizedTest
     @ValueSource(strings = {
             "NORMAL, Not at all, One or two days a week, Three to four days a week, Everyday",
             "SUPPORTIVE, Very poor, Poor, Okay, Good, Very good",
@@ -120,13 +121,13 @@ class QuestionDataTest {
         }
     }
 
-    @org.junit.jupiter.params.ParameterizedTest
+    @ParameterizedTest
     @ValueSource(strings = {"DUMMY"})
     void getAnswerValues_invalidAnswerType(String answerType) {
         assertNull(defaultTestQuestionData.getAnswerValues(answerType));
     }
 
-    @org.junit.jupiter.params.ParameterizedTest
+    @ParameterizedTest
     @ValueSource(strings = {
             "NORMAL, Not at all, One or two days a week, Three to four days a week, Everyday",
             "SUPPORTIVE, Very poor, Poor, Okay, Good, Very good",
@@ -140,7 +141,7 @@ class QuestionDataTest {
         assertEquals(singleAnswerTypeData.getAnswerValues().length, actualAnswerValsLength);
     }
 
-    @org.junit.jupiter.params.ParameterizedTest
+    @ParameterizedTest
     @CsvSource({
             "NORMAL, RadioButtons",
             "SUPPORTIVE, RadioButtons",
