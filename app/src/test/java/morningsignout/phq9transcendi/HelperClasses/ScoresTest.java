@@ -208,7 +208,10 @@ class ScoresTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "000,000"
+            "000,000",
+            "000,111",
+            "220,110",
+            "312,111"
     })
     void restoreScores_scoreAndVisitedStringRestoredCorrectly_noneVisited(
             @ConvertWith(ToScoreStateContainer.class) ScoreStateContainer expectedScoreObjects)
@@ -222,8 +225,4 @@ class ScoresTest {
             assertEquals(expectedScoreObjects.visitedValues[i], scores.questionIsVisited(i));
         }
     }
-
-    // FIXME: Make a copy of the above unit test for other score and visited strings.
-    // Better yet, just get rid of the "noneVisited" clause and make this a 
-    // parameterized unit test
 }
