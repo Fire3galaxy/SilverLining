@@ -185,7 +185,7 @@ public class Scores {
     }
 
     public int getFamilyUnderstandsAnswer() {
-        return scoreDictionary[QuestionData.FAMILY_UNDERSTANDS];
+        return scoreDictionary[questionData.getIndex_familyUnderstands()];
     }
 
     public int getiAppointmentAnswer() {

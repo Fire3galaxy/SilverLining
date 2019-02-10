@@ -270,4 +270,15 @@ class ScoresTest {
         assertEquals(intToBool(expectedFSScore), familyOrCultureBits.get(familySituationBitIndex));
         assertEquals(intToBool(expectedCBScore), familyOrCultureBits.get(culturalBackgroundBitIndex));
     }
+
+    @Test
+    void getFamilyUnderstandsAnswer_expectedScoreIsCorrect() {
+        Scores scores = new Scores(specialQuestionData);
+        int familyUnderstandsIndex = specialQuestionData.getIndex_familyUnderstands();
+        int expectedScore = 3;
+
+        scores.putScore(familyUnderstandsIndex, expectedScore);
+
+        assertEquals(expectedScore, scores.getFamilyUnderstandsAnswer());
+    }
 }

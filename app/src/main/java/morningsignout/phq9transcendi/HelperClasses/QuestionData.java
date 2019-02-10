@@ -31,6 +31,7 @@ public class QuestionData {
     public static final String I_APPOINTMENT_NAME = "i_appointment";
     public static final String CULTURAL_BACKGROUND_NAME = "culturalbackground";
     public static final String FAMILY_SITUATION_NAME = "familysituation";
+    public static final String FAMILY_UNDERSTANDS_NAME = "familyunderstands";
 
     // --------------- Legacy variables below ---------------
     // Index where red flag starts
@@ -38,9 +39,6 @@ public class QuestionData {
 
     // Category index that red flags begin (All questions that contribute to score are below red flag)
     static public final int RED_FLAG_CATEGORY = 9;
-
-    // index constants for email message in results activity
-    public static final int FAMILY_UNDERSTANDS = 21;
 
     // Array of which category each question is associated with
     public static final int[] categoryIndices = {
@@ -323,6 +321,10 @@ public class QuestionData {
 
     public int getIndex_familySituation() throws IllegalStateException {
         return getSpecialQuestionIndex(FAMILY_SITUATION_NAME);
+    }
+
+    public int getIndex_familyUnderstands() throws IllegalStateException {
+        return getSpecialQuestionIndex(FAMILY_UNDERSTANDS_NAME);
     }
 
     private int getSpecialQuestionIndex(String questionName) {
