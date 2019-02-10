@@ -1,7 +1,6 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -59,7 +58,7 @@ class QuestionDataTest {
 
         defaultTestQuestionData = null;
         try {
-            defaultTestQuestionData = new QuestionData(IS_UNIT_TEST, THREE_QUESTION_TEST_FILE);
+            defaultTestQuestionData = new QuestionData(THREE_QUESTION_TEST_FILE);
         } catch (IOException e) {
             fail("QuestionData should not throw exception: " + e.getMessage());
         }
@@ -76,7 +75,7 @@ class QuestionDataTest {
     void questionsLength_numQuestionsIsCorrect(String filename, int correctNumQuestions) {
         QuestionData questionData = null;
         try {
-            questionData = new QuestionData(IS_UNIT_TEST, filename);
+            questionData = new QuestionData(filename);
         } catch (IOException e) {
             fail("QuestionData should not throw exception");
         }

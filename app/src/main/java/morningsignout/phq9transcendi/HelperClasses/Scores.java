@@ -189,6 +189,6 @@ public class Scores {
     }
 
     public int getiAppointmentAnswer() {
-        return scoreDictionary[QuestionData.I_APPOINTMENT];
+        return scoreDictionary[questionData.getIndex_iAppointment()];
     }
 }

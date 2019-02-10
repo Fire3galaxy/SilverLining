@@ -5,7 +5,6 @@ import android.content.Context;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,6 +26,10 @@ import java.util.LinkedList;
  * activity_quiz.xml, and @style/[every styleName]RangeSlider need to be updated to accommodate this.
  */
 public class QuestionData {
+    // --------------- New variables here -------------------
+    public static final String I_APPOINTMENT_NAME = "i_appointment";
+
+    // --------------- Legacy variables below ---------------
     // Index where red flag starts
     static public final int RED_FLAG_QUESTION = 16;
 
@@ -147,19 +150,22 @@ public class QuestionData {
     private int questionOrderingVersion;
 
     public QuestionData(Context context) throws IOException {
-        this(context, false, QUESTION_SPREADSHEET_NAME);
+        this(context, QUESTION_SPREADSHEET_NAME);
     }
 
     // Special constructor for custom questions for unit tests.
-    QuestionData(boolean isUnitTest, String unitTestQuestionFilename) throws IOException {
-        this(null, isUnitTest, unitTestQuestionFilename);
+    QuestionData(String unitTestQuestionFilename) throws IOException {
+        this(null, unitTestQuestionFilename);
     }
 
-    private QuestionData(Context context, boolean isUnitTest, String questionFilename) throws IOException {
+    private QuestionData(Context context, String questionFilename) throws IOException {
         this.context = context;
-        this.isUnitTest = isUnitTest;
+        this.isUnitTest = false;
         this.questionList = new LinkedList<>();
         this.answerMap = new HashMap<>();
+
+        if (context == null)
+            this.isUnitTest = true;
 
         loadQuestionDataFromSpreadsheet(questionFilename);
         loadAnswerDataFromSpreadsheet();
@@ -304,5 +310,17 @@ public class QuestionData {
 
     public int getVersionOfQuestionOrder() {
         return questionOrderingVersion;
+    }
+
+    public int getIndex_iAppointment() throws IllegalStateException {
+        for (int i = 0; i < questionList.size(); i++) {
+            SingleQuestionData sqd = questionList.get(i);
+            if (sqd.getQuestionName().equals(I_APPOINTMENT_NAME)) {
+                return i;
+            }
+        }
+
+        throw new IllegalStateException(
+                "Specially categorized question not in passed-in CSV. Was this intentional?");
     }
 }

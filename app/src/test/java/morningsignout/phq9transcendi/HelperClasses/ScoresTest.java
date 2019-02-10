@@ -33,7 +33,7 @@ class ScoresTest {
 
         questionData = null;
         try {
-            questionData = new QuestionData(IS_UNIT_TEST, QUESTION_ASSET_FILE);
+            questionData = new QuestionData(QUESTION_ASSET_FILE);
         } catch (IOException e) {
             fail("QuestionData should not throw exception: " + e.getMessage());
         }
@@ -224,5 +224,26 @@ class ScoresTest {
             assertEquals(expectedScoreObjects.scoreValues[i], scores.getQuestionScore(i));
             assertEquals(expectedScoreObjects.visitedValues[i], scores.questionIsVisited(i));
         }
+    }
+
+    // FIXME: Finish this unit test and start removing named category variables from QuestionData
+    @Test
+    void getiAppointmentAnswer_expectedScoreIsCorrect() {
+        final String specialQuestionCSV = "special_questions.csv";
+        QuestionData specialQuestionData = null;
+
+        try {
+            specialQuestionData = new QuestionData(specialQuestionCSV);
+        } catch (IOException e) {
+            fail("QuestionData should not throw exception: " + e.getMessage());
+        }
+
+        Scores scores = new Scores(specialQuestionData);
+        int iAppointmentIndex = specialQuestionData.getIndex_iAppointment();
+        int expectedScore = 3;
+
+        scores.putScore(iAppointmentIndex, expectedScore);
+
+        assertEquals(expectedScore, scores.getiAppointmentAnswer());
     }
 }
