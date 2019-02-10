@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -281,7 +280,7 @@ public class QuizActivity extends AppCompatActivity {
         results.putExtra(ResultsActivity.SCORE, scores.getFinalScore());
         results.putExtra(ResultsActivity.RED_FLAG, scores.containsRedFlag());
         results.putExtra(ResultsActivity.RED_FLAG_BITS, scores.getRedFlagBits());
-        results.putExtra(ResultsActivity.FAM_OR_CULTURE_BITS, scores.getFamOrCultureBits());
+        results.putExtra(ResultsActivity.FAM_OR_CULTURE_BITS, scores.getFamilyOrCultureBits());
         results.putExtra(ResultsActivity.FAMILY_UNDERSTANDS_ANSWER, scores.getFamilyUnderstandsAnswer());
         results.putExtra(ResultsActivity.CAN_SEE_ANSWER, scores.getiAppointmentAnswer());
         startActivity(results);

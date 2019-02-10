@@ -177,10 +177,10 @@ public class Scores {
         return redFlagBitSet;
     }
 
-    public BitSet getFamOrCultureBits() {
+    public BitSet getFamilyOrCultureBits() {
         BitSet famOrCultureBits = new BitSet(2);
         famOrCultureBits.set(0, scoreDictionary[QuestionData.FAMILY_SITUATION] != 0); // convert int to boolean
-        famOrCultureBits.set(1, scoreDictionary[QuestionData.CULTURAL_BACKGROUND] != 0);
+        famOrCultureBits.set(1, scoreDictionary[questionData.getIndex_culturalBackground()] != 0);
         return famOrCultureBits;
     }
 

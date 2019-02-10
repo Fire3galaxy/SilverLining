@@ -9,31 +9,43 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.BitSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ScoresTest {
     private final static String QUESTION_ASSET_FILE = "3_questions.csv";
+    private final static String SPECIAL_QUESTION_ASSET_FILE = "special_questions.csv";
     private final static String ANSWER_ASSET_FILE = "answers.csv";
     private final static String CONFIG_ASSET_FILE = "config.csv";
     private static final boolean IS_UNIT_TEST = true;
 
     private static QuestionData questionData;
+    private static QuestionData specialQuestionData;
 
     @BeforeAll
     static void setUp() {
         // Make sure test files exist
         File questionFile = new File(QUESTION_ASSET_FILE);
+        File specialQuestionFile = new File(SPECIAL_QUESTION_ASSET_FILE);
         File answerFile = new File(ANSWER_ASSET_FILE);
         File configFile = new File(CONFIG_ASSET_FILE);
 
         assertTrue(questionFile.exists());
+        assertTrue(specialQuestionFile.exists());
         assertTrue(answerFile.exists());
         assertTrue(configFile.exists());
 
         questionData = null;
         try {
             questionData = new QuestionData(QUESTION_ASSET_FILE);
+        } catch (IOException e) {
+            fail("QuestionData should not throw exception: " + e.getMessage());
+        }
+
+        specialQuestionData = null;
+        try {
+            specialQuestionData = new QuestionData(SPECIAL_QUESTION_ASSET_FILE);
         } catch (IOException e) {
             fail("QuestionData should not throw exception: " + e.getMessage());
         }
@@ -226,18 +238,8 @@ class ScoresTest {
         }
     }
 
-    // FIXME: Finish this unit test and start removing named category variables from QuestionData
     @Test
     void getiAppointmentAnswer_expectedScoreIsCorrect() {
-        final String specialQuestionCSV = "special_questions.csv";
-        QuestionData specialQuestionData = null;
-
-        try {
-            specialQuestionData = new QuestionData(specialQuestionCSV);
-        } catch (IOException e) {
-            fail("QuestionData should not throw exception: " + e.getMessage());
-        }
-
         Scores scores = new Scores(specialQuestionData);
         int iAppointmentIndex = specialQuestionData.getIndex_iAppointment();
         int expectedScore = 3;
@@ -245,5 +247,17 @@ class ScoresTest {
         scores.putScore(iAppointmentIndex, expectedScore);
 
         assertEquals(expectedScore, scores.getiAppointmentAnswer());
+    }
+
+    @Test
+    void getFamilyOrCultureBits_expectedScoreIsCorrect() {
+        Scores scores = new Scores(specialQuestionData);
+        int culturalBackgroundIndex = specialQuestionData.getIndex_culturalBackground();
+        int expectedCBScore = 1;
+
+        scores.putScore(culturalBackgroundIndex, expectedCBScore);
+        BitSet familyOrCultureBits = scores.getFamilyOrCultureBits();
+
+        assertEquals(expectedCBScore == 1, familyOrCultureBits.get(1));
     }
 }

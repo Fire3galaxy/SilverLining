@@ -1,6 +1,7 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -28,6 +29,7 @@ import java.util.LinkedList;
 public class QuestionData {
     // --------------- New variables here -------------------
     public static final String I_APPOINTMENT_NAME = "i_appointment";
+    public static final String CULTURAL_BACKGROUND_NAME = "culturalbackground";
 
     // --------------- Legacy variables below ---------------
     // Index where red flag starts
@@ -40,7 +42,6 @@ public class QuestionData {
     public static final int FAMILY_UNDERSTANDS = 21;
     public static final int FAMILY_SITUATION = 22;
     public static final int CULTURAL_BACKGROUND = 23;
-    public static final int I_APPOINTMENT = 24;
 
     // Array of which category each question is associated with
     public static final int[] categoryIndices = {
@@ -96,6 +97,7 @@ public class QuestionData {
             readableName = s;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return readableName;
@@ -313,9 +315,17 @@ public class QuestionData {
     }
 
     public int getIndex_iAppointment() throws IllegalStateException {
+        return getSpecialQuestionIndex(I_APPOINTMENT_NAME);
+    }
+
+    public int getIndex_culturalBackground() throws IllegalStateException {
+        return getSpecialQuestionIndex(CULTURAL_BACKGROUND_NAME);
+    }
+
+    private int getSpecialQuestionIndex(String questionName) {
         for (int i = 0; i < questionList.size(); i++) {
             SingleQuestionData sqd = questionList.get(i);
-            if (sqd.getQuestionName().equals(I_APPOINTMENT_NAME)) {
+            if (sqd.getQuestionName().equals(questionName)) {
                 return i;
             }
         }
