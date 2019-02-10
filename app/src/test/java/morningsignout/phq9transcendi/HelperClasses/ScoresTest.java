@@ -23,6 +23,10 @@ class ScoresTest {
     private static QuestionData questionData;
     private static QuestionData specialQuestionData;
 
+    private boolean intToBool(int i) {
+        return i != 0;
+    }
+
     @BeforeAll
     static void setUp() {
         // Make sure test files exist
@@ -252,12 +256,18 @@ class ScoresTest {
     @Test
     void getFamilyOrCultureBits_expectedScoreIsCorrect() {
         Scores scores = new Scores(specialQuestionData);
+        int familySituationIndex = specialQuestionData.getIndex_familySituation();
         int culturalBackgroundIndex = specialQuestionData.getIndex_culturalBackground();
+        int expectedFSScore = 0;
         int expectedCBScore = 1;
 
+        scores.putScore(familySituationIndex, expectedFSScore);
         scores.putScore(culturalBackgroundIndex, expectedCBScore);
         BitSet familyOrCultureBits = scores.getFamilyOrCultureBits();
 
-        assertEquals(expectedCBScore == 1, familyOrCultureBits.get(1));
+        int familySituationBitIndex = 0;
+        int culturalBackgroundBitIndex = 1;
+        assertEquals(intToBool(expectedFSScore), familyOrCultureBits.get(familySituationBitIndex));
+        assertEquals(intToBool(expectedCBScore), familyOrCultureBits.get(culturalBackgroundBitIndex));
     }
 }

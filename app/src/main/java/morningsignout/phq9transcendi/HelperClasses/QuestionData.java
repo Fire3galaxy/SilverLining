@@ -30,6 +30,7 @@ public class QuestionData {
     // --------------- New variables here -------------------
     public static final String I_APPOINTMENT_NAME = "i_appointment";
     public static final String CULTURAL_BACKGROUND_NAME = "culturalbackground";
+    public static final String FAMILY_SITUATION_NAME = "familysituation";
 
     // --------------- Legacy variables below ---------------
     // Index where red flag starts
@@ -40,8 +41,6 @@ public class QuestionData {
 
     // index constants for email message in results activity
     public static final int FAMILY_UNDERSTANDS = 21;
-    public static final int FAMILY_SITUATION = 22;
-    public static final int CULTURAL_BACKGROUND = 23;
 
     // Array of which category each question is associated with
     public static final int[] categoryIndices = {
@@ -320,6 +319,10 @@ public class QuestionData {
 
     public int getIndex_culturalBackground() throws IllegalStateException {
         return getSpecialQuestionIndex(CULTURAL_BACKGROUND_NAME);
+    }
+
+    public int getIndex_familySituation() throws IllegalStateException {
+        return getSpecialQuestionIndex(FAMILY_SITUATION_NAME);
     }
 
     private int getSpecialQuestionIndex(String questionName) {

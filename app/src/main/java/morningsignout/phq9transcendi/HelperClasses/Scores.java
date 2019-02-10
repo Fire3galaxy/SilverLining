@@ -179,7 +179,7 @@ public class Scores {
 
     public BitSet getFamilyOrCultureBits() {
         BitSet famOrCultureBits = new BitSet(2);
-        famOrCultureBits.set(0, scoreDictionary[QuestionData.FAMILY_SITUATION] != 0); // convert int to boolean
+        famOrCultureBits.set(0, scoreDictionary[questionData.getIndex_familySituation()] != 0); // convert int to boolean
         famOrCultureBits.set(1, scoreDictionary[questionData.getIndex_culturalBackground()] != 0);
         return famOrCultureBits;
     }
