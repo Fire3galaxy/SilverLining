@@ -4,9 +4,11 @@ class SingleQuestionData {
     private final String questionName;
     private final String questionText;
     private final String answerType;
+    private final String categoryType;
 
-    SingleQuestionData(String questionName, String answerType, String questionText) {
+    SingleQuestionData(String questionName, String categoryType, String answerType, String questionText) {
         this.questionName = questionName;
+        this.categoryType = categoryType;
         this.answerType = answerType;
         this.questionText = questionText;
     }
@@ -21,5 +23,9 @@ class SingleQuestionData {
 
     String getQuestionText() {
         return questionText;
+    }
+
+    String getCategoryType() {
+        return categoryType;
     }
 }

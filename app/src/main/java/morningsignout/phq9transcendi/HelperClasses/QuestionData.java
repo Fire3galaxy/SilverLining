@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 /**
  * Created by Daniel on 12/18/2016.
@@ -27,11 +29,11 @@ import java.util.LinkedList;
  * activity_quiz.xml, and @style/[every styleName]RangeSlider need to be updated to accommodate this.
  */
 public class QuestionData {
-    // --------------- New variables here -------------------
-    public static final String I_APPOINTMENT_NAME = "i_appointment";
-    public static final String CULTURAL_BACKGROUND_NAME = "culturalbackground";
-    public static final String FAMILY_SITUATION_NAME = "familysituation";
-    public static final String FAMILY_UNDERSTANDS_NAME = "familyunderstands";
+    // Special questions used for email in ResultsActivity. Names are hardcoded.
+    private static final String I_APPOINTMENT_NAME = "i_appointment";
+    private static final String CULTURAL_BACKGROUND_NAME = "culturalbackground";
+    private static final String FAMILY_SITUATION_NAME = "familysituation";
+    private static final String FAMILY_UNDERSTANDS_NAME = "familyunderstands";
 
     // --------------- Legacy variables below ---------------
     // Index where red flag starts
@@ -144,6 +146,7 @@ public class QuestionData {
 
     private LinkedList<SingleQuestionData> questionList;
     private HashMap<String, SingleAnswerTypeData> answerMap;
+    private HashSet<String> finalScoreCategories;
     private boolean isUnitTest;
     private Context context;
     private int questionOrderingVersion;
@@ -250,10 +253,12 @@ public class QuestionData {
 
         for (CSVRecord record : records) {
             String questionName = record.get(QuestionsHeaders.questionName);
+            String categoryType = record.get(QuestionsHeaders.categoryType);
             String answerType   = record.get(QuestionsHeaders.answerType);
             String questionText = record.get(QuestionsHeaders.questionText);
 
-            questionList.add(new SingleQuestionData(questionName, answerType, questionText));
+            questionList.add(
+                    new SingleQuestionData(questionName, categoryType, answerType, questionText));
         }
     }
 
@@ -285,6 +290,10 @@ public class QuestionData {
         return questionList.get(i).getQuestionText();
     }
 
+    public String getQuestionCategoryType(int i) {
+        return questionList.get(i).getCategoryType();
+    }
+
     public String getAnswerType(int i) {
         return questionList.get(i).getAnswerType();
     }
@@ -309,6 +318,11 @@ public class QuestionData {
 
     public int getVersionOfQuestionOrder() {
         return questionOrderingVersion;
+    }
+
+    // Next time: Read this data from config.csv and put it into this set. Unit test is already implemented.
+    public Set<String> getFinalScoreCategories() {
+        return finalScoreCategories;
     }
 
     public int getIndex_iAppointment() throws IllegalStateException {

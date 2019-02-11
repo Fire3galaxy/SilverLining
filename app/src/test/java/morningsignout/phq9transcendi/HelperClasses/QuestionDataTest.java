@@ -1,6 +1,7 @@
 package morningsignout.phq9transcendi.HelperClasses;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -8,6 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,29 +20,6 @@ class QuestionDataTest {
     private static final String THREE_QUESTION_TEST_FILE = "3_questions.csv";
     private static final String ANSWER_TEST_FILE = "answers.csv";
     private static final String CONFIG_TEST_FILE = "config.csv";
-    private static final boolean IS_UNIT_TEST = true;
-
-    /* Basically all the values corresponding to THREE_QUESTION_TEST_FILE are here. This
-     * level of hard-coding "kinda" makes sense - after all, no one should be changing the dummy
-     * values, so these tests should be able to assume the data is correct.
-     */
-    private static final String[] THREE_QUESTION_NAMES = new String[]{
-            "DUMMY",
-            "anhedoniainterest",
-            "guilt"
-    };
-    private static final String[] THREE_QUESTION_TEXT = new String[]{
-            "DUMMY QUESTION",
-            "Example Question 1",
-            "Example Question 2"
-    };
-    private static final String[] THREE_QUESTION_ANSWER_TYPES = new String[]{
-            "DUMMY",
-            "NORMAL",
-            "SUPPORTIVE"
-    };
-    private static final int QUESTION_ORDERING_VERSION = 42;
-
     private static QuestionData defaultTestQuestionData;
 
     @BeforeAll
@@ -84,24 +63,42 @@ class QuestionDataTest {
                 "Number of questions in spreadsheet should be " + correctNumQuestions);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getQuestionText_containsExpectedDummyQuestionNamesInCorrectOrder() {
-        for (int i = 0; i < THREE_QUESTION_NAMES.length; i++) {
-            assertEquals(THREE_QUESTION_NAMES[i], defaultTestQuestionData.getQuestionName(i));
+        final String[] threeQuestionNames = new String[]{
+                "DUMMY",
+                "anhedoniainterest",
+                "guilt"
+        };
+
+        for (int i = 0; i < threeQuestionNames.length; i++) {
+            assertEquals(threeQuestionNames[i], defaultTestQuestionData.getQuestionName(i));
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getQuestionText_containsExpectedDummyQuestionTextInCorrectOrder() {
-        for (int i = 0; i < THREE_QUESTION_TEXT.length; i++) {
-            assertEquals(THREE_QUESTION_TEXT[i],  defaultTestQuestionData.getQuestionText(i));
+        final String[] threeQuestionText = new String[]{
+                "DUMMY QUESTION",
+                "Example Question 1",
+                "Example Question 2"
+        };
+
+        for (int i = 0; i < threeQuestionText.length; i++) {
+            assertEquals(threeQuestionText[i],  defaultTestQuestionData.getQuestionText(i));
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getAnswerType_containsExpectedAnswerTypesInCorrectOrder() {
-        for (int i = 0; i < THREE_QUESTION_ANSWER_TYPES.length; i++) {
-            assertEquals(THREE_QUESTION_ANSWER_TYPES[i], defaultTestQuestionData.getAnswerType(i));
+        final String[] threeQuestionAnswerTypes = new String[]{
+                "DUMMY",
+                "NORMAL",
+                "SUPPORTIVE"
+        };
+
+        for (int i = 0; i < threeQuestionAnswerTypes.length; i++) {
+            assertEquals(threeQuestionAnswerTypes[i], defaultTestQuestionData.getAnswerType(i));
         }
     }
 
@@ -153,10 +150,34 @@ class QuestionDataTest {
         assertEquals(expectedUIType, actualUIType, answerType + " has wrong UI type");
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getVersionOfQuestionOrder_isCorrectVersion() {
-        final int versionNum = defaultTestQuestionData.getVersionOfQuestionOrder();
+        final int expectedVersionNum = 49;
+        final int actualVersionNum = defaultTestQuestionData.getVersionOfQuestionOrder();
 
-        assertEquals(QUESTION_ORDERING_VERSION, versionNum);
+        assertEquals(expectedVersionNum, actualVersionNum);
+    }
+
+    @Test
+    void getQuestionCategoryType_isCorrectCategoryType() {
+        String dummyCategoryType = "DUMMY";         // question 0
+        String anhedoniaCategoryType = "anhedonia"; // question 1
+        String guiltCategoryType = "guilt";         // question 2
+
+        assertEquals(dummyCategoryType, defaultTestQuestionData.getQuestionCategoryType(0));
+        assertEquals(anhedoniaCategoryType, defaultTestQuestionData.getQuestionCategoryType(1));
+        assertEquals(guiltCategoryType, defaultTestQuestionData.getQuestionCategoryType(2));
+    }
+
+    @Test
+    void getFinalScoreCategories_isCorrectSet() {
+        String dummyCategoryType = "DUMMY";         // Should not be in
+        String anhedoniaCategoryType = "anhedonia"; // Should be in
+        String guiltCategoryType = "guilt";         // Should be in
+        Set<String> finalScoreCategories = defaultTestQuestionData.getFinalScoreCategories();
+
+        assertFalse(finalScoreCategories.contains(dummyCategoryType));
+        assertTrue(finalScoreCategories.contains(anhedoniaCategoryType));
+        assertTrue(finalScoreCategories.contains(guiltCategoryType));
     }
 }
