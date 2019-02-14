@@ -86,14 +86,14 @@ public class Scores {
                 categoryScores.put(currCategory, scoreDictionary[i]);
 
             // Second question in a category onward. Keep highest value.
-            else if (scoreDictionary[i] > categoryScore.intValue())
+            else if (scoreDictionary[i] > categoryScore)
                 categoryScores.put(currCategory, scoreDictionary[i]);
         }
 
         // Sum up final results
         int sum = 0;
         for (Integer score : categoryScores.values())
-            sum += score.intValue();
+            sum += score;
 
         return sum;
     }
