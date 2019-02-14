@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import morningsignout.phq9transcendi.PHQApplication;
@@ -75,10 +76,16 @@ public class Scores {
 
     public int getFinalScore() {
         HashMap<String, Integer> categoryScores = new HashMap<>();
+        Set<String> finalScoreCategories = questionData.getFinalScoreCategories();
 
         // Separate scores by categories
         for (int i = 0; i < questionData.questionsLength(); i++) {
             String currCategory = questionData.getQuestionCategoryType(i);
+
+            // Don't consider categories that don't contribute to final score
+            if (!finalScoreCategories.contains(currCategory))
+                continue;
+
             Integer categoryScore = categoryScores.get(currCategory);
 
             // First question in a category

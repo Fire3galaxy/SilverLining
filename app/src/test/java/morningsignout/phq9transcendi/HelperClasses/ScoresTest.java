@@ -156,6 +156,16 @@ class ScoresTest {
     }
 
     @Test
+    void getFinalScore_nonContributingCategoriesAnswered() {
+        Scores scores = new Scores(questionData);
+        int expectedScore = 0;
+
+        scores.putScore(0, 1);
+
+        assertEquals(expectedScore, scores.getFinalScore());
+    }
+
+    @Test
     void getScoreString_noQuestionsAnswered() {
         Scores scores = new Scores(questionData);
         String expectedString = "000_" + questionData.getVersionOfQuestionOrder();

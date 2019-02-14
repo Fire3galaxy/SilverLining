@@ -323,7 +323,6 @@ public class QuestionData {
         return questionOrderingVersion;
     }
 
-    // Next time: Read this data from config.csv and put it into this set. Unit test is already implemented.
     public Set<String> getFinalScoreCategories() {
         return finalScoreCategories;
     }
