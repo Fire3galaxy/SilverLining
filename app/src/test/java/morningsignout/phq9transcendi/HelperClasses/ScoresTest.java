@@ -137,8 +137,15 @@ class ScoresTest {
     }
 
     @Test
+    void getFinalScore_noQuestionsAnswered() {
+        Scores scores = new Scores(questionData);
+        int expectedScore = 0;
+
+        assertEquals(expectedScore, scores.getFinalScore());
+    }
+
+    @Test
     void getScoreString_noQuestionsAnswered() {
-        // Using 3_questions.csv. Expecting string with 3 answers
         Scores scores = new Scores(questionData);
         String expectedString = "000_" + questionData.getVersionOfQuestionOrder();
 

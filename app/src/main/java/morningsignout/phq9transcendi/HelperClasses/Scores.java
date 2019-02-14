@@ -74,21 +74,26 @@ public class Scores {
     }
 
     public int getFinalScore() {
-        int sum = 0;
-        int max = 0;
-        int currentCategory = QuestionData.categoryIndices[0];
+        HashMap<String, Integer> categoryScores = new HashMap<>();
 
-        for (int i = 0; i < QuestionData.questionNames.length; i++) {
-            max = Math.max(scoreDictionary[i], max);
+        // Separate scores by categories
+        for (int i = 0; i < questionData.questionsLength(); i++) {
+            String currCategory = questionData.getQuestionCategoryType(i);
+            Integer categoryScore = categoryScores.get(currCategory);
 
-            // Next category
-            if (i + 1 < QuestionData.categoryIndices.length && currentCategory != QuestionData.categoryIndices[i + 1]) {
-                if (currentCategory < QuestionData.RED_FLAG_CATEGORY)
-                    sum += max;
-                max = 0;
-                currentCategory = QuestionData.categoryIndices[i + 1];
-            }
+            // First question in a category
+            if (categoryScore == null)
+                categoryScores.put(currCategory, scoreDictionary[i]);
+
+            // Second question in a category onward. Keep highest value.
+            else if (scoreDictionary[i] > categoryScore.intValue())
+                categoryScores.put(currCategory, scoreDictionary[i]);
         }
+
+        // Sum up final results
+        int sum = 0;
+        for (Integer score : categoryScores.values())
+            sum += score.intValue();
 
         return sum;
     }
