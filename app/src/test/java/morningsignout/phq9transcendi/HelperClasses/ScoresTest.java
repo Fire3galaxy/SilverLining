@@ -166,6 +166,25 @@ class ScoresTest {
     }
 
     @Test
+    void getFinalScore_multipleQuestionsInOneCategoryAnswered() {
+        try {
+            QuestionData manyQuestionData = new QuestionData("many_questions.csv");
+            Scores scores = new Scores(manyQuestionData);
+            int expectedScore = 3;
+
+            // category: anhedonia
+            scores.putScore(0, 3);
+            scores.putScore(2, 1);
+            scores.putScore(3, 2);
+
+            // Expecting to get higher value of two questions, not sum of scores
+            assertEquals(expectedScore, scores.getFinalScore());
+        } catch (IOException e) {
+            fail("QuestionData should not throw exception: " + e.getMessage());
+        }
+    }
+
+    @Test
     void getScoreString_noQuestionsAnswered() {
         Scores scores = new Scores(questionData);
         String expectedString = "000_" + questionData.getVersionOfQuestionOrder();
