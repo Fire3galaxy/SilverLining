@@ -125,7 +125,8 @@ public class QuestionData {
     }
 
     private enum ConfigHeaders {
-        questionOrderVers("Question Ordering Version");
+        questionOrderVers("Question Ordering Version"),
+        finalScoreCat("Categories that Contribute to Final Score");
 
         private String readableName;
 
@@ -165,6 +166,7 @@ public class QuestionData {
         this.isUnitTest = false;
         this.questionList = new LinkedList<>();
         this.answerMap = new HashMap<>();
+        this.finalScoreCategories = new HashSet<>();
 
         if (context == null)
             this.isUnitTest = true;
@@ -175,27 +177,23 @@ public class QuestionData {
     }
 
     private void loadConfigurationFromSpreadsheet() throws IOException {
-        Reader in = getConfigReader();
-        int firstRow = 0;
-        CSVRecord allConfigVals = CSVFormat.DEFAULT
-                .withFirstRecordAsHeader().parse(in).getRecords().get(firstRow);
+        Iterable<CSVRecord> records = getConfigRecords();
+        CSVRecord firstRecord = records.iterator().next();
 
-        questionOrderingVersion = Integer.parseInt(allConfigVals.get(ConfigHeaders.questionOrderVers));
-    }
+        // Get questionOrderingVersion from first row
+        questionOrderingVersion = Integer.parseInt(firstRecord.get(ConfigHeaders.questionOrderVers));
 
-    private Reader getConfigReader() throws IOException {
-        if (this.isUnitTest)
-            return new FileReader(CONFIG_SPREADSHEET_NAME);
+        // Get final score categories from first row
+        finalScoreCategories.add(firstRecord.get(ConfigHeaders.finalScoreCat));
 
-        if (this.context == null)
-            throw new IllegalStateException("Null value passed in for context");
-
-        return new InputStreamReader(this.context.getAssets().open(CONFIG_SPREADSHEET_NAME));
+        // Get rest of final score categories from second row onward
+        for (CSVRecord record : records) {
+            finalScoreCategories.add(record.get(ConfigHeaders.finalScoreCat));
+        }
     }
 
     private void loadAnswerDataFromSpreadsheet() throws IOException {
-        Reader in = getAnswersReader();
-        Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(in);
+        Iterable<CSVRecord> records = getAnswersRecords();
 
         for (CSVRecord record : records) {
             String answerType = record.get(AnswersHeaders.answerType);
@@ -248,8 +246,7 @@ public class QuestionData {
     }
 
     private void loadQuestionDataFromSpreadsheet(String filename) throws IOException {
-        Reader in = getQuestionsReader(filename);
-        Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(in);
+        Iterable<CSVRecord> records = getQuestionsRecords(filename);
 
         for (CSVRecord record : records) {
             String questionName = record.get(QuestionsHeaders.questionName);
@@ -262,24 +259,30 @@ public class QuestionData {
         }
     }
 
-    private Reader getQuestionsReader(String filename) throws IOException {
-        if (this.isUnitTest)
-            return new FileReader(filename);
+    private Iterable<CSVRecord> getCSVRecords(String filename) throws IOException {
+        if (this.isUnitTest) {
+            Reader in = new FileReader(filename);
+            return CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(in);
+        }
 
-        if (this.context == null)
+        if (this.context == null) {
             throw new IllegalStateException("Null value passed in for context");
+        }
 
-        return new InputStreamReader(this.context.getAssets().open(filename));
+        Reader in = new InputStreamReader(context.getAssets().open(filename));
+        return CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(in);
     }
 
-    private Reader getAnswersReader() throws IOException {
-        if (this.isUnitTest)
-            return new FileReader(ANSWER_SPREADSHEET_NAME);
+    private Iterable<CSVRecord> getQuestionsRecords(String filename) throws IOException {
+        return getCSVRecords(filename);
+    }
 
-        if (this.context == null)
-            throw new IllegalStateException("Null value passed in for context");
+    private Iterable<CSVRecord> getAnswersRecords() throws IOException {
+        return getCSVRecords(ANSWER_SPREADSHEET_NAME);
+    }
 
-        return new InputStreamReader(this.context.getAssets().open(ANSWER_SPREADSHEET_NAME));
+    private Iterable<CSVRecord> getConfigRecords() throws IOException {
+        return getCSVRecords(CONFIG_SPREADSHEET_NAME);
     }
 
     String getQuestionName(int i) {
