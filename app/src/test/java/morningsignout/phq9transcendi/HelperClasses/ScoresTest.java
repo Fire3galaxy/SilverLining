@@ -262,12 +262,11 @@ class ScoresTest {
             @ConvertWith(ToBitSet.class) BitSet expectedBitSet) {
         Scores scores = new Scores(manyQuestionData);
 
-        expectedBitSet.set(0, true);
-        expectedBitSet.set(1, true);
-        expectedBitSet.set(2, false);
         scores.putScore(4, expectedBitSet.get(0) ? 1 : 0); // bool to int
         scores.putScore(5, expectedBitSet.get(1) ? 1 : 0);
         scores.putScore(6, expectedBitSet.get(2) ? 1 : 0);
+
+        assertEquals(expectedBitSet.get(0, 2), scores.getRedFlagBits().get(0, 2));
     }
 
     @Test

@@ -12,7 +12,9 @@ import java.lang.IndexOutOfBoundsException;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -163,16 +165,19 @@ public class Scores {
 
     // Functions below are for emailing results in the results activity
     public BitSet getRedFlagBits() {
-        BitSet redFlagBitSet = new BitSet(5);
+        Queue<Integer> redFlagAnswers = new LinkedList<>();
+        for (int i = 0; i < questionData.questionsLength(); i++) {
+            if (questionData.getQuestionCategoryType(i).equals("red-flag")) {
+                redFlagAnswers.add(scoreDictionary[i]);
+            }
+        }
 
-        // Assumes that red flag questions are consecutive
-        int redFlagNum = 0;
-        int end = QuestionData.RED_FLAG_QUESTION + QuestionData.redFlagThreshold.length;
-        for (int i = QuestionData.RED_FLAG_QUESTION; i < end; i++, redFlagNum++)
-            redFlagBitSet.set(redFlagNum,
-                    (scoreDictionary[i] >= QuestionData.redFlagThreshold[redFlagNum]));
+        BitSet redFlagBits = new BitSet(redFlagAnswers.size());
+        for (int i = 0; i < redFlagAnswers.size(); i++) {
+            redFlagBits.set(i, redFlagAnswers.remove() != 0); // int to bool
+        }
 
-        return redFlagBitSet;
+        return redFlagBits;
     }
 
     public BitSet getFamilyOrCultureBits() {
