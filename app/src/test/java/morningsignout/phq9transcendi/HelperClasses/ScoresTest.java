@@ -185,6 +185,13 @@ class ScoresTest {
     }
 
     @Test
+    void containsRedFlag_noRedFlagsRaised_noAnswers() {
+        Scores scores = new Scores(questionData);
+
+        assertFalse(scores.containsRedFlag());
+    }
+
+    @Test
     void getScoreString_noQuestionsAnswered() {
         Scores scores = new Scores(questionData);
         String expectedString = "000_" + questionData.getVersionOfQuestionOrder();

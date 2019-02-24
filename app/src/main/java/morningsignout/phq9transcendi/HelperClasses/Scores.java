@@ -86,14 +86,6 @@ public class Scores {
     }
 
     public boolean containsRedFlag() {
-        int redFlagNum = 0;
-        int end = QuestionData.RED_FLAG_QUESTION + QuestionData.redFlagThreshold.length;
-
-        // Assumes that red flag questions are consecutive
-        for (int i = QuestionData.RED_FLAG_QUESTION; i < end; i++, redFlagNum++)
-            if (scoreDictionary[i] >= QuestionData.redFlagThreshold[redFlagNum])
-                return true;
-
         return false;
     }
 
