@@ -15,27 +15,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ScoresTest {
     private final static String QUESTION_ASSET_FILE = "3_questions.csv";
-    private final static String SPECIAL_QUESTION_ASSET_FILE = "special_questions.csv";
+    private final static String MANY_QUESTION_ASSET_FILE = "many_questions.csv";
     private final static String ANSWER_ASSET_FILE = "answers.csv";
     private final static String CONFIG_ASSET_FILE = "config.csv";
 
     private static QuestionData questionData;
-    private static QuestionData specialQuestionData;
-
-    private boolean intToBool(int i) {
-        return i != 0;
-    }
+    private static QuestionData manyQuestionData;
 
     @BeforeAll
     static void setUp() {
         // Make sure test files exist
         File questionFile = new File(QUESTION_ASSET_FILE);
-        File specialQuestionFile = new File(SPECIAL_QUESTION_ASSET_FILE);
+        File manyQuestionFile = new File(MANY_QUESTION_ASSET_FILE);
         File answerFile = new File(ANSWER_ASSET_FILE);
         File configFile = new File(CONFIG_ASSET_FILE);
 
         assertTrue(questionFile.exists());
-        assertTrue(specialQuestionFile.exists());
+        assertTrue(manyQuestionFile.exists());
         assertTrue(answerFile.exists());
         assertTrue(configFile.exists());
 
@@ -46,9 +42,9 @@ class ScoresTest {
             fail("QuestionData should not throw exception: " + e.getMessage());
         }
 
-        specialQuestionData = null;
+        manyQuestionData = null;
         try {
-            specialQuestionData = new QuestionData(SPECIAL_QUESTION_ASSET_FILE);
+            manyQuestionData = new QuestionData(MANY_QUESTION_ASSET_FILE);
         } catch (IOException e) {
             fail("QuestionData should not throw exception: " + e.getMessage());
         }
@@ -166,21 +162,16 @@ class ScoresTest {
 
     @Test
     void getFinalScore_multipleQuestionsInOneCategoryAnswered() {
-        try {
-            QuestionData manyQuestionData = new QuestionData("many_questions.csv");
-            Scores scores = new Scores(manyQuestionData);
-            int expectedScore = 3;
+        Scores scores = new Scores(manyQuestionData);
+        int expectedScore = 3;
 
-            // category: anhedonia
-            scores.putScore(0, 3);
-            scores.putScore(2, 1);
-            scores.putScore(3, 2);
+        // category: anhedonia
+        scores.putScore(0, 3);
+        scores.putScore(2, 1);
+        scores.putScore(3, 2);
 
-            // Expecting to get higher value of two questions, not sum of scores
-            assertEquals(expectedScore, scores.getFinalScore());
-        } catch (IOException e) {
-            fail("QuestionData should not throw exception: " + e.getMessage());
-        }
+        // Expecting to get higher value of two questions, not sum of scores
+        assertEquals(expectedScore, scores.getFinalScore());
     }
 
     @Test
@@ -202,17 +193,22 @@ class ScoresTest {
     }
 
     @Test
-    void containsRedFlag_redFlagsRaised() {
-        try {
-            QuestionData manyQuestionData = new QuestionData("many_questions.csv");
-            Scores scores = new Scores(manyQuestionData);
+    void containsRedFlag_redFlagsRaised_oneAnswer() {
+        Scores scores = new Scores(manyQuestionData);
 
-            scores.putScore(5, 1);
+        scores.putScore(5, 1);
 
-            assertTrue(scores.containsRedFlag());
-        } catch (IOException e) {
-            fail("QuestionData should not throw exception: " + e.getMessage());
-        }
+        assertTrue(scores.containsRedFlag());
+    }
+
+    @Test
+    void containsRedFlag_redFlagsRaised_multipleAnswers() {
+        Scores scores = new Scores(manyQuestionData);
+
+        scores.putScore(4, 1);
+        scores.putScore(6, 1);
+
+        assertTrue(scores.containsRedFlag());
     }
 
     @Test
@@ -256,6 +252,22 @@ class ScoresTest {
         scores.putScore(2, ARBITRARY_SCORE);
 
         assertEquals(legacyExpectedString, scores.getVisitedString());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "000", "110", "001", "111"
+    })
+    void getRedFlagBits_expectedBitsAreReturned(
+            @ConvertWith(ToBitSet.class) BitSet expectedBitSet) {
+        Scores scores = new Scores(manyQuestionData);
+
+        expectedBitSet.set(0, true);
+        expectedBitSet.set(1, true);
+        expectedBitSet.set(2, false);
+        scores.putScore(4, expectedBitSet.get(0) ? 1 : 0); // bool to int
+        scores.putScore(5, expectedBitSet.get(1) ? 1 : 0);
+        scores.putScore(6, expectedBitSet.get(2) ? 1 : 0);
     }
 
     @Test
@@ -322,8 +334,8 @@ class ScoresTest {
 
     @Test
     void getiAppointmentAnswer_expectedScoreIsCorrect() {
-        Scores scores = new Scores(specialQuestionData);
-        int iAppointmentIndex = specialQuestionData.getIndex_iAppointment();
+        Scores scores = new Scores(manyQuestionData);
+        int iAppointmentIndex = manyQuestionData.getIndex_iAppointment();
         int expectedScore = 3;
 
         scores.putScore(iAppointmentIndex, expectedScore);
@@ -333,9 +345,9 @@ class ScoresTest {
 
     @Test
     void getFamilyOrCultureBits_expectedScoreIsCorrect() {
-        Scores scores = new Scores(specialQuestionData);
-        int familySituationIndex = specialQuestionData.getIndex_familySituation();
-        int culturalBackgroundIndex = specialQuestionData.getIndex_culturalBackground();
+        Scores scores = new Scores(manyQuestionData);
+        int familySituationIndex = manyQuestionData.getIndex_familySituation();
+        int culturalBackgroundIndex = manyQuestionData.getIndex_culturalBackground();
         int expectedFSScore = 0;
         int expectedCBScore = 1;
 
@@ -345,14 +357,16 @@ class ScoresTest {
 
         int familySituationBitIndex = 0;
         int culturalBackgroundBitIndex = 1;
-        assertEquals(intToBool(expectedFSScore), familyOrCultureBits.get(familySituationBitIndex));
-        assertEquals(intToBool(expectedCBScore), familyOrCultureBits.get(culturalBackgroundBitIndex));
+        assertEquals(expectedFSScore != 0, // int to bool
+                familyOrCultureBits.get(familySituationBitIndex));
+        assertEquals(expectedCBScore != 0,
+                familyOrCultureBits.get(culturalBackgroundBitIndex));
     }
 
     @Test
     void getFamilyUnderstandsAnswer_expectedScoreIsCorrect() {
-        Scores scores = new Scores(specialQuestionData);
-        int familyUnderstandsIndex = specialQuestionData.getIndex_familyUnderstands();
+        Scores scores = new Scores(manyQuestionData);
+        int familyUnderstandsIndex = manyQuestionData.getIndex_familyUnderstands();
         int expectedScore = 3;
 
         scores.putScore(familyUnderstandsIndex, expectedScore);
