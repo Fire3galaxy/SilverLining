@@ -18,7 +18,6 @@ class ScoresTest {
     private final static String SPECIAL_QUESTION_ASSET_FILE = "special_questions.csv";
     private final static String ANSWER_ASSET_FILE = "answers.csv";
     private final static String CONFIG_ASSET_FILE = "config.csv";
-    private static final boolean IS_UNIT_TEST = true;
 
     private static QuestionData questionData;
     private static QuestionData specialQuestionData;
@@ -189,6 +188,31 @@ class ScoresTest {
         Scores scores = new Scores(questionData);
 
         assertFalse(scores.containsRedFlag());
+    }
+
+    @Test
+    void containsRedFlag_noRedFlagsRaised_someAnswers() {
+        Scores scores = new Scores(questionData);
+
+        scores.putScore(0, 1);
+        scores.putScore(1, 1);
+        scores.putScore(1, 1);
+
+        assertFalse(scores.containsRedFlag());
+    }
+
+    @Test
+    void containsRedFlag_redFlagsRaised() {
+        try {
+            QuestionData manyQuestionData = new QuestionData("many_questions.csv");
+            Scores scores = new Scores(manyQuestionData);
+
+            scores.putScore(5, 1);
+
+            assertTrue(scores.containsRedFlag());
+        } catch (IOException e) {
+            fail("QuestionData should not throw exception: " + e.getMessage());
+        }
     }
 
     @Test

@@ -86,6 +86,11 @@ public class Scores {
     }
 
     public boolean containsRedFlag() {
+        for (int i = 0; i < questionData.questionsLength(); i++) {
+            if (questionData.getQuestionCategoryType(i).equals("red-flag") && scoreDictionary[i] != 0)
+                return true;
+        }
+
         return false;
     }
 
