@@ -39,49 +39,9 @@ public class QuestionData {
     // Index where red flag starts
     static public final int RED_FLAG_QUESTION = 16;
 
-    // Category index that red flags begin (All questions that contribute to score are below red flag)
-    static public final int RED_FLAG_CATEGORY = 9;
-
-    // Array of which category each question is associated with
-    public static final int[] categoryIndices = {
-            0, 0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 9, 9, 9, 10, 11, 12, 13, 14, 15
-    };
-    // Categories of questions
-    public static final String[] categoryNames = {
-            "anhedonia", "mood", "sleep-disturbance", "energy", "appetite", "guilt", "cognition-concentration",
-            "psychomotor", "suicide", "red-flag", "familyunderstands", "familysituation", "culturalbackground",
-            "i_appointment", "fearofstranger", "i_adequateresources"
-    };
-
     // Score value that would trigger a red flag alert (from 0-1)
     public static final int[] redFlagThreshold = {
             1, 1, 1, 1, 1
-    };
-
-    // Relevant question data variables
-    // Using names instead of numbers for FireBase on the off-chance that
-    // the order of questions is not fixed (would be bad for database to use #).
-    //
-    // Ordered by current order of questions, arranged by category
-    static final String[] questionNames = {
-            // 1-16 (normal)
-            "anhedoniainterest", "anhedoniaenjoy",
-            "mooddepress", "moodhopeless",
-            "sleeplow", "sleephigh",
-            "fatigue",
-            "appetitelow", "appetitehigh",
-            "guilt",
-            "concentrationpoor", "concentrationdistracted",
-            "psychomotorslowself", "psychomotorslowother",
-            "suicidalityactive", "suicidalitypassive",
-
-            // 17-21 (red flag)
-            "continuousdepression_flag", "longdepression_flag", "interference", "suicidality_flag",
-            "suicideaction_flag",
-
-            // 22-27 (research)
-            "familyunderstands", "familysituation", "culturalbackground", "i_appointment",
-            "fearofstranger", "i_adequateresources"
     };
 
     private enum QuestionsHeaders {

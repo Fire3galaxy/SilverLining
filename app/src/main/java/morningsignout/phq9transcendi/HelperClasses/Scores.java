@@ -75,27 +75,7 @@ public class Scores {
     }
 
     public int getFinalScore() {
-        HashMap<String, Integer> categoryScores = new HashMap<>();
-        Set<String> finalScoreCategories = questionData.getFinalScoreCategories();
-
-        // Separate scores by categories
-        for (int i = 0; i < questionData.questionsLength(); i++) {
-            String currCategory = questionData.getQuestionCategoryType(i);
-
-            // Don't consider categories that don't contribute to final score
-            if (!finalScoreCategories.contains(currCategory))
-                continue;
-
-            Integer categoryScore = categoryScores.get(currCategory);
-
-            // First question in a category
-            if (categoryScore == null)
-                categoryScores.put(currCategory, scoreDictionary[i]);
-
-            // Second question in a category onward. Keep highest value.
-            else if (scoreDictionary[i] > categoryScore)
-                categoryScores.put(currCategory, scoreDictionary[i]);
-        }
+        HashMap<String, Integer> categoryScores = getCategoryScoreMap();
 
         // Sum up final results
         int sum = 0;
@@ -131,21 +111,30 @@ public class Scores {
         return true;
     }
 
-    private int getCategoryScore(int category) {
-        int max = 0;
-
-        for (int i = 0; i < QuestionData.categoryIndices.length && QuestionData.categoryIndices[i] <= category; i++)
-            if (QuestionData.categoryIndices[i] == category)
-                max = Math.max(scoreDictionary[i], max);
-
-        return max;
-    }
-
     public HashMap<String, Integer> getCategoryScoreMap() {
-        HashMap<String, Integer> scores = new HashMap<>(QuestionData.categoryNames.length);
-        for (int i = 0; i < QuestionData.categoryNames.length; i++)
-            scores.put(QuestionData.categoryNames[i], getCategoryScore(i));
-        return scores;
+        HashMap<String, Integer> categoryScores = new HashMap<>();
+        Set<String> finalScoreCategories = questionData.getFinalScoreCategories();
+
+        // Separate scores by categories
+        for (int i = 0; i < questionData.questionsLength(); i++) {
+            String currCategory = questionData.getQuestionCategoryType(i);
+
+            // Don't consider categories that don't contribute to final score
+            if (!finalScoreCategories.contains(currCategory))
+                continue;
+
+            Integer categoryScore = categoryScores.get(currCategory);
+
+            // First question in a category
+            if (categoryScore == null)
+                categoryScores.put(currCategory, scoreDictionary[i]);
+
+                // Second question in a category onward. Keep highest value.
+            else if (scoreDictionary[i] > categoryScore)
+                categoryScores.put(currCategory, scoreDictionary[i]);
+        }
+
+        return categoryScores;
     }
 
     public ArrayList<Integer> getScoreValsArray() {
