@@ -406,6 +406,10 @@ public class QuizActivity extends AppCompatActivity {
         if (currentAnswerChoice != -1) {
             addScore(questionNumber, currentAnswerChoice);
         }
+//        // FIXME: For debugging ONLY!!!!!!!!!!!!!!!!!!!!
+//        else {
+//            addScore(questionNumber, 0);
+//        }
     }
 
     // FIXME: Use a class like DateFormat next time

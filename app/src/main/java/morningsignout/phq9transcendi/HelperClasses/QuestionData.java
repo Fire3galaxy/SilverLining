@@ -17,16 +17,9 @@ import java.util.Set;
 
 /**
  * Created by Daniel on 12/18/2016.
- * Intended to make adding questions much easier. No dependency in QuizActivity for particular
- * number or organization of questions except on this class and Scores (category of new question).
  *
- * Warning: Red flag question positions are FIXED in Scores class. If those positions change, then
- * you have to edit Scores class. They are also assumed to be consecutive.
- *
- * What to update when question is added: Every variable. If no new answer type is needed, there is
- * no need to add a new type. If so, add a new type and change the class constructor.
- * If you have more than 5 possible answers for a question, then RangeSliderTextAddOns,
- * activity_quiz.xml, and @style/[every styleName]RangeSlider need to be updated to accommodate this.
+ * To update questions for some new version of the PHQ-9, just modify the questions.csv file in the
+ * assets folder. Questions? Email/message me (ask MSO boss for my contact info)!
  */
 public class QuestionData {
     // Special questions used for email in ResultsActivity. Names are hardcoded.
@@ -34,15 +27,6 @@ public class QuestionData {
     private static final String CULTURAL_BACKGROUND_NAME = "culturalbackground";
     private static final String FAMILY_SITUATION_NAME = "familysituation";
     private static final String FAMILY_UNDERSTANDS_NAME = "familyunderstands";
-
-    // --------------- Legacy variables below ---------------
-    // Index where red flag starts
-    static public final int RED_FLAG_QUESTION = 16;
-
-    // Score value that would trigger a red flag alert (from 0-1)
-    public static final int[] redFlagThreshold = {
-            1, 1, 1, 1, 1
-    };
 
     private enum QuestionsHeaders {
         questionName("Question Name"),

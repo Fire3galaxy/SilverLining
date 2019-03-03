@@ -25,6 +25,9 @@ import morningsignout.phq9transcendi.PHQApplication;
  * Container of score values and if question is "visited"
  */
 public class Scores {
+    // constant category name for red flag questions
+    private static final String RED_FLAG = "red-flag";
+
     // Mapping of question name to score value or visit flag
     private int[] scoreDictionary;
     private boolean[] questionIsAnswered;
@@ -89,7 +92,7 @@ public class Scores {
 
     public boolean containsRedFlag() {
         for (int i = 0; i < questionData.questionsLength(); i++) {
-            if (questionData.getQuestionCategoryType(i).equals("red-flag") && scoreDictionary[i] != 0)
+            if (questionData.getQuestionCategoryType(i).equals(RED_FLAG) && scoreDictionary[i] != 0)
                 return true;
         }
 
@@ -167,14 +170,16 @@ public class Scores {
     public BitSet getRedFlagBits() {
         Queue<Integer> redFlagAnswers = new LinkedList<>();
         for (int i = 0; i < questionData.questionsLength(); i++) {
-            if (questionData.getQuestionCategoryType(i).equals("red-flag")) {
+            if (questionData.getQuestionCategoryType(i).equals(RED_FLAG)) {
                 redFlagAnswers.add(scoreDictionary[i]);
             }
         }
 
         BitSet redFlagBits = new BitSet(redFlagAnswers.size());
-        for (int i = 0; i < redFlagAnswers.size(); i++) {
+        int i = 0;
+        while (redFlagAnswers.peek() != null) {
             redFlagBits.set(i, redFlagAnswers.remove() != 0); // int to bool
+            i++;
         }
 
         return redFlagBits;

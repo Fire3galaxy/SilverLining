@@ -309,23 +309,27 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
             scoreEvalResult = scoreEval[5];
         }
 
-        // Red flag message
-        String redFlagMessage = "";
+        /* ------------How red flags work--------------
+         * As of 3/3/19, there are 5 red flag questions (I'll refer to them as 0-5).
+         * Question 1 indicates a year of depression
+         * Question 0 indicates 2 weeks+ of depression
+         * Questions 2-4
+         */
+        StringBuilder redFlagMessage = new StringBuilder();
         String[] emailRedFlag2 = res.getStringArray(R.array.email_red_flag_2);
         String[] emailRedFlag3 = res.getStringArray(R.array.email_red_flag_3);
         if (redFlag) {
             int lastTrueFlag = -1;
 
-            // First sentence of red flag (priority to red flag 1)
             if (redFlagBitSet.get(1))
-                redFlagMessage = res.getString(R.string.email_red_flag_1, emailRedFlag2[1]);
+                redFlagMessage = new StringBuilder(res.getString(R.string.email_red_flag_1, emailRedFlag2[1]));
             else if (redFlagBitSet.get(0))
-                redFlagMessage = res.getString(R.string.email_red_flag_1, emailRedFlag2[0]);
+                redFlagMessage = new StringBuilder(res.getString(R.string.email_red_flag_1, emailRedFlag2[0]));
             else {
-                for (lastTrueFlag = 2; lastTrueFlag < redFlagBitSet.size(); lastTrueFlag++)
+                for (lastTrueFlag = 2; lastTrueFlag < redFlagBitSet.length(); lastTrueFlag++)
                     if (redFlagBitSet.get(lastTrueFlag))
                         break;
-                redFlagMessage = res.getString(R.string.email_red_flag_1, emailRedFlag2[lastTrueFlag]);
+                redFlagMessage = new StringBuilder(res.getString(R.string.email_red_flag_1, emailRedFlag2[lastTrueFlag]));
             }
 
             // Extra sentences if needed (only for red flags 2,3,4 (based on zero-index))
@@ -333,9 +337,9 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
                 lastTrueFlag = 2;
             else
                 lastTrueFlag = lastTrueFlag + 1;
-            for (; lastTrueFlag < redFlagBitSet.size(); lastTrueFlag++)
+            for (; lastTrueFlag < redFlagBitSet.length(); lastTrueFlag++)
                 if (redFlagBitSet.get(lastTrueFlag))
-                    redFlagMessage += " " + emailRedFlag3[lastTrueFlag - 2]; // 2,3,4 -> 0,1,2
+                    redFlagMessage.append(" ").append(emailRedFlag3[lastTrueFlag - 2]); // 2,3,4 -> 0,1,2
         }
 
         // Family or cultural background as cause?
@@ -357,7 +361,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         String[] emailCanSee = res.getStringArray(R.array.email_can_see);
 
         return res.getString(R.string.email_message,
-                todayDate, totalScore, scoreEvalResult, redFlagMessage, famOrCultureResult,
+                todayDate, totalScore, scoreEvalResult, redFlagMessage.toString(), famOrCultureResult,
                 emailFamily[familyUnderstandsAnswer], emailCanSee[canSeeAnswer]);
     }
 }
