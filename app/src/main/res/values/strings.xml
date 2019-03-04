@@ -24,9 +24,11 @@
     <string name="about_disclaimer">Disclaimer: This app is meant for educational use only, and is
         not intended for clinical or diagnostic use.</string>
     <string name="quiz_start">Get Started!</string>
+    <string name="quiz_medium_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut fringilla justo. Donec quis velit euismod, facilisis dui quis, consequat massa. Nullam nec rutrum nunc. Morbi id fermentum ipsum. Praesent auctor in est sit amet aliquam. Aenean scelerisque eleifend justo.</string>
+    <string name="quiz_long_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam congue aliquet dui, vitae tempor nisi. Nam sit amet feugiat erat. Sed aliquet, sapien ut ultricies gravida, lacus risus tincidunt orci, a consectetur turpis nibh id purus. Ut aliquet, justo non condimentum ultrices, lacus diam molestie eros, sit amet blandit dui sapien ultrices tortor. Ut efficitur luctus libero et semper. Aenean accumsan, elit vitae vehicula accumsan, dolor libero consectetur velit, ac sodales odio tellus sit amet tortor. Vivamus lectus nisi, rutrum ut blandit in, volutpat et libero. Aliquam varius, nulla venenatis varius congue, lorem justo varius leo, a consequat risus urna.</string>
+
     <string name="demo_continue">Share a little about myself</string>
     <string name="demo_skip">No thanks, maybe next time</string>
-
     <string name="demo_start_quiz">Start Quiz</string>
     <string name="description_previous">Previous question</string>
     <string name="description_next">Next question</string>
