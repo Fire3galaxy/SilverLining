@@ -169,25 +169,33 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:paddingStart="20dp"
-        android:paddingEnd="15dp"/>
+        android:paddingEnd="15dp"
+        android:visibility="invisible"/>
 
     <!--FIXME: Next time, keep experimenting with GUI-->
-    <TextView
-        android:background="?attr/quizbackground"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="0dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/quiz_long_text"
-        android:id="@+id/questionView"
-        android:gravity="center_horizontal"
-        android:textSize="24sp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="15dp"
-        android:ellipsize="end"
-        android:lastBaselineToBottomHeight="20dp"/>
+        android:layout_above="@id/space_aboveAnswerChoices"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/questionView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentTop="true"
+            android:background="?attr/quizbackground"
+
+            android:paddingStart="20dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="25dp"
+            android:paddingEnd="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="25dp"
+
+            android:text="@string/quiz_text_l"
+            android:gravity="center"
+            android:textSize="24sp"/>
+    </LinearLayout>
 </RelativeLayout>
