@@ -23,7 +23,7 @@ public class DemographicsIntroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Utils.onActivityCreateSetTheme(this, Utils.GetTheme(this));
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.demographics_intro);
+        setContentView(R.layout.activity_demographics_intro);
 
         // Contine and Skip button for Demographics
         continue_button = (Button) findViewById(R.id.button_continue_demo);
