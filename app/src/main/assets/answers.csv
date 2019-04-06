@@ -6,4 +6,4 @@ SITUATION,RadioButtons,Not much,A little,Somewhat,A lot,
 APPOINTMENT,RadioButtons,I have a hard time seeing myself making an appointment,I can see myself making an appointment,,,
 STRANGER,RadioButtons,"Yes, and it could stop me from getting help","Yes, but it wouldn't stop me from getting help","No, not really",,
 SUPPORTIVE,RadioButtons,Very poor,Poor,Okay,Good,Very good
-YES/NO,StandardButtons,Yes,No,,,
+YES/NO,RadioButtons,No,Yes,,,

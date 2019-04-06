@@ -177,15 +177,20 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void onClickNextArrow(View view) {
+        // User clicked next arrow too quickly after the last question. Due to how Android works,
+        // there's a brief period of time between the call to finish() in handleQuiz() and the
+        // switch to the next activity. If the user clicks next again, this code will still be
+        // called and an OutOfBoundsException will occur.
+        if (questionNumber == questionData.questionsLength())
+            return;
+
         arrowButtonClicked();
         handleQuiz(true);
-        Log.d(LOG_NAME, "NEXT");
     }
 
     public void onClickPrevArrow(View view) {
         arrowButtonClicked();
         handleQuiz(false);
-        Log.d(LOG_NAME, "PREV");
     }
 
     private void arrowButtonClicked() {
@@ -195,7 +200,6 @@ public class QuizActivity extends AppCompatActivity {
 
         if (answerUIType == AnswerUITypeEnum.RadioButtons) {
             recordRadioButtonAnswer();
-            Log.d(LOG_NAME, "Question uses radio buttons");
         }
     }
 
@@ -229,8 +233,8 @@ public class QuizActivity extends AppCompatActivity {
 
     // Calls all functions to change question.
     // bool isNextQuestion determines if questionNumber increases/decreases.
-    private void handleQuiz(boolean isNextQuestion) {
-        if (isNextQuestion) {
+    private void handleQuiz(boolean goToNextQuestion) {
+        if (goToNextQuestion) {
             questionNumber++;
 
             if (questionNumber == questionData.questionsLength()) {
@@ -406,10 +410,10 @@ public class QuizActivity extends AppCompatActivity {
         if (currentAnswerChoice != -1) {
             addScore(questionNumber, currentAnswerChoice);
         }
-//        // FIXME: For debugging ONLY!!!!!!!!!!!!!!!!!!!!
-//        else {
-//            addScore(questionNumber, 0);
-//        }
+        // FIXME: For debugging ONLY!!!!!!!!!!!!!!!!!!!!
+        else {
+            addScore(questionNumber, 0);
+        }
     }
 
     // FIXME: Use a class like DateFormat next time
