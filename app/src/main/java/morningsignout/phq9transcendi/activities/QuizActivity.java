@@ -47,7 +47,7 @@ public class QuizActivity extends AppCompatActivity {
     private String numberString;
 
     private TextView questionTextView, questionNumText; //The text of the question
-    private ImageButton nextArrow, prevArrow;
+    private ImageButton prevArrow;
     private RadioGroup radioButtonGroup;
 
     QuestionData questionData;
@@ -67,7 +67,6 @@ public class QuizActivity extends AppCompatActivity {
         // Grab and set content; inital setup (Use restoreInstanceState() for "continue where you last left off" code)
         questionTextView = findViewById(R.id.questionView);
         questionNumText = findViewById(R.id.textView_question_number);
-        nextArrow = findViewById(R.id.imageButton_nextq);
         prevArrow = findViewById(R.id.imageButton_prevq);
         radioButtonGroup = findViewById(R.id.answer_choices);
 
@@ -321,7 +320,6 @@ public class QuizActivity extends AppCompatActivity {
     private void addScore(int questionNumber, int value) {
         scores.putScore(questionNumber, value);
     }
-
 
     public void recordRadioButtonAnswer(){
         int currentAnswerChoice = -1;
