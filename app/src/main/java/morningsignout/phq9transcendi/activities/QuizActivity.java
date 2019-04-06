@@ -29,7 +29,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
-import morningsignout.phq9transcendi.HelperClasses.AnswerUITypeEnum;
 import morningsignout.phq9transcendi.PHQApplication;
 import morningsignout.phq9transcendi.R;
 import morningsignout.phq9transcendi.HelperClasses.QuestionData;
@@ -264,31 +263,24 @@ public class QuizActivity extends AppCompatActivity {
     //changes the question text, answer text, and answer method
     //also checks the radiobutton that was previously chosen
     private void updateQuestionTextAndViews() {
-        String answerType = questionData.getAnswerType(questionNumber);
-        int offsetOne = 1;
+        // Question text
+        questionTextView.setText(questionData.getQuestionText(questionNumber));
+        // Question # (+1 because users don't think in zero-based indices)
+        questionNumText.setText(String.format(numberString, questionNumber + 1));
+        // Answer text
+        changeAnswerViews();
 
-        questionTextView.setText(questionData.getQuestionText(questionNumber));     // Question text
-        questionNumText.setText(String.format(numberString, questionNumber + offsetOne));   // Question #
-        changeAnswerText();
-
-        // Show previously saved answer if previous button is clicked
-        if (scores.questionIsVisited(questionNumber)) {
-            //TODO set radio button to be the score saved
-            //answerSliderView.setIndex(scores.getQuestionScore(questionNumber));
-            int qnScore = scores.getQuestionScore(questionNumber);
-            //if this answer has been chosen, we can check the correct option
-            //TODO: check to see that index is <= number of radio buttons
-            if (qnScore > -1) {
-                radioButtonGroup.clearCheck();
-                RadioButton rb = ((RadioButton)radioButtonGroup.getChildAt(qnScore));
-                rb.setChecked(true);
-            }
-        }
         // Hide previous button on first question
         if (questionNumber == 0)
             prevArrow.setVisibility(View.INVISIBLE);
         else if (prevArrow.getVisibility() != View.VISIBLE)
             prevArrow.setVisibility(View.VISIBLE);
+    }
+
+    private void setRadioButtonSelected(int lastSavedAnswer) {
+        radioButtonGroup.clearCheck();
+        RadioButton rb = ((RadioButton)radioButtonGroup.getChildAt(lastSavedAnswer));
+        rb.setChecked(true);
     }
 
     //sets the radio buttons to be visible and buttons to be invisible
@@ -306,17 +298,23 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-    private void changeAnswerText() {
-        String answerType = questionData.getAnswerType(questionNumber);
-        String[] newText = questionData.getAnswerValues(answerType);
-
+    private void setRadioButtonText(String[] newText) {
         radioButtonGroup.clearCheck();
         //loop through and set each button
         for (int i = 0; i < newText.length; i++) {
             RadioButton rb = (RadioButton) radioButtonGroup.getChildAt(i);
             rb.setText(newText[i]);
         }
+    }
 
+    private void changeAnswerViews() {
+        String answerType = questionData.getAnswerType(questionNumber);
+        String[] newText = questionData.getAnswerValues(answerType);
+
+        setRadioButtonText(newText);
+        if (scores.questionIsVisited(questionNumber)) {
+            setRadioButtonSelected(scores.getQuestionScore(questionNumber));
+        }
         changeRadioButtonsVisible(newText.length);
     }
 
