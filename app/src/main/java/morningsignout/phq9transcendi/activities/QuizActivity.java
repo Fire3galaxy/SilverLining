@@ -8,15 +8,12 @@ import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -51,9 +48,7 @@ public class QuizActivity extends AppCompatActivity {
     private String numberString;
 
     private TextView questionTextView, questionNumText; //The text of the question
-    private Button answerNo, answerYes;
     private ImageButton nextArrow, prevArrow;
-    private LinearLayout containerButtons;
     private RadioGroup radioButtonGroup;
 
     QuestionData questionData;
@@ -69,16 +64,12 @@ public class QuizActivity extends AppCompatActivity {
         Utils.onActivityCreateSetTheme(this, theme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        Resources res = getResources();
 
         // Grab and set content; inital setup (Use restoreInstanceState() for "continue where you last left off" code)
         questionTextView = findViewById(R.id.questionView);
         questionNumText = findViewById(R.id.textView_question_number);
-        answerNo = findViewById(R.id.button_answer_no);
-        answerYes = findViewById(R.id.button_answer_yes);
         nextArrow = findViewById(R.id.imageButton_nextq);
         prevArrow = findViewById(R.id.imageButton_prevq);
-        containerButtons = findViewById(R.id.container_buttons);
         radioButtonGroup = findViewById(R.id.answer_choices);
 
         //change color according to theme
@@ -183,33 +174,13 @@ public class QuizActivity extends AppCompatActivity {
         if (questionNumber == questionData.questionsLength())
             return;
 
-        arrowButtonClicked(true);
+        recordRadioButtonAnswer();
+        changeCurrQuestion(true);
     }
 
     public void onClickPrevArrow(View view) {
-        arrowButtonClicked(false);
-    }
-
-    private void arrowButtonClicked(boolean goToNextQuestion) {
-        // We only need an explicit "save answer" action for radio buttons.
-        String answerType = questionData.getAnswerType(questionNumber);
-        AnswerUITypeEnum answerUIType = questionData.getAnswerUIType(answerType);
-
-        if (answerUIType == AnswerUITypeEnum.RadioButtons) {
-            recordRadioButtonAnswer();
-        }
-
-        changeCurrQuestion(goToNextQuestion);
-    }
-
-    public void onClickButtonYes(View view) {
-        addScore(questionNumber, 1);
-        changeCurrQuestion(true);
-    }
-
-    public void onClickButtonNo(View view) {
-        addScore(questionNumber, 0);
-        changeCurrQuestion(true);
+        recordRadioButtonAnswer();
+        changeCurrQuestion(false);
     }
 
     private void confirmUserWishesToQuitDialog() {
@@ -294,19 +265,11 @@ public class QuizActivity extends AppCompatActivity {
     //also checks the radiobutton that was previously chosen
     private void updateQuestionTextAndViews() {
         String answerType = questionData.getAnswerType(questionNumber);
-        AnswerUITypeEnum answerUIType = questionData.getAnswerUIType(answerType);
         int offsetOne = 1;
 
         questionTextView.setText(questionData.getQuestionText(questionNumber));     // Question text
         questionNumText.setText(String.format(numberString, questionNumber + offsetOne));   // Question #
         changeAnswerText();
-
-        // Shows either the radio buttons or regular yes/no buttons
-        if (answerUIType == AnswerUITypeEnum.RadioButtons) {
-            putRadioButtons();
-        } else {
-            putButtons();
-        }
 
         // Show previously saved answer if previous button is clicked
         if (scores.questionIsVisited(questionNumber)) {
@@ -326,28 +289,14 @@ public class QuizActivity extends AppCompatActivity {
             prevArrow.setVisibility(View.INVISIBLE);
         else if (prevArrow.getVisibility() != View.VISIBLE)
             prevArrow.setVisibility(View.VISIBLE);
-
-        // Hide nextArrow button on red flag questions unless already answered or is interference
-        if (answerUIType != AnswerUITypeEnum.RadioButtons
-                && !scores.questionIsVisited(questionNumber))
-            nextArrow.setVisibility(View.INVISIBLE);
-        else
-            nextArrow.setVisibility(View.VISIBLE);
     }
 
     //sets the radio buttons to be visible and buttons to be invisible
     //Number of buttons is determined by what question it is
     //question number is passed in
-    private void putRadioButtons() {
-        String answerType = questionData.getAnswerType(questionNumber);
-        String[] answerVals = questionData.getAnswerValues(answerType);
-        if (answerVals == null)
-            throw new IllegalStateException("Invalid question type passed in");
-        int numButtonsForCurrQuestion = answerVals.length;
-        radioButtonGroup.setVisibility(View.VISIBLE);
-
+    private void changeRadioButtonsVisible(int numButtons) {
         int i;
-        for (i= 0; i < numButtonsForCurrQuestion && i < MAX_NUM_BUTTONS; i++) {
+        for (i= 0; i < numButtons; i++) {
             RadioButton rb = (RadioButton)radioButtonGroup.getChildAt(i);
             rb.setVisibility(View.VISIBLE);
         }
@@ -355,39 +304,20 @@ public class QuizActivity extends AppCompatActivity {
             RadioButton rb = (RadioButton)radioButtonGroup.getChildAt(i);
             rb.setVisibility(View.GONE);
         }
-
-        if (containerButtons.getVisibility() != View.GONE) {
-            containerButtons.setVisibility(View.GONE);
-        }
-    }
-
-    private void putButtons() {
-        if (radioButtonGroup.getVisibility() != View.INVISIBLE)
-            radioButtonGroup.setVisibility(View.INVISIBLE);
-        if (containerButtons.getVisibility() != View.VISIBLE)
-            containerButtons.setVisibility(View.VISIBLE);
     }
 
     private void changeAnswerText() {
         String answerType = questionData.getAnswerType(questionNumber);
         String[] newText = questionData.getAnswerValues(answerType);
-        AnswerUITypeEnum answerUIType = questionData.getAnswerUIType(answerType);
 
-        if (answerUIType == AnswerUITypeEnum.RadioButtons) {
-            radioButtonGroup.clearCheck();
-            //loop through and set each button
-            //TODO only loop through number of questions
-            int count = radioButtonGroup.getChildCount();
-            for (int i=0;i<count;i++) {
-                RadioButton rb = (RadioButton) radioButtonGroup.getChildAt(i);
-                if (i < newText.length) {
-                    rb.setText(newText[i]);
-                }
-            }
-        } else {
-            answerYes.setText(newText[0]);
-            answerNo.setText(newText[1]);
+        radioButtonGroup.clearCheck();
+        //loop through and set each button
+        for (int i = 0; i < newText.length; i++) {
+            RadioButton rb = (RadioButton) radioButtonGroup.getChildAt(i);
+            rb.setText(newText[i]);
         }
+
+        changeRadioButtonsVisible(newText.length);
     }
 
     private void addScore(int questionNumber, int value) {
