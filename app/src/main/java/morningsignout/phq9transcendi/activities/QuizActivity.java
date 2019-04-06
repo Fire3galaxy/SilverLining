@@ -12,7 +12,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -131,7 +130,7 @@ public class QuizActivity extends AppCompatActivity {
         numberString = "%1$d/" + String.valueOf(questionData.questionsLength());
         scores = new Scores(questionData);
 
-        handleQuiz(true);   // Everything is set up, start quiz
+        changeCurrQuestion(true);   // Everything is set up, start quiz
     }
 
     @Override
@@ -178,22 +177,20 @@ public class QuizActivity extends AppCompatActivity {
 
     public void onClickNextArrow(View view) {
         // User clicked next arrow too quickly after the last question. Due to how Android works,
-        // there's a brief period of time between the call to finish() in handleQuiz() and the
+        // there's a brief period of time between the call to finish() in changeCurrQuestion() and the
         // switch to the next activity. If the user clicks next again, this code will still be
         // called and an OutOfBoundsException will occur.
         if (questionNumber == questionData.questionsLength())
             return;
 
-        arrowButtonClicked();
-        handleQuiz(true);
+        arrowButtonClicked(true);
     }
 
     public void onClickPrevArrow(View view) {
-        arrowButtonClicked();
-        handleQuiz(false);
+        arrowButtonClicked(false);
     }
 
-    private void arrowButtonClicked() {
+    private void arrowButtonClicked(boolean goToNextQuestion) {
         // We only need an explicit "save answer" action for radio buttons.
         String answerType = questionData.getAnswerType(questionNumber);
         AnswerUITypeEnum answerUIType = questionData.getAnswerUIType(answerType);
@@ -201,16 +198,18 @@ public class QuizActivity extends AppCompatActivity {
         if (answerUIType == AnswerUITypeEnum.RadioButtons) {
             recordRadioButtonAnswer();
         }
+
+        changeCurrQuestion(goToNextQuestion);
     }
 
     public void onClickButtonYes(View view) {
         addScore(questionNumber, 1);
-        handleQuiz(true);
+        changeCurrQuestion(true);
     }
 
     public void onClickButtonNo(View view) {
         addScore(questionNumber, 0);
-        handleQuiz(true);
+        changeCurrQuestion(true);
     }
 
     private void confirmUserWishesToQuitDialog() {
@@ -233,7 +232,7 @@ public class QuizActivity extends AppCompatActivity {
 
     // Calls all functions to change question.
     // bool isNextQuestion determines if questionNumber increases/decreases.
-    private void handleQuiz(boolean goToNextQuestion) {
+    private void changeCurrQuestion(boolean goToNextQuestion) {
         if (goToNextQuestion) {
             questionNumber++;
 
@@ -246,11 +245,11 @@ public class QuizActivity extends AppCompatActivity {
                 }
             }
             else {
-                updateQuestions();
+                updateQuestionTextAndViews();
             }
         } else {
             questionNumber--;
-            updateQuestions();
+            updateQuestionTextAndViews();
         }
     }
 
@@ -268,7 +267,7 @@ public class QuizActivity extends AppCompatActivity {
     private void setQuestion(int questionNumber) {
         if (questionNumber >= 0 && questionNumber < questionData.questionsLength()) {
             this.questionNumber = questionNumber;
-            updateQuestions();
+            updateQuestionTextAndViews();
         }
     }
 
@@ -293,7 +292,7 @@ public class QuizActivity extends AppCompatActivity {
 
     //changes the question text, answer text, and answer method
     //also checks the radiobutton that was previously chosen
-    private void updateQuestions() {
+    private void updateQuestionTextAndViews() {
         String answerType = questionData.getAnswerType(questionNumber);
         AnswerUITypeEnum answerUIType = questionData.getAnswerUIType(answerType);
         int offsetOne = 1;
