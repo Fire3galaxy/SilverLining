@@ -125,25 +125,20 @@
         android:layout_height="5dp"
         android:layout_above="@id/answer_choices" />
 
-    <!-- Next time, try to change background to have diagonal stripes -->
-    <!-- or "box within a box" to replicate a shadow effect. End result -->
-    <!-- must be that extra whitespace isn't ugly -->
-    <TextView
-        android:background="?attr/quizbackground"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_alignParentTop="true"
         android:layout_above="@id/space_aboveAnswerChoices"
         android:layout_centerHorizontal="true"
-        android:id="@+id/questionView"
-        android:gravity="center"
-        android:textSize="24sp"
-        android:padding="20dp"
-        android:visibility="visible"/>
-
-    <!-- Next time: "sliding" view animation and logic for transition -->
-    <!-- between short question view and long question view -->
-    <include layout="@layout/scrollable_question_view"
-        android:visibility="gone"/>
-
+        android:background="?attr/quizbackground"
+        android:padding="15dp">
+        <TextView
+            android:id="@+id/questionView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:gravity="center_horizontal"
+            android:textSize="24sp"/>
+    </ScrollView>
 </RelativeLayout>
