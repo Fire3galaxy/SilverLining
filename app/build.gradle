@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "morningsignout.phq9transcendi"
-        minSdkVersion 15
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode 8
         versionName "1.7"
@@ -22,12 +22,6 @@ android {
         exclude 'META-INF/NOTICE' // It is not include NOTICE file
         exclude 'META-INF/LICENSE' // It is not include LICENSE file
     }
-
-    // TODO: Test that app still runs on phones with SDK 15
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//        targetCompatibility JavaVersion.VERSION_1_8
-//    }
 }
 
 dependencies {
@@ -42,8 +36,8 @@ dependencies {
     implementation 'uk.co.chrisjenx:calligraphy:2.2.0'
     implementation 'me.grantland:autofittextview:0.2.1'
     // For authenticating
-    implementation 'com.google.firebase:firebase-auth:16.1.0'
+    implementation 'com.google.firebase:firebase-auth:16.2.1'
     // For the database
-    implementation 'com.google.firebase:firebase-database:16.0.6'
+    implementation 'com.google.firebase:firebase-database:16.1.0'
     implementation 'org.apache.commons:commons-csv:1.6'
 }
